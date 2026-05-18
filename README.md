@@ -6,7 +6,6 @@
 [![Claude Code](https://img.shields.io/badge/edition-Claude_Code-orange)](releases/v0.3/)
 [![Kiro IDE](https://img.shields.io/badge/edition-Kiro-00C694)](releases/v0.3/)
 
-Adapted from [AWS Labs AI-DLC](https://github.com/aws-samples/sample-ai-driven-development-lifecycle) and the Toan Huynh enterprise AI engineering playbook. Maintained by **Kafi Securities Transformation Office**.
 
 ---
 
