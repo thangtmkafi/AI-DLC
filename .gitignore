@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node / build (in case tooling expands later)
+node_modules/
+*.log
+
+# Python (in case Python tools are added)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local environment
+.env
+.env.local
+
+# Temp / working files
+*.tmp
+.tmp/
+scratch/
+
+# DO NOT ignore releases/ — those are committed artifacts
+# DO NOT ignore .github/ — workflows live there
+# DO NOT ignore .claude/ or .kiro/ — these are the platform packages

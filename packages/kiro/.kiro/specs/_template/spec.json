@@ -1,0 +1,13 @@
+{
+  "name": "[feature-name]",
+  "description": "[1-sentence purpose]",
+  "status": "draft",
+  "owner": "[role/name]",
+  "createdAt": "[ISO date]",
+  "updatedAt": "[ISO date]",
+  "aidlcMapping": {
+    "_comment": "Optional: map this Kiro spec to AI-DLC stages it covers",
+    "stages": ["4 · Requirements Analysis", "10 · Functional Design"],
+    "units": []
+  }
+}

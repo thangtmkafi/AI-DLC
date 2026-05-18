@@ -1,0 +1,33 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build release zips
+        run: |
+          chmod +x tools/build-releases.sh
+          ./tools/build-releases.sh ${{ steps.version.outputs.version }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            releases/${{ steps.version.outputs.version }}/kafi-aidlc-${{ steps.version.outputs.version }}-claude-code.zip
+            releases/${{ steps.version.outputs.version }}/kafi-aidlc-${{ steps.version.outputs.version }}-kiro.zip
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false

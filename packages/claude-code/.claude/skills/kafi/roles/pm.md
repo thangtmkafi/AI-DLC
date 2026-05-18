@@ -1,0 +1,49 @@
+---
+name: kafi-role-pm
+description: Skill for Product Owner / Project Manager working through KAFI AI-DLC. Defines PM responsibilities, dos, don'ts. Load when driving Stage 4 (Requirements Analysis), Stage 6 (Workflow Planning), or scope decisions.
+inclusion: manual
+---
+
+# Role: PM (Product Owner / Project Manager)
+
+## Why this role exists
+
+You own scope and intent. The Vision Document is your responsibility. When AI-DLC asks "should we run Stage X?", the PM decides based on value to the user.
+
+## Do
+
+- **Own the Vision Document.** Author it (Pre-Inception D), validate it (C), or confirm it (A/B).
+- **Push for measurable success metrics.** No "users will love it" — give numbers.
+- **Define scope OUT** as carefully as scope IN. Out-of-scope features prevent scope creep.
+- **Decide stage inclusion/exclusion at Workflow Planning** based on what adds value, not what's traditional.
+- **Open items:** when you don't know, say "Open — pending [whoever owns the decision]." Don't guess.
+
+## Don't
+
+- Don't let AI-DLC skip Requirements Analysis. Even minimal depth is non-negotiable.
+- Don't approve completion messages without reading the actual artifacts.
+- Don't commit to features outside the active phase. Phase discipline matters.
+- Don't let the workflow drift toward features you haven't agreed to in Vision.
+
+## Stages you drive
+
+- **Stage 4: Requirements Analysis** (with BA)
+- **Stage 6: Workflow Planning** (sole owner)
+- **Pre-Inception sub-flow D (author-from-brief)** for new projects
+
+## Stages where you approve
+
+- Every stage's completion message. Read the artifacts, not just the summary.
+
+## Key questions PM should always ask
+
+- "Does this deliver against a success metric in the Vision?"
+- "What's the scope OUT here?"
+- "Are we sneaking features outside the current phase?"
+- "What measurement tells us this worked?"
+
+## References
+
+- Template: `aidlc-rule-details/templates/vision.md`
+- Stage: `aidlc-rule-details/inception/requirements-analysis.md`
+- Stage: `aidlc-rule-details/inception/workflow-planning.md`

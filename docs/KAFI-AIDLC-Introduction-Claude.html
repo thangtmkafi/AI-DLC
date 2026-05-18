@@ -1,0 +1,2808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KAFI AI-DLC — Introduction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* BRAND */
+  --kafi-green:        #00C694;
+  --kafi-teal:         #07756D;
+  --kafi-teal-mid:     #0C6070;
+  --kafi-dark:         #101820;
+  --kafi-yellow:       #F9CC4E;
+  --kafi-mint:         #D8F5EE;
+  --kafi-mint-light:   #E6FBF4;
+
+  /* SEMANTIC */
+  --color-success-bg:  #E6FBF4;
+  --color-success-text:#07756D;
+  --color-warning-bg:  #FFF8E1;
+  --color-warning-text:#A05C00;
+  --color-danger-bg:   #FFF0F0;
+  --color-danger-text: #B02020;
+  --color-info-bg:     #EEF2FF;
+  --color-info-text:   #1A3CC8;
+  --color-purple-bg:   #F5EEFF;
+  --color-purple-text: #6B1FB8;
+
+  /* SURFACES */
+  --page-bg:           #F2F4F7;
+  --card-bg:           #FFFFFF;
+  --section-alt:       #FAFCFB;
+  --table-header-bg:   #F7F8FA;
+
+  /* TEXT — 3 shades max */
+  --text-primary:      #101820;
+  --text-secondary:    #585667;
+  --text-muted:        #9095A0;
+  --text-brand:        #00C694;
+
+  /* BORDERS */
+  --border-card:       1.5px solid rgba(0,0,0,0.08);
+  --border-internal:   1px solid rgba(0,0,0,0.06);
+
+  /* RADIUS */
+  --radius-card:       18px;
+  --radius-button:     32px;
+  --radius-badge:      20px;
+  --radius-sm:         8px;
+  --radius-md:         12px;
+
+  /* SHADOWS */
+  --shadow-sm:         0 1px 4px rgba(0,0,0,0.05);
+  --shadow-md:         0 3px 12px rgba(0,0,0,0.08);
+
+  /* SPACING (4px base) */
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:24px;
+  --sp6:32px; --sp7:48px; --sp8:64px; --sp9:96px; --sp10:128px;
+
+  --font: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--sp8) var(--sp7);
+}
+
+/* ============ HEADER ============ */
+.doc-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: var(--sp6);
+  border-bottom: var(--border-internal);
+  margin-bottom: var(--sp8);
+  gap: var(--sp7);
+  flex-wrap: wrap;
+}
+.logo-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--sp5);
+}
+.logo-x {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+.logo-x::before,
+.logo-x::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 5px;
+  border-radius: 4px;
+  top: 10px;
+  left: -2px;
+}
+.logo-x::before {
+  background: var(--kafi-teal);
+  transform: rotate(45deg);
+}
+.logo-x::after {
+  background: var(--kafi-green);
+  transform: rotate(-45deg);
+}
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.doc-eyebrow {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.doc-title {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 12px 0;
+  color: var(--text-primary);
+}
+.doc-title em {
+  font-style: normal;
+  color: var(--kafi-teal);
+}
+.doc-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0;
+  line-height: 1.55;
+}
+.doc-meta {
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.doc-meta strong { color: var(--text-secondary); display: block; font-weight: 600; margin-bottom: 2px; }
+
+/* ============ SECTIONS ============ */
+section { margin-bottom: var(--sp9); }
+section.tight { margin-bottom: var(--sp7); }
+
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 var(--sp4) 0;
+  color: var(--text-primary);
+}
+h2 + .section-intro {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 0 var(--sp6) 0;
+}
+h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 var(--sp3) 0;
+  color: var(--text-primary);
+}
+h4 {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--sp2) 0;
+}
+p { margin: 0 0 var(--sp3) 0; color: var(--text-secondary); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* ============ CARDS ============ */
+.card {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp5);
+}
+.card-grid {
+  display: grid;
+  gap: var(--sp4);
+}
+.card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid--6 { grid-template-columns: repeat(6, 1fr); }
+.card-grid--auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+/* ============ HERO PITCH ============ */
+.pitch {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp7);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.pitch-accent {
+  position: absolute;
+  top: 0;
+  left: var(--sp7);
+  width: 48px;
+  height: 4px;
+  background: var(--kafi-green);
+  border-radius: 0 0 4px 4px;
+}
+.pitch-headline {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+  margin: 0 0 var(--sp4) 0;
+  letter-spacing: -0.01em;
+}
+.pitch-body {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+.pitch-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp4);
+  margin-top: var(--sp6);
+  padding-top: var(--sp5);
+  border-top: var(--border-internal);
+}
+.stat-val {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--kafi-teal);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.stat-lbl {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ============ DIAGRAM ============ */
+.diagram-frame {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp7) var(--sp5);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.diagram-svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============ CYCLE ============ */
+.cycle-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp4);
+}
+.cycle-step {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  position: relative;
+}
+.cycle-num {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp3);
+}
+.cycle-actor {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--kafi-teal);
+  margin-bottom: 4px;
+}
+.cycle-action {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--sp2);
+}
+.cycle-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============ ROLES ============ */
+.role-card {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  display: flex;
+  flex-direction: column;
+}
+.role-card h4 { color: var(--text-muted); margin-bottom: var(--sp1); }
+.role-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--sp3) 0;
+}
+.role-owns {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--sp3);
+}
+.role-stages {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding-top: var(--sp3);
+  border-top: var(--border-internal);
+  margin-top: auto;
+}
+.role-stages strong { color: var(--text-secondary); font-weight: 600; }
+
+/* ============ TABLE ============ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+th {
+  text-align: left;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 14px 18px;
+  background: var(--table-header-bg);
+  border-bottom: var(--border-internal);
+}
+td {
+  padding: 14px 18px;
+  border-bottom: var(--border-internal);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--text-primary); }
+
+/* ============ KB PRINCIPLE ============ */
+.kb-box {
+  background: var(--color-success-bg);
+  border: 1.5px solid rgba(0, 198, 148, 0.2);
+  border-radius: var(--radius-card);
+  padding: var(--sp6);
+  position: relative;
+}
+.kb-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--color-success-text);
+  margin-bottom: var(--sp3);
+}
+.kb-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--sp3) 0;
+}
+.kb-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+.kb-folder-list {
+  margin-top: var(--sp5);
+  padding: var(--sp4);
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ============ COMPLIANCE CARDS ============ */
+.compliance-card {
+  padding: var(--sp4);
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.compliance-card h4 { letter-spacing: 0.08em; margin-bottom: var(--sp1); font-size: 9.5px; }
+.compliance-card .c-title { font-weight: 700; color: var(--text-primary); font-size: 13px; margin-bottom: var(--sp2); }
+.compliance-card .c-body { color: var(--text-secondary); font-size: 12px; }
+.compliance-card.audit { background: var(--color-info-bg); }
+.compliance-card.audit h4 { color: var(--color-info-text); }
+.compliance-card.privacy { background: var(--color-purple-bg); }
+.compliance-card.privacy h4 { color: var(--color-purple-text); }
+.compliance-card.review { background: var(--color-warning-bg); }
+.compliance-card.review h4 { color: var(--color-warning-text); }
+
+/* ============ NEXT BOX ============ */
+.next-box {
+  background: var(--kafi-dark);
+  color: white;
+  padding: var(--sp7);
+  border-radius: var(--radius-card);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--sp6);
+  align-items: center;
+}
+.next-box h2 { color: white; margin-bottom: var(--sp3); }
+.next-box p { color: rgba(255,255,255,0.75); margin: 0; }
+.next-cta {
+  background: var(--kafi-green);
+  color: white;
+  padding: 14px 24px;
+  border-radius: var(--radius-button);
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ============ ROUTES (A/B/C/D) ============ */
+.route-card {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  position: relative;
+  overflow: hidden;
+}
+.route-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--sp5);
+  width: 32px;
+  height: 3px;
+  background: var(--color-danger-text);
+  border-radius: 0 0 3px 3px;
+  opacity: 0.4;
+}
+.route-letter {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-danger-text);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp2);
+  opacity: 0.85;
+}
+.route-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--sp3) 0;
+}
+.route-when {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp1);
+}
+.route-when-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp4);
+  line-height: 1.5;
+}
+.route-io {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--page-bg);
+  padding: var(--sp3);
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  line-height: 1.5;
+}
+.route-io strong {
+  display: block;
+  font-family: var(--font);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.route-io + .route-io { margin-top: var(--sp2); }
+
+/* ============ I/O TABLE ============ */
+.io-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.io-table th {
+  text-align: left;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  background: var(--table-header-bg);
+  border-bottom: var(--border-internal);
+}
+.io-table td {
+  padding: 10px 16px;
+  border-bottom: var(--border-internal);
+  color: var(--text-secondary);
+  vertical-align: top;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.io-table tr:last-child td { border-bottom: none; }
+.io-table td.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 32px;
+  white-space: nowrap;
+}
+.io-table td.stage strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.io-table td.role {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  width: 110px;
+}
+.io-table td.path {
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.io-table td.path code {
+  background: transparent;
+  padding: 0;
+  font-size: 11px;
+}
+/* Phase row tint */
+.io-table tr.phase-pre td { background: rgba(255, 240, 240, 0.4); }
+.io-table tr.phase-in td { background: rgba(238, 242, 255, 0.4); }
+.io-table tr.phase-ux td { background: rgba(245, 238, 255, 0.4); }
+.io-table tr.phase-cn td { background: rgba(230, 251, 244, 0.4); }
+.io-table tr.phase-op td { background: rgba(255, 248, 225, 0.4); }
+.io-table tr.phase-detect td { background: rgba(247, 248, 250, 0.6); }
+
+/* ============ ROLE PLAYBOOKS ============ */
+.playbook-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp4);
+}
+.playbook {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  display: flex;
+  flex-direction: column;
+}
+.playbook-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp3);
+  padding-bottom: var(--sp4);
+  border-bottom: var(--border-internal);
+  margin-bottom: var(--sp4);
+}
+.playbook-abbr {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-success-bg);
+  color: var(--kafi-teal);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+.playbook-titles { flex: 1; min-width: 0; }
+.playbook-role {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.playbook-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 2px 0 0 0;
+}
+.playbook-section { margin-bottom: var(--sp4); }
+.playbook-section:last-child { margin-bottom: 0; }
+.playbook-section h4 {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--sp2) 0;
+}
+.playbook-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.playbook-list li { padding: 2px 0; position: relative; padding-left: 12px; }
+.playbook-list li::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+.playbook-stages {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--page-bg);
+  padding: var(--sp2) var(--sp3);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+.playbook-stages strong { color: var(--text-primary); }
+.playbook-prompt {
+  background: var(--kafi-dark);
+  color: #E8EBEF;
+  border-radius: var(--radius-md);
+  padding: var(--sp4);
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  font-size: 11px;
+  line-height: 1.65;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+}
+.playbook-prompt::before {
+  content: 'STARTER PROMPT';
+  display: block;
+  font-family: var(--font);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: var(--sp2);
+}
+.playbook-prompt .ph {
+  color: var(--kafi-green);
+  font-weight: 600;
+}
+.playbook-prompt .key {
+  color: #F9CC4E;
+  font-weight: 600;
+}
+.playbook-prompt .file {
+  color: #87CEEB;
+}
+.playbook-prompt .dim {
+  color: rgba(255,255,255,0.5);
+  font-style: italic;
+}
+.git-diagram-wrap {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin-top: var(--sp4);
+}
+.playbook-watch {
+  background: var(--color-warning-bg);
+  padding: var(--sp3);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-warning-text);
+  line-height: 1.55;
+}
+.playbook-watch strong { color: var(--color-warning-text); }
+
+.skills-note {
+  background: var(--color-info-bg);
+  border: 1.5px solid rgba(45, 91, 255, 0.2);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin-bottom: var(--sp6);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp4);
+  align-items: start;
+}
+.skills-note-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-info-text);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.skills-note h4 {
+  margin: 0 0 var(--sp2) 0;
+  color: var(--color-info-text);
+}
+.skills-note p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.skills-note p + p { margin-top: var(--sp2); }
+.skills-note code {
+  background: rgba(45, 91, 255, 0.08);
+  color: var(--color-info-text);
+  font-size: 11.5px;
+}
+
+/* ============ FOLDER TREE ============ */
+.folder-tree {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp6);
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  overflow-x: auto;
+}
+.folder-tree .root { color: var(--text-primary); font-weight: 700; }
+.folder-tree .folder { color: var(--text-primary); font-weight: 600; }
+.folder-tree .file { color: var(--text-secondary); }
+.folder-tree .comment {
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 11.5px;
+  font-style: normal;
+}
+.folder-tree .tag {
+  display: inline-block;
+  padding: 1px 8px;
+  margin-left: 8px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  vertical-align: 1px;
+}
+.folder-tree .tag.pre { background: var(--color-danger-bg); color: var(--color-danger-text); }
+.folder-tree .tag.in { background: var(--color-info-bg); color: var(--color-info-text); }
+.folder-tree .tag.ux { background: var(--color-purple-bg); color: var(--color-purple-text); }
+.folder-tree .tag.cn { background: var(--color-success-bg); color: var(--color-success-text); }
+.folder-tree .tag.op { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.folder-tree .tag.team { background: var(--page-bg); color: var(--text-secondary); }
+
+/* ============ BRAINSTORM SECTION ============ */
+/* Follows KAFI design system v2.2 — green-only accent, border-only cards,
+   max 3 text shades, no decorative colors. */
+
+.brainstorm-section {
+  margin-top: var(--sp9);
+  padding-top: var(--sp7);
+  border-top: var(--border-internal);
+}
+
+.brainstorm-banner {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-left: 3px solid var(--kafi-green);
+  border-radius: var(--radius-md);
+  padding: var(--sp4) var(--sp5);
+  margin: var(--sp5) 0 var(--sp6) 0;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.brainstorm-banner strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.brainstorm-idea {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp6);
+  margin-bottom: var(--sp5);
+}
+.brainstorm-idea--hero {
+  border-color: var(--kafi-green);
+  border-width: 1.5px;
+}
+
+/* Type label — neutral muted only, no color */
+.brainstorm-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp3);
+}
+
+.brainstorm-idea h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--sp3) 0;
+  color: var(--text-primary);
+}
+.brainstorm-idea h4 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-primary);
+  margin: var(--sp5) 0 var(--sp2) 0;
+}
+
+.idea-pitch {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: var(--sp3) 0 var(--sp5) 0;
+}
+.idea-pitch strong { color: var(--text-primary); font-weight: 600; }
+
+/* Naming candidates — border-only cards, one with green-accent for recommendation */
+.name-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp3);
+  margin: var(--sp3) 0;
+}
+.name-card {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-md);
+  padding: var(--sp3) var(--sp4);
+}
+.name-card--recommended {
+  border-color: var(--kafi-green);
+  border-width: 1.5px;
+}
+.name-card .name {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: var(--sp1);
+}
+.name-card .rationale {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.name-card .rec-pill {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--kafi-green);
+  margin-left: var(--sp2);
+  vertical-align: middle;
+}
+
+/* Diagram wrapper — minimal section-alt surface */
+.skb-diagram-wrap {
+  background: var(--section-alt);
+  border: var(--border-internal);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin: var(--sp4) 0;
+  overflow-x: auto;
+}
+.skb-diagram-wrap svg {
+  width: 100%;
+  height: auto;
+  max-width: 920px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Skill table — same conventions as existing io-table */
+.skill-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--sp3);
+  font-size: 12.5px;
+}
+.skill-table thead th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--sp2) var(--sp3);
+  border-bottom: var(--border-internal);
+  background: var(--table-header-bg);
+}
+.skill-table tbody td {
+  padding: var(--sp3);
+  border-bottom: var(--border-internal);
+  vertical-align: top;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.skill-table tbody td:first-child {
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+.skill-table tbody td strong { color: var(--text-primary); font-weight: 600; }
+
+/* Requirement / component callouts — same border-only treatment */
+.req-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp3);
+  margin: var(--sp3) 0;
+}
+.req-item {
+  background: var(--card-bg);
+  border: var(--border-internal);
+  border-radius: var(--radius-md);
+  padding: var(--sp3) var(--sp4);
+}
+.req-item .req-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--sp1);
+}
+.req-item .req-body {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ============ FOOTER ============ */
+footer {
+  margin-top: var(--sp9);
+  padding-top: var(--sp5);
+  border-top: var(--border-internal);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: var(--sp3);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+  .container { padding: var(--sp5) var(--sp4); }
+  .pitch-stats { grid-template-columns: repeat(2, 1fr); }
+  .cycle-row { grid-template-columns: repeat(2, 1fr); }
+  .card-grid--3, .card-grid--6 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid--2 { grid-template-columns: 1fr; }
+  .playbook-grid { grid-template-columns: 1fr; }
+  .skills-note { grid-template-columns: 1fr; }
+  .next-box { grid-template-columns: 1fr; }
+  .doc-title { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ============ HEADER ============ -->
+<header class="doc-header">
+  <div>
+    <div class="logo-mark">
+      <span class="logo-x"></span>
+      <span class="logo-text">Kafi</span>
+    </div>
+    <div class="doc-eyebrow">Transformation Office · v0.3 Draft</div>
+    <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
+    <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders.</p>
+  </div>
+  <div class="doc-meta">
+    <strong>Audience</strong>
+    Leadership · PMs · POs · BAs · SAs · Designers · Devs · DevOps
+  </div>
+</header>
+
+<!-- ============ THE PITCH ============ -->
+<section>
+  <div class="pitch">
+    <div class="pitch-accent"></div>
+    <p class="pitch-headline">Software development at KAFI is becoming AI-first. The AI agent drafts artifacts, asks clarifying questions, and generates code. Humans review, decide, and approve at every gate.</p>
+    <p class="pitch-body">AI-DLC isn't about replacing the team. It's about making every role more focused: PMs spend more time on scope decisions, not formatting. BAs spend more time on edge cases, not boilerplate. Devs spend more time reviewing and refining, not typing out scaffolding. Every artifact is in git. Every decision is logged. Every output is reviewable.</p>
+    <div class="pitch-stats">
+      <div>
+        <div class="stat-val">2</div>
+        <div class="stat-lbl">Modes — Lite for greenfield<br/>Standard for brownfield</div>
+      </div>
+      <div>
+        <div class="stat-val">17</div>
+        <div class="stat-lbl">Stages — 6 always-on,<br/>9 conditional, 2 placeholder</div>
+      </div>
+      <div>
+        <div class="stat-val">6</div>
+        <div class="stat-lbl">Human roles —<br/>PM · BA · SA · Designer · Dev · DevOps</div>
+      </div>
+      <div>
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Artifacts in git —<br/>not in chat, not in heads</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIAGRAM ============ -->
+<section>
+  <h2>The workflow at a glance</h2>
+  <p class="section-intro">Mode is auto-detected at workspace detection — you can override. Both modes converge into the same Inception → Construction → Operations sequence after Pre-Inception.</p>
+
+  <div class="diagram-frame">
+    <svg class="diagram-svg" viewBox="0 0 1200 1720" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#9095A0"/>
+        </marker>
+      </defs>
+
+      <!-- TITLE -->
+      <text x="60" y="40" font-size="15" font-weight="700" fill="#101820">AI-DLC v0.3 · two modes, one workflow</text>
+      <text x="60" y="60" font-size="11.5" fill="#585667">Each box: stage number · role · output document · phase colour matches legend</text>
+
+      <!-- STAGE 1: WORKSPACE DETECTION -->
+      <rect x="460" y="100" width="280" height="96" rx="8" fill="#F2F4F7" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+      <text x="474" y="122" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 1</text>
+      <text x="600" y="144" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Workspace detection</text>
+      <text x="600" y="162" font-size="11.5" fill="#585667" text-anchor="middle">AI agent · always runs · decides mode</text>
+      <line x1="490" y1="172" x2="710" y2="172" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="188" font-size="10.5" fill="#9095A0" text-anchor="middle">→ aidlc-state.md · audit.md</text>
+
+      <!-- BRANCH ARROWS -->
+      <path d="M 600 196 L 600 230 L 380 230 L 380 270" stroke="#9095A0" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 600 196 L 600 230 L 820 230 L 820 270" stroke="#9095A0" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+      <!-- LITE / STANDARD LABELS -->
+      <text x="380" y="250" font-size="11.5" font-weight="600" fill="#101820" text-anchor="middle">Lite mode</text>
+      <text x="380" y="264" font-size="10.5" fill="#9095A0" text-anchor="middle">greenfield + clean inputs</text>
+      <text x="820" y="250" font-size="11.5" font-weight="600" fill="#101820" text-anchor="middle">Standard mode</text>
+      <text x="820" y="264" font-size="10.5" fill="#9095A0" text-anchor="middle">brownfield OR needs input prep</text>
+
+      <!-- LITE ANNOTATION (LEFT) -->
+      <rect x="40" y="290" width="290" height="120" rx="8" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="56" y="312" font-size="10.5" font-weight="700" fill="#9095A0" letter-spacing="0.10em">LITE MODE SKIPS</text>
+      <text x="56" y="332" font-size="11.5" fill="#585667">· Pre-Inception phase</text>
+      <text x="56" y="348" font-size="11.5" fill="#585667">· Reverse Engineering (Stage 3)</text>
+      <text x="56" y="372" font-size="10.5" font-weight="700" fill="#9095A0" letter-spacing="0.10em">LITE ASSUMES</text>
+      <text x="56" y="391" font-size="11.5" fill="#585667">· Vision + Tech Env exist at kickoff</text>
+      <text x="56" y="407" font-size="11.5" fill="#585667">· No existing code to map</text>
+
+      <!-- STAGE P: PRE-INCEPTION (Standard path) -->
+      <rect x="680" y="280" width="280" height="96" rx="8" fill="#FFF0F0" stroke="#B02020" stroke-width="1.5" stroke-dasharray="6 3"/>
+      <text x="694" y="302" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE P · A/B/C/D</text>
+      <text x="820" y="324" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Pre-Inception</text>
+      <text x="820" y="342" font-size="11.5" fill="#585667" text-anchor="middle">PO + BA · Standard only</text>
+      <line x1="710" y1="352" x2="930" y2="352" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="820" y="368" font-size="10.5" fill="#9095A0" text-anchor="middle">→ vision.md · technical-environment.md</text>
+
+      <!-- Pre-Inception annotation: named routes -->
+      <text x="976" y="290" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">FOUR ROUTES</text>
+      <text x="976" y="306" font-size="11" fill="#585667">A · skip — inputs ready</text>
+      <text x="976" y="322" font-size="11" fill="#585667">B · fill-gaps — one missing</text>
+      <text x="976" y="338" font-size="11" fill="#585667">C · map-existing — legacy doc</text>
+      <text x="976" y="354" font-size="11" fill="#585667">D · author-from-brief — intent only</text>
+
+      <!-- Arrow Pre-Inception → Reverse -->
+      <path d="M 820 376 L 820 410" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 3: REVERSE ENGINEERING -->
+      <rect x="680" y="420" width="280" height="96" rx="8" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1.5"/>
+      <text x="694" y="442" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 3</text>
+      <text x="820" y="464" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Reverse engineering</text>
+      <text x="820" y="482" font-size="11.5" fill="#585667" text-anchor="middle">SA · brownfield only</text>
+      <line x1="710" y1="492" x2="930" y2="492" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="820" y="508" font-size="10.5" fill="#9095A0" text-anchor="middle">→ reverse-engineering/ · 6 files</text>
+
+      <!-- Reverse annotation -->
+      <text x="976" y="464" font-size="11" fill="#585667">documents existing code</text>
+      <text x="976" y="480" font-size="11" fill="#585667">grounded in project KB</text>
+
+      <!-- DIVIDER -->
+      <line x1="80" y1="555" x2="1120" y2="555" stroke="rgba(0,0,0,0.10)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="600" y="548" font-size="10.5" font-weight="700" fill="#9095A0" text-anchor="middle" letter-spacing="0.10em">BOTH MODES CONVERGE BELOW</text>
+
+      <!-- CONVERGENCE ARROWS into REQUIREMENTS -->
+      <path d="M 380 270 L 380 590 L 600 590 L 600 620" stroke="#9095A0" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 820 516 L 820 590 L 600 590 L 600 620" stroke="#9095A0" stroke-width="1.5" fill="none"/>
+
+      <!-- STAGE 4: REQUIREMENTS ANALYSIS -->
+      <rect x="460" y="628" width="280" height="96" rx="8" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1.5"/>
+      <text x="474" y="650" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 4</text>
+      <text x="600" y="672" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Requirements analysis</text>
+      <text x="600" y="690" font-size="11.5" fill="#585667" text-anchor="middle">PM + BA · always</text>
+      <line x1="490" y1="700" x2="710" y2="700" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="716" font-size="10.5" fill="#9095A0" text-anchor="middle">→ requirements.md · verification-questions.md</text>
+
+      <path d="M 600 724 L 600 750" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 5: USER STORIES -->
+      <rect x="460" y="760" width="280" height="96" rx="8" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1.5"/>
+      <text x="474" y="782" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 5</text>
+      <text x="600" y="804" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">User stories</text>
+      <text x="600" y="822" font-size="11.5" fill="#585667" text-anchor="middle">BA · conditional (user-facing)</text>
+      <line x1="490" y1="832" x2="710" y2="832" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="848" font-size="10.5" fill="#9095A0" text-anchor="middle">→ stories.md · personas.md</text>
+
+      <path d="M 600 856 L 600 882" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 7: PRODUCT DESIGN -->
+      <rect x="460" y="892" width="280" height="96" rx="8" fill="#F5EEFF" stroke="rgba(150,45,255,0.25)" stroke-width="1.5"/>
+      <text x="474" y="914" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 7</text>
+      <text x="600" y="936" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Product design</text>
+      <text x="600" y="954" font-size="11.5" fill="#585667" text-anchor="middle">Designer · conditional (UI involved)</text>
+      <line x1="490" y1="964" x2="710" y2="964" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="980" font-size="10.5" fill="#9095A0" text-anchor="middle">→ product-design/ · flows · screens · IA</text>
+
+      <path d="M 600 988 L 600 1014" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 8: APPLICATION DESIGN -->
+      <rect x="460" y="1024" width="280" height="96" rx="8" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1.5"/>
+      <text x="474" y="1046" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 8</text>
+      <text x="600" y="1068" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Application design</text>
+      <text x="600" y="1086" font-size="11.5" fill="#585667" text-anchor="middle">SA · consolidates components + NFRs</text>
+      <line x1="490" y1="1096" x2="710" y2="1096" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="1112" font-size="10.5" fill="#9095A0" text-anchor="middle">→ application-design/ · 5 files + ADRs</text>
+
+      <path d="M 600 1120 L 600 1146" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 9: UNITS GENERATION -->
+      <rect x="460" y="1156" width="280" height="96" rx="8" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1.5"/>
+      <text x="474" y="1178" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 9</text>
+      <text x="600" y="1200" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Units generation</text>
+      <text x="600" y="1218" font-size="11.5" fill="#585667" text-anchor="middle">SA · conditional (multi-unit only)</text>
+      <line x1="490" y1="1228" x2="710" y2="1228" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="1244" font-size="10.5" fill="#9095A0" text-anchor="middle">→ unit-of-work*.md · 3 files</text>
+
+      <path d="M 600 1252 L 600 1278" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Per-unit construction label -->
+      <text x="976" y="1180" font-size="10.5" font-weight="700" fill="#9095A0" letter-spacing="0.10em">PER-UNIT LOOP</text>
+      <text x="976" y="1198" font-size="11" fill="#585667">Stage 10 · Functional design</text>
+      <text x="976" y="1214" font-size="11" fill="#585667">Stage 11 · NFR requirements</text>
+      <text x="976" y="1230" font-size="11" fill="#585667">Stage 12 · NFR design</text>
+      <text x="976" y="1246" font-size="11" fill="#585667">Stage 13 · Infrastructure design</text>
+
+      <!-- STAGE 14: CODE GENERATION -->
+      <rect x="460" y="1288" width="280" height="96" rx="8" fill="#E6FBF4" stroke="rgba(0,198,148,0.35)" stroke-width="1.5"/>
+      <text x="474" y="1310" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 14</text>
+      <text x="600" y="1332" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Code generation</text>
+      <text x="600" y="1350" font-size="11.5" fill="#585667" text-anchor="middle">Developer · always · per unit</text>
+      <line x1="490" y1="1360" x2="710" y2="1360" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="1376" font-size="10.5" fill="#9095A0" text-anchor="middle">→ src/ ← code · code/ ← summaries</text>
+
+      <path d="M 600 1384 L 600 1410" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGE 15: BUILD -->
+      <rect x="460" y="1420" width="280" height="96" rx="8" fill="#E6FBF4" stroke="rgba(0,198,148,0.35)" stroke-width="1.5"/>
+      <text x="474" y="1442" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGE 15</text>
+      <text x="600" y="1464" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Build</text>
+      <text x="600" y="1482" font-size="11.5" fill="#585667" text-anchor="middle">Developer · always · no tests in v0.3</text>
+      <line x1="490" y1="1492" x2="710" y2="1492" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="1508" font-size="10.5" fill="#9095A0" text-anchor="middle">→ build-instructions.md · build-summary.md</text>
+
+      <path d="M 600 1516 L 600 1542" stroke="#9095A0" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- STAGES 16+: OPERATIONS -->
+      <rect x="460" y="1552" width="280" height="96" rx="8" fill="#FFF8E1" stroke="rgba(217,119,10,0.30)" stroke-width="1.5"/>
+      <text x="474" y="1574" font-size="10" font-weight="700" fill="#9095A0" letter-spacing="0.10em">STAGES 16+</text>
+      <text x="600" y="1596" font-size="14" font-weight="700" fill="#101820" text-anchor="middle">Operations</text>
+      <text x="600" y="1614" font-size="11.5" fill="#585667" text-anchor="middle">DevOps · deploy + monitor</text>
+      <line x1="490" y1="1624" x2="710" y2="1624" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="600" y="1640" font-size="10.5" fill="#9095A0" text-anchor="middle">v0.4 scope · placeholder in v0.3</text>
+
+      <!-- CROSS-CUTTING SIDEBAR (LEFT) -->
+      <rect x="40" y="628" width="290" height="540" rx="8" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="56" y="652" font-size="10.5" font-weight="700" fill="#9095A0" letter-spacing="0.10em">CROSS-CUTTING (EVERY STAGE)</text>
+
+      <text x="56" y="684" font-size="13" font-weight="700" fill="#101820">AI Review Checklist</text>
+      <text x="56" y="702" font-size="11.5" fill="#585667">soft warning on writes:</text>
+      <text x="56" y="718" font-size="11.5" fill="#585667">grounded · no secrets · scope ·</text>
+      <text x="56" y="734" font-size="11.5" fill="#585667">reversible · human-decidable</text>
+
+      <text x="56" y="770" font-size="13" font-weight="700" fill="#101820">Audit trail</text>
+      <text x="56" y="788" font-size="11.5" fill="#585667">append-only · ISO 8601 ·</text>
+      <text x="56" y="804" font-size="11.5" fill="#585667">TT 96/2020 compliant</text>
+
+      <text x="56" y="840" font-size="13" font-weight="700" fill="#101820">Privacy extension</text>
+      <text x="56" y="858" font-size="11.5" fill="#585667">auto-enable on PII fields ·</text>
+      <text x="56" y="874" font-size="11.5" fill="#585667">Decree 13/2023</text>
+
+      <text x="56" y="910" font-size="13" font-weight="700" fill="#101820">SA quality lens</text>
+      <text x="56" y="928" font-size="11.5" fill="#585667">push testable ACs · measurable</text>
+      <text x="56" y="944" font-size="11.5" fill="#585667">NFRs · edge cases (no QA in v0.3)</text>
+
+      <text x="56" y="980" font-size="13" font-weight="700" fill="#101820">Open items protocol</text>
+      <text x="56" y="998" font-size="11.5" fill="#585667">surfaces, never fabricates ·</text>
+      <text x="56" y="1014" font-size="11.5" fill="#585667">"Open — pending [owner]"</text>
+
+      <text x="56" y="1050" font-size="13" font-weight="700" fill="#101820">2-option gates</text>
+      <text x="56" y="1068" font-size="11.5" fill="#585667">every stage ends with: Request</text>
+      <text x="56" y="1084" font-size="11.5" fill="#585667">Changes / Continue to Next</text>
+
+      <text x="56" y="1120" font-size="13" font-weight="700" fill="#101820">All artifacts in git</text>
+      <text x="56" y="1138" font-size="11.5" fill="#585667">/aidlc-docs/ · /adrs/ ·</text>
+      <text x="56" y="1154" font-size="11.5" fill="#585667">audit.md · aidlc-state.md</text>
+
+      <!-- LEGEND -->
+      <g transform="translate(820, 1450)">
+        <text x="0" y="0" font-size="10.5" font-weight="700" fill="#9095A0" letter-spacing="0.10em">LEGEND · PHASE</text>
+        <rect x="0" y="14" width="14" height="14" rx="3" fill="#F2F4F7" stroke="rgba(0,0,0,0.10)" stroke-width="1"/>
+        <text x="22" y="25" font-size="11" fill="#585667">Detection (always)</text>
+        <rect x="0" y="34" width="14" height="14" rx="3" fill="#FFF0F0" stroke="#B02020" stroke-width="1" stroke-dasharray="2 1"/>
+        <text x="22" y="45" font-size="11" fill="#585667">Pre-Inception (Std only)</text>
+        <rect x="0" y="54" width="14" height="14" rx="3" fill="#EEF2FF" stroke="rgba(45,91,255,0.25)" stroke-width="1"/>
+        <text x="22" y="65" font-size="11" fill="#585667">Inception</text>
+        <rect x="0" y="74" width="14" height="14" rx="3" fill="#F5EEFF" stroke="rgba(150,45,255,0.25)" stroke-width="1"/>
+        <text x="22" y="85" font-size="11" fill="#585667">Inception (UX-led)</text>
+        <rect x="0" y="94" width="14" height="14" rx="3" fill="#E6FBF4" stroke="rgba(0,198,148,0.35)" stroke-width="1"/>
+        <text x="22" y="105" font-size="11" fill="#585667">Construction</text>
+        <rect x="0" y="114" width="14" height="14" rx="3" fill="#FFF8E1" stroke="rgba(217,119,10,0.30)" stroke-width="1"/>
+        <text x="22" y="125" font-size="11" fill="#585667">Operations</text>
+      </g>
+
+    </svg>
+  </div>
+</section>
+
+<!-- ============ PRE-INCEPTION ROUTES ============ -->
+<section>
+  <h2>Pre-Inception · the four routes</h2>
+  <p class="section-intro">Standard mode picks one of four routes based on what the team has already prepared. The chosen route produces the Vision Document and Technical Environment Document that Inception needs.</p>
+
+  <div class="card-grid card-grid--2">
+    <div class="route-card">
+      <div class="route-letter">A</div>
+      <h3 class="route-name">skip</h3>
+      <div class="route-when">When</div>
+      <p class="route-when-detail">Vision Document and Technical Environment Document both already exist in <code>aidlc-docs/inception/discovery/</code>. Nothing to author.</p>
+      <div class="route-io">
+        <strong>Reads</strong>
+        aidlc-docs/inception/discovery/vision.md<br/>
+        aidlc-docs/inception/discovery/technical-environment.md
+      </div>
+      <div class="route-io">
+        <strong>Writes</strong>
+        (no files — routing decision logged in audit.md only)
+      </div>
+    </div>
+
+    <div class="route-card">
+      <div class="route-letter">B</div>
+      <h3 class="route-name">fill-gaps</h3>
+      <div class="route-when">When</div>
+      <p class="route-when-detail">One of the two inputs exists, the other is missing. Walk the missing template section by section with the team.</p>
+      <div class="route-io">
+        <strong>Reads</strong>
+        Whichever input exists<br/>
+        aidlc-rule-details/templates/vision.md<br/>
+        aidlc-rule-details/templates/technical-environment.md
+      </div>
+      <div class="route-io">
+        <strong>Writes</strong>
+        aidlc-docs/inception/discovery/[missing].md<br/>
+        aidlc-docs/inception/discovery/[missing]-draft-questions.md
+      </div>
+    </div>
+
+    <div class="route-card">
+      <div class="route-letter">C</div>
+      <h3 class="route-name">map-existing</h3>
+      <div class="route-when">When</div>
+      <p class="route-when-detail">Team has a legacy BRD, PRD, or requirements doc. Validate it, map content to Vision format, preserve the original, fill rubric gaps.</p>
+      <div class="route-io">
+        <strong>Reads</strong>
+        Legacy BRD/PRD source file<br/>
+        aidlc-rule-details/templates/vision.md
+      </div>
+      <div class="route-io">
+        <strong>Writes</strong>
+        aidlc-docs/inception/discovery/vision.md<br/>
+        aidlc-docs/inception/discovery/source-appendix.md<br/>
+        aidlc-docs/inception/discovery/fit-check.md<br/>
+        aidlc-docs/inception/discovery/technical-environment.md<br/>
+        aidlc-docs/inception/discovery/validation/&lt;source&gt;-review.md
+      </div>
+    </div>
+
+    <div class="route-card">
+      <div class="route-letter">D</div>
+      <h3 class="route-name">author-from-brief</h3>
+      <div class="route-when">When</div>
+      <p class="route-when-detail">Team has only intent or a short brief. Seven-step process: template resolution → parsing → gap analysis → drafting plan → execution → translation → BA review.</p>
+      <div class="route-io">
+        <strong>Reads</strong>
+        User's brief or intent message<br/>
+        aidlc-rule-details/templates/vision.md
+      </div>
+      <div class="route-io">
+        <strong>Writes</strong>
+        aidlc-docs/inception/discovery/vision.md<br/>
+        aidlc-docs/inception/discovery/technical-environment.md<br/>
+        aidlc-docs/ba-authoring/&lt;feature&gt;/plan.md<br/>
+        aidlc-docs/ba-authoring/&lt;feature&gt;/questions.md
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section>
+  <h2>How a session actually works</h2>
+  <p class="section-intro">Every stage follows the same rhythm. Humans decide; the agent drafts and asks; nothing proceeds without explicit approval.</p>
+
+  <div class="cycle-row">
+    <div class="cycle-step">
+      <div class="cycle-num">Step 1</div>
+      <div class="cycle-actor">Human</div>
+      <div class="cycle-action">Sets intent</div>
+      <div class="cycle-desc">PM/PO names what to build. Or a stage owner reviews prior artifacts and decides what's next.</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-num">Step 2</div>
+      <div class="cycle-actor">AI agent</div>
+      <div class="cycle-action">Drafts + asks</div>
+      <div class="cycle-desc">Agent writes a plan with checkboxes and questions in a `[Answer]:` file. Asks measurable, non-vague questions.</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-num">Step 3</div>
+      <div class="cycle-actor">Human</div>
+      <div class="cycle-action">Reviews + answers</div>
+      <div class="cycle-desc">Stage owner fills `[Answer]:` tags, edits artifacts directly if needed, or asks for changes.</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-num">Step 4</div>
+      <div class="cycle-actor">Human</div>
+      <div class="cycle-action">Approves gate</div>
+      <div class="cycle-desc">Two-option message: <strong>Request Changes</strong> or <strong>Continue to Next Stage</strong>. No silent progress.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROLES ============ -->
+<section>
+  <h2>Roles in your project team</h2>
+  <p class="section-intro">Six human roles. Each role has a skill file the agent loads when you're driving a stage that role owns. No QA, Security, or Compliance role in v0.3 — compliance is enforced automatically via extensions.</p>
+
+  <div class="card-grid card-grid--3">
+    <div class="role-card">
+      <h4>Product Owner</h4>
+      <div class="role-name">PM / PO</div>
+      <p class="role-owns">Owns intent and scope. Authors or validates the Vision Document. Decides what runs and what gets cut.</p>
+      <div class="role-stages"><strong>Drives:</strong> Requirements Analysis · Workflow Planning · Pre-Inception D (author from brief)</div>
+    </div>
+    <div class="role-card">
+      <h4>Business Analyst</h4>
+      <div class="role-name">BA</div>
+      <p class="role-owns">Translates intent to requirements and stories. Pushes back on vague language. Uses neutral roles until taxonomy is confirmed.</p>
+      <div class="role-stages"><strong>Drives:</strong> Requirements · User Stories · Functional Design · Pre-Inception B/C/D</div>
+    </div>
+    <div class="role-card">
+      <h4>Solution Architect</h4>
+      <div class="role-name">SA</div>
+      <p class="role-owns">Architecture, NFRs, ADRs. Guardian of KB boundaries. Pushes for measurable NFR thresholds.</p>
+      <div class="role-stages"><strong>Drives:</strong> Reverse Engineering · App Design · NFR Requirements · NFR Design · Units Generation</div>
+    </div>
+    <div class="role-card">
+      <h4>Product Designer</h4>
+      <div class="role-name">Designer</div>
+      <p class="role-owns">UX flows, screen specs, interaction patterns. References the KAFI design system — custom components require justification.</p>
+      <div class="role-stages"><strong>Drives:</strong> Product Design (only stage UX-led)</div>
+    </div>
+    <div class="role-card">
+      <h4>Developer</h4>
+      <div class="role-name">Dev</div>
+      <p class="role-owns">Pairs with the AI agent on code generation. Reviews the plan, verifies the build, owns the build instructions.</p>
+      <div class="role-stages"><strong>Drives:</strong> Code Generation · Build</div>
+    </div>
+    <div class="role-card">
+      <h4>DevOps / SRE</h4>
+      <div class="role-name">DevOps</div>
+      <p class="role-owns">Maps logical components to concrete services. Owns deployment topology and monitoring (Operations is placeholder in v0.3).</p>
+      <div class="role-stages"><strong>Drives:</strong> Infrastructure Design · Deployment · Monitoring</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROLE PLAYBOOKS ============ -->
+<section>
+  <h2>Role playbooks · how to start a session</h2>
+  <p class="section-intro">Each role has two complementary tools. Use both together for the best results.</p>
+
+  <div class="skills-note">
+    <div class="skills-note-icon">i</div>
+    <div>
+      <h4>Skills vs starter prompts</h4>
+      <p><strong>Role skills</strong> live at <code>.claude/skills/kafi/roles/[role].md</code>. They shape the agent's persistent behavior — what to push back on, what to cite, what to refuse. Manual inclusion in Claude Code.</p>
+      <p><strong>Starter prompts</strong> are pasted at session start. They set context (project, stage, key files) and instruct the agent to load the role skill. The skill keeps influencing every turn after that.</p>
+      <p>The recommended pattern: paste the starter prompt → it references the skill → the agent loads both and you're ready. Edit placeholders (in <span style="color:var(--kafi-green);font-family:'JetBrains Mono',monospace;">green</span>) before pasting.</p>
+    </div>
+  </div>
+
+  <div class="playbook-grid">
+
+    <!-- PM PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">PM</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">Product Owner / PM</h3>
+          <p class="playbook-sub">Owns intent and scope · approves every gate</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Starting a new project (Pre-Inception D)</li>
+          <li>Reviewing requirements (Stage 4)</li>
+          <li>Setting the execution plan (Stage 6)</li>
+          <li>Approving any stage completion gate</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stages 4 · 6 · Pre-Inception D</strong> + every gate approval
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with <span class="ph">[authoring the Vision / producing requirements / setting the workflow plan]</span> as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the PM on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception D / Stage 4 / Stage 6]</span>. Context lives in:
+  · <span class="file">00-knowledge/product/</span><span class="ph">[BRD/PRD]</span>
+  · <span class="file">00-knowledge/architecture/</span><span class="ph">[sections]</span>
+  · <span class="file">00-knowledge/open-items.md</span>
+
+Load <span class="file">.claude/skills/kafi/roles/pm.md</span>. Write to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage]</span><span class="file">/</span>. Push for measurable success metrics — numbers, not adjectives. Honor scope OUT as much as scope IN. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> vague success metrics ("users will love it"), scope creep beyond Vision §4, features sneaking outside the active phase.
+        </div>
+      </div>
+    </div>
+
+    <!-- BA PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">BA</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">Business Analyst</h3>
+          <p class="playbook-sub">Intent → requirements → stories → functional design</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Authoring or mapping the Vision (Pre-Inception B/C/D)</li>
+          <li>Producing requirements with PM (Stage 4)</li>
+          <li>Writing user stories (Stage 5)</li>
+          <li>Detailing functional design per unit (Stage 10)</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stages 4 · 5 · 10 · Pre-Inception B/C/D</strong>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Business Analyst at KAFI Securities, tasked with <span class="ph">[translating intent into requirements / producing INVEST user stories / detailing functional design per unit]</span> as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the BA on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception B/C/D / Stage 4 / Stage 5 / Stage 10]</span>. Inputs:
+  · <span class="file">00-knowledge/product/</span> (BRD / PRD)
+  · <span class="file">aidlc-docs/inception/discovery/</span>
+  · <span class="ph">[stage-specific prior outputs]</span>
+
+Load <span class="file">.claude/skills/kafi/roles/ba.md</span>. Write to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage]</span><span class="file">/</span>. Use Given/When/Then for every AC. INVEST for every story. Neutral role names until BTS confirms taxonomy. Cite KB sections in every requirement. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> acceptance criteria that aren't testable, stories without personas, bundled capabilities (split them), vague language sneaking in from legacy docs.
+        </div>
+      </div>
+    </div>
+
+    <!-- SA PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">SA</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">Solution Architect</h3>
+          <p class="playbook-sub">Architecture · NFRs · ADRs · KB guardian</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Documenting existing systems (Stage 3, brownfield)</li>
+          <li>Application Design + opening ADRs (Stage 8)</li>
+          <li>Decomposing into Units (Stage 9)</li>
+          <li>NFR Requirements + Design per unit (Stages 11, 12)</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stages 3 · 8 · 9 · 11 · 12</strong> + ADR authoring across the workflow
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Solution Architect at KAFI Securities, tasked with <span class="ph">[documenting existing systems / designing components and opening ADRs / decomposing into Units / specifying NFR thresholds / selecting NFR patterns]</span> as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the SA on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode, <span class="ph">[greenfield | brownfield]</span> type. The active stage is <span class="ph">[Stage 3 / Stage 8 / Stage 9 / Stage 11 / Stage 12]</span>. Inputs:
+  · <span class="file">00-knowledge/architecture/</span>
+  · <span class="file">00-knowledge/conventions/architecture-boundaries.md</span>
+  · <span class="file">aidlc-docs/inception/</span>
+
+Load <span class="file">.claude/skills/kafi/roles/sa.md</span>. Write to <span class="file">aidlc-docs/</span><span class="ph">[path]</span><span class="file">/</span>. Open an ADR in <span class="file">adrs/</span> for every trade-off (sync vs async, tech pick, data shape, build vs buy, cross-boundary). Measurable NFR thresholds — ms, percentile, load profile. No "should be fast" without numbers. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> skipped Application Design when changes cross components, NFRs without measurable thresholds, cross-boundary calls without ADRs, code contradicting KB silently.
+        </div>
+      </div>
+    </div>
+
+    <!-- DESIGNER PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">Des</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">Product Designer</h3>
+          <p class="playbook-sub">User flows · screens · interaction specs</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Translating user stories into screens (Stage 7)</li>
+          <li>Defining interaction patterns for Code Generation</li>
+          <li>Reviewing UI changes that touch design system</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stage 7 Product Design</strong> — only when UI is in scope
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Product Designer at KAFI Securities, tasked with translating user stories into screen specifications and interaction patterns that Code Generation can consume directly, as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the Product Designer on <span class="ph">[PROJECT]</span>. The active stage is Stage 7 Product Design. Inputs:
+  · <span class="file">aidlc-docs/inception/user-stories/</span>
+  · <span class="file">aidlc-docs/inception/discovery/vision.md</span> (personas)
+
+Load BOTH:
+  · <span class="file">.claude/skills/kafi/roles/designer.md</span>
+  · <span class="file">.claude/skills/kafi/design-system/SKILL.md</span>
+
+Write to <span class="file">aidlc-docs/inception/product-design/</span>. Reference the KAFI design system for every component; custom components require justification. Cover empty / error / loading states — not just happy path. WCAG 2.1 AA minimum. Spec interactions Code Generation can consume directly. Only focus on Stage 7 deliverables and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> custom components when design system covers it, mockups without negative states, designs that ignore IA, ungrounded UX assumptions.
+        </div>
+      </div>
+    </div>
+
+    <!-- DEV PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">Dev</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">Developer</h3>
+          <p class="playbook-sub">Pairs with the AI agent on code + build</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Generating code for a unit (Stage 14)</li>
+          <li>Reviewing the code generation plan before Part 2 execution</li>
+          <li>Authoring build instructions (Stage 15)</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stages 14 · 15</strong> — per-unit code generation, then global build
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Developer at KAFI Securities, pairing with me to generate working code that implements the functional and NFR designs for one Unit of Work, as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the Developer on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT]</span>. The active stage is Stage 14 Code Generation. Inputs:
+  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/functional-design/</span>
+  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
+  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>
+  · <span class="file">aidlc-docs/inception/application-design/</span>
+
+Load <span class="file">.claude/skills/kafi/roles/dev.md</span>. Write code into <span class="file">src/</span> — NEVER inside <span class="file">aidlc-docs/</span>. File inventory and notes to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/code/</span>. No hardcoded secrets — env vars only. Auto-wire audit trail at state-change boundaries; privacy enforcement on PII. Show me the file plan first; execute after my approval. Only focus on UNIT-<span class="ph">[N]</span> code and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> code in <code>aidlc-docs/</code> instead of <code>src/</code>, architecture boundary violations without ADRs, missing audit hooks, hardcoded config (URLs, IDs, timeouts).
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVOPS PLAYBOOK -->
+    <div class="playbook">
+      <div class="playbook-header">
+        <div class="playbook-abbr">Ops</div>
+        <div class="playbook-titles">
+          <h3 class="playbook-role">DevOps / SRE</h3>
+          <p class="playbook-sub">Infrastructure · deployment · monitoring</p>
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <h4>When to open a session</h4>
+        <ul class="playbook-list">
+          <li>Mapping logical components to concrete services (Stage 13)</li>
+          <li>Reviewing infrastructure designs across units</li>
+          <li>Deployment + monitoring (Stages 16, 17 — v0.4 scope)</li>
+        </ul>
+      </div>
+
+      <div class="playbook-section">
+        <h4>You drive</h4>
+        <div class="playbook-stages">
+          <strong>Stage 13</strong> · placeholder for <strong>Stages 16 + 17</strong> in v0.3
+        </div>
+      </div>
+
+      <div class="playbook-section">
+        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert DevOps / SRE at KAFI Securities, tasked with mapping logical infrastructure components to concrete services and defining the deployment topology for one Unit of Work, as mentioned in the Task section below.
+
+<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
+
+<span class="key">Your Task:</span> I am the DevOps/SRE on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT]</span>. The active stage is Stage 13 Infrastructure Design. Inputs:
+  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
+  · <span class="file">aidlc-docs/inception/discovery/technical-environment.md</span>
+  · <span class="file">00-knowledge/architecture/</span><span class="ph">[integration map if exists]</span>
+
+Load <span class="file">.claude/skills/kafi/roles/devops.md</span>. Write to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>. If cloud target is undecided, use logical components only — surface "Open — pending [owner]". Plan-before-apply for any IaC; flag destructive ops. Document where secrets live + rotate. Identify observability hooks for declared NFR thresholds. Only focus on Stage 13 deliverables and nothing else.</pre>
+      </div>
+
+      <div class="playbook-section">
+        <div class="playbook-watch">
+          <strong>Watch for:</strong> "TBD" instead of "Open — pending [owner]" on cloud target, secrets in IaC, missing observability hooks for declared SLOs, tight cloud coupling before KAFI decides.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ GIT WORKFLOW ============ -->
+<section>
+  <h2>Working together with git</h2>
+  <p class="section-intro">Six roles plus the AI agent share one repo. The workflow's gates and branches stay in lockstep so parallel work doesn't collide and the audit history is clean. <strong>Three rules:</strong> stage = branch, gate = pull request, merge = approval.</p>
+
+  <div class="git-diagram-wrap">
+    <svg viewBox="0 0 660 470" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; display: block;">
+      <!-- PHASE INDICATORS -->
+      <rect x="20" y="40" width="80" height="105" fill="#FFF0F0" rx="6" opacity="0.55"/>
+      <text x="60" y="68" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#B02020" font-family="Inter, sans-serif">PRE-</text>
+      <text x="60" y="80" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#B02020" font-family="Inter, sans-serif">INCEPTION</text>
+
+      <rect x="20" y="155" width="80" height="175" fill="#EEF2FF" rx="6" opacity="0.55"/>
+      <text x="60" y="240" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#1A3CC8" font-family="Inter, sans-serif">INCEPTION</text>
+
+      <rect x="20" y="340" width="80" height="115" fill="#E6FBF4" rx="6" opacity="0.65"/>
+      <text x="60" y="400" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#07756D" font-family="Inter, sans-serif">CONSTRUCTION</text>
+
+      <!-- MAIN BRANCH (vertical kafi-green trunk) -->
+      <line x1="160" y1="40" x2="160" y2="450" stroke="#00C694" stroke-width="3.5" stroke-linecap="round"/>
+      
+      <!-- Initial commit on main -->
+      <circle cx="160" cy="55" r="6" fill="#00C694"/>
+      <text x="180" y="50" font-size="10.5" font-weight="600" fill="#101820" font-family="Inter, sans-serif">v0 setup</text>
+      <text x="180" y="63" font-size="9.5" fill="#9095A0" font-family="Inter, sans-serif">CLAUDE.md committed · 00-knowledge populated</text>
+
+      <!-- BRANCH 1: stage/0-vision (Pre-Inception D) -->
+      <path d="M 160 95 C 195 95 235 100 270 108" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <line x1="270" y1="108" x2="270" y2="138" stroke="#1A3CC8" stroke-width="2"/>
+      <circle cx="270" cy="111" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="124" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="138" r="4" fill="#1A3CC8"/>
+      <path d="M 270 138 C 235 148 195 148 160 148" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <text x="290" y="107" font-size="11" font-weight="600" fill="#101820" font-family="Inter, sans-serif">stage/0-vision</text>
+      <text x="290" y="120" font-size="9.5" fill="#585667" font-family="Inter, sans-serif">PM · Pre-Inception D</text>
+      <text x="290" y="132" font-size="9" fill="#9095A0" font-style="italic" font-family="Inter, sans-serif">drafts vision.md + tech-env.md</text>
+      <rect x="198" y="141" width="32" height="14" fill="#00C694" rx="7"/>
+      <text x="214" y="151.5" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF" font-family="Inter, sans-serif">PR</text>
+      <circle cx="160" cy="148" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+      <!-- BRANCH 2: stage/4-requirements (Inception) -->
+      <path d="M 160 185 C 195 185 235 190 270 198" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <line x1="270" y1="198" x2="270" y2="232" stroke="#1A3CC8" stroke-width="2"/>
+      <circle cx="270" cy="201" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="216" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="232" r="4" fill="#1A3CC8"/>
+      <path d="M 270 232 C 235 245 195 245 160 245" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <text x="290" y="197" font-size="11" font-weight="600" fill="#101820" font-family="Inter, sans-serif">stage/4-requirements</text>
+      <text x="290" y="210" font-size="9.5" fill="#585667" font-family="Inter, sans-serif">PM + BA</text>
+      <text x="290" y="222" font-size="9" fill="#9095A0" font-style="italic" font-family="Inter, sans-serif">REQ-01 … REQ-NN with KB citations</text>
+      <rect x="198" y="238" width="32" height="14" fill="#00C694" rx="7"/>
+      <text x="214" y="248.5" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF" font-family="Inter, sans-serif">PR</text>
+      <circle cx="160" cy="245" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+      <!-- BRANCHES 3 + 4 (parallel: stage/7 + stage/8) -->
+      <!-- stage/7-design -->
+      <path d="M 160 275 C 195 275 235 277 270 280" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <line x1="270" y1="280" x2="270" y2="305" stroke="#1A3CC8" stroke-width="2"/>
+      <circle cx="270" cy="284" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="295" r="4" fill="#1A3CC8"/>
+      <circle cx="270" cy="305" r="4" fill="#1A3CC8"/>
+      <path d="M 270 305 C 235 312 195 312 160 312" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <text x="290" y="280" font-size="11" font-weight="600" fill="#101820" font-family="Inter, sans-serif">stage/7-design</text>
+      <text x="290" y="293" font-size="9.5" fill="#585667" font-family="Inter, sans-serif">Designer</text>
+      <rect x="198" y="305" width="32" height="14" fill="#00C694" rx="7"/>
+      <text x="214" y="315.5" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF" font-family="Inter, sans-serif">PR</text>
+      <circle cx="160" cy="312" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+      <!-- stage/8-app-design (parallel — overlapping timeline) -->
+      <path d="M 160 275 C 230 290 380 295 460 298" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <line x1="460" y1="298" x2="460" y2="320" stroke="#1A3CC8" stroke-width="2"/>
+      <circle cx="460" cy="300" r="4" fill="#1A3CC8"/>
+      <circle cx="460" cy="310" r="4" fill="#1A3CC8"/>
+      <circle cx="460" cy="320" r="4" fill="#1A3CC8"/>
+      <path d="M 460 320 C 380 325 230 325 160 325" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+      <text x="480" y="303" font-size="11" font-weight="600" fill="#101820" font-family="Inter, sans-serif">stage/8-app-design</text>
+      <text x="480" y="316" font-size="9.5" fill="#585667" font-family="Inter, sans-serif">SA · parallel</text>
+      <circle cx="160" cy="325" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+      <!-- Parallel annotation -->
+      <text x="290" y="335" font-size="9" fill="#1A3CC8" font-weight="600" font-style="italic" font-family="Inter, sans-serif">⇡ different roles · same time</text>
+
+      <!-- BRANCH 5: unit/UNIT-01 (long Construction branch) -->
+      <path d="M 160 365 C 195 365 235 372 270 380" stroke="#07756D" stroke-width="2" fill="none"/>
+      <line x1="270" y1="380" x2="270" y2="425" stroke="#07756D" stroke-width="2"/>
+      <circle cx="270" cy="383" r="4" fill="#07756D"/>
+      <circle cx="270" cy="395" r="4" fill="#07756D"/>
+      <circle cx="270" cy="407" r="4" fill="#07756D"/>
+      <circle cx="270" cy="418" r="4" fill="#07756D"/>
+      <circle cx="270" cy="425" r="4" fill="#07756D"/>
+      <path d="M 270 425 C 235 433 195 433 160 433" stroke="#07756D" stroke-width="2" fill="none"/>
+      <text x="290" y="380" font-size="11" font-weight="600" fill="#101820" font-family="Inter, sans-serif">unit/UNIT-01-bond-capture</text>
+      <text x="290" y="393" font-size="9.5" fill="#585667" font-family="Inter, sans-serif">SA · Dev · DevOps</text>
+      <text x="290" y="406" font-size="9" fill="#9095A0" font-style="italic" font-family="Inter, sans-serif">Stages 10·11·12·13·14 grouped in one branch</text>
+      <rect x="198" y="426" width="32" height="14" fill="#00C694" rx="7"/>
+      <text x="214" y="436.5" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF" font-family="Inter, sans-serif">PR</text>
+      <circle cx="160" cy="433" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+      <!-- main label -->
+      <text x="160" y="465" text-anchor="middle" font-size="10.5" font-weight="700" fill="#00C694" letter-spacing="0.05em" font-family="Inter, sans-serif">MAIN</text>
+    </svg>
+  </div>
+
+  <div class="minicard-grid minicard-grid--3" style="margin-top: var(--sp5);">
+    <div class="minicard">
+      <h4>One branch per stage</h4>
+      <p>Inception stages get their own branch — <code>stage/4-requirements</code>, <code>stage/8-app-design</code>. Construction work groups under <code>unit/UNIT-NN-name</code>. Pre-Inception sub-flows: <code>pre-inception/route-D-vision</code>.</p>
+    </div>
+    <div class="minicard">
+      <h4>Gate = pull request</h4>
+      <p>The 2-option completion message becomes the PR. Reviewer is the next-stage role or the SA (depending on what's being merged). Approve and merge = gate passed.</p>
+    </div>
+    <div class="minicard">
+      <h4>Append-only audit log</h4>
+      <p><code>aidlc-docs/audit.md</code> is append-only on every branch. On merge conflicts: keep both — never overwrite. The full audit history is the TT 96/2020 record.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KB + FOLDERS ============ -->
+<section>
+  <h2>Where files live</h2>
+  <p class="section-intro">The folder structure is the contract. The team feeds inputs into <code>00-knowledge/</code>; the workflow writes outputs into <code>aidlc-docs/</code>, <code>adrs/</code>, and <code>src/</code>. Every stage knows exactly which folders it reads from and writes to.</p>
+
+  <div class="kb-box">
+    <div class="kb-tag">Principle · Simplified for v0.3</div>
+    <h3 class="kb-title">PO, PM, and BA manually copy project context files into the KB folder</h3>
+    <p class="kb-body">BRD, PRD, architecture diagrams, glossaries, system catalogs, open-items registers, naming conventions — anything the AI needs grounding from lives in <code>00-knowledge/</code>. The team owns what goes in and keeps it current. No external integration, no magic.</p>
+  </div>
+</section>
+
+<!-- ============ DOCUMENT TYPES SUMMARY ============ -->
+<section>
+  <h2>Document types</h2>
+  <p class="section-intro">19 canonical document types across four phases. Templates marked <strong>★</strong> are pre-built scaffolds in <code>aidlc-rule-details/templates/</code>; the agent uses them as a starting frame and fills in project specifics. Full per-type detail is in the Handbook Part 3.</p>
+
+  <table class="io-table">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Document</th>
+        <th>Owner</th>
+        <th>Purpose · one line</th>
+        <th>Template</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="phase-pre">
+        <td class="phase-cell">Pre-Inception</td>
+        <td><strong>Vision Document</strong><br/><code>discovery/vision.md</code></td>
+        <td>PM</td>
+        <td>The what + why · scope IN / OUT · success metrics</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-pre">
+        <td class="phase-cell"></td>
+        <td><strong>Technical Environment</strong><br/><code>discovery/technical-environment.md</code></td>
+        <td>SA</td>
+        <td>Stack · cloud · prohibited libs · integration constraints</td>
+        <td>★</td>
+      </tr>
+
+      <tr class="phase-in">
+        <td class="phase-cell">Inception</td>
+        <td><strong>Reverse Engineering Pack</strong><br/><code>reverse-engineering/</code> · 6 files</td>
+        <td>SA</td>
+        <td>Brownfield only · existing system documented KB-first</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>Requirements</strong><br/><code>requirements/requirements.md</code></td>
+        <td>PM + BA</td>
+        <td>REQ-NN entries · KB-cited · with measurable acceptance</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>User Stories &amp; Personas</strong><br/><code>user-stories/stories.md</code></td>
+        <td>BA</td>
+        <td>US-NN · INVEST · Given/When/Then ACs · personas</td>
+        <td>★ (single story)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>Execution Plan</strong><br/><code>plans/execution-plan.md</code></td>
+        <td>PM</td>
+        <td>Which stages run · at what depth · gating model</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>Product Design Pack</strong><br/><code>product-design/</code> · 6 files</td>
+        <td>Designer</td>
+        <td>UX flows · screens · interactions · accessibility (UI only)</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>Application Design Pack</strong><br/><code>application-design/</code> · 5 files</td>
+        <td>SA</td>
+        <td>Components · methods · services · dependencies · ADRs</td>
+        <td>★ (consolidated + components)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
+        <td><strong>Units of Work</strong><br/><code>application-design/unit-of-work*.md</code></td>
+        <td>SA</td>
+        <td>Unit decomposition · dependencies · story map · exit criteria</td>
+        <td>★</td>
+      </tr>
+
+      <tr class="phase-cn">
+        <td class="phase-cell">Construction<br/><span style="font-weight:400;color:var(--text-muted);">per unit</span></td>
+        <td><strong>Per-Unit Intent &amp; Pinned Context</strong><br/><code>construction/UNIT-NN/intent.md</code></td>
+        <td>SA</td>
+        <td>Unit intent + KB pin list (≤ 4k tokens) + exit criteria</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>Functional Design Pack</strong><br/><code>{unit}/functional-design/</code></td>
+        <td>BA + SA</td>
+        <td>Business logic · rules · entities · frontend components</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>NFR Requirements</strong><br/><code>{unit}/nfr-requirements/</code></td>
+        <td>SA</td>
+        <td>Measurable thresholds — perf · scale · avail · sec · compliance</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>NFR Design</strong><br/><code>{unit}/nfr-design/</code></td>
+        <td>SA</td>
+        <td>Patterns + tech that meet each NFR requirement · ADRs</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>Infrastructure Design</strong><br/><code>{unit}/infrastructure-design/</code></td>
+        <td>DevOps + SA review</td>
+        <td>Logical components → concrete services · deployment topology</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>Code Summaries</strong><br/><code>{unit}/code/</code> (code in <code>src/</code>)</td>
+        <td>Developer</td>
+        <td>File inventory · module map · review checklist outcomes</td>
+        <td>—</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="phase-cell"></td>
+        <td><strong>Build Pack</strong><br/><code>construction/build/</code></td>
+        <td>Developer</td>
+        <td>Build instructions · order · outputs · failure modes</td>
+        <td>—</td>
+      </tr>
+
+      <tr style="background: var(--page-bg);">
+        <td class="phase-cell" style="color: var(--text-muted);">Cross-cutting</td>
+        <td><strong>Architecture Decision Record</strong><br/><code>adrs/ADR-NN-*.md</code></td>
+        <td>SA</td>
+        <td>One file per trade-off · context · decision · consequences</td>
+        <td>★</td>
+      </tr>
+      <tr style="background: var(--page-bg);">
+        <td class="phase-cell"></td>
+        <td><strong>Audit Log</strong><br/><code>aidlc-docs/audit.md</code></td>
+        <td>AI agent</td>
+        <td>Append-only · every interaction · TT 96/2020 compliance</td>
+        <td>—</td>
+      </tr>
+      <tr style="background: var(--page-bg);">
+        <td class="phase-cell"></td>
+        <td><strong>State File</strong><br/><code>aidlc-docs/aidlc-state.md</code></td>
+        <td>AI agent</td>
+        <td>Current workflow state · last gate · resume marker</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ I/O TABLE ============ -->
+<section>
+  <h3>Stage-by-stage input / output</h3>
+  <p class="section-intro">Each row shows which folder the stage reads from and where it writes its outputs. Phase tinting matches the workflow diagram above.</p>
+
+  <table class="io-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Stage</th>
+        <th>Role</th>
+        <th>Reads from</th>
+        <th>Writes to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="phase-detect">
+        <td class="num">1</td>
+        <td class="stage"><strong>Workspace Detection</strong></td>
+        <td class="role">AI agent</td>
+        <td class="path"><code>ai-dlc/project.md</code><br/>workspace filesystem</td>
+        <td class="path"><code>aidlc-docs/aidlc-state.md</code><br/><code>aidlc-docs/audit.md</code></td>
+      </tr>
+      <tr class="phase-detect">
+        <td class="num">2</td>
+        <td class="stage"><strong>KB Context Loading</strong></td>
+        <td class="role">AI agent</td>
+        <td class="path"><code>00-knowledge/architecture/</code><br/><code>00-knowledge/open-items.md</code><br/><code>00-knowledge/conventions/</code></td>
+        <td class="path">context loaded into agent memory<br/>(no files written)</td>
+      </tr>
+      <tr class="phase-pre">
+        <td class="num">P</td>
+        <td class="stage"><strong>Pre-Inception (A/B/C/D)</strong></td>
+        <td class="role">PO + BA</td>
+        <td class="path">User intent · attached docs<br/><code>aidlc-rule-details/templates/</code></td>
+        <td class="path"><code>aidlc-docs/inception/discovery/</code><br/><code>aidlc-docs/ba-authoring/</code> (route D)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">3</td>
+        <td class="stage"><strong>Reverse Engineering</strong></td>
+        <td class="role">SA</td>
+        <td class="path"><code>00-knowledge/architecture/</code><br/><code>src/</code> (existing code)</td>
+        <td class="path"><code>aidlc-docs/inception/reverse-engineering/</code> (6 files)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">4</td>
+        <td class="stage"><strong>Requirements Analysis</strong></td>
+        <td class="role">PM + BA</td>
+        <td class="path"><code>aidlc-docs/inception/discovery/</code><br/><code>00-knowledge/product/</code><br/><code>00-knowledge/open-items.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/requirements/requirements.md</code><br/><code>requirement-verification-questions.md</code></td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">5</td>
+        <td class="stage"><strong>User Stories</strong></td>
+        <td class="role">BA</td>
+        <td class="path"><code>aidlc-docs/inception/requirements/</code><br/><code>00-knowledge/glossary/</code></td>
+        <td class="path"><code>aidlc-docs/inception/user-stories/stories.md</code><br/><code>aidlc-docs/inception/user-stories/personas.md</code></td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">6</td>
+        <td class="stage"><strong>Workflow Planning</strong></td>
+        <td class="role">PM</td>
+        <td class="path">All prior Inception artifacts<br/><code>00-knowledge/phases.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/plans/execution-plan.md</code></td>
+      </tr>
+      <tr class="phase-ux">
+        <td class="num">7</td>
+        <td class="stage"><strong>Product Design</strong></td>
+        <td class="role">Designer</td>
+        <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi/design-system/SKILL.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/product-design/</code><br/>(user-flows · IA · wireframes · screens · interactions)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">8</td>
+        <td class="stage"><strong>Application Design</strong></td>
+        <td class="role">SA</td>
+        <td class="path"><code>aidlc-docs/inception/requirements/</code><br/><code>aidlc-docs/inception/user-stories/</code><br/><code>00-knowledge/conventions/architecture-boundaries.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/application-design/</code> (5 files)<br/><code>adrs/ADR-NN-*.md</code> (trade-offs)</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="num">9</td>
+        <td class="stage"><strong>Units Generation</strong></td>
+        <td class="role">SA</td>
+        <td class="path"><code>aidlc-docs/inception/application-design/</code><br/><code>aidlc-docs/inception/user-stories/</code></td>
+        <td class="path"><code>aidlc-docs/inception/application-design/unit-of-work*.md</code><br/>+ per-unit folders created</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">10</td>
+        <td class="stage"><strong>Functional Design</strong> · per-unit</td>
+        <td class="role">BA + SA</td>
+        <td class="path"><code>aidlc-docs/inception/application-design/</code><br/>this unit's stories</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/functional-design/</code> (4 files)</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">11</td>
+        <td class="stage"><strong>NFR Requirements</strong> · per-unit</td>
+        <td class="role">SA</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/functional-design/</code><br/><code>aidlc-docs/inception/discovery/technical-environment.md</code></td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/nfr-requirements/</code> (2 files)</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">12</td>
+        <td class="stage"><strong>NFR Design</strong> · per-unit</td>
+        <td class="role">SA</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/nfr-requirements/</code></td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/nfr-design/</code> (2 files)</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">13</td>
+        <td class="stage"><strong>Infrastructure Design</strong> · per-unit</td>
+        <td class="role">DevOps</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/nfr-design/</code><br/><code>aidlc-docs/inception/discovery/technical-environment.md</code></td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/infrastructure-design/</code> (2 files)</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">14</td>
+        <td class="stage"><strong>Code Generation</strong> · per-unit</td>
+        <td class="role">Developer</td>
+        <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>aidlc-docs/inception/application-design/</code></td>
+        <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← actual code<br/><code>aidlc-docs/construction/{unit}/code/</code> ← summaries only</td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">15</td>
+        <td class="stage"><strong>Build</strong></td>
+        <td class="role">Developer</td>
+        <td class="path">All <code>src/</code> code<br/><code>aidlc-docs/construction/*/code/</code></td>
+        <td class="path"><code>aidlc-docs/construction/build/build-instructions.md</code><br/><code>aidlc-docs/construction/build/build-summary.md</code></td>
+      </tr>
+      <tr class="phase-op">
+        <td class="num">16</td>
+        <td class="stage"><strong>Deployment</strong> · placeholder</td>
+        <td class="role">DevOps</td>
+        <td class="path">Build artifacts (v0.4 scope)</td>
+        <td class="path"><code>aidlc-docs/operations/</code> (format TBD)</td>
+      </tr>
+      <tr class="phase-op">
+        <td class="num">17</td>
+        <td class="stage"><strong>Monitoring</strong> · placeholder</td>
+        <td class="role">DevOps + SRE</td>
+        <td class="path">Deployed system + NFR thresholds (v0.4 scope)</td>
+        <td class="path"><code>aidlc-docs/operations/</code> (format TBD)</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ FOLDER STRUCTURE ============ -->
+<section>
+  <h3>The complete folder anatomy</h3>
+  <p class="section-intro">Color-coded by phase. Code lives only in <code>src/</code>; documentation only in <code>aidlc-docs/</code>; the team-managed KB only in <code>00-knowledge/</code>. ADRs in their own directory.</p>
+
+  <div class="folder-tree">
+<span class="root">project-root/</span><br/>
+├── <span class="folder">CLAUDE.md</span>                              <span class="comment">Workflow spec — agent reads this</span><br/>
+│<br/>
+├── <span class="folder">ai-dlc/</span><br/>
+│   ├── <span class="file">project.md</span>                          <span class="comment">Project metadata <span class="tag team">team configures</span></span><br/>
+│   └── <span class="file">context-pins.md</span>                     <span class="comment">Per-unit KB injection list</span><br/>
+│<br/>
+├── <span class="folder">aidlc-rule-details/</span>                  <span class="comment">Rule files (KAFI standard, 36 files)</span><br/>
+│   ├── <span class="folder">common/</span> · <span class="folder">pre-inception/</span> · <span class="folder">inception/</span><br/>
+│   ├── <span class="folder">construction/</span> · <span class="folder">operations/</span><br/>
+│   ├── <span class="folder">extensions/</span>                         <span class="comment">audit-trail · personal-data-privacy</span><br/>
+│   └── <span class="folder">templates/</span>                          <span class="comment">vision · technical-environment · user-story · adr</span><br/>
+│<br/>
+├── <span class="folder">.claude/</span><br/>
+│   ├── <span class="file">settings.json</span><br/>
+│   └── <span class="folder">skills/kafi/</span><br/>
+│       ├── <span class="folder">design-system/</span><br/>
+│       │   └── <span class="file">SKILL.md</span>                       <span class="comment">KAFI brand · tokens, typography, components, patterns</span><br/>
+│       └── <span class="folder">roles/</span>                          <span class="comment">pm · ba · sa · designer · dev · devops</span><br/>
+│<br/>
+├── <span class="folder">00-knowledge/</span>                         <span class="comment">Team-managed source-of-truth <span class="tag team">PO/PM/BA copy here</span></span><br/>
+│   ├── <span class="folder">architecture/</span>                       <span class="comment">Architecture docs, system maps</span><br/>
+│   ├── <span class="folder">product/</span>                            <span class="comment">BRD, PRD, ERD copied from source</span><br/>
+│   ├── <span class="folder">conventions/</span>                        <span class="comment">naming.md · architecture-boundaries.md</span><br/>
+│   ├── <span class="folder">glossary/</span>                           <span class="comment">Domain terms</span><br/>
+│   ├── <span class="folder">design-system/</span>                      <span class="comment">If project has UI (used by Stage 7)</span><br/>
+│   ├── <span class="file">open-items.md</span>                       <span class="comment">Decisions pending owner/date</span><br/>
+│   ├── <span class="file">phases.md</span>                           <span class="comment">Phase definitions (used by Stage 6)</span><br/>
+│   └── <span class="file">systems-catalog.md</span>                  <span class="comment">External systems and contracts</span><br/>
+│<br/>
+├── <span class="folder">aidlc-docs/</span>                           <span class="comment">Generated workflow artifacts</span><br/>
+│   ├── <span class="file">aidlc-state.md</span>                        <span class="comment"><span class="tag in">Stage 1</span></span><br/>
+│   ├── <span class="file">audit.md</span>                              <span class="comment">Appended by every stage</span><br/>
+│   ├── <span class="folder">inception/</span><br/>
+│   │   ├── <span class="folder">discovery/</span>                      <span class="comment"><span class="tag pre">Pre-Inception A/B/C/D</span></span><br/>
+│   │   │   ├── <span class="file">vision.md</span><br/>
+│   │   │   ├── <span class="file">technical-environment.md</span><br/>
+│   │   │   ├── <span class="file">source-appendix.md</span>            <span class="comment">Route C only</span><br/>
+│   │   │   └── <span class="folder">validation/</span>                 <span class="comment">Document Validator output</span><br/>
+│   │   ├── <span class="folder">reverse-engineering/</span>            <span class="comment"><span class="tag in">Stage 3</span> SA · brownfield</span><br/>
+│   │   ├── <span class="folder">requirements/</span>                   <span class="comment"><span class="tag in">Stage 4</span> PM + BA</span><br/>
+│   │   ├── <span class="folder">user-stories/</span>                   <span class="comment"><span class="tag in">Stage 5</span> BA</span><br/>
+│   │   ├── <span class="folder">plans/</span>                          <span class="comment"><span class="tag in">Stage 6</span> PM · execution plan</span><br/>
+│   │   ├── <span class="folder">product-design/</span>                 <span class="comment"><span class="tag ux">Stage 7</span> Designer · UI only</span><br/>
+│   │   └── <span class="folder">application-design/</span>             <span class="comment"><span class="tag in">Stages 8 + 9</span> SA · components + units</span><br/>
+│   ├── <span class="folder">ba-authoring/</span>                       <span class="comment">Route D only — drafting workspace</span><br/>
+│   ├── <span class="folder">construction/</span><br/>
+│   │   ├── <span class="folder">{unit-name}/</span>                    <span class="comment">Per unit:</span><br/>
+│   │   │   ├── <span class="folder">functional-design/</span>          <span class="comment"><span class="tag cn">Stage 10</span> BA + SA</span><br/>
+│   │   │   ├── <span class="folder">nfr-requirements/</span>           <span class="comment"><span class="tag cn">Stage 11</span> SA</span><br/>
+│   │   │   ├── <span class="folder">nfr-design/</span>                 <span class="comment"><span class="tag cn">Stage 12</span> SA</span><br/>
+│   │   │   ├── <span class="folder">infrastructure-design/</span>      <span class="comment"><span class="tag cn">Stage 13</span> DevOps</span><br/>
+│   │   │   └── <span class="folder">code/</span>                       <span class="comment"><span class="tag cn">Stage 14</span> markdown summaries (code in /src)</span><br/>
+│   │   └── <span class="folder">build/</span>                          <span class="comment"><span class="tag cn">Stage 15</span> Dev</span><br/>
+│   └── <span class="folder">operations/</span>                         <span class="comment"><span class="tag op">Stages 16 + 17</span> placeholder in v0.3</span><br/>
+│<br/>
+├── <span class="folder">adrs/</span>                                  <span class="comment">Architecture Decision Records</span><br/>
+│   └── <span class="file">ADR-NN-&lt;title&gt;.md</span>                    <span class="comment">Opened during Stages 8 + 12</span><br/>
+│<br/>
+└── <span class="folder">src/</span>                                   <span class="comment">Application code <span class="tag cn">Stage 14</span> — code lives here, NOT in aidlc-docs/</span>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE ============ -->
+<section>
+  <h2>Built-in compliance and safety</h2>
+  <p class="section-intro">Three layers operate continuously across every stage. None of them require remembering to enable.</p>
+
+  <div class="card-grid card-grid--3">
+    <div class="compliance-card audit">
+      <h4>KAFI Standard · TT 96/2020</h4>
+      <div class="c-title">Audit trail</div>
+      <div class="c-body">Every interaction logged to <code>audit.md</code> — raw user input, AI response, KB citations, open items, extension compliance. Append-only. ISO 8601. Stored separately from operational data.</div>
+    </div>
+    <div class="compliance-card privacy">
+      <h4>KAFI Standard · Decree 13/2023</h4>
+      <div class="c-title">Personal data privacy</div>
+      <div class="c-body">Auto-enables when any artifact touches PII. Adds consent tracking, encryption at rest, access logging, and subject-rights endpoints (access, rectification, erasure, portability).</div>
+    </div>
+    <div class="compliance-card review">
+      <h4>Soft Enforcement · Warning Mode</h4>
+      <div class="c-title">AI Review Checklist</div>
+      <div class="c-body">Before any meaningful write: grounded · no secrets · scope respected · reversible · human-decidable. Warnings reported in completion summary; team decides whether to proceed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO MODES TABLE ============ -->
+<section>
+  <h2>Lite vs Standard at a glance</h2>
+  <p class="section-intro">Workspace Detection chooses the mode automatically. Either can be overridden at any time.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Lite mode</th>
+        <th>Standard mode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Triggered by</strong></td>
+        <td>Greenfield + Vision + Tech Env both ready in <code>00-knowledge/</code></td>
+        <td>Brownfield OR Vision/Tech Env missing OR legacy BRD/PRD needs mapping</td>
+      </tr>
+      <tr>
+        <td><strong>Pre-Inception</strong></td>
+        <td>Skipped</td>
+        <td>One of four sub-flows runs: skip · fill-gaps · map-existing · author-from-brief</td>
+      </tr>
+      <tr>
+        <td><strong>Reverse Engineering</strong></td>
+        <td>Skipped</td>
+        <td>Runs only for brownfield</td>
+      </tr>
+      <tr>
+        <td><strong>Typical doc count</strong></td>
+        <td>12–15 documents</td>
+        <td>20–35 documents</td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>New internal tools, MVPs, isolated greenfield work</td>
+        <td>Extension of existing systems, multi-team, multi-unit, regulated work</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ NEXT STEP ============ -->
+<section>
+  <div class="next-box">
+    <div>
+      <h2>What's next</h2>
+      <p>v0.3 is ready to pilot on a real KAFI project. The team will validate the workflow end-to-end before company-wide rollout. The injection package — CLAUDE.md, rule details, role skills, templates — is built and ready to drop into a project repo.</p>
+    </div>
+    <div>
+      <span class="next-cta">Pilot kicks off Q2 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BRAINSTORM · v0.4+ ============ -->
+<section class="brainstorm-section" id="brainstorm">
+  <h2>Beyond v0.3 · brainstorm</h2>
+
+  <div class="brainstorm-banner">
+    <strong>Status: BRAINSTORM.</strong> Nothing in this section is committed. v0.3 pilots first. After learning from Q2 2026, the team will refine, prioritize, and decide together. Captured here so the thinking does not get lost.
+  </div>
+
+  <p class="section-intro">Three threads. The first is a platform-level idea that would change how every AI-DLC project starts. The second extends the v0.3 skill system into a pull-on-demand catalog. The third lists candidate skills to add to the catalog.</p>
+
+  <!-- ============ IDEA 1: SKB ============ -->
+  <article class="brainstorm-idea brainstorm-idea--hero">
+    <div class="brainstorm-tag">Idea 1 · v0.4+ · platform layer</div>
+    <h3>System Knowledge Base · a shared brain for every KAFI project</h3>
+
+    <p class="idea-pitch">
+      Every KAFI project today re-discovers the same context: how KOS-MO is laid out, what the BO Cores do, where TT 96/2020 applies, why a given ADR was made, which open items are still pending. The <strong>SKB</strong> would be a centralized, always-current knowledge layer that any AI-DLC project queries at Pre-Inception to pull the relevant context — no more manually copying BRDs and architecture docs into <code>00-knowledge/</code> by hand.
+    </p>
+
+    <h4>Name candidates</h4>
+    <p style="font-size: 12.5px; color: var(--text-secondary); margin: 0 0 var(--sp3) 0;">Five options. Each plays differently with the existing KAFI naming family (KOS-MO, KAI Foundry, KAI Atlas would be a clean sibling).</p>
+
+    <div class="name-grid">
+      <div class="name-card name-card--recommended">
+        <div class="name">KAI Atlas <span class="rec-pill">recommended</span></div>
+        <div class="rationale">Atlas of all KAFI systems. Sits naturally next to KAI Foundry under the Intelligent Foundation. Function reads from the name: a map you consult.</div>
+      </div>
+      <div class="name-card">
+        <div class="name">KORE</div>
+        <div class="rationale">KAFI Operations &amp; Reference Engine. Short, acronymic, fits the CAPS family (KOS-MO, RME, BO). Carries the "core of truth" suggestion.</div>
+      </div>
+      <div class="name-card">
+        <div class="name">KAFI Cortex</div>
+        <div class="rationale">Brain / neural-system metaphor. Memorable. Suggests the centralized intelligence layer of the firm. Slightly futuristic register.</div>
+      </div>
+      <div class="name-card">
+        <div class="name">K-Lens</div>
+        <div class="rationale">A looking-glass into the system landscape. Lighter, more product-y. Less formal than the others — could feel right for a self-serve UI.</div>
+      </div>
+      <div class="name-card">
+        <div class="name">K-Compass</div>
+        <div class="rationale">Guides agents and humans to the right knowledge. Friendly, evocative. Less explicit about "knowledge" than Atlas.</div>
+      </div>
+    </div>
+
+    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: var(--sp2);">For the rest of this section we use "SKB" as a generic placeholder.</p>
+
+    <h4>How it would work</h4>
+
+    <p class="idea-pitch">
+      The SKB pulls knowledge in from three streams and exposes it through a single MCP server. AI-DLC projects use the MCP both ways — they query at Pre-Inception to inject context, and they push at every stage merge to keep the SKB current.
+    </p>
+
+    <div class="skb-diagram-wrap">
+      <svg viewBox="0 0 920 780" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <defs>
+          <marker id="skb-arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,8 L8,4 z" fill="#9095A0"/>
+          </marker>
+        </defs>
+
+        <!-- ZONE LABELS (left vertical) -->
+        <text x="20" y="68" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">SOURCES</text>
+        <text x="20" y="230" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">PROCESSING</text>
+        <text x="20" y="372" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">STORAGE</text>
+        <text x="20" y="568" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">INTERFACE</text>
+        <text x="20" y="678" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">CONSUMERS</text>
+
+        <!-- ROW 1: SOURCES (3 boxes) -->
+        <rect x="140" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="250" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">KAFI System Repos</text>
+        <text x="250" y="99" text-anchor="middle" font-size="11" fill="#585667">KOS-MO · TRS · RME ·</text>
+        <text x="250" y="114" text-anchor="middle" font-size="11" fill="#585667">Margin · Bravo · Cores</text>
+
+        <rect x="380" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="490" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">AI-DLC Stage Merges</text>
+        <text x="490" y="99" text-anchor="middle" font-size="11" fill="#585667">Vision · REQs · ADRs ·</text>
+        <text x="490" y="114" text-anchor="middle" font-size="11" fill="#585667">architecture · code</text>
+
+        <rect x="620" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="730" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">External Docs</text>
+        <text x="730" y="99" text-anchor="middle" font-size="11" fill="#585667">Confluence · Wiki ·</text>
+        <text x="730" y="114" text-anchor="middle" font-size="11" fill="#585667">Notion · drives</text>
+
+        <!-- ARROWS down to LLM -->
+        <line x1="250" y1="126" x2="430" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <line x1="490" y1="126" x2="490" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <line x1="730" y1="126" x2="550" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+
+        <text x="320" y="156" font-size="10" fill="#9095A0">daily scan</text>
+        <text x="500" y="156" font-size="10" fill="#9095A0">on merge hook</text>
+        <text x="600" y="156" font-size="10" fill="#9095A0">periodic sync</text>
+
+        <!-- ROW 2: LOCAL LLM -->
+        <rect x="240" y="210" width="500" height="100" rx="14" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="490" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="#101820">Local LLM · on-prem</text>
+        <text x="490" y="268" text-anchor="middle" font-size="11.5" fill="#585667">extracts · structures · embeds · summarizes</text>
+        <text x="490" y="290" text-anchor="middle" font-size="10.5" fill="#9095A0">Hosted under KAI Foundry · Intelligent Foundation</text>
+
+        <!-- ARROW down to SKB -->
+        <line x1="490" y1="310" x2="490" y2="350" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <text x="500" y="334" font-size="10" fill="#9095A0">write structured knowledge</text>
+
+        <!-- ROW 3: SKB CORE (HERO — green border) -->
+        <rect x="100" y="358" width="780" height="170" rx="18" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
+        <text x="490" y="394" text-anchor="middle" font-size="17" font-weight="700" fill="#101820">SKB Core</text>
+        <text x="490" y="416" text-anchor="middle" font-size="12" fill="#585667">single source-of-truth for all KAFI system knowledge</text>
+
+        <!-- 3 sub-elements -->
+        <rect x="140" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <text x="250" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Vector store</text>
+        <text x="250" y="486" text-anchor="middle" font-size="10.5" fill="#585667">semantic search · embeddings</text>
+
+        <rect x="380" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <text x="490" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Knowledge graph</text>
+        <text x="490" y="486" text-anchor="middle" font-size="10.5" fill="#585667">entities · relationships · ADRs</text>
+
+        <rect x="620" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <text x="730" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Structured docs</text>
+        <text x="730" y="486" text-anchor="middle" font-size="10.5" fill="#585667">BRDs · PRDs · specs · diagrams</text>
+
+        <!-- ARROW down to MCP -->
+        <line x1="490" y1="528" x2="490" y2="560" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <text x="500" y="548" font-size="10" fill="#9095A0">exposed via</text>
+
+        <!-- ROW 4: MCP SERVER (green border, hero-ish) -->
+        <rect x="280" y="568" width="420" height="68" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
+        <text x="490" y="594" text-anchor="middle" font-size="13.5" font-weight="700" fill="#101820">MCP Server</text>
+        <text x="490" y="616" text-anchor="middle" font-size="11" fill="#585667">query · write · authenticated · audited</text>
+
+        <!-- ARROWS to 3 consumers -->
+        <line x1="340" y1="636" x2="200" y2="690" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <line x1="490" y1="690" x2="490" y2="642" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+        <line x1="640" y1="636" x2="780" y2="690" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
+
+        <text x="240" y="664" font-size="10" fill="#9095A0">pull context</text>
+        <text x="510" y="664" font-size="10" fill="#9095A0">push update</text>
+        <text x="700" y="664" font-size="10" fill="#9095A0">read</text>
+
+        <!-- ROW 5: CONSUMERS -->
+        <rect x="80" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="200" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Pre-Inception query</text>
+        <text x="200" y="742" text-anchor="middle" font-size="10.5" fill="#585667">project agent injects relevant</text>
+        <text x="200" y="758" text-anchor="middle" font-size="10.5" fill="#585667">context into 00-knowledge/</text>
+
+        <rect x="370" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="490" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Post-merge push</text>
+        <text x="490" y="742" text-anchor="middle" font-size="10.5" fill="#585667">AI-DLC stage hook fires on</text>
+        <text x="490" y="758" text-anchor="middle" font-size="10.5" fill="#585667">approval · SKB updated</text>
+
+        <rect x="660" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="780" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Human browse</text>
+        <text x="780" y="742" text-anchor="middle" font-size="10.5" fill="#585667">chat panel · web UI ·</text>
+        <text x="780" y="758" text-anchor="middle" font-size="10.5" fill="#585667">IDE plugin · discovery</text>
+      </svg>
+    </div>
+
+    <h4>What the SKB would contain</h4>
+    <p class="idea-pitch" style="margin-top: var(--sp2);">Anything a future project would need to ground its work, organized by domain and system. Examples — not exhaustive:</p>
+
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-title">System architecture</div>
+        <div class="req-body">Per-system layer diagrams, component inventories, integration maps, domain boundaries</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">API specs</div>
+        <div class="req-body">OpenAPI definitions, gRPC contracts, event schemas, versioning history</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">BRDs &amp; PRDs</div>
+        <div class="req-body">Latest business and product requirement docs across systems</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Sequence &amp; flow diagrams</div>
+        <div class="req-body">Per-capability sequence diagrams · user flows · process diagrams</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">UI / UX designs</div>
+        <div class="req-body">Figma references · screen specs · design tokens · component library state</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">ADRs</div>
+        <div class="req-body">Every architectural decision ever made, with context · rationale · alternatives</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Data models</div>
+        <div class="req-body">ERDs · table schemas · field dictionaries · PII tags</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Open items register</div>
+        <div class="req-body">Cross-system pending decisions, owners, status, expected resolution</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Compliance mappings</div>
+        <div class="req-body">TT 96/2020 · Decree 13/2023 · SSC rules → where they apply, who owns them</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Glossary &amp; conventions</div>
+        <div class="req-body">KAFI-wide naming, role taxonomy, ID formats, prohibited terms</div>
+      </div>
+    </div>
+
+    <h4>Integration with AI-DLC</h4>
+
+    <p class="idea-pitch">
+      Three concrete additions to the v0.3 workflow:
+    </p>
+
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-title">New skill · <code>kafi-skb</code></div>
+        <div class="req-body">Auto-discoverable like the design-system skill. Tells the agent the SKB exists, what shape it has, and how to query it via MCP.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">New rule · <code>pre-inception/0-skb-query.md</code></div>
+        <div class="req-body">Before drafting Vision, the agent queries the SKB MCP for related systems, prior ADRs, and existing capabilities. Surfaces these as starting context — the team decides which apply.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">New hook · post-merge update</div>
+        <div class="req-body">When a stage PR is merged, a git hook posts the new artifacts to the SKB MCP. Local LLM processes, structures, and embeds. SKB stays current automatically.</div>
+      </div>
+    </div>
+
+    <h4>Browser chatbot · Local LLM dual purpose</h4>
+
+    <p class="idea-pitch">
+      The same Local LLM that ingests artifacts can also answer human questions through a <strong>chat panel in the SKB web UI</strong>. Same model, two modes: <strong>ingestion</strong> writes to SKB (existing), <strong>inference</strong> reads from SKB using RAG — Retrieval-Augmented Generation. Means anyone in KAFI — not just AI-DLC agents — can query the system knowledge directly in the browser.
+    </p>
+
+    <h4 style="margin-top: var(--sp4);">What people would ask</h4>
+
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-title">Query</div>
+        <div class="req-body">"Where does TT 96/2020 apply in KOS-MO?" · "What's the current state of the Bond settlement flow?"</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Search</div>
+        <div class="req-body">"Find all ADRs about real-time balance ownership" · "Show requirements that mention VSD"</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Brainstorm</div>
+        <div class="req-body">"What's the typical KAFI approach for cross-border data flows?" · "Compare how TRS and Margin handle limit checks"</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Discovery</div>
+        <div class="req-body">"Which systems integrate with VSD?" · "Who owns the open items for Customer Mgt?"</div>
+      </div>
+    </div>
+
+    <h4 style="margin-top: var(--sp5);">How the chat flow works</h4>
+
+    <p class="idea-pitch" style="margin-top: var(--sp2);">
+      The chat panel does <strong>RAG</strong>: when a user asks a question, the MCP Server retrieves the most relevant chunks from SKB Core, then prompts the Local LLM with question + retrieved context. The LLM generates a grounded answer with clickable citations back to source artifacts. <strong>No hallucination beyond what's in KAFI's actual knowledge</strong> — every answer is traceable to a real document in the SKB.
+    </p>
+
+    <div class="skb-diagram-wrap">
+      <svg viewBox="0 0 920 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <defs>
+          <marker id="chat-arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,8 L8,4 z" fill="#9095A0"/>
+          </marker>
+        </defs>
+
+        <!-- ZONE LABELS LEFT -->
+        <text x="20" y="78" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">USER</text>
+        <text x="20" y="170" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">WEB UI</text>
+        <text x="20" y="272" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">ORCHESTRATOR</text>
+        <text x="20" y="392" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">RAG ENGINES</text>
+
+        <!-- ROW 1: USER -->
+        <rect x="340" y="50" width="240" height="56" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="460" y="76" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">User · browser</text>
+        <text x="460" y="94" text-anchor="middle" font-size="10.5" fill="#585667">asks question · reads answer with citations</text>
+
+        <!-- Bidirectional arrows USER ↔ WEB UI -->
+        <line x1="450" y1="106" x2="450" y2="138" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <line x1="470" y1="138" x2="470" y2="106" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <text x="488" y="125" font-size="10" fill="#9095A0">question / answer</text>
+
+        <!-- ROW 2: WEB UI -->
+        <rect x="320" y="146" width="280" height="60" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="460" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">SKB Web UI · chat panel</text>
+        <text x="460" y="190" text-anchor="middle" font-size="10.5" fill="#585667">renders Q&amp;A · clickable source citations</text>
+
+        <!-- Bidirectional arrows WEB UI ↔ MCP -->
+        <line x1="450" y1="206" x2="450" y2="238" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <line x1="470" y1="238" x2="470" y2="206" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <text x="488" y="225" font-size="10" fill="#9095A0">POST /chat</text>
+
+        <!-- ROW 3: MCP SERVER (hero) -->
+        <rect x="260" y="244" width="400" height="80" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
+        <text x="460" y="270" text-anchor="middle" font-size="13.5" font-weight="700" fill="#101820">MCP Server · chat orchestrator</text>
+        <text x="460" y="290" text-anchor="middle" font-size="11" fill="#585667">RAG: retrieve relevant chunks from SKB · prompt LLM with context</text>
+        <text x="460" y="308" text-anchor="middle" font-size="10.5" fill="#9095A0">authenticated · every chat call audited</text>
+
+        <!-- Diagonal arrows DOWN to SKB and LLM (one-way going out; return implied) -->
+        <line x1="350" y1="324" x2="240" y2="374" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <text x="218" y="354" font-size="11" font-weight="700" fill="#00C694">① retrieve</text>
+
+        <line x1="570" y1="324" x2="680" y2="374" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
+        <text x="630" y="354" font-size="11" font-weight="700" fill="#00C694">② generate</text>
+
+        <!-- ROW 4: SKB Core + Local LLM -->
+        <rect x="100" y="380" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
+        <text x="230" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">SKB Core</text>
+        <text x="230" y="424" text-anchor="middle" font-size="10.5" fill="#585667">vector search · returns top-k chunks</text>
+
+        <rect x="560" y="380" width="260" height="64" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+        <text x="690" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">Local LLM · inference mode</text>
+        <text x="690" y="424" text-anchor="middle" font-size="10.5" fill="#585667">prompt: question + chunks → answer</text>
+
+        <!-- Bottom note: return path -->
+        <text x="460" y="465" text-anchor="middle" font-size="10.5" fill="#9095A0">Answer + citations flow back: LLM → MCP → Web UI → User (return paths via bidirectional arrows above)</text>
+      </svg>
+    </div>
+
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: var(--sp3); line-height: 1.55;">
+      <strong>Capacity note · open question.</strong> Local LLM serves both ingestion (batch, off-hours friendly) and chat (interactive, latency-sensitive). One DGX Spark unit handles ingestion; the second serves chat inference. To keep chat under ~3 seconds end-to-end, the chat side could run a smaller distilled model (e.g. 8B for retrieval-grounded Q&amp;A) while the heavier 70B model does structured ingestion. Open — pending Phase A benchmarks.
+    </p>
+
+    <h4>Required infrastructure</h4>
+
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-title">SKB storage</div>
+        <div class="req-body">Vector DB + graph DB + object/document store. Hosted on-prem under Intelligent Foundation.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">MCP Server</div>
+        <div class="req-body">Single API surface for query, write, and <code>/chat</code> RAG endpoint. Authenticated, audited every call.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Local LLM</div>
+        <div class="req-body">On-prem model serving two modes: structured-knowledge <strong>ingestion</strong> (heavier 70B for accuracy) and chat <strong>inference</strong> (smaller distilled model for latency). Sits under KAI Foundry.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Daily scanner</div>
+        <div class="req-body">Cron job that walks all KAFI system repos and queues changes for the Local LLM.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Webhook receiver</div>
+        <div class="req-body">Listens for AI-DLC merge events. Pulls the diff, hands it to the Local LLM.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Browse UI + chat panel</div>
+        <div class="req-body">Web app with chat panel for natural-language Q&amp;A · structured browse of artifacts · clickable citations · (optional) IDE plugin.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ IDEA 2: SKILL INVENTORY ============ -->
+  <article class="brainstorm-idea">
+    <div class="brainstorm-tag">Idea 2 · v0.4 · workflow extension</div>
+    <h3>Skill Inventory · pull skills on demand</h3>
+
+    <p class="idea-pitch">
+      v0.3 ships a fixed set of skills in the injection package — design-system plus six role guides. Real projects will need more: data-modeling, API-design, accessibility-audit, performance-tuning, integration-testing patterns. A <strong>Skill Inventory</strong> with its own MCP server would let an AI-DLC project pull the skills it needs at session start, instead of bundling every skill into every project.
+    </p>
+
+    <h4>How it would work</h4>
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-title">Central Skill Inventory</div>
+        <div class="req-body">All KAFI-approved skills live in one repo. Versioned. Each has metadata: name, scope, prerequisites, supported stages.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Skill MCP server</div>
+        <div class="req-body">Lists available skills · fetches a skill on request · returns metadata for the agent to decide.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">New rule · skill discovery</div>
+        <div class="req-body">In Workspace Detection (or per-stage), the agent queries the Skill MCP for skills relevant to the active stage. Suggests them to the team.</div>
+      </div>
+      <div class="req-item">
+        <div class="req-title">Local cache</div>
+        <div class="req-body">Pulled skills land in <code>.claude/skills/</code> and stay for the project. Skill versions pinned per project for reproducibility.</div>
+      </div>
+    </div>
+
+    <h4>Open question · who curates</h4>
+    <p class="idea-pitch">
+      v0.3 hands all skills to the TO. With a Skill Inventory, the TO still owns "approved skill" status, but any team can propose. Needs a lightweight review process — see Idea 3 for candidate skills to seed.
+    </p>
+  </article>
+
+  <!-- ============ IDEA 3: NEW SKILLS ============ -->
+  <article class="brainstorm-idea">
+    <div class="brainstorm-tag">Idea 3 · v0.4+ · skill catalog</div>
+    <h3>Additional skills to consider</h3>
+
+    <p class="idea-pitch">
+      Skills the team has flagged as useful, plus a few derived from how teams actually work today. The Skill Inventory (Idea 2) would host all of these. None is committed; the list is a starting point for the v0.4 prioritization conversation.
+    </p>
+
+    <table class="skill-table">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Triggers in</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>code-review</td>
+          <td>Stage 14 · post-codegen</td>
+          <td>Reads generated code · checks against house conventions · flags missing error handling, unclear naming, untyped boundaries. Output: structured review notes the Dev can address before Build.</td>
+        </tr>
+        <tr>
+          <td>automation-unit-test</td>
+          <td>Stage 14 · alongside code</td>
+          <td>Generates unit tests for the new code · runs coverage analysis · flags untested branches. Pairs with code-review on the same generated artifact.</td>
+        </tr>
+        <tr>
+          <td>security-audit</td>
+          <td>Per unit · before merge</td>
+          <td>OWASP top-10 scan · auth/authorization checks · PII handling verification · secret leakage detection. Surfaces findings for the SA to triage.</td>
+        </tr>
+        <tr>
+          <td>code-compliance-audit</td>
+          <td>Per unit · before merge</td>
+          <td>Verifies code against architecture-boundaries · checks naming conventions · validates folder structure · confirms ADR coverage on cross-boundary calls.</td>
+        </tr>
+        <tr>
+          <td>api-contract-check</td>
+          <td>Stage 8 · application-design</td>
+          <td>Compares new API specs against existing consumers · flags breaking changes · suggests versioning strategy. Reads SKB for consumer dependencies (synergy with Idea 1).</td>
+        </tr>
+        <tr>
+          <td>performance-regression</td>
+          <td>Stage 14 · alongside test</td>
+          <td>Detects performance delta vs main on critical paths · enforces NFR-PERF thresholds from Stage 11. Requires baseline numbers in NFR Requirements.</td>
+        </tr>
+        <tr>
+          <td>observability-coverage</td>
+          <td>Stage 13 · infrastructure</td>
+          <td>Validates that every NFR-OBS requirement has a corresponding log, metric, or trace emission point in the generated code. Pairs with NFR Design (Stage 12).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: var(--sp4);">Skills are not ordered — the v0.4 conversation will pick which two or three ship first based on pilot learnings.</p>
+  </article>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <span>KAFI Transformation Office · v0.3 Draft · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>Companion: KAFI-AIDLC-Handbook.html · CLAUDE.md workflow spec</span>
+</footer>
+
+</div>
+</body>
+</html>
