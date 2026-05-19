@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KAFI AI-DLC · Documentation</title>
+<meta name="description" content="KAFI AI-Driven Development Lifecycle · public documentation hub">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root,
+[data-theme="light"] {
+  --kafi-green:        #00C694;
+  --kafi-teal:         #07756D;
+  --kafi-dark:         #101820;
+  --kafi-yellow:       #F9CC4E;
+  --kafi-mint-light:   #E6FBF4;
+
+  --color-success-bg:  #E6FBF4;
+  --color-success-text:#07756D;
+  --color-info-bg:     #EEF2FF;
+  --color-info-text:   #1A3CC8;
+  --color-danger-bg:   #FFF0F0;
+  --color-danger-text: #B02020;
+  --color-warning-bg:  #FFF8E1;
+  --color-warning-text:#A05C00;
+
+  --page-bg:           #F2F4F7;
+  --card-bg:           #FFFFFF;
+  --section-alt:       #FAFCFB;
+
+  --text-primary:      #101820;
+  --text-secondary:    #585667;
+  --text-muted:        #9095A0;
+
+  --border-card:       1.5px solid rgba(0,0,0,0.08);
+  --border-internal:   1px solid rgba(0,0,0,0.06);
+
+  --radius-card:       18px;
+  --radius-button:     32px;
+  --radius-badge:      20px;
+  --radius-sm:         8px;
+  --radius-md:         12px;
+
+  --shadow-sm:         0 1px 4px rgba(0,0,0,0.05);
+  --shadow-md:         0 3px 12px rgba(0,0,0,0.08);
+  --shadow-lg:         0 8px 32px rgba(0,0,0,0.10);
+
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:24px;
+  --sp6:32px; --sp7:48px; --sp8:64px; --sp9:96px;
+
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', 'Inter', monospace;
+}
+
+[data-theme="dark"] {
+  --color-success-bg:  rgba(0,198,148,0.15);
+  --color-success-text:#00C694;
+  --color-info-bg:     rgba(91,141,239,0.15);
+  --color-info-text:   #8FB1F2;
+  --color-danger-bg:   rgba(255,76,66,0.15);
+  --color-danger-text: #FF7A72;
+  --color-warning-bg:  rgba(249,204,78,0.15);
+  --color-warning-text:#F9CC4E;
+
+  --page-bg:           #080D12;
+  --card-bg:           #0C1219;
+  --section-alt:       rgba(255,255,255,0.03);
+
+  --text-primary:      #F0F4F8;
+  --text-secondary:    #A8B5C0;
+  --text-muted:        #6B7785;
+
+  --border-card:       1.5px solid rgba(255,255,255,0.12);
+  --border-internal:   1px solid rgba(255,255,255,0.08);
+
+  --shadow-sm:         0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-md:         0 3px 16px rgba(0,0,0,0.40);
+  --shadow-lg:         0 8px 48px rgba(0,0,0,0.60);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.18s, color 0.18s;
+}
+
+[data-lang="en"] [lang="vi"] { display: none !important; }
+[data-lang="vi"] [lang="en"] { display: none !important; }
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--sp7) var(--sp5) var(--sp9) var(--sp5);
+}
+
+/* ============ Hero ============ */
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp5);
+  margin-bottom: var(--sp7);
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--sp4);
+}
+.logo-x {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  position: relative;
+}
+.logo-x::before, .logo-x::after {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 5.5px;
+  border-radius: 4px;
+  top: 11px;
+  left: -2px;
+}
+.logo-x::before { background: var(--kafi-teal); transform: rotate(45deg); }
+.logo-x::after  { background: var(--kafi-green); transform: rotate(-45deg); }
+.brand-text {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp2);
+}
+h1.title {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0 0 var(--sp3) 0;
+  color: var(--text-primary);
+}
+.subtitle {
+  font-size: 15.5px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 0 var(--sp5) 0;
+  line-height: 1.55;
+}
+
+.meta-row {
+  display: flex;
+  gap: var(--sp5);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp5);
+}
+.meta-row strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.meta-row a { color: var(--kafi-teal); text-decoration: none; }
+.meta-row a:hover { color: var(--kafi-green); }
+
+.controls {
+  display: flex;
+  gap: var(--sp2);
+}
+.control-group {
+  display: inline-flex;
+  border: var(--border-card);
+  border-radius: var(--radius-button);
+  overflow: hidden;
+  background: var(--card-bg);
+}
+.control-btn {
+  font-family: var(--font);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 7px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.control-btn:hover { color: var(--text-primary); }
+.control-btn[aria-pressed="true"] {
+  background: var(--kafi-green);
+  color: #FFFFFF;
+}
+
+/* ============ Section ============ */
+section { margin-bottom: var(--sp7); }
+.section-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp2);
+  padding-bottom: var(--sp2);
+  border-bottom: var(--border-internal);
+}
+h2.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp4) 0;
+  color: var(--text-primary);
+}
+
+/* ============ Doc cards grid ============ */
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp4);
+}
+.doc-grid--featured { grid-template-columns: 1fr; }
+
+.doc {
+  display: block;
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+.doc::after {
+  content: '→';
+  position: absolute;
+  top: var(--sp4);
+  right: var(--sp5);
+  font-size: 20px;
+  color: var(--text-muted);
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.doc:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--kafi-green);
+}
+.doc:hover::after {
+  transform: translateX(4px);
+  color: var(--kafi-green);
+}
+.doc:hover .doc-title { color: var(--kafi-green); }
+
+.doc-tag-row {
+  display: flex;
+  gap: var(--sp1);
+  margin-bottom: var(--sp3);
+  flex-wrap: wrap;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-badge);
+}
+.tag-claude { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.tag-kiro   { background: var(--color-success-bg); color: var(--color-success-text); }
+.tag-intro  { background: var(--color-info-bg);    color: var(--color-info-text); }
+.tag-handbook { background: var(--section-alt); color: var(--text-secondary); border: 1px solid rgba(128,128,128,0.18); }
+.tag-guide  { background: var(--color-info-bg);    color: var(--color-info-text); }
+.tag-bilingual { background: transparent; color: var(--text-muted); border: 1px solid rgba(128,128,128,0.20); }
+
+.doc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 var(--sp2) 0;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  transition: color 0.18s;
+  padding-right: 30px;
+}
+.doc-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 var(--sp3) 0;
+  line-height: 1.55;
+}
+.doc-meta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ============ Featured (Git Guide) ============ */
+.doc-featured {
+  background:
+    linear-gradient(135deg, rgba(0,198,148,0.04) 0%, rgba(0,198,148,0) 60%),
+    var(--card-bg);
+  border: 1.5px solid var(--kafi-green);
+}
+.doc-featured .doc-title { font-size: 22px; }
+.doc-featured .doc-desc { font-size: 14px; max-width: 640px; }
+
+/* ============ How / Quick-start ============ */
+.callout {
+  background: var(--color-info-bg);
+  border: 1.5px solid rgba(45,91,255,0.18);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin-top: var(--sp4);
+  color: var(--color-info-text);
+}
+[data-theme="dark"] .callout {
+  border-color: rgba(143,177,242,0.30);
+}
+.callout-label {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp2);
+}
+.callout p { margin: 0 0 var(--sp2) 0; font-size: 13px; line-height: 1.55; }
+.callout p:last-child { margin-bottom: 0; }
+.callout code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: inherit;
+}
+[data-theme="dark"] .callout code { background: rgba(255,255,255,0.10); }
+
+/* ============ Footer ============ */
+footer {
+  margin-top: var(--sp9);
+  padding-top: var(--sp5);
+  border-top: var(--border-internal);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp3);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+footer a { color: var(--text-secondary); text-decoration: none; }
+footer a:hover { color: var(--kafi-green); }
+
+/* ============ Responsive ============ */
+@media (max-width: 760px) {
+  h1.title { font-size: 32px; }
+  .doc-grid { grid-template-columns: 1fr; }
+  .hero { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <div class="brand">
+        <span class="logo-x"></span>
+        <span class="brand-text">KAFI AI-DLC</span>
+      </div>
+      <div class="eyebrow" lang="en">Documentation hub · v0.3</div>
+      <div class="eyebrow" lang="vi">Trang tài liệu · v0.3</div>
+      <h1 class="title" lang="en">AI-Driven Development Lifecycle</h1>
+      <h1 class="title" lang="vi">Quy trình phát triển dẫn dắt bởi AI</h1>
+      <p class="subtitle" lang="en">A 17-stage adaptive workflow with two human modes and six role playbooks. Ships in parity for Claude Code and Kiro IDE. Built and maintained by the KAFI Transformation Office.</p>
+      <p class="subtitle" lang="vi">Quy trình thích nghi 17 stage, hai chế độ làm việc và sáu playbook vai trò. Đóng gói parity cho Claude Code và Kiro IDE. Xây dựng và duy trì bởi Văn phòng Chuyển đổi KAFI.</p>
+      <div class="meta-row">
+        <div><strong lang="en">Repository</strong><strong lang="vi">Mã nguồn</strong> <a href="https://github.com/Kafivn/KORA">github.com/Kafivn/KORA</a></div>
+        <div><strong lang="en">Latest release</strong><strong lang="vi">Bản mới nhất</strong> <a href="https://github.com/Kafivn/KORA/releases">v0.3</a></div>
+        <div><strong lang="en">License</strong><strong lang="vi">Giấy phép</strong> Apache 2.0</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-group" role="group" aria-label="Language">
+        <button class="control-btn" data-action="lang" data-value="en" aria-pressed="true">EN</button>
+        <button class="control-btn" data-action="lang" data-value="vi" aria-pressed="false">VI</button>
+      </div>
+      <div class="control-group" role="group" aria-label="Theme">
+        <button class="control-btn" data-action="theme" data-value="light" aria-pressed="true">
+          <span lang="en">Light</span><span lang="vi">Sáng</span>
+        </button>
+        <button class="control-btn" data-action="theme" data-value="dark" aria-pressed="false">
+          <span lang="en">Dark</span><span lang="vi">Tối</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ Featured · Git Guide ============ -->
+  <section>
+    <div class="section-label" lang="en">For everyone · start here if new to Git</div>
+    <div class="section-label" lang="vi">Cho mọi người · bắt đầu tại đây nếu chưa quen Git</div>
+    <div class="doc-grid doc-grid--featured">
+      <a class="doc doc-featured" href="KAFI-Git-Guide-NonDev.html">
+        <div class="doc-tag-row">
+          <span class="tag tag-guide" lang="en">Git Guide</span><span class="tag tag-guide" lang="vi">Hướng dẫn Git</span>
+          <span class="tag tag-bilingual" lang="en">EN · VI</span><span class="tag tag-bilingual" lang="vi">EN · VI</span>
+          <span class="tag tag-bilingual" lang="en">Light / Dark</span><span class="tag tag-bilingual" lang="vi">Sáng / Tối</span>
+        </div>
+        <h3 class="doc-title" lang="en">Git for non-developers</h3>
+        <h3 class="doc-title" lang="vi">Git cho người không phải lập trình viên</h3>
+        <p class="doc-desc" lang="en">A visual, role-friendly handbook for PMs, BAs, Product Designers, and POs working inside AI-DLC. Covers Git fundamentals with diagrams, the KAFI stage = branch model, three tool tracks (Git Extensions on Windows, Fork on Mac, command line), troubleshooting, and a printable cheat sheet.</p>
+        <p class="doc-desc" lang="vi">Sổ tay trực quan, viết cho PM, BA, Product Designer và PO tham gia AI-DLC. Khái niệm Git cơ bản kèm sơ đồ, mô hình stage = branch của KAFI, ba cách dùng (Git Extensions trên Windows, Fork trên Mac, dòng lệnh), xử lý sự cố, và bảng tra in được.</p>
+        <div class="doc-meta">KAFI-Git-Guide-NonDev.html · ~12 diagrams · bilingual</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ Introduction ============ -->
+  <section>
+    <div class="section-label" lang="en">Introduction · high-level overview</div>
+    <div class="section-label" lang="vi">Giới thiệu · tổng quan</div>
+    <div class="doc-grid">
+      <a class="doc" href="KAFI-AIDLC-Introduction-Claude.html">
+        <div class="doc-tag-row">
+          <span class="tag tag-intro" lang="en">Introduction</span><span class="tag tag-intro" lang="vi">Giới thiệu</span>
+          <span class="tag tag-claude">Claude Code</span>
+        </div>
+        <h3 class="doc-title" lang="en">Introduction · Claude Code edition</h3>
+        <h3 class="doc-title" lang="vi">Giới thiệu · Bản Claude Code</h3>
+        <p class="doc-desc" lang="en">What AI-DLC is, why it exists, and how the Claude Code edition fits together. Use this as the first read for teams adopting AI-DLC on Claude Code.</p>
+        <p class="doc-desc" lang="vi">AI-DLC là gì, vì sao tồn tại, và bản Claude Code lắp ráp ra sao. Đây là tài liệu đọc đầu tiên cho đội triển khai AI-DLC trên Claude Code.</p>
+        <div class="doc-meta">KAFI-AIDLC-Introduction-Claude.html</div>
+      </a>
+
+      <a class="doc" href="KAFI-AIDLC-Introduction-Kiro.html">
+        <div class="doc-tag-row">
+          <span class="tag tag-intro" lang="en">Introduction</span><span class="tag tag-intro" lang="vi">Giới thiệu</span>
+          <span class="tag tag-kiro">Kiro IDE</span>
+        </div>
+        <h3 class="doc-title" lang="en">Introduction · Kiro IDE edition</h3>
+        <h3 class="doc-title" lang="vi">Giới thiệu · Bản Kiro IDE</h3>
+        <p class="doc-desc" lang="en">Same content as the Claude edition, framed in Kiro's vocabulary: <code>AGENTS.md</code>, <code>#filename</code> references, native spec mode. Start here if your team uses Kiro IDE.</p>
+        <p class="doc-desc" lang="vi">Cùng nội dung bản Claude, diễn đạt theo từ vựng Kiro: <code>AGENTS.md</code>, tham chiếu <code>#filename</code>, spec mode native. Đọc tại đây nếu đội dùng Kiro IDE.</p>
+        <div class="doc-meta">KAFI-AIDLC-Introduction-Kiro.html</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ Handbook ============ -->
+  <section>
+    <div class="section-label" lang="en">Handbook · per-stage reference</div>
+    <div class="section-label" lang="vi">Sổ tay · tham chiếu theo stage</div>
+    <div class="doc-grid">
+      <a class="doc" href="KAFI-AIDLC-Handbook-Claude.html">
+        <div class="doc-tag-row">
+          <span class="tag tag-handbook" lang="en">Handbook</span><span class="tag tag-handbook" lang="vi">Sổ tay</span>
+          <span class="tag tag-claude">Claude Code</span>
+        </div>
+        <h3 class="doc-title" lang="en">Handbook · Claude Code edition</h3>
+        <h3 class="doc-title" lang="vi">Sổ tay · Bản Claude Code</h3>
+        <p class="doc-desc" lang="en">Per-stage reference for the full 17-stage workflow: routing logic, inputs/outputs, role ownership, gate criteria, KAFI extensions, git workflow, and the AI review checklist. The deep-dive companion to the introduction.</p>
+        <p class="doc-desc" lang="vi">Tham chiếu chi tiết toàn bộ 17 stage: logic định tuyến, input/output, vai trò sở hữu, tiêu chí gate, extension KAFI, git workflow, và AI review checklist. Cuốn sâu đi kèm với phần giới thiệu.</p>
+        <div class="doc-meta">KAFI-AIDLC-Handbook-Claude.html</div>
+      </a>
+
+      <a class="doc" href="KAFI-AIDLC-Handbook-Kiro.html">
+        <div class="doc-tag-row">
+          <span class="tag tag-handbook" lang="en">Handbook</span><span class="tag tag-handbook" lang="vi">Sổ tay</span>
+          <span class="tag tag-kiro">Kiro IDE</span>
+        </div>
+        <h3 class="doc-title" lang="en">Handbook · Kiro IDE edition</h3>
+        <h3 class="doc-title" lang="vi">Sổ tay · Bản Kiro IDE</h3>
+        <p class="doc-desc" lang="en">The same workflow reference, Kiro-flavored: <code>inclusion: always|manual</code> modes, the <code>.kiro/steering/</code> library, the native spec-driven layout, and visual walkthroughs of Kiro UI moments.</p>
+        <p class="doc-desc" lang="vi">Cùng tham chiếu workflow, đậm chất Kiro: các chế độ <code>inclusion: always|manual</code>, thư viện <code>.kiro/steering/</code>, layout spec native, và minh hoạ các bước trên UI Kiro.</p>
+        <div class="doc-meta">KAFI-AIDLC-Handbook-Kiro.html</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ How to use ============ -->
+  <section>
+    <div class="section-label" lang="en">Getting started</div>
+    <div class="section-label" lang="vi">Bắt đầu</div>
+
+    <div class="callout">
+      <span class="callout-label" lang="en">Pick the right doc</span>
+      <span class="callout-label" lang="vi">Chọn đúng tài liệu</span>
+      <p lang="en"><strong>New to Git?</strong> Read the <a href="KAFI-Git-Guide-NonDev.html">Git Guide for non-developers</a> first — it covers everything a PM/BA/Designer/PO needs.</p>
+      <p lang="vi"><strong>Chưa quen Git?</strong> Đọc <a href="KAFI-Git-Guide-NonDev.html">Hướng dẫn Git cho người không phải lập trình viên</a> trước — gói gọn mọi thứ PM/BA/Designer/PO cần.</p>
+      <p lang="en"><strong>New to AI-DLC?</strong> Read the Introduction for your IDE first (Claude Code or Kiro), then dive into the Handbook for stage-by-stage detail.</p>
+      <p lang="vi"><strong>Chưa biết AI-DLC?</strong> Đọc phần Giới thiệu cho IDE của bạn trước (Claude Code hoặc Kiro), rồi vào Sổ tay để xem chi tiết từng stage.</p>
+      <p lang="en"><strong>Want to use it on a project?</strong> Grab the latest release from <a href="https://github.com/Kafivn/KORA/releases">GitHub Releases</a> — two zip packages, one per IDE edition.</p>
+      <p lang="vi"><strong>Muốn dùng cho dự án?</strong> Tải bản mới nhất tại <a href="https://github.com/Kafivn/KORA/releases">GitHub Releases</a> — hai bộ zip, mỗi IDE một bộ.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div lang="en">KAFI Transformation Office · v0.3 · Apache 2.0</div>
+    <div lang="vi">Văn phòng Chuyển đổi KAFI · v0.3 · Apache 2.0</div>
+    <div>
+      <a href="https://github.com/Kafivn/KORA">GitHub</a>
+      &middot;
+      <a href="https://github.com/Kafivn/KORA/issues">Issues</a>
+      &middot;
+      <a href="https://github.com/Kafivn/KORA/releases">Releases</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var STORAGE = { lang: 'kafi-aidlc-lang', theme: 'kafi-aidlc-theme' };
+
+  function setLang(value) {
+    if (value !== 'en' && value !== 'vi') return;
+    root.setAttribute('data-lang', value);
+    root.setAttribute('lang', value);
+    try { localStorage.setItem(STORAGE.lang, value); } catch (e) {}
+    document.querySelectorAll('[data-action="lang"]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
+    });
+  }
+  function setTheme(value) {
+    if (value !== 'light' && value !== 'dark') return;
+    root.setAttribute('data-theme', value);
+    try { localStorage.setItem(STORAGE.theme, value); } catch (e) {}
+    document.querySelectorAll('[data-action="theme"]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-action');
+    var value = btn.getAttribute('data-value');
+    if (action === 'lang') setLang(value);
+    if (action === 'theme') setTheme(value);
+  });
+  try {
+    var savedLang = localStorage.getItem(STORAGE.lang);
+    var savedTheme = localStorage.getItem(STORAGE.theme);
+    if (savedLang) setLang(savedLang);
+    if (savedTheme) setTheme(savedTheme);
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

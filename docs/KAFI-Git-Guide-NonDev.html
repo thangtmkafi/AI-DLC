@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KAFI · Git Guide for Non-Developers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   KAFI Design System v2.2 · Light + Dark theme tokens
+   ================================================================ */
+:root,
+[data-theme="light"] {
+  --kafi-green:        #00C694;
+  --kafi-teal:         #07756D;
+  --kafi-teal-mid:     #0C6070;
+  --kafi-dark:         #101820;
+  --kafi-yellow:       #F9CC4E;
+  --kafi-mint:         #D8F5EE;
+  --kafi-mint-light:   #E6FBF4;
+
+  --color-success-bg:  #E6FBF4;
+  --color-success-text:#07756D;
+  --color-warning-bg:  #FFF8E1;
+  --color-warning-text:#A05C00;
+  --color-danger-bg:   #FFF0F0;
+  --color-danger-text: #B02020;
+  --color-info-bg:     #EEF2FF;
+  --color-info-text:   #1A3CC8;
+  --color-purple-bg:   #F5EEFF;
+  --color-purple-text: #6B1FB8;
+
+  --page-bg:           #F2F4F7;
+  --card-bg:           #FFFFFF;
+  --section-alt:       #FAFCFB;
+  --table-header-bg:   #F7F8FA;
+  --code-bg:           #101820;
+  --code-fg:           #E8EBEF;
+
+  --text-primary:      #101820;
+  --text-secondary:    #585667;
+  --text-muted:        #9095A0;
+  --text-brand:        #00C694;
+
+  --border-card:       1.5px solid rgba(0,0,0,0.08);
+  --border-internal:   1px solid rgba(0,0,0,0.06);
+  --border-strong:     1.5px solid rgba(0,0,0,0.12);
+
+  --radius-card:       18px;
+  --radius-button:     32px;
+  --radius-badge:      20px;
+  --radius-sm:         8px;
+  --radius-md:         12px;
+
+  --shadow-sm:         0 1px 4px rgba(0,0,0,0.05);
+  --shadow-md:         0 3px 12px rgba(0,0,0,0.08);
+  --shadow-lg:         0 4px 20px rgba(0,0,0,0.12);
+
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:24px;
+  --sp6:32px; --sp7:48px; --sp8:64px; --sp9:96px;
+
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', 'Inter', monospace;
+
+  /* SVG palette */
+  --svg-stroke:        #101820;
+  --svg-stroke-soft:   #585667;
+  --svg-fill-soft:     #FFFFFF;
+  --svg-shadow:        rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] {
+  --kafi-mint:         #BEF6E9;
+
+  --color-success-bg:  rgba(0,198,148,0.15);
+  --color-success-text:#00C694;
+  --color-warning-bg:  rgba(249,204,78,0.15);
+  --color-warning-text:#F9CC4E;
+  --color-danger-bg:   rgba(255,76,66,0.15);
+  --color-danger-text: #FF7A72;
+  --color-info-bg:     rgba(91,141,239,0.15);
+  --color-info-text:   #8FB1F2;
+  --color-purple-bg:   rgba(150,45,255,0.15);
+  --color-purple-text: #C28CFF;
+
+  --page-bg:           #080D12;
+  --card-bg:           #0C1219;
+  --section-alt:       rgba(255,255,255,0.03);
+  --table-header-bg:   rgba(255,255,255,0.04);
+  --code-bg:           #050A10;
+  --code-fg:           #E8EBEF;
+
+  --text-primary:      #F0F4F8;
+  --text-secondary:    #A8B5C0;
+  --text-muted:        #6B7785;
+  --text-brand:        #00C694;
+
+  --border-card:       1.5px solid rgba(255,255,255,0.12);
+  --border-internal:   1px solid rgba(255,255,255,0.08);
+  --border-strong:     1.5px solid rgba(255,255,255,0.20);
+
+  --shadow-sm:         0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-md:         0 3px 16px rgba(0,0,0,0.40);
+  --shadow-lg:         0 4px 24px rgba(0,0,0,0.50);
+
+  --svg-stroke:        #F0F4F8;
+  --svg-stroke-soft:   #A8B5C0;
+  --svg-fill-soft:     #0C1219;
+  --svg-shadow:        rgba(0,0,0,0.50);
+}
+
+/* ================================================================
+   Base
+   ================================================================ */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.18s, color 0.18s;
+}
+
+/* ================================================================
+   Bilingual visibility
+   ================================================================ */
+[data-lang="en"] [lang="vi"] { display: none !important; }
+[data-lang="vi"] [lang="en"] { display: none !important; }
+
+/* ================================================================
+   Layout
+   ================================================================ */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.toc {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: var(--sp6) var(--sp4) var(--sp6) var(--sp6);
+  border-right: var(--border-internal);
+  overflow-y: auto;
+  background: var(--card-bg);
+}
+.toc-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: var(--sp4);
+  border-bottom: var(--border-internal);
+  margin-bottom: var(--sp4);
+}
+.logo-x {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  position: relative;
+}
+.logo-x::before, .logo-x::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 4.5px;
+  border-radius: 4px;
+  top: 9px;
+  left: -2px;
+}
+.logo-x::before { background: var(--kafi-teal); transform: rotate(45deg); }
+.logo-x::after  { background: var(--kafi-green); transform: rotate(-45deg); }
+.logo-text { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+
+.toc-eyebrow {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: var(--sp4) 0 var(--sp2) 0;
+}
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc ul ul { margin-left: 10px; }
+.toc li a {
+  display: block;
+  padding: 4px 10px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+}
+.toc li a:hover {
+  color: var(--text-primary);
+  background: var(--page-bg);
+}
+.toc li ul li a {
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.toc li ul li a:hover { color: var(--text-secondary); }
+
+main {
+  padding: var(--sp7) var(--sp7) var(--sp9) var(--sp7);
+  max-width: 940px;
+}
+
+/* ================================================================
+   Header + controls
+   ================================================================ */
+.doc-header {
+  padding-bottom: var(--sp5);
+  border-bottom: var(--border-internal);
+  margin-bottom: var(--sp7);
+}
+.doc-eyebrow {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+h1.doc-title {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+}
+.doc-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0;
+}
+.doc-meta-row {
+  display: flex;
+  gap: var(--sp5);
+  margin-top: var(--sp4);
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.doc-meta-row strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.controls {
+  display: flex;
+  gap: var(--sp2);
+  margin-top: var(--sp5);
+}
+.control-group {
+  display: inline-flex;
+  border: var(--border-card);
+  border-radius: var(--radius-button);
+  overflow: hidden;
+  background: var(--card-bg);
+}
+.control-btn {
+  font-family: var(--font);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 7px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.control-btn:hover { color: var(--text-primary); }
+.control-btn[aria-pressed="true"] {
+  background: var(--kafi-green);
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   Headings + base body
+   ================================================================ */
+section { margin-bottom: var(--sp8); scroll-margin-top: var(--sp4); }
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp3) 0;
+  color: var(--text-primary);
+  scroll-margin-top: var(--sp4);
+}
+h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: var(--sp5) 0 var(--sp3) 0;
+  color: var(--text-primary);
+  scroll-margin-top: var(--sp4);
+}
+h4 {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--sp2) 0;
+}
+.section-intro {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0 0 var(--sp5) 0;
+}
+p { margin: 0 0 var(--sp3) 0; color: var(--text-secondary); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--text-primary); font-weight: 600; }
+em { color: var(--text-primary); font-style: italic; }
+
+a { color: var(--kafi-teal); text-decoration: none; }
+a:hover { color: var(--kafi-green); text-decoration: underline; }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--page-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--text-primary);
+}
+[data-theme="dark"] code {
+  background: rgba(255,255,255,0.06);
+}
+
+ul, ol { color: var(--text-secondary); padding-left: 22px; margin: 0 0 var(--sp3) 0; }
+li { margin-bottom: 4px; }
+
+/* ================================================================
+   Part headers
+   ================================================================ */
+.part-header {
+  margin: var(--sp9) 0 var(--sp5) 0;
+  padding-bottom: var(--sp3);
+  border-bottom: 2px solid var(--kafi-green);
+}
+.part-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--kafi-teal);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp1);
+}
+[data-theme="dark"] .part-tag { color: var(--kafi-green); }
+.part-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* ================================================================
+   Cards & callouts
+   ================================================================ */
+.card {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin-bottom: var(--sp4);
+}
+.minicard-grid {
+  display: grid;
+  gap: var(--sp4);
+  margin-bottom: var(--sp4);
+}
+.minicard-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.minicard-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.minicard {
+  padding: var(--sp4);
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+}
+.minicard h3 { font-size: 14.5px; margin: 0 0 var(--sp2) 0; }
+.minicard h4 { margin-bottom: var(--sp2); }
+.minicard p { font-size: 12.5px; line-height: 1.5; margin: 0 0 var(--sp2) 0; }
+.minicard p:last-child { margin-bottom: 0; }
+
+.callout {
+  background: var(--page-bg);
+  border-left: 3px solid var(--text-muted);
+  padding: var(--sp3) var(--sp4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: var(--sp3) 0;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.callout-skip   { border-left-color: var(--color-info-text); background: var(--color-info-bg); color: var(--color-info-text); }
+.callout-watch  { border-left-color: var(--color-warning-text); background: var(--color-warning-bg); color: var(--color-warning-text); }
+.callout-note   { border-left-color: var(--kafi-teal); background: var(--color-success-bg); color: var(--color-success-text); }
+.callout-danger { border-left-color: var(--color-danger-text); background: var(--color-danger-bg); color: var(--color-danger-text); }
+.callout-label {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ================================================================
+   Table
+   ================================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  margin: 0 0 var(--sp4) 0;
+}
+th {
+  text-align: left;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  background: var(--table-header-bg);
+  border-bottom: var(--border-internal);
+}
+td {
+  padding: 12px 16px;
+  border-bottom: var(--border-internal);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--text-primary); }
+
+/* ================================================================
+   Code block
+   ================================================================ */
+pre.code, .code-block {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: var(--sp4);
+  border-radius: var(--radius-md);
+  line-height: 1.7;
+  margin: 0 0 var(--sp4) 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+.code-block .cm  { color: #9095A0; }
+.code-block .kw  { color: #F9CC4E; }
+.code-block .str { color: #87CEEB; }
+.code-block .br  { color: #00C694; }
+
+/* ================================================================
+   Badges
+   ================================================================ */
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-badge);
+  margin-right: 4px;
+}
+.badge-green  { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-info   { background: var(--color-info-bg);    color: var(--color-info-text); }
+.badge-warn   { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge-danger { background: var(--color-danger-bg);  color: var(--color-danger-text); }
+.badge-neutral{ background: var(--page-bg);          color: var(--text-secondary); border: 1px solid rgba(128,128,128,0.18); }
+
+/* ================================================================
+   Diagram container
+   ================================================================ */
+.diagram {
+  background: var(--card-bg);
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp5);
+  margin: var(--sp4) 0;
+}
+.diagram svg { display: block; max-width: 100%; height: auto; }
+.diagram-caption {
+  margin-top: var(--sp3);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.diagram-text { fill: var(--text-primary); font-family: var(--font); }
+.diagram-text-soft { fill: var(--text-secondary); font-family: var(--font); }
+.diagram-text-muted { fill: var(--text-muted); font-family: var(--font); }
+.diagram-stroke { stroke: var(--text-primary); }
+.diagram-stroke-soft { stroke: var(--text-secondary); }
+.diagram-fill { fill: var(--card-bg); }
+.diagram-fill-page { fill: var(--page-bg); }
+
+/* ================================================================
+   UI-mockup boxes (for tool walkthroughs)
+   ================================================================ */
+.ui-mock {
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  padding: var(--sp5);
+  margin: var(--sp4) 0;
+}
+.ui-mock svg { display: block; max-width: 100%; height: auto; }
+
+/* ================================================================
+   Tabs (for tool tracks)
+   ================================================================ */
+.tabs {
+  display: flex;
+  gap: var(--sp2);
+  margin-bottom: var(--sp4);
+  flex-wrap: wrap;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: var(--border-card);
+  border-radius: var(--radius-button);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn[aria-pressed="true"] {
+  background: var(--kafi-green);
+  border-color: var(--kafi-green);
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   Step lists for walkthroughs
+   ================================================================ */
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp4) 0;
+}
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 var(--sp4) var(--sp7);
+  border-left: 2px solid var(--border-internal);
+  margin-left: 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: -16px;
+  top: -4px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--kafi-green);
+  color: #FFFFFF;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+.steps > li strong { display: block; color: var(--text-primary); font-size: 13.5px; margin-bottom: 4px; }
+
+/* ================================================================
+   Footer
+   ================================================================ */
+footer {
+  margin-top: var(--sp9);
+  padding-top: var(--sp4);
+  border-top: var(--border-internal);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp3);
+}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; }
+  .toc {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: var(--border-internal);
+  }
+  main { padding: var(--sp5); }
+  .minicard-grid--2, .minicard-grid--3 { grid-template-columns: 1fr; }
+  h1.doc-title { font-size: 28px; }
+  .part-title { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============== TOC ============== -->
+  <aside class="toc">
+    <div class="toc-mark">
+      <span class="logo-x"></span>
+      <span class="logo-text">KAFI · Git Guide</span>
+    </div>
+
+    <div class="toc-eyebrow" lang="en">For non-developers</div>
+    <div class="toc-eyebrow" lang="vi">Dành cho phi-lập trình</div>
+
+    <ul>
+      <li><a href="#intro"><span lang="en">Introduction</span><span lang="vi">Giới thiệu</span></a></li>
+      <li><a href="#why"><span lang="en">Why Git matters</span><span lang="vi">Vì sao Git quan trọng</span></a></li>
+
+      <li><a href="#concepts"><span lang="en">Core Git concepts</span><span lang="vi">Khái niệm Git cốt lõi</span></a>
+        <ul>
+          <li><a href="#c-repo"><span lang="en">Repository</span><span lang="vi">Repository</span></a></li>
+          <li><a href="#c-zones"><span lang="en">The four zones</span><span lang="vi">Bốn vùng</span></a></li>
+          <li><a href="#c-commit"><span lang="en">Commit</span><span lang="vi">Commit</span></a></li>
+          <li><a href="#c-branch"><span lang="en">Branch</span><span lang="vi">Branch (nhánh)</span></a></li>
+          <li><a href="#c-checkout"><span lang="en">Checkout</span><span lang="vi">Checkout</span></a></li>
+          <li><a href="#c-pushpull"><span lang="en">Push, Pull, Fetch</span><span lang="vi">Push, Pull, Fetch</span></a></li>
+          <li><a href="#c-merge"><span lang="en">Merge</span><span lang="vi">Merge (gộp)</span></a></li>
+          <li><a href="#c-pr"><span lang="en">Pull Request</span><span lang="vi">Pull Request</span></a></li>
+          <li><a href="#c-conflict"><span lang="en">Conflict</span><span lang="vi">Conflict (xung đột)</span></a></li>
+        </ul>
+      </li>
+
+      <li><a href="#kafi-model"><span lang="en">KAFI branch model</span><span lang="vi">Mô hình nhánh KAFI</span></a>
+        <ul>
+          <li><a href="#k-stage-branch"><span lang="en">Stage = branch</span><span lang="vi">Stage = nhánh</span></a></li>
+          <li><a href="#k-naming"><span lang="en">Branch naming</span><span lang="vi">Đặt tên nhánh</span></a></li>
+          <li><a href="#k-commit-fmt"><span lang="en">Commit format</span><span lang="vi">Định dạng commit</span></a></li>
+          <li><a href="#k-ownership"><span lang="en">File ownership</span><span lang="vi">Sở hữu thư mục</span></a></li>
+        </ul>
+      </li>
+
+      <li><a href="#tools"><span lang="en">Three tool tracks</span><span lang="vi">Ba cách dùng Git</span></a>
+        <ul>
+          <li><a href="#t-extensions"><span lang="en">Git Extensions · Windows</span><span lang="vi">Git Extensions · Windows</span></a></li>
+          <li><a href="#t-fork"><span lang="en">Fork · Mac</span><span lang="vi">Fork · Mac</span></a></li>
+          <li><a href="#t-cli"><span lang="en">Command line</span><span lang="vi">Dòng lệnh</span></a></li>
+        </ul>
+      </li>
+
+      <li><a href="#troubleshoot"><span lang="en">Troubleshooting</span><span lang="vi">Xử lý sự cố</span></a></li>
+      <li><a href="#glossary"><span lang="en">Glossary</span><span lang="vi">Thuật ngữ</span></a></li>
+      <li><a href="#cheatsheet"><span lang="en">Cheat sheet</span><span lang="vi">Bảng tra nhanh</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- ============== MAIN ============== -->
+  <main>
+
+    <header class="doc-header">
+      <div class="doc-eyebrow" lang="en">KAFI Engineering · AI-DLC supplement</div>
+      <div class="doc-eyebrow" lang="vi">KAFI Engineering · Phụ lục AI-DLC</div>
+
+      <h1 class="doc-title" lang="en">Git for non-developers</h1>
+      <h1 class="doc-title" lang="vi">Git cho người không phải lập trình viên</h1>
+
+      <p class="doc-subtitle" lang="en">A visual, role-friendly handbook for PMs, BAs, Product Designers, and POs working inside the KAFI AI-DLC workflow. Covers Git fundamentals, the KAFI branch model, and three tool tracks: Git Extensions (Windows), Fork (Mac), and the command line.</p>
+      <p class="doc-subtitle" lang="vi">Sổ tay trực quan, viết cho PM, BA, Product Designer và PO tham gia quy trình KAFI AI-DLC. Bao gồm khái niệm Git cơ bản, mô hình nhánh KAFI, và ba cách dùng: Git Extensions (Windows), Fork (Mac), và dòng lệnh.</p>
+
+      <div class="doc-meta-row">
+        <div><strong lang="en">Version</strong><strong lang="vi">Phiên bản</strong> v0.3 · 2026-05</div>
+        <div><strong lang="en">Audience</strong><strong lang="vi">Đối tượng</strong> <span lang="en">PM · BA · PD · PO</span><span lang="vi">PM · BA · PD · PO</span></div>
+        <div><strong lang="en">Companion</strong><strong lang="vi">Tài liệu liên quan</strong> <a href="KAFI-AIDLC-Handbook-Claude.html">KAFI-AIDLC-Handbook</a></div>
+      </div>
+
+      <div class="controls">
+        <div class="control-group" role="group" aria-label="Language">
+          <button class="control-btn" data-action="lang" data-value="en" aria-pressed="true">EN</button>
+          <button class="control-btn" data-action="lang" data-value="vi" aria-pressed="false">VI</button>
+        </div>
+        <div class="control-group" role="group" aria-label="Theme">
+          <button class="control-btn" data-action="theme" data-value="light" aria-pressed="true">
+            <span lang="en">Light</span><span lang="vi">Sáng</span>
+          </button>
+          <button class="control-btn" data-action="theme" data-value="dark" aria-pressed="false">
+            <span lang="en">Dark</span><span lang="vi">Tối</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- =============================================
+         INTRO
+         ============================================= -->
+    <section id="intro">
+      <h2 lang="en">Introduction</h2>
+      <h2 lang="vi">Giới thiệu</h2>
+
+      <p class="section-intro" lang="en">In KAFI's AI-Driven Development Lifecycle (AI-DLC), every output — Vision, requirements, user stories, design specs, code — lives as a file in a Git repository. Reviews happen on files. Approvals are tracked as pull requests. Git <strong>is</strong> the audit trail. This guide teaches you everything you need to participate, even if you have never written a line of code.</p>
+      <p class="section-intro" lang="vi">Trong quy trình AI-DLC của KAFI, mọi sản phẩm — Vision, requirements, user story, design spec, code — đều tồn tại dưới dạng file trong một Git repository. Việc rà soát diễn ra trên file. Việc phê duyệt được ghi nhận qua pull request. Git <strong>chính là</strong> nhật ký kiểm toán. Tài liệu này hướng dẫn mọi điều bạn cần để tham gia, ngay cả khi bạn chưa từng viết một dòng code nào.</p>
+
+      <div class="callout callout-note">
+        <span class="callout-label" lang="en">How to read this guide</span>
+        <span class="callout-label" lang="vi">Cách đọc tài liệu này</span>
+        <div lang="en"><strong>Part 1–2</strong> covers concepts every role needs to know. <strong>Part 3</strong> shows the KAFI-specific branch model. <strong>Part 4</strong> teaches you the day-to-day mechanics in your preferred tool — pick one of Git Extensions, Fork, or the command line. <strong>Part 5</strong> is a troubleshooting reference you keep at hand. Switch language and theme any time using the toggles above.</div>
+        <div lang="vi"><strong>Phần 1–2</strong> dạy các khái niệm mà mọi vai trò đều cần nắm. <strong>Phần 3</strong> trình bày mô hình nhánh riêng của KAFI. <strong>Phần 4</strong> hướng dẫn thao tác hàng ngày trong công cụ bạn chọn — Git Extensions, Fork, hoặc dòng lệnh. <strong>Phần 5</strong> là tra cứu xử lý sự cố. Đổi ngôn ngữ và giao diện sáng/tối bất cứ lúc nào bằng nút phía trên.</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PART 1 — WHY
+         ============================================= -->
+    <div class="part-header">
+      <div class="part-tag">PART 1</div>
+      <h2 class="part-title" lang="en">Why Git matters for non-developers</h2>
+      <h2 class="part-title" lang="vi">Vì sao Git quan trọng với người phi-lập trình</h2>
+    </div>
+
+    <section id="why">
+      <p class="section-intro" lang="en">Six people (PM, BA, SA, Designer, Dev, DevOps) plus an AI agent work on one repo. Without a system, three things break: people overwrite each other, decisions get lost, and "which version is final?" becomes a daily question. Git fixes all three.</p>
+      <p class="section-intro" lang="vi">Sáu vai trò (PM, BA, SA, Designer, Dev, DevOps) cùng một AI agent làm việc trên cùng một repo. Không có hệ thống thì ba điều sẽ vỡ: mọi người ghi đè lên nhau, quyết định bị mất, và câu hỏi "bản nào là bản cuối?" trở thành chuyện thường ngày. Git giải quyết cả ba.</p>
+
+      <div class="minicard-grid minicard-grid--3">
+        <div class="minicard">
+          <h4 lang="en">Parallel work without collisions</h4>
+          <h4 lang="vi">Làm song song không đụng nhau</h4>
+          <p lang="en">PM drafts Vision while BA writes requirements while Designer mocks screens. Each has their own branch — a private timeline — so edits never overwrite each other.</p>
+          <p lang="vi">PM viết Vision, BA viết requirement, Designer mock màn hình — đồng thời. Mỗi người làm trên một nhánh riêng (timeline riêng) nên các chỉnh sửa không ghi đè lẫn nhau.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Every decision auditable</h4>
+          <h4 lang="vi">Mọi quyết định đều có dấu vết</h4>
+          <p lang="en">Each change is a commit with author, timestamp, and message. The whole history is preserved — you can replay how the project arrived at its current state.</p>
+          <p lang="vi">Mỗi thay đổi là một commit kèm tác giả, thời điểm, và mô tả. Toàn bộ lịch sử được giữ lại — bạn có thể tua lại để hiểu vì sao dự án đến được trạng thái hiện tại.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">A clear gate between draft and final</h4>
+          <h4 lang="vi">Có cửa rõ ràng giữa nháp và bản cuối</h4>
+          <p lang="en">Work-in-progress lives on a branch. To make it "official", you open a Pull Request — a review checkpoint. Only approved PRs merge into <code>main</code>. <code>main</code> is always trusted.</p>
+          <p lang="vi">Bản đang làm sống trên nhánh. Để biến nó thành "chính thức", bạn mở Pull Request — một chốt rà soát. Chỉ PR đã được duyệt mới hoà vào <code>main</code>. <code>main</code> luôn là bản đáng tin cậy.</p>
+        </div>
+      </div>
+
+      <h3 lang="en">What changes for you as a non-developer</h3>
+      <h3 lang="vi">Điều gì thay đổi với bạn (không-phải-lập-trình-viên)</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Before Git</th>
+            <th lang="vi">Trước khi có Git</th>
+            <th lang="en">With Git in AI-DLC</th>
+            <th lang="vi">Với Git trong AI-DLC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td lang="en"><strong>vision_v3_FINAL_final2.docx</strong></td>
+            <td lang="vi"><strong>vision_v3_FINAL_final2.docx</strong></td>
+            <td lang="en">One file in <code>aidlc-docs/inception/discovery/vision.md</code>. History is implicit — every version is recoverable.</td>
+            <td lang="vi">Một file duy nhất tại <code>aidlc-docs/inception/discovery/vision.md</code>. Lịch sử ngầm sẵn — mọi phiên bản đều có thể truy hồi.</td>
+          </tr>
+          <tr>
+            <td lang="en">Email approval threads scattered in inboxes</td>
+            <td lang="vi">Email phê duyệt nằm rải rác trong các hộp thư</td>
+            <td lang="en">Approval is the PR merge. Reviewers comment on the PR. All in one place, searchable.</td>
+            <td lang="vi">Phê duyệt = merge PR. Reviewer comment thẳng trên PR. Tất cả ở một nơi, tìm kiếm được.</td>
+          </tr>
+          <tr>
+            <td lang="en">"Who edited this last week?"</td>
+            <td lang="vi">"Tuần trước ai sửa cái này?"</td>
+            <td lang="en">Right-click → Blame / History. Every line has an author and timestamp.</td>
+            <td lang="vi">Chuột phải → Blame / History. Mỗi dòng đều biết ai sửa, lúc nào.</td>
+          </tr>
+          <tr>
+            <td lang="en">Conflicting edits silently lost</td>
+            <td lang="vi">Chỉnh sửa va chạm bị mất ngầm</td>
+            <td lang="en">Conflicts are surfaced visually. You decide which version wins.</td>
+            <td lang="vi">Xung đột được hiển thị rõ. Bạn quyết định bản nào thắng.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-skip">
+        <span class="callout-label" lang="en">You don't need to memorize commands</span>
+        <span class="callout-label" lang="vi">Bạn không cần nhớ lệnh</span>
+        <span lang="en">If you prefer not to use the command line, the GUI tools in Part 4 (Git Extensions on Windows, Fork on Mac) cover 95% of your daily work with point-and-click. The command line is just an alternative — pick the track that fits your habits.</span>
+        <span lang="vi">Nếu bạn không muốn dùng dòng lệnh, các công cụ GUI ở Phần 4 (Git Extensions trên Windows, Fork trên Mac) bao trùm 95% việc hàng ngày bằng thao tác bấm. Dòng lệnh chỉ là một lựa chọn — chọn track phù hợp thói quen bạn.</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PART 2 — CORE GIT CONCEPTS
+         ============================================= -->
+    <div class="part-header">
+      <div class="part-tag">PART 2</div>
+      <h2 class="part-title" lang="en">Core Git concepts</h2>
+      <h2 class="part-title" lang="vi">Khái niệm Git cốt lõi</h2>
+    </div>
+
+    <section id="concepts">
+      <p class="section-intro" lang="en">Nine ideas. Each has a one-paragraph explanation and a diagram. Read them in order — they build on each other.</p>
+      <p class="section-intro" lang="vi">Chín khái niệm. Mỗi cái có một đoạn giải thích và một sơ đồ. Đọc theo thứ tự — chúng xây dựng dần lên nhau.</p>
+    </section>
+
+    <!-- ============ Repository ============ -->
+    <section id="c-repo">
+      <h3 lang="en">1 · Repository (repo)</h3>
+      <h3 lang="vi">1 · Repository (kho code, gọi tắt là repo)</h3>
+
+      <p lang="en">A <strong>repository</strong> is a folder that Git is tracking. Whatever is inside — markdown files, design specs, code, images — Git records every version of every file. A repo has two faces: the <strong>local</strong> copy on your laptop, and the <strong>remote</strong> copy on GitHub (the shared source of truth).</p>
+      <p lang="vi">Một <strong>repository</strong> là một thư mục được Git theo dõi. Bên trong có gì — file markdown, design spec, code, hình ảnh — Git đều ghi lại mọi phiên bản của mọi file. Một repo có hai mặt: bản <strong>local</strong> trên máy bạn, và bản <strong>remote</strong> trên GitHub (nguồn chân lý chung).</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- Local laptop -->
+          <rect x="40" y="55" width="220" height="135" rx="14" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+          <text x="150" y="42" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">LOCAL · YOUR LAPTOP</text>
+          <rect x="62" y="82" width="176" height="32" rx="8" fill="none" class="diagram-stroke-soft" stroke-width="1"/>
+          <text x="150" y="103" text-anchor="middle" font-size="12" font-weight="600" class="diagram-text">/aidlc-docs/</text>
+          <rect x="62" y="124" width="176" height="32" rx="8" fill="none" class="diagram-stroke-soft" stroke-width="1"/>
+          <text x="150" y="145" text-anchor="middle" font-size="12" font-weight="600" class="diagram-text">/00-knowledge/</text>
+          <rect x="62" y="166" width="176" height="18" rx="6" fill="#00C694" opacity="0.15"/>
+          <text x="150" y="179" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">.git · hidden engine</text>
+
+          <!-- Network -->
+          <path d="M 270 122 Q 340 80 410 122" fill="none" stroke="#00C694" stroke-width="2" stroke-dasharray="5 3"/>
+          <path d="M 270 122 Q 340 164 410 122" fill="none" stroke="#00C694" stroke-width="2" stroke-dasharray="5 3"/>
+          <polygon points="408,118 416,122 408,126" fill="#00C694"/>
+          <polygon points="272,118 264,122 272,126" fill="#00C694"/>
+          <text x="340" y="76" text-anchor="middle" font-size="10.5" font-weight="600" fill="#00C694">push</text>
+          <text x="340" y="180" text-anchor="middle" font-size="10.5" font-weight="600" fill="#00C694">pull / fetch</text>
+
+          <!-- Remote -->
+          <rect x="420" y="55" width="220" height="135" rx="14" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+          <text x="530" y="42" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">REMOTE · GITHUB</text>
+          <rect x="442" y="82" width="176" height="74" rx="8" fill="#F2F4F7" opacity="0.4"/>
+          <text x="530" y="110" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">kafi-project</text>
+          <text x="530" y="130" text-anchor="middle" font-size="11" class="diagram-text-soft">main · stage/4-requirements</text>
+          <text x="530" y="146" text-anchor="middle" font-size="11" class="diagram-text-soft">stage/7-design · unit/UNIT-01</text>
+          <text x="530" y="178" text-anchor="middle" font-size="10.5" font-weight="600" class="diagram-text-muted">shared source of truth</text>
+
+          <text x="340" y="220" text-anchor="middle" font-size="11" class="diagram-text-soft" font-style="italic">Same content, two locations. You always work locally, then sync to remote.</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Local repo ↔ Remote repo · synced via push and pull</div>
+        <div class="diagram-caption" lang="vi">Repo local ↔ repo remote · đồng bộ qua push và pull</div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label" lang="en">In KAFI</span>
+        <span class="callout-label" lang="vi">Trong KAFI</span>
+        <span lang="en">Every project lives in a GitHub repository owned by KAFI. The Transformation Office creates the repo, sets folder ownership (CODEOWNERS), and seeds it with the AI-DLC skeleton (<code>CLAUDE.md</code>, <code>aidlc-rule-details/</code>, etc.). You clone it to your laptop to start working.</span>
+        <span lang="vi">Mỗi dự án nằm trong một repository GitHub thuộc sở hữu KAFI. Văn phòng Chuyển đổi tạo repo, gán chủ sở hữu thư mục (CODEOWNERS), và seed sẵn bộ khung AI-DLC (<code>CLAUDE.md</code>, <code>aidlc-rule-details/</code>, …). Bạn clone về máy để bắt đầu làm việc.</span>
+      </div>
+    </section>
+
+    <!-- ============ Four Zones ============ -->
+    <section id="c-zones">
+      <h3 lang="en">2 · The four zones</h3>
+      <h3 lang="vi">2 · Bốn vùng</h3>
+
+      <p lang="en">A file lives in one of four places at any moment. Understanding these zones is the single most important concept in Git — every command moves a file from one zone to the next.</p>
+      <p lang="vi">Một file tại mỗi thời điểm sẽ nằm ở một trong bốn vùng. Hiểu các vùng này là khái niệm quan trọng nhất trong Git — mọi lệnh đều đẩy file từ vùng này sang vùng kế.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Four zone boxes -->
+          <g>
+            <rect x="20" y="80" width="150" height="110" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="95" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">1 · WORKING DIR</text>
+            <text x="95" y="125" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">your edits</text>
+            <text x="95" y="148" text-anchor="middle" font-size="11" class="diagram-text-soft">files you can see</text>
+            <text x="95" y="164" text-anchor="middle" font-size="11" class="diagram-text-soft">and open in editor</text>
+          </g>
+          <g>
+            <rect x="200" y="80" width="150" height="110" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="275" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#F9CC4E">2 · STAGING AREA</text>
+            <text x="275" y="125" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">selected for next</text>
+            <text x="275" y="148" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">commit</text>
+            <text x="275" y="170" text-anchor="middle" font-size="11" class="diagram-text-soft">"the basket"</text>
+          </g>
+          <g>
+            <rect x="380" y="80" width="150" height="110" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="455" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#00C694">3 · LOCAL REPO</text>
+            <text x="455" y="125" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">your committed</text>
+            <text x="455" y="148" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">history</text>
+            <text x="455" y="170" text-anchor="middle" font-size="11" class="diagram-text-soft">offline, on your laptop</text>
+          </g>
+          <g>
+            <rect x="560" y="80" width="150" height="110" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="635" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#1A3CC8">4 · REMOTE REPO</text>
+            <text x="635" y="125" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">shared on GitHub</text>
+            <text x="635" y="148" text-anchor="middle" font-size="11" class="diagram-text-soft">teammates see this</text>
+            <text x="635" y="164" text-anchor="middle" font-size="11" class="diagram-text-soft">version</text>
+          </g>
+
+          <!-- Arrows between zones -->
+          <g>
+            <line x1="170" y1="120" x2="200" y2="120" stroke="#F9CC4E" stroke-width="2"/>
+            <polygon points="200,120 192,116 192,124" fill="#F9CC4E"/>
+            <text x="185" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#F9CC4E">add</text>
+          </g>
+          <g>
+            <line x1="350" y1="120" x2="380" y2="120" stroke="#00C694" stroke-width="2"/>
+            <polygon points="380,120 372,116 372,124" fill="#00C694"/>
+            <text x="365" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">commit</text>
+          </g>
+          <g>
+            <line x1="530" y1="120" x2="560" y2="120" stroke="#1A3CC8" stroke-width="2"/>
+            <polygon points="560,120 552,116 552,124" fill="#1A3CC8"/>
+            <text x="545" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#1A3CC8">push</text>
+          </g>
+          <!-- Reverse arrows -->
+          <g>
+            <path d="M 635 200 Q 635 230 95 230 Q 95 200 95 195" fill="none" stroke="#962DFF" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <polygon points="95,195 91,203 99,203" fill="#962DFF"/>
+            <text x="370" y="252" text-anchor="middle" font-size="10.5" font-weight="600" fill="#962DFF">pull · brings remote changes back to working dir</text>
+          </g>
+
+          <text x="360" y="36" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">The journey of one file</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Working Dir → Staging → Local Repo → Remote Repo · with pull bringing remote changes back</div>
+        <div class="diagram-caption" lang="vi">Working Dir → Staging → Local Repo → Remote Repo · và pull đưa thay đổi từ remote về</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Zone</th>
+            <th lang="vi">Vùng</th>
+            <th lang="en">Analogy</th>
+            <th lang="vi">Ví dụ ví von</th>
+            <th lang="en">Command to enter</th>
+            <th lang="vi">Lệnh để đưa vào</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1 · Working Directory</strong></td>
+            <td><strong>1 · Working Directory</strong></td>
+            <td lang="en">Your desk · open documents</td>
+            <td lang="vi">Mặt bàn · tài liệu đang mở</td>
+            <td><span lang="en">Just edit the file</span><span lang="vi">Cứ chỉnh file</span></td>
+            <td><span lang="en">Just edit the file</span><span lang="vi">Cứ chỉnh file</span></td>
+          </tr>
+          <tr>
+            <td><strong>2 · Staging Area</strong></td>
+            <td><strong>2 · Staging Area</strong></td>
+            <td lang="en">A shopping basket · what you've picked out</td>
+            <td lang="vi">Giỏ hàng · những món bạn đã chọn</td>
+            <td><code>git add</code></td>
+            <td><code>git add</code></td>
+          </tr>
+          <tr>
+            <td><strong>3 · Local Repository</strong></td>
+            <td><strong>3 · Local Repository</strong></td>
+            <td lang="en">A photo album · permanent snapshots on your laptop</td>
+            <td lang="vi">Album ảnh · các snapshot vĩnh viễn trên máy bạn</td>
+            <td><code>git commit</code></td>
+            <td><code>git commit</code></td>
+          </tr>
+          <tr>
+            <td><strong>4 · Remote Repository</strong></td>
+            <td><strong>4 · Remote Repository</strong></td>
+            <td lang="en">Cloud backup · what teammates see</td>
+            <td lang="vi">Cloud backup · cái mà đồng nghiệp thấy</td>
+            <td><code>git push</code></td>
+            <td><code>git push</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-watch">
+        <span class="callout-label" lang="en">The most common mistake</span>
+        <span class="callout-label" lang="vi">Lỗi thường gặp nhất</span>
+        <span lang="en">"I committed my changes but my teammate doesn't see them." Committing only puts changes in zone 3 (local). To share, you must <strong>push</strong> to zone 4 (remote). The reverse is also true: a teammate's commit isn't on your laptop until you <strong>pull</strong>.</span>
+        <span lang="vi">"Tôi đã commit rồi nhưng đồng nghiệp không thấy." Commit chỉ đưa thay đổi vào vùng 3 (local). Muốn chia sẻ phải <strong>push</strong> sang vùng 4 (remote). Ngược lại cũng vậy: commit của đồng nghiệp chưa nằm trên máy bạn cho tới khi bạn <strong>pull</strong>.</span>
+      </div>
+    </section>
+
+    <!-- ============ Commit ============ -->
+    <section id="c-commit">
+      <h3 lang="en">3 · Commit</h3>
+      <h3 lang="vi">3 · Commit</h3>
+
+      <p lang="en">A <strong>commit</strong> is a saved snapshot of every file in the repo at a single moment, plus a short message explaining why. Each commit has a unique fingerprint (hash) like <code>a3f5c2e</code>. Commits are immutable — once made, they don't change. The full history of commits is the project's narrative.</p>
+      <p lang="vi">Một <strong>commit</strong> là một snapshot toàn bộ file trong repo tại một thời điểm, kèm một mô tả ngắn giải thích vì sao. Mỗi commit có một dấu vân tay duy nhất (hash) kiểu <code>a3f5c2e</code>. Commit là bất biến — đã tạo thì không thay đổi nữa. Toàn bộ lịch sử commit chính là dòng kể của dự án.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="40" y1="100" x2="660" y2="100" stroke="#00C694" stroke-width="3" stroke-linecap="round"/>
+          <!-- commits -->
+          <g>
+            <circle cx="80" cy="100" r="10" fill="#00C694"/>
+            <text x="80" y="138" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono, monospace" class="diagram-text-muted">a3f5c2e</text>
+            <text x="80" y="80" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">v0 setup</text>
+            <text x="80" y="160" text-anchor="middle" font-size="10" class="diagram-text-soft">PM · Mon</text>
+          </g>
+          <g>
+            <circle cx="200" cy="100" r="10" fill="#00C694"/>
+            <text x="200" y="138" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono, monospace" class="diagram-text-muted">d7e1a90</text>
+            <text x="200" y="80" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">Vision draft</text>
+            <text x="200" y="160" text-anchor="middle" font-size="10" class="diagram-text-soft">PM · Tue</text>
+          </g>
+          <g>
+            <circle cx="320" cy="100" r="10" fill="#00C694"/>
+            <text x="320" y="138" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono, monospace" class="diagram-text-muted">f4b8c11</text>
+            <text x="320" y="80" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">Vision §2 + §3</text>
+            <text x="320" y="160" text-anchor="middle" font-size="10" class="diagram-text-soft">PM · Tue</text>
+          </g>
+          <g>
+            <circle cx="440" cy="100" r="10" fill="#00C694"/>
+            <text x="440" y="138" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono, monospace" class="diagram-text-muted">9c0a2d4</text>
+            <text x="440" y="80" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">REQ-01..REQ-12</text>
+            <text x="440" y="160" text-anchor="middle" font-size="10" class="diagram-text-soft">BA · Wed</text>
+          </g>
+          <g>
+            <circle cx="560" cy="100" r="12" fill="#FFFFFF" stroke="#00C694" stroke-width="3"/>
+            <text x="560" y="138" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono, monospace" class="diagram-text-muted">HEAD</text>
+            <text x="560" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#00C694">where you are now</text>
+            <text x="560" y="160" text-anchor="middle" font-size="10" class="diagram-text-soft">BA · Wed</text>
+          </g>
+          <text x="350" y="30" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">Commits flow left → right, oldest → newest</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Each commit is a permanent snapshot · the chain is the project history</div>
+        <div class="diagram-caption" lang="vi">Mỗi commit là một snapshot vĩnh viễn · chuỗi commit chính là lịch sử dự án</div>
+      </div>
+
+      <h4 lang="en">Anatomy of a commit (KAFI format)</h4>
+      <h4 lang="vi">Cấu trúc một commit (theo định dạng KAFI)</h4>
+      <pre class="code-block"><span class="kw">Subject:</span>  Stage 4: Requirements — REQ-01 to REQ-12
+
+<span class="kw">Body:</span>     Produced: requirements.md (12 REQs)
+          KB cited: arch/treasury.md §3, glossary.md
+          Open items: L2 role taxonomy
+
+<span class="kw">Footer:</span>   Related: REQ-01..REQ-12, ADR-03
+
+<span class="cm"># Hash assigned by Git: 9c0a2d4...</span>
+<span class="cm"># Author + timestamp recorded automatically</span></pre>
+
+      <div class="callout">
+        <span class="callout-label" lang="en">Why messages matter</span>
+        <span class="callout-label" lang="vi">Vì sao message quan trọng</span>
+        <span lang="en">Three months later, when someone asks "why does requirement REQ-07 exist?", the commit message is how you find out. Lazy messages like "update" or "fix" are unhelpful. The KAFI format always names the stage and the artifact produced.</span>
+        <span lang="vi">Ba tháng sau, khi có người hỏi "vì sao tồn tại REQ-07?", commit message là cách bạn tìm ra. Message lười biếng kiểu "update" hoặc "fix" vô dụng. Định dạng KAFI luôn gọi tên stage và artifact được tạo ra.</span>
+      </div>
+    </section>
+
+    <!-- ============ Branch ============ -->
+    <section id="c-branch">
+      <h3 lang="en">4 · Branch (nhánh)</h3>
+      <h3 lang="vi">4 · Branch (nhánh)</h3>
+
+      <p lang="en">A <strong>branch</strong> is a parallel timeline of commits. The main timeline is called <code>main</code> — the official, approved version. When you start work, you create a new branch off <code>main</code>, do your commits there, and merge back only when reviewed. Branches let multiple people work simultaneously without stepping on each other.</p>
+      <p lang="vi">Một <strong>branch</strong> là một timeline commit song song. Timeline chính gọi là <code>main</code> — bản chính thức, đã được duyệt. Khi bắt đầu việc, bạn tạo một nhánh mới rẽ ra từ <code>main</code>, commit ở đó, và chỉ gộp về sau khi đã rà soát. Branch cho phép nhiều người làm song song mà không đụng nhau.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+          <!-- main line -->
+          <line x1="40" y1="90" x2="660" y2="90" stroke="#00C694" stroke-width="3" stroke-linecap="round"/>
+          <text x="20" y="94" font-size="11" font-weight="700" fill="#00C694">main</text>
+
+          <!-- main commits -->
+          <circle cx="80" cy="90" r="8" fill="#00C694"/>
+          <circle cx="180" cy="90" r="8" fill="#00C694"/>
+          <circle cx="540" cy="90" r="8" fill="#00C694"/>
+          <circle cx="620" cy="90" r="10" fill="#FFFFFF" stroke="#00C694" stroke-width="3"/>
+
+          <!-- branch 1 -->
+          <path d="M 180 90 C 220 90 240 140 260 160" stroke="#1A3CC8" stroke-width="2.5" fill="none"/>
+          <line x1="260" y1="160" x2="500" y2="160" stroke="#1A3CC8" stroke-width="2.5"/>
+          <path d="M 500 160 C 520 160 530 100 540 90" stroke="#1A3CC8" stroke-width="2.5" fill="none"/>
+          <circle cx="280" cy="160" r="7" fill="#1A3CC8"/>
+          <circle cx="360" cy="160" r="7" fill="#1A3CC8"/>
+          <circle cx="440" cy="160" r="7" fill="#1A3CC8"/>
+          <text x="370" y="184" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1A3CC8">stage/4-requirements · BA</text>
+          <text x="370" y="200" text-anchor="middle" font-size="10" class="diagram-text-soft">3 commits · merged back via PR</text>
+
+          <!-- branch 2 -->
+          <path d="M 180 90 C 240 90 260 220 290 240" stroke="#962DFF" stroke-width="2.5" fill="none"/>
+          <line x1="290" y1="240" x2="430" y2="240" stroke="#962DFF" stroke-width="2.5"/>
+          <circle cx="310" cy="240" r="7" fill="#962DFF"/>
+          <circle cx="370" cy="240" r="7" fill="#962DFF"/>
+          <circle cx="420" cy="240" r="7" fill="#962DFF"/>
+          <text x="370" y="264" text-anchor="middle" font-size="11.5" font-weight="700" fill="#962DFF">stage/7-design · Designer</text>
+          <text x="370" y="280" text-anchor="middle" font-size="10" class="diagram-text-soft">in progress · not merged yet</text>
+
+          <!-- labels -->
+          <text x="80" y="74" text-anchor="middle" font-size="10" class="diagram-text-soft">v0 setup</text>
+          <text x="180" y="74" text-anchor="middle" font-size="10" class="diagram-text-soft">Vision merged</text>
+          <text x="540" y="74" text-anchor="middle" font-size="10" class="diagram-text-soft">Reqs merged</text>
+          <text x="620" y="74" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">latest main</text>
+
+          <text x="350" y="30" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">Branches: two people working in parallel, both rooted in main</text>
+        </svg>
+        <div class="diagram-caption" lang="en">BA's requirements branch was reviewed and merged back · Designer's branch is still open</div>
+        <div class="diagram-caption" lang="vi">Nhánh requirements của BA đã được rà soát và gộp về · nhánh của Designer vẫn đang mở</div>
+      </div>
+
+      <div class="minicard-grid minicard-grid--2">
+        <div class="minicard">
+          <h4 lang="en">Why branch at all?</h4>
+          <h4 lang="vi">Vì sao phải dùng nhánh?</h4>
+          <p lang="en">Without branches, every change goes straight into <code>main</code>. Half-finished work breaks the official version. With branches, you experiment freely on your own timeline — your half-finished Vision draft can't affect anyone else.</p>
+          <p lang="vi">Không có nhánh, mọi thay đổi đi thẳng vào <code>main</code>. Việc dở dang sẽ làm vỡ bản chính thức. Có nhánh, bạn thử nghiệm thoải mái trên timeline riêng — Vision viết dở của bạn không ảnh hưởng ai khác.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">A branch is a label, not a copy</h4>
+          <h4 lang="vi">Branch là một nhãn, không phải bản sao</h4>
+          <p lang="en">Creating a branch is instant. Git doesn't duplicate files — it just adds a pointer ("this name = this commit"). That's why teams can have dozens of branches without bloating the repo.</p>
+          <p lang="vi">Tạo branch là tức thì. Git không sao chép file — nó chỉ thêm một con trỏ ("tên này = commit này"). Vì vậy đội có thể có hàng chục branch mà repo vẫn không phình to.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Checkout ============ -->
+    <section id="c-checkout">
+      <h3 lang="en">5 · Checkout — switching lanes</h3>
+      <h3 lang="vi">5 · Checkout — chuyển làn</h3>
+
+      <p lang="en"><strong>Checkout</strong> means "switch my working directory to a different branch (or commit)". The files on disk physically change to match whatever you check out. It's like flipping the train track — you stay in the same station, but the next car arriving is from a different line.</p>
+      <p lang="vi"><strong>Checkout</strong> nghĩa là "chuyển working directory của tôi sang một nhánh khác (hoặc commit khác)". Các file trên đĩa sẽ vật lý thay đổi để khớp với cái bạn checkout. Giống như bẻ đường ray — bạn vẫn ở cùng một ga, nhưng toa kế tiếp đến là của tuyến khác.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- BEFORE -->
+          <text x="160" y="32" text-anchor="middle" font-size="11.5" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">BEFORE CHECKOUT</text>
+          <line x1="40" y1="80" x2="280" y2="80" stroke="#00C694" stroke-width="2.5"/>
+          <circle cx="80" cy="80" r="7" fill="#00C694"/>
+          <circle cx="160" cy="80" r="7" fill="#00C694"/>
+          <line x1="160" y1="80" x2="180" y2="120" stroke="#1A3CC8" stroke-width="2"/>
+          <line x1="180" y1="120" x2="280" y2="120" stroke="#1A3CC8" stroke-width="2.5"/>
+          <circle cx="220" cy="120" r="7" fill="#1A3CC8"/>
+          <circle cx="270" cy="120" r="10" fill="#FFFFFF" stroke="#1A3CC8" stroke-width="3"/>
+          <text x="270" y="142" text-anchor="middle" font-size="10" font-weight="700" fill="#1A3CC8">HEAD</text>
+          <text x="40" y="65" font-size="10" fill="#00C694">main</text>
+          <text x="170" y="160" font-size="10" fill="#1A3CC8">stage/4-requirements</text>
+          <rect x="40" y="180" width="240" height="50" rx="8" fill="#EEF2FF" opacity="0.5"/>
+          <text x="160" y="200" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">working dir shows</text>
+          <text x="160" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#1A3CC8">requirements.md (draft)</text>
+
+          <!-- Arrow -->
+          <text x="350" y="135" text-anchor="middle" font-size="24" fill="#00C694">→</text>
+          <text x="350" y="158" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">git checkout main</text>
+
+          <!-- AFTER -->
+          <text x="540" y="32" text-anchor="middle" font-size="11.5" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">AFTER CHECKOUT</text>
+          <line x1="420" y1="80" x2="660" y2="80" stroke="#00C694" stroke-width="2.5"/>
+          <circle cx="460" cy="80" r="7" fill="#00C694"/>
+          <circle cx="540" cy="80" r="10" fill="#FFFFFF" stroke="#00C694" stroke-width="3"/>
+          <text x="540" y="60" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">HEAD</text>
+          <line x1="540" y1="80" x2="560" y2="120" stroke="#1A3CC8" stroke-width="2"/>
+          <line x1="560" y1="120" x2="660" y2="120" stroke="#1A3CC8" stroke-width="2.5"/>
+          <circle cx="600" cy="120" r="7" fill="#1A3CC8"/>
+          <circle cx="650" cy="120" r="7" fill="#1A3CC8"/>
+          <text x="420" y="65" font-size="10" fill="#00C694">main</text>
+          <text x="550" y="160" font-size="10" fill="#1A3CC8">stage/4-requirements</text>
+          <rect x="420" y="180" width="240" height="50" rx="8" fill="#E6FBF4" opacity="0.7"/>
+          <text x="540" y="200" text-anchor="middle" font-size="11" font-weight="600" class="diagram-text">working dir shows</text>
+          <text x="540" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#07756D">requirements.md (approved version)</text>
+        </svg>
+        <div class="diagram-caption" lang="en">HEAD moves to a different branch — your files change to match it</div>
+        <div class="diagram-caption" lang="vi">HEAD chuyển sang nhánh khác — file của bạn thay đổi theo</div>
+      </div>
+
+      <div class="callout callout-watch">
+        <span class="callout-label" lang="en">Save before you switch</span>
+        <span class="callout-label" lang="vi">Lưu trước khi chuyển</span>
+        <span lang="en">Git won't let you check out a different branch if you have uncommitted changes in working dir that would be overwritten. Either commit them first, or stash them (a temporary set-aside). Both tools in Part 4 prompt you for this automatically.</span>
+        <span lang="vi">Git sẽ chặn không cho checkout sang nhánh khác nếu working dir của bạn còn thay đổi chưa commit và sẽ bị ghi đè. Hoặc bạn commit trước, hoặc stash lại (đặt tạm sang một bên). Cả hai công cụ ở Phần 4 đều nhắc bạn tự động.</span>
+      </div>
+    </section>
+
+    <!-- ============ Push / Pull / Fetch ============ -->
+    <section id="c-pushpull">
+      <h3 lang="en">6 · Push, Pull, Fetch</h3>
+      <h3 lang="vi">6 · Push, Pull, Fetch</h3>
+
+      <p lang="en">Three commands move commits between your laptop and GitHub. <strong>Push</strong> sends your local commits up. <strong>Fetch</strong> downloads remote commits without changing your files (read-only check). <strong>Pull</strong> = fetch + merge: it downloads <em>and</em> applies the remote changes to your current branch.</p>
+      <p lang="vi">Ba lệnh chuyển commit giữa máy bạn và GitHub. <strong>Push</strong> đẩy commit local lên trên. <strong>Fetch</strong> tải commit remote về nhưng không đụng file của bạn (chỉ ngó). <strong>Pull</strong> = fetch + merge: vừa tải xuống vừa áp dụng vào nhánh đang đứng.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Local -->
+          <rect x="40" y="60" width="240" height="180" rx="14" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+          <text x="160" y="44" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">YOUR LAPTOP</text>
+          <line x1="70" y1="110" x2="250" y2="110" stroke="#00C694" stroke-width="2"/>
+          <circle cx="100" cy="110" r="6" fill="#00C694"/>
+          <circle cx="160" cy="110" r="6" fill="#00C694"/>
+          <circle cx="220" cy="110" r="8" fill="#FFFFFF" stroke="#00C694" stroke-width="2.5"/>
+          <text x="220" y="92" text-anchor="middle" font-size="10" fill="#00C694">your work</text>
+
+          <line x1="70" y1="180" x2="250" y2="180" stroke="#1A3CC8" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="100" cy="180" r="5" fill="#1A3CC8" opacity="0.5"/>
+          <circle cx="160" cy="180" r="5" fill="#1A3CC8" opacity="0.5"/>
+          <text x="160" y="208" text-anchor="middle" font-size="10" fill="#1A3CC8" font-style="italic">local cache of remote (origin/main)</text>
+
+          <!-- Remote -->
+          <rect x="420" y="60" width="240" height="180" rx="14" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+          <text x="540" y="44" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">GITHUB · ORIGIN</text>
+          <line x1="450" y1="140" x2="630" y2="140" stroke="#1A3CC8" stroke-width="2"/>
+          <circle cx="480" cy="140" r="6" fill="#1A3CC8"/>
+          <circle cx="540" cy="140" r="6" fill="#1A3CC8"/>
+          <circle cx="600" cy="140" r="6" fill="#1A3CC8"/>
+          <text x="540" y="118" text-anchor="middle" font-size="10" fill="#1A3CC8">team's shared timeline</text>
+
+          <!-- Arrows -->
+          <path d="M 280 100 Q 350 70 420 100" stroke="#00C694" stroke-width="2" fill="none"/>
+          <polygon points="418,96 426,100 418,104" fill="#00C694"/>
+          <text x="350" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#00C694">push</text>
+          <text x="350" y="78" text-anchor="middle" font-size="10" class="diagram-text-soft">send commits up</text>
+
+          <path d="M 420 160 Q 350 200 280 160" stroke="#962DFF" stroke-width="2" fill="none"/>
+          <polygon points="282,164 274,160 282,156" fill="#962DFF"/>
+          <text x="350" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#962DFF">pull / fetch</text>
+          <text x="350" y="236" text-anchor="middle" font-size="10" class="diagram-text-soft">bring commits down</text>
+
+          <text x="350" y="266" text-anchor="middle" font-size="11" class="diagram-text-soft" font-style="italic">Always pull before you start work · push when a chunk is ready</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Sync flow between your laptop and GitHub</div>
+        <div class="diagram-caption" lang="vi">Luồng đồng bộ giữa máy bạn và GitHub</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Command</th>
+            <th lang="vi">Lệnh</th>
+            <th lang="en">What it does</th>
+            <th lang="vi">Tác dụng</th>
+            <th lang="en">When you use it</th>
+            <th lang="vi">Khi nào dùng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>git push</code></td>
+            <td><code>git push</code></td>
+            <td lang="en">Upload local commits to GitHub</td>
+            <td lang="vi">Đẩy commit local lên GitHub</td>
+            <td lang="en">End of stage · ready to open PR</td>
+            <td lang="vi">Kết thúc stage · sẵn sàng mở PR</td>
+          </tr>
+          <tr>
+            <td><code>git fetch</code></td>
+            <td><code>git fetch</code></td>
+            <td lang="en">Check what's new on GitHub (no changes to your files)</td>
+            <td lang="vi">Kiểm tra xem GitHub có gì mới (không động vào file của bạn)</td>
+            <td lang="en">Curious about teammates' progress</td>
+            <td lang="vi">Muốn xem đồng nghiệp tiến tới đâu</td>
+          </tr>
+          <tr>
+            <td><code>git pull</code></td>
+            <td><code>git pull</code></td>
+            <td lang="en">Fetch + merge into your current branch</td>
+            <td lang="vi">Fetch + merge vào nhánh đang đứng</td>
+            <td lang="en">Start of every session · keep up with main</td>
+            <td lang="vi">Đầu mỗi phiên làm · cập nhật main</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ Merge ============ -->
+    <section id="c-merge">
+      <h3 lang="en">7 · Merge — joining timelines</h3>
+      <h3 lang="vi">7 · Merge — gộp các timeline</h3>
+
+      <p lang="en"><strong>Merge</strong> takes the commits from one branch and joins them into another. The destination branch (usually <code>main</code>) gets a new commit — the "merge commit" — that has two parents: the previous tip of <code>main</code> and the tip of the merged branch. After merging, the branch's work is now part of the official history.</p>
+      <p lang="vi"><strong>Merge</strong> lấy commit từ một nhánh và nhập vào nhánh khác. Nhánh đích (thường là <code>main</code>) nhận một commit mới — "merge commit" — có hai bố mẹ: đầu cũ của <code>main</code> và đầu của nhánh được merge. Sau khi merge, công việc trên nhánh đó đã thành một phần lịch sử chính thức.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- main line -->
+          <line x1="40" y1="120" x2="660" y2="120" stroke="#00C694" stroke-width="3"/>
+          <circle cx="80" cy="120" r="8" fill="#00C694"/>
+          <circle cx="180" cy="120" r="8" fill="#00C694"/>
+          <circle cx="540" cy="120" r="11" fill="#FFFFFF" stroke="#00C694" stroke-width="3.5"/>
+          <text x="540" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#00C694">merge commit</text>
+          <text x="540" y="150" text-anchor="middle" font-size="9.5" fill="#00C694">m1k9p3z</text>
+          <text x="20" y="124" font-size="11" font-weight="700" fill="#00C694">main</text>
+
+          <!-- branch -->
+          <path d="M 180 120 C 220 120 240 170 280 180" stroke="#1A3CC8" stroke-width="2.5" fill="none"/>
+          <line x1="280" y1="180" x2="480" y2="180" stroke="#1A3CC8" stroke-width="2.5"/>
+          <path d="M 480 180 C 510 180 525 140 540 120" stroke="#1A3CC8" stroke-width="2.5" fill="none"/>
+          <circle cx="320" cy="180" r="7" fill="#1A3CC8"/>
+          <circle cx="400" cy="180" r="7" fill="#1A3CC8"/>
+          <circle cx="470" cy="180" r="7" fill="#1A3CC8"/>
+          <text x="400" y="208" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1A3CC8">stage/4-requirements</text>
+          <text x="400" y="224" text-anchor="middle" font-size="10" class="diagram-text-soft">3 commits</text>
+
+          <!-- Annotations -->
+          <text x="350" y="50" text-anchor="middle" font-size="13" font-weight="700" class="diagram-text">Merge collapses branch work into main</text>
+          <text x="540" y="80" text-anchor="middle" font-size="10.5" class="diagram-text-soft" font-style="italic">two parents → one timeline going forward</text>
+        </svg>
+        <div class="diagram-caption" lang="en">After merge: branch commits live inside main's history forever</div>
+        <div class="diagram-caption" lang="vi">Sau merge: commit của nhánh sống trong lịch sử main mãi mãi</div>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-label" lang="en">In KAFI you rarely run merge yourself</span>
+        <span class="callout-label" lang="vi">Trong KAFI bạn hiếm khi tự chạy merge</span>
+        <span lang="en">The merge into <code>main</code> happens automatically when a Pull Request is approved on GitHub. You merge only in two cases: (1) bringing fresh <code>main</code> changes into your own branch while you work, (2) resolving a conflict.</span>
+        <span lang="vi">Việc merge vào <code>main</code> diễn ra tự động khi Pull Request được duyệt trên GitHub. Bạn chỉ phải merge thủ công trong hai trường hợp: (1) kéo thay đổi mới từ <code>main</code> về nhánh của bạn khi đang làm, (2) xử lý conflict.</span>
+      </div>
+    </section>
+
+    <!-- ============ Pull Request ============ -->
+    <section id="c-pr">
+      <h3 lang="en">8 · Pull Request (PR) — the review gate</h3>
+      <h3 lang="vi">8 · Pull Request (PR) — cửa rà soát</h3>
+
+      <p lang="en">A <strong>Pull Request</strong> is a formal proposal on GitHub: "please review my branch and, if approved, merge it into <code>main</code>." It's a conversation around the diff — reviewers comment line-by-line, request changes, or approve. In KAFI, every stage ends by opening a PR.</p>
+      <p lang="vi">Một <strong>Pull Request</strong> là lời đề nghị chính thức trên GitHub: "vui lòng rà soát nhánh của tôi và, nếu được, hãy merge vào <code>main</code>." Nó là một cuộc trao đổi quanh diff — reviewer comment từng dòng, yêu cầu sửa, hoặc duyệt. Trong KAFI, mỗi stage kết thúc bằng việc mở PR.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Steps -->
+          <g>
+            <rect x="20" y="80" width="140" height="100" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="90" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#1A3CC8">1 · WORK</text>
+            <text x="90" y="120" text-anchor="middle" font-size="12" font-weight="700" class="diagram-text">commit on</text>
+            <text x="90" y="138" text-anchor="middle" font-size="12" font-weight="700" class="diagram-text">your branch</text>
+            <text x="90" y="158" text-anchor="middle" font-size="10" class="diagram-text-soft">local laptop</text>
+          </g>
+          <text x="170" y="135" text-anchor="middle" font-size="20" fill="#00C694">→</text>
+          <g>
+            <rect x="185" y="80" width="140" height="100" rx="12" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+            <text x="255" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#1A3CC8">2 · PUSH</text>
+            <text x="255" y="120" text-anchor="middle" font-size="12" font-weight="700" class="diagram-text">push branch</text>
+            <text x="255" y="138" text-anchor="middle" font-size="12" font-weight="700" class="diagram-text">to GitHub</text>
+            <text x="255" y="158" text-anchor="middle" font-size="10" class="diagram-text-soft">teammates can see it</text>
+          </g>
+          <text x="335" y="135" text-anchor="middle" font-size="20" fill="#00C694">→</text>
+          <g>
+            <rect x="350" y="80" width="140" height="100" rx="12" fill="#FFF8E1" stroke="#A05C00" stroke-width="1.5"/>
+            <text x="420" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#A05C00">3 · OPEN PR</text>
+            <text x="420" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#A05C00">review</text>
+            <text x="420" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#A05C00">conversation</text>
+            <text x="420" y="158" text-anchor="middle" font-size="10" fill="#A05C00">comments + approvals</text>
+          </g>
+          <text x="500" y="135" text-anchor="middle" font-size="20" fill="#00C694">→</text>
+          <g>
+            <rect x="515" y="80" width="140" height="100" rx="12" fill="#E6FBF4" stroke="#07756D" stroke-width="1.5"/>
+            <text x="585" y="64" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#07756D">4 · MERGE</text>
+            <text x="585" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#07756D">approve →</text>
+            <text x="585" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#07756D">into main</text>
+            <text x="585" y="158" text-anchor="middle" font-size="10" fill="#07756D">official version</text>
+          </g>
+
+          <!-- Comments callout -->
+          <path d="M 420 180 L 420 210" stroke="#A05C00" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <rect x="280" y="210" width="280" height="50" rx="8" fill="#FFF8E1" stroke="#A05C00" stroke-width="1"/>
+          <text x="420" y="232" text-anchor="middle" font-size="11" font-weight="600" fill="#A05C00">"REQ-04 lacks measurable acceptance"</text>
+          <text x="420" y="248" text-anchor="middle" font-size="10" class="diagram-text-soft" font-style="italic">→ author pushes more commits to the branch</text>
+        </svg>
+        <div class="diagram-caption" lang="en">PR life cycle · review happens between push and merge</div>
+        <div class="diagram-caption" lang="vi">Vòng đời PR · rà soát diễn ra giữa push và merge</div>
+      </div>
+
+      <h4 lang="en">What a KAFI PR looks like</h4>
+      <h4 lang="vi">Một PR theo chuẩn KAFI trông thế nào</h4>
+      <pre class="code-block"><span class="br">Title:</span>   Stage 4: Requirements — closes gate
+
+<span class="br">Body:</span>
+  Outputs:
+  - aidlc-docs/inception/requirements/requirements.md (12 REQs)
+  - aidlc-docs/inception/requirements/verification-questions.md (3)
+
+  KB cited: arch/treasury.md §3, glossary.md
+  Open items: L2 role taxonomy
+
+  Closes gate: <span class="kw">Continue to Stage 5</span>
+
+<span class="cm"># Reviewers (from CODEOWNERS): PM + BA team</span>
+<span class="cm"># Required checks: parity check, link check</span></pre>
+
+      <div class="callout">
+        <span class="callout-label" lang="en">Reviewers comment on files, not in chat</span>
+        <span class="callout-label" lang="vi">Reviewer comment trên file, không phải trong chat</span>
+        <span lang="en">PR comments are anchored to specific lines. That means feedback like "this REQ doesn't have acceptance criteria" stays attached to the exact requirement forever. Compare that to a Slack thread that vanishes in 48 hours.</span>
+        <span lang="vi">Comment trên PR được gắn vào dòng cụ thể. Nghĩa là feedback kiểu "REQ này thiếu acceptance criteria" sẽ dính vào đúng requirement đó mãi mãi. So với một thread Slack biến mất sau 48 giờ.</span>
+      </div>
+    </section>
+
+    <!-- ============ Conflict ============ -->
+    <section id="c-conflict">
+      <h3 lang="en">9 · Conflict — when two branches edit the same line</h3>
+      <h3 lang="vi">9 · Conflict — khi hai nhánh sửa cùng một dòng</h3>
+
+      <p lang="en">A <strong>conflict</strong> happens when Git can't automatically combine two changes — usually because two people edited the same line of the same file. Git pauses the merge and asks you to choose. Conflicts feel scary the first time but the resolution is mechanical: read both versions, pick the right one (or combine), save, continue.</p>
+      <p lang="vi">Một <strong>conflict</strong> xảy ra khi Git không thể tự động hợp hai thay đổi — thường vì hai người sửa cùng một dòng của cùng một file. Git tạm dừng việc merge và hỏi bạn chọn. Lần đầu thấy conflict có thể sợ nhưng cách xử lý đơn giản: đọc cả hai phiên bản, chọn đúng (hoặc kết hợp), lưu, tiếp tục.</p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- File before -->
+          <text x="120" y="32" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" class="diagram-text-muted">FILE WITH CONFLICT</text>
+          <rect x="20" y="50" width="200" height="180" rx="8" fill="none" class="diagram-stroke" stroke-width="1.5"/>
+          <text x="35" y="74" font-family="JetBrains Mono, monospace" font-size="11" class="diagram-text">REQ-01: Bond capture</text>
+          <text x="35" y="92" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#B02020">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</text>
+          <text x="35" y="110" font-family="JetBrains Mono, monospace" font-size="11" class="diagram-text">Priority: Must</text>
+          <text x="35" y="128" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#B02020">=======</text>
+          <text x="35" y="146" font-family="JetBrains Mono, monospace" font-size="11" class="diagram-text">Priority: Should</text>
+          <text x="35" y="164" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#B02020">&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</text>
+          <text x="35" y="182" font-family="JetBrains Mono, monospace" font-size="11" class="diagram-text">Source: Vision §2</text>
+
+          <!-- Annotations -->
+          <line x1="220" y1="100" x2="290" y2="80" stroke="#1A3CC8" stroke-width="1" stroke-dasharray="3 2"/>
+          <rect x="290" y="70" width="170" height="40" rx="6" fill="#EEF2FF"/>
+          <text x="375" y="86" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1A3CC8">YOUR version (HEAD)</text>
+          <text x="375" y="102" text-anchor="middle" font-size="10" fill="#1A3CC8">what's in your branch</text>
+
+          <line x1="220" y1="148" x2="290" y2="170" stroke="#962DFF" stroke-width="1" stroke-dasharray="3 2"/>
+          <rect x="290" y="155" width="170" height="40" rx="6" fill="#F5EEFF"/>
+          <text x="375" y="171" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6B1FB8">THEIR version (main)</text>
+          <text x="375" y="187" text-anchor="middle" font-size="10" fill="#6B1FB8">what's on main now</text>
+
+          <!-- Resolution arrow -->
+          <text x="510" y="125" text-anchor="middle" font-size="20" fill="#00C694">→</text>
+          <text x="510" y="145" text-anchor="middle" font-size="9.5" font-weight="700" fill="#00C694">you decide</text>
+
+          <!-- After -->
+          <text x="610" y="32" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="0.08em" fill="#07756D">RESOLVED</text>
+          <rect x="540" y="80" width="160" height="100" rx="8" fill="#E6FBF4" stroke="#07756D" stroke-width="1.5"/>
+          <text x="555" y="104" font-family="JetBrains Mono, monospace" font-size="11" fill="#07756D">REQ-01: Bond capture</text>
+          <text x="555" y="124" font-family="JetBrains Mono, monospace" font-size="11" fill="#07756D">Priority: Must</text>
+          <text x="555" y="144" font-family="JetBrains Mono, monospace" font-size="11" fill="#07756D">Source: Vision §2</text>
+          <text x="620" y="172" text-anchor="middle" font-size="10" class="diagram-text-soft" font-style="italic">markers gone</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Git marks both sides with <code>&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;</code> · you choose the final wording</div>
+        <div class="diagram-caption" lang="vi">Git đánh dấu cả hai phía bằng <code>&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;</code> · bạn chọn bản cuối</div>
+      </div>
+
+      <div class="minicard-grid minicard-grid--3">
+        <div class="minicard">
+          <h4 lang="en">Read both sides</h4>
+          <h4 lang="vi">Đọc cả hai phía</h4>
+          <p lang="en">The text between <code>&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> is yours. Below <code>=======</code> down to <code>&gt;&gt;&gt;&gt;&gt;&gt;</code> is the other version.</p>
+          <p lang="vi">Đoạn giữa <code>&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> và <code>=======</code> là của bạn. Phía dưới <code>=======</code> đến <code>&gt;&gt;&gt;&gt;&gt;&gt;</code> là bản kia.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Decide intent</h4>
+          <h4 lang="vi">Quyết định ý đúng</h4>
+          <p lang="en">Pick one, both, or rewrite. Talk to the other author if you don't know which is correct. Don't guess.</p>
+          <p lang="vi">Chọn một bên, cả hai, hoặc viết lại. Hỏi tác giả bên kia nếu bạn không chắc bản nào đúng. Đừng đoán.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Delete the markers</h4>
+          <h4 lang="vi">Xoá các dấu</h4>
+          <p lang="en">Remove <code>&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;</code> lines completely. Save the file. Then commit — that finishes the merge.</p>
+          <p lang="vi">Xoá hoàn toàn các dòng <code>&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;</code>. Lưu file. Rồi commit — vậy là kết thúc merge.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-watch">
+        <span class="callout-label" lang="en">KAFI · audit.md is special</span>
+        <span class="callout-label" lang="vi">KAFI · audit.md là trường hợp đặc biệt</span>
+        <span lang="en"><code>aidlc-docs/audit.md</code> is append-only and will conflict on almost every merge. The rule is simple: <strong>keep both sides</strong> in chronological order, then delete the markers. Both tools in Part 4 have a one-click option for this.</span>
+        <span lang="vi"><code>aidlc-docs/audit.md</code> là append-only và sẽ luôn conflict ở hầu hết các merge. Quy tắc đơn giản: <strong>giữ cả hai phía</strong> theo thứ tự thời gian, rồi xoá các dấu. Cả hai công cụ ở Phần 4 đều có nút một-bấm để xử lý.</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PART 3 — KAFI BRANCH MODEL
+         ============================================= -->
+    <div class="part-header">
+      <div class="part-tag">PART 3</div>
+      <h2 class="part-title" lang="en">The KAFI branch model</h2>
+      <h2 class="part-title" lang="vi">Mô hình nhánh của KAFI</h2>
+    </div>
+
+    <section id="kafi-model">
+      <p class="section-intro" lang="en">Generic Git is just plumbing. KAFI AI-DLC adds three concrete rules that make six roles plus an AI agent work in one repo without collisions:</p>
+      <p class="section-intro" lang="vi">Git nguyên bản chỉ là đường ống. KAFI AI-DLC thêm ba quy tắc cụ thể để sáu vai trò cùng AI agent có thể làm việc trên một repo không đụng nhau:</p>
+
+      <div class="minicard-grid minicard-grid--3">
+        <div class="minicard">
+          <h4 lang="en">Rule 1</h4>
+          <h4 lang="vi">Quy tắc 1</h4>
+          <h3 lang="en">stage = branch</h3>
+          <h3 lang="vi">stage = branch</h3>
+          <p lang="en">Each AI-DLC stage gets its own branch. Stage 4 → <code>stage/4-requirements</code>. Stage 7 → <code>stage/7-design</code>. The branch name is the stage's audit trail.</p>
+          <p lang="vi">Mỗi stage AI-DLC có một branch riêng. Stage 4 → <code>stage/4-requirements</code>. Stage 7 → <code>stage/7-design</code>. Tên branch chính là dấu vết kiểm toán của stage.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Rule 2</h4>
+          <h4 lang="vi">Quy tắc 2</h4>
+          <h3 lang="en">gate = pull request</h3>
+          <h3 lang="vi">gate = pull request</h3>
+          <p lang="en">A stage's 2-option completion message ("Request Changes / Continue") is materialized as a PR review. The PR <em>is</em> the gate.</p>
+          <p lang="vi">Thông điệp hoàn tất 2-lựa chọn ("Request Changes / Continue") của một stage được hiện thực hoá thành cuộc rà soát PR. PR <em>chính là</em> cửa kiểm soát.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Rule 3</h4>
+          <h4 lang="vi">Quy tắc 3</h4>
+          <h3 lang="en">merge = approval</h3>
+          <h3 lang="vi">merge = approval</h3>
+          <p lang="en">A PR can only merge into <code>main</code> after CODEOWNERS sign-off. Once merged, that stage is officially closed.</p>
+          <p lang="vi">PR chỉ được merge vào <code>main</code> sau khi CODEOWNERS duyệt. Một khi đã merge, stage đó chính thức đóng.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Stage = Branch diagram ============ -->
+    <section id="k-stage-branch">
+      <h3 lang="en">The full workflow on one diagram</h3>
+      <h3 lang="vi">Toàn bộ luồng làm việc trên một sơ đồ</h3>
+
+      <div class="diagram">
+        <svg viewBox="0 0 720 540" xmlns="http://www.w3.org/2000/svg">
+          <!-- Phase column -->
+          <rect x="20" y="50" width="80" height="105" fill="#FFF0F0" rx="6" opacity="0.55"/>
+          <text x="60" y="78" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#B02020">PRE-</text>
+          <text x="60" y="90" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#B02020">INCEPTION</text>
+
+          <rect x="20" y="165" width="80" height="190" fill="#EEF2FF" rx="6" opacity="0.55"/>
+          <text x="60" y="260" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#1A3CC8">INCEPTION</text>
+
+          <rect x="20" y="365" width="80" height="130" fill="#E6FBF4" rx="6" opacity="0.65"/>
+          <text x="60" y="435" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="0.08em" fill="#07756D">CONSTRUCTION</text>
+
+          <!-- Main line -->
+          <line x1="160" y1="50" x2="160" y2="510" stroke="#00C694" stroke-width="3.5" stroke-linecap="round"/>
+
+          <!-- v0 setup -->
+          <circle cx="160" cy="65" r="6" fill="#00C694"/>
+          <text x="180" y="60" font-size="10.5" font-weight="600" class="diagram-text">v0 setup</text>
+          <text x="180" y="73" font-size="9.5" class="diagram-text-muted">CLAUDE.md committed · 00-knowledge populated</text>
+
+          <!-- Pre-Inception branch -->
+          <path d="M 160 105 C 195 105 235 110 270 118" stroke="#B02020" stroke-width="2" fill="none"/>
+          <line x1="270" y1="118" x2="270" y2="142" stroke="#B02020" stroke-width="2"/>
+          <circle cx="270" cy="121" r="4" fill="#B02020"/>
+          <circle cx="270" cy="132" r="4" fill="#B02020"/>
+          <circle cx="270" cy="142" r="4" fill="#B02020"/>
+          <path d="M 270 142 C 235 152 195 152 160 152" stroke="#B02020" stroke-width="2" fill="none"/>
+          <text x="290" y="115" font-size="11" font-weight="600" class="diagram-text">pre-inception/route-D-vision</text>
+          <text x="290" y="128" font-size="9.5" class="diagram-text-soft">PM · Sub-flow D</text>
+          <text x="290" y="140" font-size="9" class="diagram-text-soft" font-style="italic">drafts vision.md + tech-env.md</text>
+          <rect x="198" y="146" width="32" height="14" fill="#00C694" rx="7"/>
+          <text x="214" y="156" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF">PR</text>
+          <circle cx="160" cy="152" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+          <!-- Stage 4 -->
+          <path d="M 160 190 C 195 190 235 196 270 205" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <line x1="270" y1="205" x2="270" y2="240" stroke="#1A3CC8" stroke-width="2"/>
+          <circle cx="270" cy="208" r="4" fill="#1A3CC8"/>
+          <circle cx="270" cy="222" r="4" fill="#1A3CC8"/>
+          <circle cx="270" cy="240" r="4" fill="#1A3CC8"/>
+          <path d="M 270 240 C 235 252 195 252 160 252" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <text x="290" y="204" font-size="11" font-weight="600" class="diagram-text">stage/4-requirements</text>
+          <text x="290" y="217" font-size="9.5" class="diagram-text-soft">PM + BA</text>
+          <text x="290" y="229" font-size="9" class="diagram-text-soft" font-style="italic">REQ-01 … REQ-NN with KB citations</text>
+          <rect x="198" y="245" width="32" height="14" fill="#00C694" rx="7"/>
+          <text x="214" y="255" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF">PR</text>
+          <circle cx="160" cy="252" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+          <!-- Stage 7 -->
+          <path d="M 160 280 C 195 280 235 284 270 290" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <line x1="270" y1="290" x2="270" y2="312" stroke="#1A3CC8" stroke-width="2"/>
+          <circle cx="270" cy="293" r="4" fill="#1A3CC8"/>
+          <circle cx="270" cy="304" r="4" fill="#1A3CC8"/>
+          <circle cx="270" cy="312" r="4" fill="#1A3CC8"/>
+          <path d="M 270 312 C 235 322 195 322 160 322" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <text x="290" y="288" font-size="11" font-weight="600" class="diagram-text">stage/7-design</text>
+          <text x="290" y="301" font-size="9.5" class="diagram-text-soft">Designer</text>
+          <text x="290" y="312" font-size="9" class="diagram-text-soft" font-style="italic">screens + interaction notes</text>
+          <rect x="198" y="316" width="32" height="14" fill="#00C694" rx="7"/>
+          <text x="214" y="326" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF">PR</text>
+          <circle cx="160" cy="322" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+          <!-- Stage 8 parallel -->
+          <path d="M 160 282 C 230 296 380 300 460 305" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <line x1="460" y1="305" x2="460" y2="325" stroke="#1A3CC8" stroke-width="2"/>
+          <circle cx="460" cy="307" r="4" fill="#1A3CC8"/>
+          <circle cx="460" cy="316" r="4" fill="#1A3CC8"/>
+          <circle cx="460" cy="325" r="4" fill="#1A3CC8"/>
+          <path d="M 460 325 C 380 333 230 333 160 333" stroke="#1A3CC8" stroke-width="2" fill="none"/>
+          <text x="480" y="310" font-size="11" font-weight="600" class="diagram-text">stage/8-app-design</text>
+          <text x="480" y="324" font-size="9.5" class="diagram-text-soft">SA · in parallel with Designer</text>
+          <circle cx="160" cy="333" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+          <text x="290" y="350" font-size="9" fill="#1A3CC8" font-weight="600" font-style="italic">⇡ different roles · same time · no collisions</text>
+
+          <!-- Construction units -->
+          <path d="M 160 380 C 195 380 235 388 270 396" stroke="#07756D" stroke-width="2" fill="none"/>
+          <line x1="270" y1="396" x2="270" y2="450" stroke="#07756D" stroke-width="2"/>
+          <circle cx="270" cy="400" r="4" fill="#07756D"/>
+          <circle cx="270" cy="414" r="4" fill="#07756D"/>
+          <circle cx="270" cy="426" r="4" fill="#07756D"/>
+          <circle cx="270" cy="438" r="4" fill="#07756D"/>
+          <circle cx="270" cy="450" r="4" fill="#07756D"/>
+          <path d="M 270 450 C 235 460 195 460 160 460" stroke="#07756D" stroke-width="2" fill="none"/>
+          <text x="290" y="395" font-size="11" font-weight="600" class="diagram-text">unit/UNIT-01-bond-capture</text>
+          <text x="290" y="410" font-size="9.5" class="diagram-text-soft">SA · Dev · DevOps</text>
+          <text x="290" y="424" font-size="9" class="diagram-text-soft" font-style="italic">Stages 10·11·12·13·14 grouped on one branch</text>
+          <rect x="198" y="454" width="32" height="14" fill="#00C694" rx="7"/>
+          <text x="214" y="464" text-anchor="middle" font-size="9" font-weight="700" fill="#FFF">PR</text>
+          <circle cx="160" cy="460" r="6" fill="#00C694" stroke="#FFF" stroke-width="2"/>
+
+          <text x="160" y="500" text-anchor="middle" font-size="10.5" font-weight="700" fill="#00C694" letter-spacing="0.05em">MAIN</text>
+          <text x="160" y="525" text-anchor="middle" font-size="10" class="diagram-text-soft" font-style="italic">always the official, approved version</text>
+        </svg>
+        <div class="diagram-caption" lang="en">Each stage branches off main, accumulates commits, merges back via PR · construction groups stages 10–14 per unit</div>
+        <div class="diagram-caption" lang="vi">Mỗi stage rẽ ra từ main, tích luỹ commit, merge về qua PR · construction gộp stages 10–14 thành mỗi unit một nhánh</div>
+      </div>
+    </section>
+
+    <!-- ============ Branch naming ============ -->
+    <section id="k-naming">
+      <h3 lang="en">Branch naming convention</h3>
+      <h3 lang="vi">Quy ước đặt tên branch</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Pattern</th>
+            <th lang="vi">Mẫu</th>
+            <th lang="en">Used for</th>
+            <th lang="vi">Dùng cho</th>
+            <th lang="en">Example</th>
+            <th lang="vi">Ví dụ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>stage/{N}-{kebab-name}</code></td>
+            <td><code>stage/{N}-{kebab-name}</code></td>
+            <td lang="en">Single-role Inception stage</td>
+            <td lang="vi">Stage Inception do một vai trò làm</td>
+            <td><code>stage/4-requirements</code></td>
+            <td><code>stage/4-requirements</code></td>
+          </tr>
+          <tr>
+            <td><code>pre-inception/route-{X}-{desc}</code></td>
+            <td><code>pre-inception/route-{X}-{desc}</code></td>
+            <td lang="en">Pre-Inception sub-flows</td>
+            <td lang="vi">Sub-flow Pre-Inception</td>
+            <td><code>pre-inception/route-D-vision</code></td>
+            <td><code>pre-inception/route-D-vision</code></td>
+          </tr>
+          <tr>
+            <td><code>unit/UNIT-{NN}-{kebab-name}</code></td>
+            <td><code>unit/UNIT-{NN}-{kebab-name}</code></td>
+            <td lang="en">Per-unit Construction (stages 10–14)</td>
+            <td lang="vi">Construction từng unit (stages 10–14)</td>
+            <td><code>unit/UNIT-01-bond-capture</code></td>
+            <td><code>unit/UNIT-01-bond-capture</code></td>
+          </tr>
+          <tr>
+            <td><code>kb/{topic}</code></td>
+            <td><code>kb/{topic}</code></td>
+            <td lang="en">Direct KB updates (PM/BA/SA)</td>
+            <td lang="vi">Cập nhật KB trực tiếp (PM/BA/SA)</td>
+            <td><code>kb/architecture-treasury-update</code></td>
+            <td><code>kb/architecture-treasury-update</code></td>
+          </tr>
+          <tr>
+            <td><code>fix/{kebab-description}</code></td>
+            <td><code>fix/{kebab-description}</code></td>
+            <td lang="en">Hotfixes and small corrections</td>
+            <td lang="vi">Sửa nóng và chỉnh nhỏ</td>
+            <td><code>fix/audit-log-format</code></td>
+            <td><code>fix/audit-log-format</code></td>
+          </tr>
+          <tr>
+            <td><code>release/v{X.Y.Z}</code></td>
+            <td><code>release/v{X.Y.Z}</code></td>
+            <td lang="en">Release-prep branches</td>
+            <td lang="vi">Nhánh chuẩn bị phát hành</td>
+            <td><code>release/v0.1.0</code></td>
+            <td><code>release/v0.1.0</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ Commit format ============ -->
+    <section id="k-commit-fmt">
+      <h3 lang="en">Commit message format</h3>
+      <h3 lang="vi">Định dạng commit message</h3>
+
+      <p lang="en">Each commit's subject names the stage and what was produced; the body lists KB citations and any open items surfaced. Reviewers should be able to read just the subject line and understand what shipped.</p>
+      <p lang="vi">Subject mỗi commit gọi tên stage và sản phẩm tạo ra; body liệt kê các trích KB và open items phát sinh. Reviewer chỉ cần đọc subject là hiểu cái gì đã ra đời.</p>
+
+      <pre class="code-block"><span class="kw">Subject:</span>  Stage [N]: [stage name] — [brief outcome]
+
+<span class="kw">Body:</span>     Produced: [files / IDs]
+          KB cited: [section refs]
+          Open items: [list or "none"]
+
+<span class="kw">Footer:</span>   Related: REQ-NN, US-NN, UNIT-NN, ADR-NN</pre>
+
+      <h4 lang="en">Real examples</h4>
+      <h4 lang="vi">Ví dụ thực tế</h4>
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Commit subject</th>
+            <th lang="vi">Subject commit</th>
+            <th lang="en">Stage</th>
+            <th lang="vi">Stage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Stage 4: Requirements — REQ-01 to REQ-24 prop FI</code></td><td><code>Stage 4: Requirements — REQ-01 to REQ-24 prop FI</code></td><td>4</td><td>4</td></tr>
+          <tr><td><code>Stage 5: User Stories — US-01 to US-18 with G/W/T</code></td><td><code>Stage 5: User Stories — US-01 to US-18 with G/W/T</code></td><td>5</td><td>5</td></tr>
+          <tr><td><code>Stage 7: Product Design — bond capture UI + approval flow</code></td><td><code>Stage 7: Product Design — bond capture UI + approval flow</code></td><td>7</td><td>7</td></tr>
+          <tr><td><code>Stage 11: UNIT-01 NFR — issuer limit lookup &lt;50ms p95</code></td><td><code>Stage 11: UNIT-01 NFR — issuer limit lookup &lt;50ms p95</code></td><td>11</td><td>11</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ File ownership ============ -->
+    <section id="k-ownership">
+      <h3 lang="en">File ownership (CODEOWNERS)</h3>
+      <h3 lang="vi">Sở hữu thư mục (CODEOWNERS)</h3>
+
+      <p lang="en">A <code>.github/CODEOWNERS</code> file maps each folder to the team that must approve PRs touching it. This locks the AI-DLC skeleton, protects the KB, and routes role-specific artifacts to their owners. You don't need to memorize it — GitHub auto-requests the right reviewers when you open a PR.</p>
+      <p lang="vi">File <code>.github/CODEOWNERS</code> ánh xạ mỗi thư mục với team phải duyệt PR có chạm vào nó. Việc này khoá bộ khung AI-DLC, bảo vệ KB, và định tuyến artifact theo vai trò đến đúng chủ. Bạn không cần thuộc lòng — GitHub tự gắn reviewer đúng khi bạn mở PR.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Path</th>
+            <th lang="vi">Đường dẫn</th>
+            <th lang="en">Owners</th>
+            <th lang="vi">Chủ sở hữu</th>
+            <th lang="en">Notes</th>
+            <th lang="vi">Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/CLAUDE.md</code></td><td><code>/CLAUDE.md</code></td><td>TO</td><td>TO</td><td lang="en">Workflow spec — locked, upstream-managed</td><td lang="vi">Đặc tả quy trình — khoá, quản trên upstream</td></tr>
+          <tr><td><code>/aidlc-rule-details/</code></td><td><code>/aidlc-rule-details/</code></td><td>TO</td><td>TO</td><td lang="en">Rule files — locked</td><td lang="vi">File rule — khoá</td></tr>
+          <tr><td><code>/00-knowledge/product/</code></td><td><code>/00-knowledge/product/</code></td><td>PM + BA</td><td>PM + BA</td><td lang="en">BRD / PRD canonical source</td><td lang="vi">Nguồn chuẩn BRD / PRD</td></tr>
+          <tr><td><code>/00-knowledge/architecture/</code></td><td><code>/00-knowledge/architecture/</code></td><td>SA</td><td>SA</td><td lang="en">Architecture canonical source</td><td lang="vi">Nguồn chuẩn kiến trúc</td></tr>
+          <tr><td><code>/aidlc-docs/inception/discovery/</code></td><td><code>/aidlc-docs/inception/discovery/</code></td><td>PM</td><td>PM</td><td lang="en">Vision, Tech Env</td><td lang="vi">Vision, Tech Env</td></tr>
+          <tr><td><code>/aidlc-docs/inception/requirements/</code></td><td><code>/aidlc-docs/inception/requirements/</code></td><td>BA + PM</td><td>BA + PM</td><td>REQ-NN</td><td>REQ-NN</td></tr>
+          <tr><td><code>/aidlc-docs/inception/user-stories/</code></td><td><code>/aidlc-docs/inception/user-stories/</code></td><td>BA</td><td>BA</td><td>US-NN</td><td>US-NN</td></tr>
+          <tr><td><code>/aidlc-docs/inception/product-design/</code></td><td><code>/aidlc-docs/inception/product-design/</code></td><td>Designer</td><td>Designer</td><td lang="en">UX + screen specs</td><td lang="vi">UX + đặc tả màn hình</td></tr>
+          <tr><td><code>/aidlc-docs/construction/{unit}/</code></td><td><code>/aidlc-docs/construction/{unit}/</code></td><td>Dev + DevOps + SA</td><td>Dev + DevOps + SA</td><td lang="en">Per-unit work</td><td lang="vi">Việc theo từng unit</td></tr>
+          <tr><td><code>/src/</code></td><td><code>/src/</code></td><td>Dev</td><td>Dev</td><td lang="en">Application code</td><td lang="vi">Code ứng dụng</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-skip">
+        <span class="callout-label" lang="en">Mental model</span>
+        <span class="callout-label" lang="vi">Mô hình tư duy</span>
+        <span lang="en">If you're a PM, you can <em>open</em> a PR touching anyone's folder, but you can't <em>merge</em> it without the right owner's approval. The repo enforces the role boundaries automatically.</span>
+        <span lang="vi">Nếu bạn là PM, bạn có thể <em>mở</em> PR chạm vào thư mục bất kỳ ai, nhưng không thể <em>merge</em> nếu thiếu duyệt của chủ sở hữu. Repo tự thực thi ranh giới vai trò.</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PART 4 — TOOL TRACKS
+         ============================================= -->
+    <div class="part-header">
+      <div class="part-tag">PART 4</div>
+      <h2 class="part-title" lang="en">Three tool tracks · pick your lane</h2>
+      <h2 class="part-title" lang="vi">Ba cách dùng Git · chọn cách phù hợp</h2>
+    </div>
+
+    <section id="tools">
+      <p class="section-intro" lang="en">Each tool covers the same six daily flows: <strong>start a session, commit, push, open PR, resume work, clean up after merge</strong>. Pick whichever matches your operating system and habits. You can mix tools on the same repo — Git doesn't care who made which commit.</p>
+      <p class="section-intro" lang="vi">Mỗi công cụ đều bao trùm sáu thao tác hàng ngày: <strong>bắt đầu phiên, commit, push, mở PR, tiếp tục công việc, dọn dẹp sau merge</strong>. Chọn công cụ hợp với hệ điều hành và thói quen. Có thể trộn các công cụ trên cùng repo — Git không quan tâm ai làm commit nào.</p>
+
+      <div class="minicard-grid minicard-grid--3">
+        <div class="minicard">
+          <h4 lang="en">Git Extensions · Windows</h4>
+          <h4 lang="vi">Git Extensions · Windows</h4>
+          <p lang="en">Free, mature, Windows-native. Best when you live in Windows and prefer dense, information-rich panels.</p>
+          <p lang="vi">Miễn phí, lâu đời, native Windows. Phù hợp khi bạn ở Windows và thích panel nhiều thông tin.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Fork · Mac (and Windows)</h4>
+          <h4 lang="vi">Fork · Mac (và Windows)</h4>
+          <p lang="en">Polished, fast, design-friendly. Best for macOS users who want a clean modern UI with smart diff tools.</p>
+          <p lang="vi">Đẹp, nhanh, thân thiện design. Phù hợp người dùng macOS muốn UI gọn gàng kèm công cụ diff tốt.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">Command line · Any OS</h4>
+          <h4 lang="vi">Dòng lệnh · Mọi OS</h4>
+          <p lang="en">Universal. Power users, scriptable, fastest for short tasks once you know it. Required reading even if you mostly use a GUI.</p>
+          <p lang="vi">Phổ quát. Power user, có thể script, nhanh nhất cho việc ngắn khi đã thuộc. Nên biết dù bạn chủ yếu dùng GUI.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================
+         GIT EXTENSIONS (WINDOWS)
+         ===================================== -->
+    <section id="t-extensions">
+      <h2 lang="en">Track A · Git Extensions on Windows</h2>
+      <h2 lang="vi">Track A · Git Extensions trên Windows</h2>
+
+      <p class="section-intro" lang="en">Git Extensions is a free Windows GUI for Git that has been around since 2008. It exposes everything Git can do, in dense panels. The learning curve is a few hours; once you have it, it becomes the fastest way to handle complex history visually.</p>
+      <p class="section-intro" lang="vi">Git Extensions là một GUI Git miễn phí trên Windows, có từ 2008. Phơi bày mọi thứ Git có thể làm, trong các panel nhiều thông tin. Học một vài giờ; quen rồi thì đây là cách nhanh nhất để xử lý lịch sử phức tạp trực quan.</p>
+
+      <h3 lang="en">Install &amp; first-time setup</h3>
+      <h3 lang="vi">Cài đặt và setup lần đầu</h3>
+
+      <ol class="steps">
+        <li>
+          <strong lang="en">Download from gitextensions.github.io</strong>
+          <strong lang="vi">Tải từ gitextensions.github.io</strong>
+          <div lang="en">Get the <code>.msi</code> installer. The installer bundles Git for Windows, KDiff3 (merge tool), and an OpenSSH client. Accept all defaults.</div>
+          <div lang="vi">Tải bộ cài <code>.msi</code>. Bộ cài kèm Git for Windows, KDiff3 (công cụ merge), và OpenSSH client. Giữ nguyên cài đặt mặc định.</div>
+        </li>
+        <li>
+          <strong lang="en">First-run wizard</strong>
+          <strong lang="vi">Trình hướng dẫn lần đầu chạy</strong>
+          <div lang="en">Set <strong>name</strong> and <strong>email</strong> — use your KAFI work email. These will appear on every commit you make. Pick <strong>OpenSSH</strong> as the SSH client.</div>
+          <div lang="vi">Khai báo <strong>tên</strong> và <strong>email</strong> — dùng email công ty KAFI. Chúng sẽ hiện trên mọi commit. Chọn <strong>OpenSSH</strong> làm SSH client.</div>
+        </li>
+        <li>
+          <strong lang="en">Generate an SSH key (one-time)</strong>
+          <strong lang="vi">Tạo SSH key (một lần duy nhất)</strong>
+          <div lang="en">Menu → <em>Plugins → Generate or import a key</em>. Save without a passphrase the first time. Copy the public key. Paste it into GitHub → Settings → SSH and GPG keys.</div>
+          <div lang="vi">Menu → <em>Plugins → Generate or import a key</em>. Lần đầu lưu không cần passphrase. Copy public key. Dán vào GitHub → Settings → SSH and GPG keys.</div>
+        </li>
+        <li>
+          <strong lang="en">Clone the KAFI project repo</strong>
+          <strong lang="vi">Clone repo dự án KAFI</strong>
+          <div lang="en">Start Page → <em>Clone repository</em>. Paste the SSH URL (looks like <code>git@github.com:kafi/&lt;project&gt;.git</code>). Pick a destination folder on disk. Click <em>Clone</em>.</div>
+          <div lang="vi">Start Page → <em>Clone repository</em>. Dán URL SSH (kiểu <code>git@github.com:kafi/&lt;project&gt;.git</code>). Chọn thư mục đích trên đĩa. Bấm <em>Clone</em>.</div>
+        </li>
+      </ol>
+
+      <h3 lang="en">The Git Extensions UI · what's where</h3>
+      <h3 lang="vi">UI của Git Extensions · cái gì ở đâu</h3>
+
+      <div class="ui-mock">
+        <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg">
+          <!-- App frame -->
+          <rect x="10" y="10" width="700" height="440" rx="10" fill="var(--page-bg)" stroke="#9095A0" stroke-width="1.5"/>
+
+          <!-- Title bar -->
+          <rect x="10" y="10" width="700" height="28" rx="10" fill="#101820"/>
+          <rect x="10" y="28" width="700" height="10" fill="#101820"/>
+          <circle cx="28" cy="24" r="5" fill="#FF5F57"/>
+          <circle cx="44" cy="24" r="5" fill="#F9CC4E"/>
+          <circle cx="60" cy="24" r="5" fill="#00C694"/>
+          <text x="360" y="28" text-anchor="middle" font-size="11" fill="#E8EBEF">Git Extensions — kafi-treasury</text>
+
+          <!-- Toolbar -->
+          <rect x="10" y="38" width="700" height="32" fill="#F7F8FA" stroke="#9095A0" stroke-width="0.5"/>
+          <g font-size="10" fill="#101820" font-weight="600">
+            <rect x="22" y="46" width="58" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="51" y="58" text-anchor="middle">Pull</text>
+            <rect x="86" y="46" width="58" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="115" y="58" text-anchor="middle">Commit</text>
+            <rect x="150" y="46" width="58" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="179" y="58" text-anchor="middle">Push</text>
+            <rect x="214" y="46" width="58" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="243" y="58" text-anchor="middle">Branch</text>
+            <rect x="278" y="46" width="58" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="307" y="58" text-anchor="middle">Merge</text>
+            <rect x="342" y="46" width="74" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+            <text x="379" y="58" text-anchor="middle">Resolve confl.</text>
+          </g>
+          <rect x="630" y="46" width="70" height="18" rx="3" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="665" y="58" text-anchor="middle" font-size="10" fill="#101820">main ▼</text>
+
+          <!-- Left tree -->
+          <rect x="10" y="70" width="160" height="340" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="20" y="86" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">BRANCHES</text>
+          <text x="22" y="106" font-size="11" fill="#00C694" font-weight="700">▸ Local</text>
+          <text x="35" y="122" font-size="11" fill="#101820">★ main</text>
+          <text x="35" y="138" font-size="11" fill="#1A3CC8">stage/4-requirements</text>
+          <text x="35" y="154" font-size="11" fill="#962DFF">stage/7-design</text>
+          <text x="22" y="180" font-size="11" fill="#00C694" font-weight="700">▸ Remote (origin)</text>
+          <text x="35" y="196" font-size="11" fill="#585667">main</text>
+          <text x="35" y="212" font-size="11" fill="#585667">stage/4-requirements</text>
+          <text x="20" y="246" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">TAGS</text>
+          <text x="35" y="262" font-size="11" fill="#585667">inception-complete</text>
+          <text x="20" y="290" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">STASHES</text>
+          <text x="35" y="306" font-size="11" fill="#585667" font-style="italic">(none)</text>
+
+          <!-- Commit graph -->
+          <rect x="170" y="70" width="540" height="180" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="180" y="86" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">COMMIT HISTORY</text>
+          <!-- mini graph -->
+          <line x1="200" y1="100" x2="200" y2="240" stroke="#00C694" stroke-width="2"/>
+          <circle cx="200" cy="110" r="4" fill="#00C694"/>
+          <text x="218" y="113" font-size="10" fill="#101820" font-weight="600">Stage 4: REQ-01..REQ-12</text>
+          <text x="540" y="113" font-size="9" fill="#9095A0">BA · today 14:22</text>
+          <circle cx="200" cy="138" r="4" fill="#00C694"/>
+          <text x="218" y="141" font-size="10" fill="#101820">v0 setup: CLAUDE.md + 00-knowledge</text>
+          <text x="540" y="141" font-size="9" fill="#9095A0">TO · 2 days ago</text>
+          <!-- branch lines -->
+          <path d="M 200 110 C 220 110 230 170 250 170" stroke="#1A3CC8" stroke-width="1.5" fill="none"/>
+          <circle cx="260" cy="170" r="4" fill="#1A3CC8"/>
+          <text x="278" y="173" font-size="10" fill="#101820">stage/4 · Vague NFR cleanup</text>
+          <text x="540" y="173" font-size="9" fill="#9095A0">BA · today 15:01</text>
+          <circle cx="260" cy="195" r="4" fill="#1A3CC8"/>
+          <text x="278" y="198" font-size="10" fill="#101820">stage/4 · add open items</text>
+          <text x="540" y="198" font-size="9" fill="#9095A0">BA · today 16:30</text>
+
+          <!-- Working dir / staging panel -->
+          <rect x="170" y="250" width="270" height="160" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="180" y="266" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">WORKING DIR (UNSTAGED)</text>
+          <text x="180" y="286" font-size="10" font-family="JetBrains Mono, monospace" fill="#A05C00">M  aidlc-docs/.../requirements.md</text>
+          <text x="180" y="302" font-size="10" font-family="JetBrains Mono, monospace" fill="#07756D">+  open-items.md</text>
+          <text x="180" y="318" font-size="10" font-family="JetBrains Mono, monospace" fill="#A05C00">M  audit.md</text>
+          <line x1="170" y1="332" x2="440" y2="332" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="180" y="350" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">STAGED · READY TO COMMIT</text>
+          <text x="180" y="370" font-size="10" font-family="JetBrains Mono, monospace" fill="#07756D">+  requirements.md (12 REQs)</text>
+
+          <!-- Diff -->
+          <rect x="440" y="250" width="270" height="160" fill="#FFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="450" y="266" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">FILE DIFF</text>
+          <text x="450" y="286" font-size="10" font-family="JetBrains Mono, monospace" fill="#101820">## REQ-04: Bond search</text>
+          <rect x="450" y="294" width="250" height="14" fill="#FFF0F0"/>
+          <text x="454" y="305" font-size="10" font-family="JetBrains Mono, monospace" fill="#B02020">- Priority: Should</text>
+          <rect x="450" y="310" width="250" height="14" fill="#E6FBF4"/>
+          <text x="454" y="321" font-size="10" font-family="JetBrains Mono, monospace" fill="#07756D">+ Priority: Must (Vision §2)</text>
+          <text x="450" y="340" font-size="10" font-family="JetBrains Mono, monospace" fill="#101820">## REQ-05: Issuer limits</text>
+          <rect x="450" y="348" width="250" height="14" fill="#E6FBF4"/>
+          <text x="454" y="359" font-size="10" font-family="JetBrains Mono, monospace" fill="#07756D">+ Source: arch/treasury.md §3</text>
+
+          <!-- Status bar -->
+          <rect x="10" y="410" width="700" height="40" rx="0" fill="#101820"/>
+          <text x="22" y="426" font-size="10" fill="#E8EBEF" font-weight="600">Branch: stage/4-requirements</text>
+          <text x="22" y="442" font-size="10" fill="#9095A0">2 commits ahead of origin · 0 behind · 3 changes (1 staged)</text>
+          <text x="650" y="434" text-anchor="end" font-size="10" fill="#9095A0">⟳ refresh</text>
+        </svg>
+      </div>
+
+      <div class="minicard-grid minicard-grid--2">
+        <div class="minicard">
+          <h4 lang="en">① Top toolbar</h4>
+          <h4 lang="vi">① Thanh công cụ trên</h4>
+          <p lang="en">The six daily actions are one click away: <code>Pull · Commit · Push · Branch · Merge · Resolve conflicts</code>. The current branch dropdown is on the right.</p>
+          <p lang="vi">Sáu thao tác hàng ngày chỉ cách một cú click: <code>Pull · Commit · Push · Branch · Merge · Resolve conflicts</code>. Dropdown branch hiện tại nằm bên phải.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">② Left tree</h4>
+          <h4 lang="vi">② Cây trái</h4>
+          <p lang="en">All local branches, remote tracking branches, tags, and stashes. Double-click any local branch to <strong>checkout</strong>.</p>
+          <p lang="vi">Tất cả nhánh local, nhánh remote, tag và stash. Nháy đúp một nhánh local để <strong>checkout</strong>.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">③ Commit graph</h4>
+          <h4 lang="vi">③ Đồ thị commit</h4>
+          <p lang="en">The history of the repo with branches drawn as colored lines. Each row is a commit; click to inspect.</p>
+          <p lang="vi">Lịch sử repo với các nhánh vẽ thành đường màu. Mỗi hàng là một commit; click để xem chi tiết.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">④ Working dir + staging</h4>
+          <h4 lang="vi">④ Working dir + staging</h4>
+          <p lang="en">Top half: changed files not staged yet. Bottom half: files in the basket ready to commit. Click arrows to move files between halves.</p>
+          <p lang="vi">Nửa trên: file đã đổi nhưng chưa stage. Nửa dưới: file đã ở trong giỏ chờ commit. Click mũi tên để di chuyển giữa hai nửa.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">⑤ Diff panel</h4>
+          <h4 lang="vi">⑤ Panel diff</h4>
+          <p lang="en">Line-by-line view of what changed. Red = removed, green = added. Use this when reviewing your own commit before pushing.</p>
+          <p lang="vi">Hiển thị từng dòng đã đổi. Đỏ = bị xoá, xanh = được thêm. Dùng panel này để tự rà soát commit trước khi push.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">⑥ Status bar</h4>
+          <h4 lang="vi">⑥ Thanh trạng thái</h4>
+          <p lang="en">Tells you which branch you're on, how many commits you're ahead/behind origin, and whether you have uncommitted changes.</p>
+          <p lang="vi">Cho biết bạn đang ở nhánh nào, cách origin bao nhiêu commit (ahead/behind), và còn thay đổi chưa commit không.</p>
+        </div>
+      </div>
+
+      <h3 lang="en">The six daily flows · Git Extensions</h3>
+      <h3 lang="vi">Sáu thao tác hàng ngày · Git Extensions</h3>
+
+      <div class="minicard-grid minicard-grid--2">
+
+        <div class="minicard">
+          <h4 lang="en">1 · Start a new stage</h4>
+          <h4 lang="vi">1 · Bắt đầu một stage mới</h4>
+          <ol lang="en">
+            <li>Top toolbar → checkout <code>main</code> (dropdown)</li>
+            <li>Top toolbar → <em>Pull</em> (gets the latest from GitHub)</li>
+            <li>Menu → <em>Commands → Create branch…</em></li>
+            <li>Name it <code>stage/4-requirements</code> (or matching pattern). Tick <em>Checkout after create</em>.</li>
+            <li>Open Claude Code in the repo folder · paste the BA starter prompt.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Toolbar → checkout <code>main</code> (dropdown)</li>
+            <li>Toolbar → <em>Pull</em> (lấy cập nhật mới nhất)</li>
+            <li>Menu → <em>Commands → Create branch…</em></li>
+            <li>Đặt tên <code>stage/4-requirements</code> (hoặc đúng mẫu). Tick <em>Checkout after create</em>.</li>
+            <li>Mở Claude Code ở thư mục repo · dán starter prompt cho BA.</li>
+          </ol>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">2 · Commit during the session</h4>
+          <h4 lang="vi">2 · Commit trong phiên làm</h4>
+          <ol lang="en">
+            <li>After Claude finishes a stage step, switch to Git Extensions.</li>
+            <li>The new files appear in <em>Working dir (unstaged)</em>.</li>
+            <li>Right-click → <em>Stage</em> on each file you want included.</li>
+            <li>Top toolbar → <em>Commit</em>. Paste the KAFI commit message template.</li>
+            <li>Click <em>Commit</em>. Your commit appears in the graph instantly.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Sau khi Claude hoàn tất một bước stage, mở Git Extensions.</li>
+            <li>File mới xuất hiện ở <em>Working dir (unstaged)</em>.</li>
+            <li>Chuột phải → <em>Stage</em> với từng file bạn muốn đưa vào.</li>
+            <li>Toolbar → <em>Commit</em>. Dán template commit của KAFI.</li>
+            <li>Bấm <em>Commit</em>. Commit của bạn hiện ngay trên đồ thị.</li>
+          </ol>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">3 · End of stage · push + open PR</h4>
+          <h4 lang="vi">3 · Hết stage · push + mở PR</h4>
+          <ol lang="en">
+            <li>Toolbar → <em>Push</em>. First push of a new branch: tick <em>Set upstream</em>.</li>
+            <li>Open GitHub in browser → click the banner <em>Compare &amp; pull request</em>.</li>
+            <li>Title: <code>Stage 4: Requirements — closes gate</code>. Body: paste the completion message.</li>
+            <li>Submit. GitHub auto-requests CODEOWNERS reviewers.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Toolbar → <em>Push</em>. Lần push đầu của branch mới: tick <em>Set upstream</em>.</li>
+            <li>Mở GitHub trên trình duyệt → click banner <em>Compare &amp; pull request</em>.</li>
+            <li>Title: <code>Stage 4: Requirements — closes gate</code>. Body: dán message hoàn tất.</li>
+            <li>Submit. GitHub tự gán reviewer theo CODEOWNERS.</li>
+          </ol>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">4 · Resume an interrupted session</h4>
+          <h4 lang="vi">4 · Tiếp tục phiên đang dở</h4>
+          <ol lang="en">
+            <li>Open Git Extensions → left tree, double-click your stage branch.</li>
+            <li>Toolbar → <em>Pull</em> (catch up if anyone pushed).</li>
+            <li>Working dir should be clean — your prior commits are in the graph.</li>
+            <li>Open Claude Code · "resume from <code>plan.md</code> step [N]".</li>
+          </ol>
+          <ol lang="vi">
+            <li>Mở Git Extensions → cây trái, nháy đúp branch stage của bạn.</li>
+            <li>Toolbar → <em>Pull</em> (đồng bộ nếu ai đó đã push).</li>
+            <li>Working dir nên trống — các commit trước đã nằm trên đồ thị.</li>
+            <li>Mở Claude Code · "resume từ <code>plan.md</code> bước [N]".</li>
+          </ol>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">5 · After PR merged · clean up</h4>
+          <h4 lang="vi">5 · Sau khi PR đã merge · dọn dẹp</h4>
+          <ol lang="en">
+            <li>Checkout <code>main</code> (toolbar dropdown).</li>
+            <li>Toolbar → <em>Pull</em>. Your merged stage commits now live in main.</li>
+            <li>Left tree → right-click the old stage branch → <em>Delete branch</em>.</li>
+            <li>Right-click again → <em>Delete remote branch</em> (origin/&hellip;).</li>
+          </ol>
+          <ol lang="vi">
+            <li>Checkout <code>main</code> (dropdown toolbar).</li>
+            <li>Toolbar → <em>Pull</em>. Commit stage đã merge giờ nằm trong main.</li>
+            <li>Cây trái → chuột phải branch stage cũ → <em>Delete branch</em>.</li>
+            <li>Chuột phải lần nữa → <em>Delete remote branch</em> (origin/&hellip;).</li>
+          </ol>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">6 · Resolve a conflict</h4>
+          <h4 lang="vi">6 · Xử lý conflict</h4>
+          <ol lang="en">
+            <li>When pull or merge fails, click toolbar <em>Resolve conflicts</em>.</li>
+            <li>Each conflicted file opens in KDiff3. Left = yours, right = theirs, bottom = result.</li>
+            <li>Pick lines from each side or type the final version into the bottom pane.</li>
+            <li>Save · close KDiff3. The file is marked resolved.</li>
+            <li>Toolbar → <em>Commit</em> to finish the merge.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Khi pull hoặc merge thất bại, bấm toolbar <em>Resolve conflicts</em>.</li>
+            <li>Mỗi file conflict mở trong KDiff3. Trái = của bạn, phải = của họ, dưới = kết quả.</li>
+            <li>Chọn dòng từ mỗi phía hoặc tự gõ bản cuối vào panel dưới.</li>
+            <li>Lưu · đóng KDiff3. File được đánh dấu đã resolve.</li>
+            <li>Toolbar → <em>Commit</em> để hoàn tất merge.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label" lang="en">PM/BA tip · the visual graph is gold</span>
+        <span class="callout-label" lang="vi">Mẹo cho PM/BA · đồ thị trực quan là kho báu</span>
+        <span lang="en">Right-click any commit in the graph → <em>View commit</em> to see exactly which lines of which files changed. This is how you audit a stage without reading prose summaries — you read the file-level diff itself.</span>
+        <span lang="vi">Chuột phải bất kỳ commit nào trên đồ thị → <em>View commit</em> để xem chính xác dòng nào của file nào đã thay đổi. Đây là cách bạn audit một stage không cần đọc tóm tắt — bạn đọc diff cấp file luôn.</span>
+      </div>
+    </section>
+
+    <!-- =====================================
+         FORK (MAC)
+         ===================================== -->
+    <section id="t-fork">
+      <h2 lang="en">Track B · Fork on macOS</h2>
+      <h2 lang="vi">Track B · Fork trên macOS</h2>
+
+      <p class="section-intro" lang="en">Fork is a modern Git client built for macOS (a Windows build also exists). It has a calm UI, fast performance, and the best 3-way merge tool of the GUIs we recommend. The trial is generous, with a one-time license fee for permanent use.</p>
+      <p class="section-intro" lang="vi">Fork là một Git client hiện đại làm cho macOS (cũng có bản Windows). UI gọn, hiệu năng nhanh, và công cụ 3-way merge tốt nhất trong số GUI mà chúng tôi khuyến nghị. Bản dùng thử rộng rãi, mua một lần để dùng vĩnh viễn.</p>
+
+      <h3 lang="en">Install &amp; first-time setup</h3>
+      <h3 lang="vi">Cài đặt và setup lần đầu</h3>
+
+      <ol class="steps">
+        <li>
+          <strong lang="en">Download from git-fork.com</strong>
+          <strong lang="vi">Tải tại git-fork.com</strong>
+          <div lang="en">Drag the <code>.app</code> into <em>/Applications</em>. Open it. Accept the macOS gatekeeper prompt.</div>
+          <div lang="vi">Kéo <code>.app</code> vào <em>/Applications</em>. Mở app. Chấp nhận cảnh báo của macOS gatekeeper.</div>
+        </li>
+        <li>
+          <strong lang="en">First-run identity</strong>
+          <strong lang="vi">Khai báo danh tính lần đầu</strong>
+          <div lang="en">Fork → Preferences → <em>Git Config</em>. Set your KAFI <strong>name</strong> + <strong>email</strong>. These stamp every commit.</div>
+          <div lang="vi">Fork → Preferences → <em>Git Config</em>. Khai báo <strong>tên</strong> + <strong>email</strong> KAFI. Chúng đóng dấu mỗi commit.</div>
+        </li>
+        <li>
+          <strong lang="en">SSH key (one-time)</strong>
+          <strong lang="vi">Khoá SSH (một lần)</strong>
+          <div lang="en">Open Terminal · run <code>ssh-keygen -t ed25519 -C "you@kafi.vn"</code>. Press Enter through all prompts (no passphrase first time). Then <code>cat ~/.ssh/id_ed25519.pub | pbcopy</code>. Paste into GitHub → Settings → SSH and GPG keys.</div>
+          <div lang="vi">Mở Terminal · chạy <code>ssh-keygen -t ed25519 -C "you@kafi.vn"</code>. Enter qua các prompt (không cần passphrase lần đầu). Sau đó <code>cat ~/.ssh/id_ed25519.pub | pbcopy</code>. Dán vào GitHub → Settings → SSH and GPG keys.</div>
+        </li>
+        <li>
+          <strong lang="en">Clone the KAFI project</strong>
+          <strong lang="vi">Clone dự án KAFI</strong>
+          <div lang="en">File → Clone… Paste the SSH URL. Pick a folder. Click <em>Clone</em>. The repo opens in Fork's main window.</div>
+          <div lang="vi">File → Clone… Dán URL SSH. Chọn thư mục. Bấm <em>Clone</em>. Repo mở trong cửa sổ chính của Fork.</div>
+        </li>
+      </ol>
+
+      <h3 lang="en">The Fork UI · what's where</h3>
+      <h3 lang="vi">UI của Fork · cái gì ở đâu</h3>
+
+      <div class="ui-mock">
+        <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg">
+          <!-- App frame -->
+          <rect x="10" y="10" width="700" height="440" rx="14" fill="#FFFFFF" stroke="#9095A0" stroke-width="1"/>
+
+          <!-- Title bar -->
+          <rect x="10" y="10" width="700" height="34" rx="14" fill="#F7F8FA"/>
+          <rect x="10" y="34" width="700" height="10" fill="#F7F8FA"/>
+          <circle cx="34" cy="27" r="6" fill="#FF5F57"/>
+          <circle cx="54" cy="27" r="6" fill="#F9CC4E"/>
+          <circle cx="74" cy="27" r="6" fill="#00C694"/>
+          <text x="360" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#101820">kafi-treasury — Fork</text>
+
+          <!-- Top tab strip -->
+          <rect x="10" y="44" width="700" height="32" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <g font-size="10.5" fill="#585667">
+            <rect x="22" y="50" width="58" height="20" rx="10" fill="#00C694"/>
+            <text x="51" y="64" text-anchor="middle" fill="#FFF" font-weight="700">Pull</text>
+            <text x="100" y="64" text-anchor="middle">Push</text>
+            <text x="146" y="64" text-anchor="middle">Fetch</text>
+            <text x="192" y="64" text-anchor="middle">Branch</text>
+            <text x="240" y="64" text-anchor="middle">Merge</text>
+            <text x="290" y="64" text-anchor="middle">Stash</text>
+          </g>
+          <rect x="612" y="50" width="86" height="20" rx="10" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="655" y="64" text-anchor="middle" font-size="10" font-weight="600" fill="#101820">stage/4 ▼</text>
+
+          <!-- Sidebar -->
+          <rect x="10" y="76" width="170" height="334" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="22" y="96" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">WORKSPACE</text>
+          <text x="22" y="116" font-size="11" fill="#101820" font-weight="600">Changes <tspan fill="#F9CC4E">●3</tspan></text>
+          <text x="22" y="132" font-size="11" fill="#585667">History</text>
+          <text x="22" y="148" font-size="11" fill="#585667">Stashes</text>
+
+          <text x="22" y="178" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">BRANCHES</text>
+          <text x="22" y="198" font-size="11" fill="#585667">main</text>
+          <text x="22" y="214" font-size="11" fill="#00C694" font-weight="700">★ stage/4-requirements</text>
+          <text x="22" y="230" font-size="11" fill="#585667">stage/7-design</text>
+
+          <text x="22" y="260" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">REMOTES</text>
+          <text x="22" y="280" font-size="11" fill="#101820">▸ origin</text>
+          <text x="34" y="296" font-size="11" fill="#585667">main</text>
+          <text x="34" y="312" font-size="11" fill="#585667">stage/4-requirements</text>
+
+          <text x="22" y="342" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">TAGS</text>
+          <text x="22" y="362" font-size="11" fill="#585667">inception-complete</text>
+
+          <!-- History graph -->
+          <rect x="180" y="76" width="320" height="200" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="192" y="96" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">HISTORY</text>
+          <line x1="210" y1="110" x2="210" y2="262" stroke="#00C694" stroke-width="2"/>
+          <circle cx="210" cy="118" r="5" fill="#1A3CC8" stroke="#FFF" stroke-width="2"/>
+          <text x="230" y="121" font-size="10" fill="#101820" font-weight="600">Stage 4: add open items</text>
+          <text x="460" y="121" font-size="9" fill="#9095A0">today 16:30</text>
+          <circle cx="210" cy="148" r="5" fill="#1A3CC8" stroke="#FFF" stroke-width="2"/>
+          <text x="230" y="151" font-size="10" fill="#101820">Stage 4: Vague NFR cleanup</text>
+          <text x="460" y="151" font-size="9" fill="#9095A0">today 15:01</text>
+          <circle cx="210" cy="178" r="5" fill="#00C694"/>
+          <text x="230" y="181" font-size="10" fill="#101820" font-weight="600">Stage 4: REQ-01..REQ-12</text>
+          <text x="460" y="181" font-size="9" fill="#9095A0">today 14:22</text>
+          <circle cx="210" cy="210" r="5" fill="#00C694"/>
+          <text x="230" y="213" font-size="10" fill="#101820">v0 setup: CLAUDE.md</text>
+          <text x="460" y="213" font-size="9" fill="#9095A0">2 days ago</text>
+          <circle cx="210" cy="240" r="5" fill="#00C694"/>
+          <text x="230" y="243" font-size="10" fill="#585667">Initial commit</text>
+          <text x="460" y="243" font-size="9" fill="#9095A0">3 days ago</text>
+
+          <!-- Right inspector -->
+          <rect x="500" y="76" width="210" height="200" fill="#FAFCFB" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="512" y="96" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">SELECTED COMMIT</text>
+          <text x="512" y="116" font-size="10.5" fill="#101820" font-weight="700">Stage 4: REQ-01..REQ-12</text>
+          <text x="512" y="132" font-size="10" fill="#585667">BA · 9c0a2d4</text>
+          <text x="512" y="156" font-size="9.5" fill="#585667">Produced: requirements.md</text>
+          <text x="512" y="170" font-size="9.5" fill="#585667">KB cited: arch/treasury.md §3</text>
+          <text x="512" y="184" font-size="9.5" fill="#585667">Open items: L2 role taxonomy</text>
+          <text x="512" y="208" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">FILES CHANGED</text>
+          <text x="512" y="226" font-size="10" fill="#07756D">+ requirements.md</text>
+          <text x="512" y="240" font-size="10" fill="#A05C00">M open-items.md</text>
+          <text x="512" y="254" font-size="10" fill="#A05C00">M audit.md</text>
+
+          <!-- Working dir + staging -->
+          <rect x="180" y="276" width="260" height="134" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="192" y="294" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">WORKING TREE · CHANGES</text>
+          <text x="192" y="314" font-family="JetBrains Mono, monospace" font-size="10" fill="#A05C00">M  requirements.md</text>
+          <text x="192" y="330" font-family="JetBrains Mono, monospace" font-size="10" fill="#07756D">+  open-items.md</text>
+          <line x1="180" y1="346" x2="440" y2="346" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="192" y="364" font-size="9.5" font-weight="700" fill="#07756D" letter-spacing="0.08em">STAGED · COMMIT</text>
+          <text x="192" y="382" font-family="JetBrains Mono, monospace" font-size="10" fill="#07756D">+ requirements.md (12 REQs)</text>
+          <rect x="320" y="394" width="110" height="12" rx="6" fill="#00C694"/>
+          <text x="375" y="403" text-anchor="middle" font-size="9" fill="#FFF" font-weight="700">Commit (Cmd+Enter)</text>
+
+          <!-- Diff -->
+          <rect x="440" y="276" width="270" height="134" fill="#FFFFFF" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="452" y="294" font-size="9.5" font-weight="700" fill="#9095A0" letter-spacing="0.08em">DIFF · REQUIREMENTS.MD</text>
+          <text x="452" y="312" font-family="JetBrains Mono, monospace" font-size="10" fill="#101820">## REQ-04: Bond search</text>
+          <rect x="452" y="320" width="246" height="14" fill="#FFF0F0"/>
+          <text x="456" y="331" font-family="JetBrains Mono, monospace" font-size="10" fill="#B02020">- Priority: Should</text>
+          <rect x="452" y="336" width="246" height="14" fill="#E6FBF4"/>
+          <text x="456" y="347" font-family="JetBrains Mono, monospace" font-size="10" fill="#07756D">+ Priority: Must (Vision §2)</text>
+          <text x="452" y="368" font-family="JetBrains Mono, monospace" font-size="10" fill="#101820">## REQ-05: Issuer limits</text>
+          <rect x="452" y="376" width="246" height="14" fill="#E6FBF4"/>
+          <text x="456" y="387" font-family="JetBrains Mono, monospace" font-size="10" fill="#07756D">+ Source: arch/treasury.md §3</text>
+
+          <!-- Status bar -->
+          <rect x="10" y="410" width="700" height="40" rx="0" fill="#F7F8FA" stroke="#9095A0" stroke-width="0.5"/>
+          <text x="22" y="426" font-size="10" fill="#101820" font-weight="600">stage/4-requirements · 2 ahead, 0 behind origin</text>
+          <text x="22" y="442" font-size="10" fill="#585667">3 changes (1 staged) · last fetch 4 min ago</text>
+          <text x="688" y="434" text-anchor="end" font-size="10" fill="#9095A0">⟳ auto-refresh on</text>
+        </svg>
+      </div>
+
+      <div class="minicard-grid minicard-grid--2">
+        <div class="minicard">
+          <h4 lang="en">① Sidebar</h4>
+          <h4 lang="vi">① Sidebar</h4>
+          <p lang="en"><strong>Changes</strong> opens working tree + staging panel. <strong>History</strong> opens the commit graph. Branches and tags below.</p>
+          <p lang="vi"><strong>Changes</strong> mở panel working tree + staging. <strong>History</strong> mở đồ thị commit. Branch và tag bên dưới.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">② History graph</h4>
+          <h4 lang="vi">② Đồ thị History</h4>
+          <p lang="en">Click any commit → the inspector on the right shows author, message, and a per-file change summary.</p>
+          <p lang="vi">Click commit bất kỳ → panel inspector bên phải hiển thị tác giả, message, và tóm tắt thay đổi từng file.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">③ Working tree + staging</h4>
+          <h4 lang="vi">③ Working tree + staging</h4>
+          <p lang="en">Top half: unstaged. Bottom half: staged. <em>Spacebar</em> on a file toggles stage. <em>Cmd+Enter</em> commits.</p>
+          <p lang="vi">Nửa trên: chưa stage. Nửa dưới: đã stage. <em>Spacebar</em> trên file để bật/tắt stage. <em>Cmd+Enter</em> để commit.</p>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">④ Diff panel</h4>
+          <h4 lang="vi">④ Panel diff</h4>
+          <p lang="en">Side-by-side or unified view. Hover a line → tiny "stage hunk" button. Excellent for partial commits.</p>
+          <p lang="vi">Xem cạnh nhau hoặc gộp. Hover dòng → nút nhỏ "stage hunk". Tuyệt cho commit từng phần.</p>
+        </div>
+      </div>
+
+      <h3 lang="en">The six daily flows · Fork</h3>
+      <h3 lang="vi">Sáu thao tác hàng ngày · Fork</h3>
+
+      <div class="minicard-grid minicard-grid--2">
+        <div class="minicard">
+          <h4 lang="en">1 · Start a new stage</h4>
+          <h4 lang="vi">1 · Bắt đầu một stage mới</h4>
+          <ol lang="en">
+            <li>Sidebar → double-click <code>main</code>.</li>
+            <li>Toolbar → <em>Pull</em>.</li>
+            <li>Right-click <code>main</code> → <em>New Branch…</em>. Name <code>stage/4-requirements</code>. Tick <em>Checkout after create</em>.</li>
+            <li>Open Claude Code in this repo · paste BA starter prompt.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Sidebar → nháy đúp <code>main</code>.</li>
+            <li>Toolbar → <em>Pull</em>.</li>
+            <li>Chuột phải <code>main</code> → <em>New Branch…</em>. Đặt tên <code>stage/4-requirements</code>. Tick <em>Checkout after create</em>.</li>
+            <li>Mở Claude Code trong repo · dán starter prompt cho BA.</li>
+          </ol>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">2 · Commit during the session</h4>
+          <h4 lang="vi">2 · Commit trong phiên làm</h4>
+          <ol lang="en">
+            <li>Sidebar → <em>Changes</em>.</li>
+            <li>Hit <em>Spacebar</em> on each file to stage.</li>
+            <li>Type the KAFI commit message in the message box (subject + body).</li>
+            <li><em>Cmd+Enter</em> to commit.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Sidebar → <em>Changes</em>.</li>
+            <li>Bấm <em>Spacebar</em> trên từng file để stage.</li>
+            <li>Gõ KAFI commit message vào ô message (subject + body).</li>
+            <li><em>Cmd+Enter</em> để commit.</li>
+          </ol>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">3 · End of stage · push + open PR</h4>
+          <h4 lang="vi">3 · Hết stage · push + mở PR</h4>
+          <ol lang="en">
+            <li>Toolbar → <em>Push</em>. First push: Fork prompts "set upstream" — confirm.</li>
+            <li>Fork shows a "Create Pull Request" link → opens GitHub in browser.</li>
+            <li>Fill title + body. Submit.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Toolbar → <em>Push</em>. Lần đầu push: Fork hỏi "set upstream" — xác nhận.</li>
+            <li>Fork hiện link "Create Pull Request" → mở GitHub trên trình duyệt.</li>
+            <li>Điền title + body. Submit.</li>
+          </ol>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">4 · Resume an interrupted session</h4>
+          <h4 lang="vi">4 · Tiếp tục phiên đang dở</h4>
+          <ol lang="en">
+            <li>Sidebar → double-click your stage branch.</li>
+            <li>Toolbar → <em>Pull</em>.</li>
+            <li>Sidebar → <em>Changes</em> should be empty. Open Claude Code · resume.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Sidebar → nháy đúp branch stage của bạn.</li>
+            <li>Toolbar → <em>Pull</em>.</li>
+            <li>Sidebar → <em>Changes</em> phải trống. Mở Claude Code · resume.</li>
+          </ol>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">5 · After PR merged · clean up</h4>
+          <h4 lang="vi">5 · Sau khi PR đã merge · dọn dẹp</h4>
+          <ol lang="en">
+            <li>Sidebar → double-click <code>main</code>. Toolbar → <em>Pull</em>.</li>
+            <li>Sidebar → right-click old stage branch → <em>Delete</em>.</li>
+            <li>Tick "Also delete on remote" if shown.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Sidebar → nháy đúp <code>main</code>. Toolbar → <em>Pull</em>.</li>
+            <li>Sidebar → chuột phải branch stage cũ → <em>Delete</em>.</li>
+            <li>Tick "Also delete on remote" nếu có.</li>
+          </ol>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">6 · Resolve a conflict</h4>
+          <h4 lang="vi">6 · Xử lý conflict</h4>
+          <ol lang="en">
+            <li>When pull/merge fails, Fork shows a conflict banner. Click <em>Resolve in Merge Tool</em>.</li>
+            <li>3-way view: ours (top-left), theirs (top-right), result (bottom).</li>
+            <li>Click chevrons to pull lines into the result. Edit freely.</li>
+            <li>Save → mark resolved. Toolbar → <em>Commit</em>.</li>
+          </ol>
+          <ol lang="vi">
+            <li>Khi pull/merge thất bại, Fork hiện banner conflict. Bấm <em>Resolve in Merge Tool</em>.</li>
+            <li>Khung 3-way: của ta (trên trái), của họ (trên phải), kết quả (dưới).</li>
+            <li>Bấm mũi tên để kéo dòng vào ô kết quả. Có thể tự sửa thêm.</li>
+            <li>Lưu → đánh dấu resolved. Toolbar → <em>Commit</em>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label" lang="en">Designer tip · drag commits to reorder</span>
+        <span class="callout-label" lang="vi">Mẹo cho Designer · kéo commit để sắp lại</span>
+        <span lang="en">Fork lets you drag commits in the History view to re-order or squash them <em>before</em> pushing. Useful when you want to clean up a noisy local history before opening a PR. Never reorder after pushing.</span>
+        <span lang="vi">Fork cho phép bạn kéo commit trên History để sắp lại hoặc gộp <em>trước khi</em> push. Hữu ích khi bạn muốn dọn sạch lịch sử local trước khi mở PR. Không bao giờ sắp lại sau khi đã push.</span>
+      </div>
+    </section>
+
+    <!-- =====================================
+         COMMAND LINE
+         ===================================== -->
+    <section id="t-cli">
+      <h2 lang="en">Track C · Command line</h2>
+      <h2 lang="vi">Track C · Dòng lệnh</h2>
+
+      <p class="section-intro" lang="en">The command line is universal, scriptable, and reads exactly the same on every machine. Even if you prefer a GUI day-to-day, learning the seven commands below pays off — you'll understand what the GUI is doing under the hood, and you can recover any repo over SSH if something breaks.</p>
+      <p class="section-intro" lang="vi">Dòng lệnh phổ quát, script được, và đọc giống nhau trên mọi máy. Dù bạn thích GUI hàng ngày, học bảy lệnh dưới đây vẫn rất đáng — bạn sẽ hiểu GUI đang làm gì bên trong, và có thể cứu repo qua SSH nếu có gì hỏng.</p>
+
+      <h3 lang="en">One-time setup</h3>
+      <h3 lang="vi">Setup một lần</h3>
+
+      <pre class="code-block"><span class="cm"># Tell Git who you are — used on every commit</span>
+<span class="kw">git config</span> --global user.name  <span class="str">"Your Name"</span>
+<span class="kw">git config</span> --global user.email <span class="str">"you@kafi.vn"</span>
+
+<span class="cm"># Saner defaults</span>
+<span class="kw">git config</span> --global init.defaultBranch main
+<span class="kw">git config</span> --global pull.rebase false       <span class="cm"># merge on pull (safer for non-devs)</span>
+<span class="kw">git config</span> --global core.autocrlf input     <span class="cm"># Mac/Linux · use 'true' on Windows</span>
+
+<span class="cm"># Clone the KAFI project</span>
+<span class="kw">git clone</span> git@github.com:kafi/&lt;project&gt;.git
+<span class="kw">cd</span> &lt;project&gt;</pre>
+
+      <h3 lang="en">The seven commands that cover 95% of your work</h3>
+      <h3 lang="vi">Bảy lệnh bao trùm 95% công việc</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Command</th>
+            <th lang="vi">Lệnh</th>
+            <th lang="en">What it does</th>
+            <th lang="vi">Tác dụng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>git status</code></td><td><code>git status</code></td><td lang="en">Where am I? What's changed?</td><td lang="vi">Tôi đang ở đâu? Có gì đã đổi?</td></tr>
+          <tr><td><code>git checkout -b &lt;name&gt;</code></td><td><code>git checkout -b &lt;name&gt;</code></td><td lang="en">Create + switch to a new branch</td><td lang="vi">Tạo + chuyển sang nhánh mới</td></tr>
+          <tr><td><code>git pull</code></td><td><code>git pull</code></td><td lang="en">Bring remote changes into current branch</td><td lang="vi">Đem thay đổi remote về nhánh đang đứng</td></tr>
+          <tr><td><code>git add &lt;file&gt;</code></td><td><code>git add &lt;file&gt;</code></td><td lang="en">Stage a file for the next commit</td><td lang="vi">Đưa file vào giỏ chờ commit</td></tr>
+          <tr><td><code>git commit</code></td><td><code>git commit</code></td><td lang="en">Snapshot what's staged with a message</td><td lang="vi">Chụp snapshot phần đã stage kèm message</td></tr>
+          <tr><td><code>git push</code></td><td><code>git push</code></td><td lang="en">Upload your commits to GitHub</td><td lang="vi">Đẩy commit lên GitHub</td></tr>
+          <tr><td><code>git log --oneline --graph</code></td><td><code>git log --oneline --graph</code></td><td lang="en">View the commit history</td><td lang="vi">Xem lịch sử commit</td></tr>
+        </tbody>
+      </table>
+
+      <h3 lang="en">The six daily flows · CLI</h3>
+      <h3 lang="vi">Sáu thao tác hàng ngày · CLI</h3>
+
+      <div class="minicard-grid minicard-grid--2">
+        <div class="minicard">
+          <h4 lang="en">1 · Start a new stage</h4>
+          <h4 lang="vi">1 · Bắt đầu một stage mới</h4>
+          <pre class="code-block"><span class="kw">git checkout</span> main
+<span class="kw">git pull</span>
+<span class="kw">git checkout</span> -b stage/4-requirements
+<span class="cm"># open Claude Code → paste BA starter prompt</span></pre>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">2 · Commit during the session</h4>
+          <h4 lang="vi">2 · Commit trong phiên làm</h4>
+          <pre class="code-block"><span class="kw">git status</span>
+<span class="kw">git add</span> aidlc-docs/inception/requirements/
+<span class="kw">git commit</span> -m <span class="str">"Stage 4: Requirements REQ-01..REQ-12
+
+KB cited: arch/treasury.md §3
+Open items: L2 role taxonomy"</span></pre>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">3 · End of stage · push + open PR</h4>
+          <h4 lang="vi">3 · Hết stage · push + mở PR</h4>
+          <pre class="code-block"><span class="kw">git push</span> -u origin stage/4-requirements
+
+<span class="cm"># Using GitHub CLI:</span>
+<span class="kw">gh pr create</span> \
+  --title <span class="str">"Stage 4: Requirements"</span> \
+  --body  <span class="str">"Closes gate · 24 REQs · 2 open items"</span></pre>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">4 · Resume an interrupted session</h4>
+          <h4 lang="vi">4 · Tiếp tục phiên đang dở</h4>
+          <pre class="code-block"><span class="kw">git checkout</span> stage/4-requirements
+<span class="kw">git pull</span>
+<span class="cm"># open Claude Code →</span>
+<span class="cm"># "resume from plan.md step [N]"</span></pre>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">5 · After PR merged · clean up</h4>
+          <h4 lang="vi">5 · Sau khi PR đã merge · dọn dẹp</h4>
+          <pre class="code-block"><span class="kw">git checkout</span> main
+<span class="kw">git pull</span>
+<span class="kw">git branch</span> -d stage/4-requirements
+<span class="kw">git push</span> origin --delete stage/4-requirements</pre>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">6 · Resolve a conflict</h4>
+          <h4 lang="vi">6 · Xử lý conflict</h4>
+          <pre class="code-block"><span class="cm"># After failed merge/pull:</span>
+<span class="kw">git status</span>                  <span class="cm"># lists conflicted files</span>
+<span class="cm"># Open each file → edit out the markers</span>
+<span class="cm"># &lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;</span>
+<span class="kw">git add</span> &lt;file&gt;
+<span class="kw">git commit</span>                  <span class="cm"># finishes the merge</span></pre>
+        </div>
+      </div>
+
+      <h3 lang="en">Useful extras</h3>
+      <h3 lang="vi">Các lệnh bổ trợ hữu ích</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Command</th>
+            <th lang="vi">Lệnh</th>
+            <th lang="en">When you'd reach for it</th>
+            <th lang="vi">Khi nào cần dùng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>git stash</code> / <code>git stash pop</code></td><td><code>git stash</code> / <code>git stash pop</code></td><td lang="en">Set aside uncommitted edits temporarily so you can checkout another branch</td><td lang="vi">Đặt tạm thay đổi chưa commit để chuyển sang nhánh khác</td></tr>
+          <tr><td><code>git diff</code></td><td><code>git diff</code></td><td lang="en">See what you've edited but not staged yet</td><td lang="vi">Xem cái đã sửa nhưng chưa stage</td></tr>
+          <tr><td><code>git diff --staged</code></td><td><code>git diff --staged</code></td><td lang="en">See what's in the basket but not committed yet</td><td lang="vi">Xem cái đang trong giỏ nhưng chưa commit</td></tr>
+          <tr><td><code>git log --follow &lt;file&gt;</code></td><td><code>git log --follow &lt;file&gt;</code></td><td lang="en">History of one specific file across renames</td><td lang="vi">Lịch sử của một file cụ thể, kể cả khi đổi tên</td></tr>
+          <tr><td><code>git blame &lt;file&gt;</code></td><td><code>git blame &lt;file&gt;</code></td><td lang="en">Who wrote each line, when</td><td lang="vi">Mỗi dòng do ai viết, khi nào</td></tr>
+          <tr><td><code>git restore &lt;file&gt;</code></td><td><code>git restore &lt;file&gt;</code></td><td lang="en">Throw away uncommitted edits to one file</td><td lang="vi">Vứt bỏ thay đổi chưa commit của một file</td></tr>
+          <tr><td><code>git revert &lt;hash&gt;</code></td><td><code>git revert &lt;hash&gt;</code></td><td lang="en">Create a new commit that undoes an old one (safe on shared branches)</td><td lang="vi">Tạo commit mới đảo ngược commit cũ (an toàn trên nhánh dùng chung)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-danger">
+        <span class="callout-label" lang="en">Commands to avoid unless you're sure</span>
+        <span class="callout-label" lang="vi">Lệnh tránh dùng trừ khi thực sự chắc</span>
+        <span lang="en"><code>git reset --hard</code>, <code>git push --force</code>, <code>git rebase</code> on shared branches, and <code>git clean -fd</code> can permanently lose work. Don't run these without asking your tech lead. The seven core commands plus the extras above are enough for AI-DLC stage work.</span>
+        <span lang="vi"><code>git reset --hard</code>, <code>git push --force</code>, <code>git rebase</code> trên nhánh dùng chung, và <code>git clean -fd</code> có thể làm mất việc vĩnh viễn. Đừng chạy nếu chưa hỏi tech lead. Bảy lệnh chính cộng lệnh bổ trợ ở trên là đủ cho việc stage AI-DLC.</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PART 5 — TROUBLESHOOTING
+         ============================================= -->
+    <div class="part-header">
+      <div class="part-tag">PART 5</div>
+      <h2 class="part-title" lang="en">Troubleshooting · the things that scare new users</h2>
+      <h2 class="part-title" lang="vi">Xử lý sự cố · những lỗi hay làm người mới hoảng</h2>
+    </div>
+
+    <section id="troubleshoot">
+      <p class="section-intro" lang="en">Nine common scenarios with the safe recovery for each. None of these will lose data if you follow the steps. When in doubt, stop and ask your tech lead — but read this first.</p>
+      <p class="section-intro" lang="vi">Chín tình huống thường gặp và cách khôi phục an toàn cho từng cái. Nếu làm theo, không cái nào làm mất dữ liệu. Khi nghi ngờ, dừng và hỏi tech lead — nhưng đọc phần này trước đã.</p>
+
+      <div class="minicard-grid minicard-grid--2">
+
+        <div class="minicard">
+          <h4 lang="en">"I committed but my teammate doesn't see it"</h4>
+          <h4 lang="vi">"Tôi commit rồi nhưng đồng nghiệp không thấy"</h4>
+          <p lang="en"><strong>Cause:</strong> commits sit in zone 3 (local) until you push.</p>
+          <p lang="vi"><strong>Nguyên nhân:</strong> commit ở vùng 3 (local) cho tới khi bạn push.</p>
+          <p lang="en"><strong>Fix:</strong> <code>git push</code> (or click <em>Push</em> in your GUI). Then your teammate runs <code>git pull</code>.</p>
+          <p lang="vi"><strong>Sửa:</strong> <code>git push</code> (hoặc bấm <em>Push</em> trong GUI). Đồng nghiệp chạy <code>git pull</code>.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"Git won't let me checkout — uncommitted changes"</h4>
+          <h4 lang="vi">"Git không cho checkout — còn thay đổi chưa commit"</h4>
+          <p lang="en"><strong>Cause:</strong> the target branch would overwrite your edits.</p>
+          <p lang="vi"><strong>Nguyên nhân:</strong> branch đích sẽ ghi đè lên bản sửa.</p>
+          <p lang="en"><strong>Fix:</strong> either commit (<code>git add</code> + <code>git commit</code>), or stash temporarily (<code>git stash</code>) — then checkout.</p>
+          <p lang="vi"><strong>Sửa:</strong> hoặc commit (<code>git add</code> + <code>git commit</code>), hoặc stash tạm (<code>git stash</code>) — rồi mới checkout.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"My push was rejected — non-fast-forward"</h4>
+          <h4 lang="vi">"Push bị từ chối — non-fast-forward"</h4>
+          <p lang="en"><strong>Cause:</strong> someone pushed to the same branch while you were working.</p>
+          <p lang="vi"><strong>Nguyên nhân:</strong> ai đó đã push lên cùng branch trong lúc bạn đang làm.</p>
+          <p lang="en"><strong>Fix:</strong> <code>git pull</code>, resolve any conflict, then <code>git push</code> again. Never use <code>--force</code>.</p>
+          <p lang="vi"><strong>Sửa:</strong> <code>git pull</code>, xử lý conflict nếu có, rồi <code>git push</code> lại. Không bao giờ dùng <code>--force</code>.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"I committed to the wrong branch"</h4>
+          <h4 lang="vi">"Tôi commit nhầm branch"</h4>
+          <p lang="en"><strong>Cause:</strong> forgot to checkout before working.</p>
+          <p lang="vi"><strong>Nguyên nhân:</strong> quên checkout trước khi làm.</p>
+          <p lang="en"><strong>Fix (if not pushed yet):</strong> create the right branch from where you are (<code>git checkout -b correct-branch</code>), then on the wrong branch: <code>git reset --soft HEAD~1</code> to undo the commit but keep changes.</p>
+          <p lang="vi"><strong>Sửa (nếu chưa push):</strong> tạo branch đúng từ chỗ bạn đang đứng (<code>git checkout -b correct-branch</code>), rồi trên branch nhầm: <code>git reset --soft HEAD~1</code> để hoàn tác commit nhưng vẫn giữ thay đổi.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"I broke audit.md with conflicts"</h4>
+          <h4 lang="vi">"audit.md của tôi đầy conflict marker"</h4>
+          <p lang="en"><strong>Cause:</strong> every session appends to <code>audit.md</code>; merges always conflict here.</p>
+          <p lang="vi"><strong>Nguyên nhân:</strong> mỗi phiên đều append vào <code>audit.md</code>; merge luôn conflict tại đây.</p>
+          <p lang="en"><strong>Fix:</strong> CLI: <code>git checkout --merge aidlc-docs/audit.md</code>. Or in GUI: pick "keep both sides" in the merge tool. Append-only — never overwrite.</p>
+          <p lang="vi"><strong>Sửa:</strong> CLI: <code>git checkout --merge aidlc-docs/audit.md</code>. Hoặc trong GUI: chọn "giữ cả hai phía" trong merge tool. Append-only — không bao giờ ghi đè.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"I want to undo my last commit"</h4>
+          <h4 lang="vi">"Tôi muốn huỷ commit vừa rồi"</h4>
+          <p lang="en"><strong>Not pushed yet:</strong> <code>git reset --soft HEAD~1</code> — keeps your file changes, unstages the commit.</p>
+          <p lang="vi"><strong>Chưa push:</strong> <code>git reset --soft HEAD~1</code> — giữ thay đổi file, gỡ commit ra.</p>
+          <p lang="en"><strong>Already pushed:</strong> <code>git revert &lt;hash&gt;</code> — creates a new commit that undoes it. Safe on shared branches.</p>
+          <p lang="vi"><strong>Đã push:</strong> <code>git revert &lt;hash&gt;</code> — tạo commit mới đảo ngược commit cũ. An toàn trên branch dùng chung.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"I want to discard all my uncommitted changes"</h4>
+          <h4 lang="vi">"Tôi muốn vứt hết thay đổi chưa commit"</h4>
+          <p lang="en"><strong>Fix:</strong> <code>git restore .</code> (CLI) or right-click → "Discard changes" (GUI). Make sure you really mean it — this is irreversible.</p>
+          <p lang="vi"><strong>Sửa:</strong> <code>git restore .</code> (CLI) hoặc chuột phải → "Discard changes" (GUI). Hãy chắc chắn — không khôi phục được.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"I accidentally deleted a branch"</h4>
+          <h4 lang="vi">"Tôi lỡ xoá nhánh"</h4>
+          <p lang="en"><strong>Fix:</strong> <code>git reflog</code> shows every HEAD movement. Find the last commit on the deleted branch, then <code>git checkout -b recovered &lt;hash&gt;</code>.</p>
+          <p lang="vi"><strong>Sửa:</strong> <code>git reflog</code> hiển thị mọi lần HEAD di chuyển. Tìm commit cuối của branch đã xoá, rồi <code>git checkout -b recovered &lt;hash&gt;</code>.</p>
+        </div>
+
+        <div class="minicard">
+          <h4 lang="en">"GitHub says my PR has conflicts"</h4>
+          <h4 lang="vi">"GitHub báo PR có conflict"</h4>
+          <p lang="en"><strong>Fix:</strong> on your laptop, checkout your branch, <code>git pull origin main</code>, resolve conflicts locally, commit, push. The PR updates automatically.</p>
+          <p lang="vi"><strong>Sửa:</strong> trên máy bạn, checkout branch của mình, <code>git pull origin main</code>, xử lý conflict, commit, push. PR tự cập nhật.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-label" lang="en">The escape hatch · git reflog</span>
+        <span class="callout-label" lang="vi">Lối thoát hiểm · git reflog</span>
+        <span lang="en">Git keeps a private log of <em>every</em> change to HEAD for ~90 days, even ones you "lost". Running <code>git reflog</code> in your repo's terminal is the closest Git has to a time machine. Anything you commit can be recovered with it. Take a deep breath.</span>
+        <span lang="vi">Git lưu một log riêng cho <em>mọi</em> lần HEAD đổi trong khoảng 90 ngày, kể cả những lần bạn "mất". Chạy <code>git reflog</code> trong terminal của repo là cỗ máy thời gian gần nhất mà Git có. Mọi thứ đã commit đều có thể khôi phục từ đây. Hít một hơi sâu.</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         GLOSSARY
+         ============================================= -->
+    <section id="glossary">
+      <h2 lang="en">Glossary</h2>
+      <h2 lang="vi">Thuật ngữ</h2>
+
+      <p class="section-intro" lang="en">Short definitions in alphabetical order. Use this as a lookup when reading a PR comment or a colleague's message.</p>
+      <p class="section-intro" lang="vi">Định nghĩa ngắn, sắp theo bảng chữ cái. Dùng tra khi đọc comment PR hoặc tin nhắn đồng nghiệp.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th lang="en">Term</th>
+            <th lang="vi">Thuật ngữ</th>
+            <th lang="en">Plain-English meaning</th>
+            <th lang="vi">Nghĩa đơn giản</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Blame</strong></td><td><strong>Blame</strong></td><td lang="en">A view that shows, for each line of a file, who wrote it and in which commit.</td><td lang="vi">Một góc nhìn cho biết mỗi dòng do ai viết, ở commit nào.</td></tr>
+          <tr><td><strong>Branch</strong></td><td><strong>Branch (nhánh)</strong></td><td lang="en">A named parallel timeline of commits.</td><td lang="vi">Một timeline commit song song có tên.</td></tr>
+          <tr><td><strong>Checkout</strong></td><td><strong>Checkout</strong></td><td lang="en">Switch your working directory to a different branch (or commit).</td><td lang="vi">Chuyển working directory sang một branch (hoặc commit) khác.</td></tr>
+          <tr><td><strong>Clone</strong></td><td><strong>Clone</strong></td><td lang="en">Make a full local copy of a remote repo (only done once per project).</td><td lang="vi">Tạo bản sao local đầy đủ của repo remote (mỗi dự án chỉ làm một lần).</td></tr>
+          <tr><td><strong>CODEOWNERS</strong></td><td><strong>CODEOWNERS</strong></td><td lang="en">A file that maps repo folders to the team that must approve PRs touching them.</td><td lang="vi">Một file ánh xạ thư mục repo với team phải duyệt PR động vào thư mục đó.</td></tr>
+          <tr><td><strong>Commit</strong></td><td><strong>Commit</strong></td><td lang="en">A saved snapshot of the repo at one moment, with a message.</td><td lang="vi">Một snapshot đã lưu của repo tại một thời điểm, kèm message.</td></tr>
+          <tr><td><strong>Conflict</strong></td><td><strong>Conflict (xung đột)</strong></td><td lang="en">Git can't auto-merge two changes; you must choose which version wins.</td><td lang="vi">Git không tự gộp được hai thay đổi; bạn phải chọn bản nào thắng.</td></tr>
+          <tr><td><strong>Diff</strong></td><td><strong>Diff</strong></td><td lang="en">A view of what changed between two versions, line by line.</td><td lang="vi">Một góc nhìn so sánh hai phiên bản, từng dòng.</td></tr>
+          <tr><td><strong>Fetch</strong></td><td><strong>Fetch</strong></td><td lang="en">Download remote info without changing your working files.</td><td lang="vi">Tải thông tin từ remote về nhưng không đụng file đang làm việc.</td></tr>
+          <tr><td><strong>HEAD</strong></td><td><strong>HEAD</strong></td><td lang="en">A pointer to your current position — usually the tip of your current branch.</td><td lang="vi">Con trỏ chỉ vị trí hiện tại của bạn — thường là đầu của branch đang đứng.</td></tr>
+          <tr><td><strong>Local repo</strong></td><td><strong>Local repo</strong></td><td lang="en">The copy of the repo on your laptop.</td><td lang="vi">Bản sao repo trên máy bạn.</td></tr>
+          <tr><td><strong>Main</strong></td><td><strong>Main</strong></td><td lang="en">The official approved branch. Always trustworthy.</td><td lang="vi">Branch chính thức đã duyệt. Luôn tin được.</td></tr>
+          <tr><td><strong>Merge</strong></td><td><strong>Merge</strong></td><td lang="en">Combine the commits of one branch into another.</td><td lang="vi">Hợp các commit của một branch vào branch khác.</td></tr>
+          <tr><td><strong>Merge commit</strong></td><td><strong>Merge commit</strong></td><td lang="en">A special commit with two parents created when two branches join.</td><td lang="vi">Commit đặc biệt có hai bố mẹ, tạo ra khi hai branch gặp nhau.</td></tr>
+          <tr><td><strong>Origin</strong></td><td><strong>Origin</strong></td><td lang="en">The default name Git gives to your remote repo on GitHub.</td><td lang="vi">Tên mặc định Git đặt cho repo remote của bạn trên GitHub.</td></tr>
+          <tr><td><strong>Pull</strong></td><td><strong>Pull</strong></td><td lang="en">Fetch + merge: download remote changes and apply them to your current branch.</td><td lang="vi">Fetch + merge: tải thay đổi remote và áp vào branch đang đứng.</td></tr>
+          <tr><td><strong>Pull Request (PR)</strong></td><td><strong>Pull Request (PR)</strong></td><td lang="en">A proposal on GitHub to merge your branch into another, with a review conversation.</td><td lang="vi">Lời đề nghị trên GitHub để merge branch của bạn vào branch khác, kèm rà soát.</td></tr>
+          <tr><td><strong>Push</strong></td><td><strong>Push</strong></td><td lang="en">Upload your local commits to the remote repo.</td><td lang="vi">Đẩy commit local lên repo remote.</td></tr>
+          <tr><td><strong>Remote repo</strong></td><td><strong>Remote repo</strong></td><td lang="en">The shared copy of the repo on GitHub.</td><td lang="vi">Bản sao chia sẻ của repo trên GitHub.</td></tr>
+          <tr><td><strong>Repository (repo)</strong></td><td><strong>Repository (repo)</strong></td><td lang="en">A folder Git is tracking, including its full history.</td><td lang="vi">Một thư mục được Git theo dõi, bao gồm toàn bộ lịch sử.</td></tr>
+          <tr><td><strong>Stage / Staging area</strong></td><td><strong>Stage / Staging area</strong></td><td lang="en">A basket of changes selected for the next commit. <code>git add</code> puts a file there.</td><td lang="vi">Giỏ thay đổi được chọn cho commit tiếp theo. <code>git add</code> bỏ file vào đó.</td></tr>
+          <tr><td><strong>Stash</strong></td><td><strong>Stash</strong></td><td lang="en">A temporary set-aside of uncommitted edits, so you can checkout something else and come back later.</td><td lang="vi">Đặt tạm các thay đổi chưa commit để bạn có thể checkout sang chỗ khác rồi quay lại sau.</td></tr>
+          <tr><td><strong>Tag</strong></td><td><strong>Tag</strong></td><td lang="en">A permanent label for a specific commit, usually marking a release (e.g. <code>v0.3</code>).</td><td lang="vi">Nhãn vĩnh viễn cho một commit cụ thể, thường đánh dấu release (vd <code>v0.3</code>).</td></tr>
+          <tr><td><strong>Upstream</strong></td><td><strong>Upstream</strong></td><td lang="en">The remote branch that your local branch is set to push/pull from.</td><td lang="vi">Branch remote mà branch local của bạn liên kết để push/pull.</td></tr>
+          <tr><td><strong>Working directory</strong></td><td><strong>Working directory</strong></td><td lang="en">The files you see in your editor — the version Git can be told to save next.</td><td lang="vi">Các file bạn thấy trong editor — bản mà Git có thể được yêu cầu lưu kế tiếp.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- =============================================
+         CHEAT SHEET
+         ============================================= -->
+    <section id="cheatsheet">
+      <h2 lang="en">Cheat sheet · printable one-pager</h2>
+      <h2 lang="vi">Bảng tra nhanh · in một trang</h2>
+
+      <p class="section-intro" lang="en">Save or print this. It's everything you need at your desk during your first month of AI-DLC stage work.</p>
+      <p class="section-intro" lang="vi">Lưu hoặc in ra. Đây là tất cả những gì bạn cần trên bàn trong tháng đầu làm việc với AI-DLC.</p>
+
+      <div class="card">
+        <h3 lang="en">Mental model</h3>
+        <h3 lang="vi">Mô hình tư duy</h3>
+        <ul>
+          <li><span lang="en"><strong>1 stage = 1 branch.</strong> Each AI-DLC stage gets its own branch named <code>stage/{N}-{kebab}</code>.</span><span lang="vi"><strong>1 stage = 1 branch.</strong> Mỗi stage AI-DLC một branch tên <code>stage/{N}-{kebab}</code>.</span></li>
+          <li><span lang="en"><strong>1 PR = 1 gate.</strong> The stage completion message becomes the PR title + body.</span><span lang="vi"><strong>1 PR = 1 gate.</strong> Message hoàn tất stage trở thành title + body của PR.</span></li>
+          <li><span lang="en"><strong>main is sacred.</strong> Never commit directly. Always branch, PR, merge.</span><span lang="vi"><strong>main là thiêng liêng.</strong> Không bao giờ commit thẳng. Luôn branch, PR, merge.</span></li>
+          <li><span lang="en"><strong>Pull before you start.</strong> Every session opens with <em>checkout main → pull → new branch</em>.</span><span lang="vi"><strong>Pull trước khi bắt đầu.</strong> Mỗi phiên mở đầu bằng <em>checkout main → pull → branch mới</em>.</span></li>
+          <li><span lang="en"><strong>audit.md keeps both sides.</strong> Append-only file — on conflict, keep both blocks chronologically.</span><span lang="vi"><strong>audit.md giữ cả hai phía.</strong> File append-only — khi conflict, giữ cả hai khối theo thứ tự thời gian.</span></li>
+        </ul>
+      </div>
+
+      <div class="minicard-grid minicard-grid--3">
+        <div class="minicard">
+          <h4 lang="en">CLI · start session</h4>
+          <h4 lang="vi">CLI · bắt đầu phiên</h4>
+          <pre class="code-block"><span class="kw">git checkout</span> main
+<span class="kw">git pull</span>
+<span class="kw">git checkout</span> -b stage/4-requirements</pre>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">CLI · commit + push</h4>
+          <h4 lang="vi">CLI · commit + push</h4>
+          <pre class="code-block"><span class="kw">git status</span>
+<span class="kw">git add</span> &lt;files&gt;
+<span class="kw">git commit</span> -m <span class="str">"Stage N: …"</span>
+<span class="kw">git push</span> -u origin &lt;branch&gt;</pre>
+        </div>
+        <div class="minicard">
+          <h4 lang="en">CLI · cleanup</h4>
+          <h4 lang="vi">CLI · dọn dẹp</h4>
+          <pre class="code-block"><span class="kw">git checkout</span> main
+<span class="kw">git pull</span>
+<span class="kw">git branch</span> -d &lt;stage-branch&gt;</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 lang="en">KAFI branch patterns</h3>
+        <h3 lang="vi">Các mẫu branch của KAFI</h3>
+        <ul>
+          <li><code>stage/{N}-{kebab-name}</code> <span lang="en">— Inception stage</span><span lang="vi">— stage Inception</span></li>
+          <li><code>pre-inception/route-{X}-{desc}</code> <span lang="en">— Pre-Inception sub-flow</span><span lang="vi">— sub-flow Pre-Inception</span></li>
+          <li><code>unit/UNIT-{NN}-{kebab-name}</code> <span lang="en">— Construction per unit</span><span lang="vi">— Construction từng unit</span></li>
+          <li><code>kb/{topic}</code> <span lang="en">— direct KB update</span><span lang="vi">— cập nhật KB trực tiếp</span></li>
+          <li><code>fix/{desc}</code> <span lang="en">— hotfix</span><span lang="vi">— sửa nóng</span></li>
+          <li><code>release/v{X.Y.Z}</code> <span lang="en">— release prep</span><span lang="vi">— chuẩn bị release</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 lang="en">When things feel wrong · do this first</h3>
+        <h3 lang="vi">Khi cảm thấy có gì đó sai · làm cái này trước</h3>
+        <ol>
+          <li><code>git status</code> — <span lang="en">read the message; Git almost always tells you what to do.</span><span lang="vi">đọc message; Git gần như luôn chỉ cho bạn phải làm gì.</span></li>
+          <li><span lang="en">Stop touching the repo until you understand what state you're in.</span><span lang="vi">Đừng đụng vào repo nữa cho tới khi bạn hiểu mình đang ở trạng thái nào.</span></li>
+          <li><span lang="en">If you've already committed, <strong>your work is safe</strong>. <code>git reflog</code> can recover almost anything.</span><span lang="vi">Nếu đã commit, <strong>việc của bạn an toàn</strong>. <code>git reflog</code> cứu được gần như mọi thứ.</span></li>
+          <li><span lang="en">Don't run <code>git reset --hard</code>, <code>push --force</code>, or <code>git clean</code> without asking.</span><span lang="vi">Đừng chạy <code>git reset --hard</code>, <code>push --force</code>, hoặc <code>git clean</code> nếu chưa hỏi ai.</span></li>
+          <li><span lang="en">Ping #ai-dlc on Slack with the output of <code>git status</code>.</span><span lang="vi">Ping #ai-dlc trên Slack kèm output của <code>git status</code>.</span></li>
+        </ol>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-label" lang="en">You are ready</span>
+        <span class="callout-label" lang="vi">Bạn đã sẵn sàng</span>
+        <span lang="en">If you understood Parts 1–3 and ran one daily flow in your tool of choice, you have everything you need to participate in KAFI's AI-DLC workflow. Everything else is a matter of repetition. See you on the PR queue.</span>
+        <span lang="vi">Nếu bạn đã hiểu Phần 1–3 và chạy được một thao tác hàng ngày trong công cụ bạn chọn, bạn đã có đủ để tham gia quy trình AI-DLC của KAFI. Phần còn lại chỉ là quen tay. Hẹn gặp ở queue PR.</span>
+      </div>
+    </section>
+
+    <footer>
+      <div lang="en">KAFI Transformation Office · v0.3 · 2026-05</div>
+      <div lang="vi">Văn phòng Chuyển đổi KAFI · v0.3 · 2026-05</div>
+      <div><span lang="en">Apache 2.0 · Methodology layer only</span><span lang="vi">Apache 2.0 · Chỉ là tầng phương pháp</span></div>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var STORAGE_KEYS = { lang: 'kafi-git-lang', theme: 'kafi-git-theme' };
+
+  function setLang(value) {
+    if (value !== 'en' && value !== 'vi') return;
+    root.setAttribute('data-lang', value);
+    root.setAttribute('lang', value);
+    try { localStorage.setItem(STORAGE_KEYS.lang, value); } catch (e) {}
+    document.querySelectorAll('[data-action="lang"]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
+    });
+  }
+
+  function setTheme(value) {
+    if (value !== 'light' && value !== 'dark') return;
+    root.setAttribute('data-theme', value);
+    try { localStorage.setItem(STORAGE_KEYS.theme, value); } catch (e) {}
+    document.querySelectorAll('[data-action="theme"]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-action');
+    var value = btn.getAttribute('data-value');
+    if (action === 'lang') setLang(value);
+    if (action === 'theme') setTheme(value);
+  });
+
+  try {
+    var savedLang = localStorage.getItem(STORAGE_KEYS.lang);
+    var savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
+    if (savedLang) setLang(savedLang);
+    if (savedTheme) setTheme(savedTheme);
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
