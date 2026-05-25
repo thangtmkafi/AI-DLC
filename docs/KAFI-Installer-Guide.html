@@ -216,10 +216,11 @@ footer a { color: var(--kafi-green); text-decoration: none; }
     <li><a href="#what-it-does">2 · What the installer does</a></li>
     <li><a href="#install-mode">3 · Install mode (fresh workspace)</a></li>
     <li><a href="#upgrade-mode">4 · Upgrade mode (existing AI-DLC)</a></li>
-    <li><a href="#flags">5 · Flags reference</a></li>
-    <li><a href="#safety">6 · Safety guardrails</a></li>
-    <li><a href="#troubleshooting">7 · Troubleshooting</a></li>
-    <li><a href="#after-install">8 · After install — first session</a></li>
+    <li><a href="#convert-mode">5 · Convert mode (Claude ↔ Kiro)</a></li>
+    <li><a href="#flags">6 · Flags reference</a></li>
+    <li><a href="#safety">7 · Safety guardrails</a></li>
+    <li><a href="#troubleshooting">8 · Troubleshooting</a></li>
+    <li><a href="#after-install">9 · After install — first session</a></li>
   </ul>
 </div>
 
@@ -332,7 +333,134 @@ Proceed? [Y/n] Y
 → Extracting…
 ✓ Extracted AI-DLC v0.4 (claude-code).</pre>
 
-<h2 id="flags">5 · Flags reference</h2>
+<h2 id="convert-mode">5 · Convert mode (Claude ↔ Kiro)</h2>
+
+<p>If you've been using one edition (e.g., Claude Code) and want to switch to the other (Kiro IDE) without losing your project work, use convert mode. The installer:</p>
+
+<ol>
+  <li><strong>Detects the current edition</strong> from <code>CLAUDE.md</code> or <code>AGENTS.md</code> presence.</li>
+  <li><strong>Backs up all current-edition files</strong> to <code>.aidlc-backup-&lt;timestamp&gt;-from-&lt;edition&gt;/</code>.</li>
+  <li><strong>Downloads + extracts the target edition</strong> (always at latest version — convert ignores <code>--version</code>).</li>
+  <li><strong>Preserves user content</strong>: <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code>. These directories are edition-agnostic — both editions reference the same paths from their workflow rules.</li>
+  <li><strong>Tells you what to do with customizations</strong>: if you edited any role/skill/rule files, they live in the backup but are NOT auto-ported (the path conventions differ between editions, and Kiro adds YAML frontmatter Claude doesn't have).</li>
+</ol>
+
+<h3>Commands</h3>
+
+<h4>Convert Claude Code → Kiro (latest)</h4>
+<div class="cmd-grid">
+  <div>
+    <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">macOS / Linux</h4>
+    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh \
+  | bash -s -- --convert-to=kiro --yes</pre>
+  </div>
+  <div>
+    <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">Windows</h4>
+    <pre>.\install.ps1 -ConvertTo kiro -Yes</pre>
+  </div>
+</div>
+
+<h4>Convert Kiro → Claude Code (latest)</h4>
+<div class="cmd-grid">
+  <div>
+    <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">macOS / Linux</h4>
+    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh \
+  | bash -s -- --convert-to=claude-code --yes</pre>
+  </div>
+  <div>
+    <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">Windows</h4>
+    <pre>.\install.ps1 -ConvertTo claude-code -Yes</pre>
+  </div>
+</div>
+
+<h3>What gets backed up vs replaced vs preserved</h3>
+
+<table>
+  <thead>
+    <tr><th>Direction</th><th>Backed up (FROM edition)</th><th>Installed (TO edition)</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Claude → Kiro</td>
+      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
+    </tr>
+    <tr>
+      <td>Kiro → Claude</td>
+      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
+      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 13px; color: var(--text-secondary);"><strong>Preserved both directions:</strong> <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></p>
+
+<div class="callout"><strong>Convert always installs the latest target version.</strong> If you pass <code>--version=vX.Y</code> together with <code>--convert-to</code>, the version flag is ignored. To downgrade and convert in one step, do them separately: convert first (lands at latest target), then run upgrade with <code>--version=vX.Y</code> within the new edition.</div>
+
+<h3>Customization migration (manual)</h3>
+
+<p>If you edited rule, skill, or role files in your previous edition, the conversion preserves them in the backup but does NOT auto-port them. Paths and frontmatter differ between editions:</p>
+
+<table>
+  <thead>
+    <tr><th>Claude path</th><th>Kiro path</th><th>Frontmatter</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>.claude/skills/kafi/roles/pm.md</code></td>
+      <td><code>.kiro/steering/roles/pm.md</code></td>
+      <td>Kiro adds <code>---\ninclusion: manual\ndescription: "..."\n---</code> at top</td>
+    </tr>
+    <tr>
+      <td><code>aidlc-rule-details/inception/*.md</code></td>
+      <td><code>.kiro/steering/inception/*.md</code></td>
+      <td>Kiro adds <code>inclusion: manual</code> frontmatter</td>
+    </tr>
+    <tr>
+      <td><code>aidlc-rule-details/common/*.md</code></td>
+      <td><code>.kiro/steering/common/*.md</code></td>
+      <td>Kiro adds <code>inclusion: always</code> frontmatter</td>
+    </tr>
+    <tr>
+      <td><code>aidlc-rule-details/templates/*.md</code></td>
+      <td><code>.kiro/templates/*.md</code></td>
+      <td>No frontmatter either side (templates are plain)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 13px; color: var(--text-secondary);">Diff your backup against the freshly-installed target paths to find customizations. Apply them manually with frontmatter adjusted.</p>
+
+<h3>Example output (Claude → Kiro)</h3>
+<pre>→ Mode: convert
+→ Converting: claude-code → kiro
+→ Source: claude-code v0.4
+→ Target: kiro v0.4
+
+=== Plan ===
+  Mode:     convert
+  Edition:  kiro
+  Version:  v0.4
+  Target:   /home/me/my-project
+  Asset:    kafi-aidlc-v0.4-kiro.zip
+  Backup:   .aidlc-backup-20260525-220000-from-claude-code/
+  Remove:   CLAUDE.md README.md aidlc-rule-details/ .claude/
+  Install:  AGENTS.md README.md .kiro/
+  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/
+
+  Note: Edition-specific customizations to roles/skills/rules will be
+         preserved in the backup but NOT auto-ported to kiro.
+         Manual review of backup may be required if you customized files.
+
+Proceed? [Y/n] Y
+
+→ Backing up claude-code edition files to .aidlc-backup-20260525-220000-from-claude-code/
+✓ Backup of claude-code edition created.
+→ Downloading kafi-aidlc-v0.4-kiro.zip…
+→ Extracting…
+✓ Extracted AI-DLC v0.4 (kiro).</pre>
+
+<h2 id="flags">6 · Flags reference</h2>
 
 <table>
   <thead>
@@ -340,10 +468,16 @@ Proceed? [Y/n] Y
   </thead>
   <tbody>
     <tr>
-      <td><code>--mode=&lt;install|upgrade|auto&gt;</code></td>
-      <td><code>-Mode &lt;install|upgrade|auto&gt;</code></td>
+      <td><code>--mode=&lt;install|upgrade|convert|auto&gt;</code></td>
+      <td><code>-Mode &lt;install|upgrade|convert|auto&gt;</code></td>
       <td><code>auto</code></td>
       <td>Force a specific mode. Useful if auto-detection picks wrong.</td>
+    </tr>
+    <tr>
+      <td><code>--convert-to=&lt;claude-code|kiro&gt;</code></td>
+      <td><code>-ConvertTo &lt;claude-code|kiro&gt;</code></td>
+      <td>(unset)</td>
+      <td>Switch edition. Backs up current edition, installs target edition latest version. See §5.</td>
     </tr>
     <tr>
       <td><code>--edition=&lt;claude-code|kiro&gt;</code></td>
@@ -398,7 +532,7 @@ Proceed? [Y/n] Y
 <h4>Install without moving existing files</h4>
 <pre>curl -fsSL .../install.sh | bash -s -- --edition=claude-code --no-move</pre>
 
-<h2 id="safety">6 · Safety guardrails</h2>
+<h2 id="safety">7 · Safety guardrails</h2>
 
 <ul>
   <li><strong>Sensitive path refusal.</strong> Installer aborts if you're in <code>$HOME</code>, <code>~/Desktop</code>, <code>~/Documents</code>, <code>/</code>, <code>C:\</code>, or <code>C:\Users</code>.</li>
@@ -421,7 +555,7 @@ node_modules/     dist/             build/         target/    .next/    .cache/
 *.lock            package-lock.json yarn.lock      Cargo.lock
 .aidlc-backup-*/  (your own backups stay put)</pre>
 
-<h2 id="troubleshooting">7 · Troubleshooting</h2>
+<h2 id="troubleshooting">8 · Troubleshooting</h2>
 
 <h3>"Refusing to install into '$HOME'"</h3>
 <p><code>cd</code> into a project subdirectory first. The installer protects you from contaminating your home with AI-DLC files. Example:</p>
@@ -444,6 +578,17 @@ curl -fsSL .../install.sh | bash</pre>
 mv .aidlc-backup-20260525-180000/* .
 rmdir .aidlc-backup-20260525-180000</pre>
 
+<h3>Convert replaced my Claude/Kiro setup — how to revert?</h3>
+<p>The installer backed up the FROM edition files to <code>.aidlc-backup-&lt;timestamp&gt;-from-&lt;edition&gt;/</code>. To revert the conversion:</p>
+<pre># Example: Claude → Kiro conversion needs reverting
+rm -rf AGENTS.md README.md .kiro/
+mv .aidlc-backup-20260525-220000-from-claude-code/* .
+rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
+<p style="font-size: 12.5px; color: var(--text-muted);">User content in <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code> was never touched by the convert and is still intact.</p>
+
+<h3>"--convert-to requires an existing AI-DLC installation"</h3>
+<p>You're trying to convert a fresh folder with no AI-DLC. Convert only switches between editions of an EXISTING install. For a new project, omit <code>--convert-to</code> and run a plain install with <code>--edition=kiro</code> or <code>--edition=claude-code</code>.</p>
+
 <h3>PowerShell "execution policy" error</h3>
 <p>Windows may block running unsigned scripts. Unblock and retry:</p>
 <pre>Unblock-File -Path .\install.ps1
@@ -452,7 +597,7 @@ rmdir .aidlc-backup-20260525-180000</pre>
 <h3>I want a fully manual install</h3>
 <p>Download the zip directly from <a href="https://github.com/Kafivn/KORA/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, and continue with the README steps. The installer is a convenience wrapper — not required.</p>
 
-<h2 id="after-install">8 · After install — first session</h2>
+<h2 id="after-install">9 · After install — first session</h2>
 
 <p>Open your project folder in Claude Code or Kiro IDE. In chat, type:</p>
 

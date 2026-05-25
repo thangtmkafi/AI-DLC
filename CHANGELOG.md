@@ -5,10 +5,11 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 ## [Unreleased]
 
 ### Added · Cross-platform installer
-- **`tools/install.sh`** (bash, macOS/Linux) + **`tools/install.ps1`** (PowerShell, Windows) — auto-detects install vs upgrade mode from current folder contents.
+- **`tools/install.sh`** (bash, macOS/Linux) + **`tools/install.ps1`** (PowerShell, Windows) — auto-detects install vs upgrade vs convert mode from current folder contents.
   - Install mode: moves existing files to `00-knowledge/references/` (configurable exclusion list), downloads latest release zip from GitHub API, unzips into cwd.
   - Upgrade mode: parses current version from `CLAUDE.md` / `AGENTS.md`, compares to latest, backs up package files to `.aidlc-backup-<timestamp>/`, replaces with new version. Preserves `00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/`.
-  - Flags: `--mode`, `--edition`, `--version`, `--yes`, `--dry-run`, `--no-move`. 1-prompt summary before destructive actions.
+  - **Convert mode** (`--convert-to=claude-code|kiro` / `-ConvertTo`): switches editions while preserving user content. Backs up FROM-edition files to `.aidlc-backup-<ts>-from-<edition>/`, installs TO-edition at latest version. `00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/` are edition-agnostic and pass through untouched. Customizations to rule/role/skill files are NOT auto-ported (paths + YAML frontmatter differ between editions); installer reminds user to diff backup against new edition and manually port.
+  - Flags: `--mode`, `--edition`, `--version`, `--convert-to`, `--yes`, `--dry-run`, `--no-move`. 1-prompt summary before destructive actions.
   - Safety: refuses on `$HOME` / `~/Desktop` / `/` / `C:\Users`, mixed-state detection, atomic download → validate → unzip.
   - Invocation: `curl -fsSL <raw>/tools/install.sh | bash` (Mac/Linux) or `iwr -useb <raw>/tools/install.ps1 -OutFile install.ps1; .\install.ps1` (Windows).
 

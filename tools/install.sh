@@ -13,6 +13,7 @@ set -euo pipefail
 MODE="auto"
 EDITION=""
 VERSION="latest"
+CONVERT_TO=""
 ASSUME_YES=false
 DRY_RUN=false
 NO_MOVE=false
@@ -37,17 +38,21 @@ usage() {
 KAFI AI-DLC installer (Mac/Linux)
 
 USAGE:
-  install.sh [--mode=auto|install|upgrade] [--edition=claude-code|kiro]
-             [--version=latest|v0.4] [--yes] [--dry-run] [--no-move] [--help]
+  install.sh [--mode=auto|install|upgrade|convert] [--edition=claude-code|kiro]
+             [--version=latest|v0.4] [--convert-to=claude-code|kiro]
+             [--yes] [--dry-run] [--no-move] [--help]
 
 FLAGS:
-  --mode=<m>      Force mode (default: auto-detect from cwd)
-  --edition=<e>   Skip edition prompt (claude-code or kiro)
-  --version=<v>   Pin version (default: latest from GitHub)
-  --yes           Skip confirmation prompt
-  --dry-run       Print actions without executing
-  --no-move       Install mode: do NOT move existing files to 00-knowledge/references/
-  --help          Print this message
+  --mode=<m>        Force mode (default: auto-detect from cwd)
+  --edition=<e>     Skip edition prompt (claude-code or kiro)
+  --version=<v>     Pin version (default: latest from GitHub)
+  --convert-to=<e>  Convert current edition → target edition (always latest).
+                    Backs up current edition files, installs target edition,
+                    preserves 00-knowledge/, aidlc-docs/, src/, adrs/, ai-dlc/.
+  --yes             Skip confirmation prompt
+  --dry-run         Print actions without executing
+  --no-move         Install mode: do NOT move existing files to 00-knowledge/references/
+  --help            Print this message
 
 EXAMPLES:
   # Auto-detect mode + edition (will prompt)
@@ -58,22 +63,37 @@ EXAMPLES:
 
   # Pin to v0.3 instead of latest
   bash install.sh --version=v0.3 --edition=kiro
+
+  # Convert Claude Code → Kiro (latest)
+  bash install.sh --convert-to=kiro --yes
+
+  # Convert Kiro → Claude Code (latest)
+  bash install.sh --convert-to=claude-code --yes
 EOF
 }
 
 # ---- argv parsing ----
 for arg in "$@"; do
   case "$arg" in
-    --mode=*)     MODE="${arg#*=}" ;;
-    --edition=*)  EDITION="${arg#*=}" ;;
-    --version=*)  VERSION="${arg#*=}" ;;
-    --yes|-y)     ASSUME_YES=true ;;
-    --dry-run)    DRY_RUN=true ;;
-    --no-move)    NO_MOVE=true ;;
-    --help|-h)    usage; exit 0 ;;
-    *)            err "Unknown flag: $arg"; usage; exit 64 ;;
+    --mode=*)        MODE="${arg#*=}" ;;
+    --edition=*)     EDITION="${arg#*=}" ;;
+    --version=*)     VERSION="${arg#*=}" ;;
+    --convert-to=*)  CONVERT_TO="${arg#*=}" ;;
+    --yes|-y)        ASSUME_YES=true ;;
+    --dry-run)       DRY_RUN=true ;;
+    --no-move)       NO_MOVE=true ;;
+    --help|-h)       usage; exit 0 ;;
+    *)               err "Unknown flag: $arg"; usage; exit 64 ;;
   esac
 done
+
+# Validate --convert-to
+if [[ -n "$CONVERT_TO" ]]; then
+  case "$CONVERT_TO" in
+    claude-code|kiro) ;;
+    *) err "Invalid --convert-to value: $CONVERT_TO (expected claude-code or kiro)"; exit 64 ;;
+  esac
+fi
 
 # ---- safety: refuse on sensitive paths ----
 CWD="$(pwd)"
@@ -113,7 +133,27 @@ detect_existing_edition() {
 
 EXISTING=$(detect_existing_edition)
 
-if [[ "$MODE" == "auto" ]]; then
+# --convert-to overrides mode detection
+if [[ -n "$CONVERT_TO" ]]; then
+  if [[ "$EXISTING" == "none" ]]; then
+    err "--convert-to requires an existing AI-DLC installation."
+    err "Found no CLAUDE.md or AGENTS.md in cwd. Run a fresh install instead."
+    exit 70
+  fi
+  if [[ "$EXISTING" == "mixed" ]]; then
+    err "Both CLAUDE.md AND AGENTS.md present — mixed state."
+    err "Decide which edition to keep, remove the other, then re-run --convert-to."
+    exit 70
+  fi
+  if [[ "$EXISTING" == "$CONVERT_TO" ]]; then
+    say "Already on $CONVERT_TO edition — nothing to convert."
+    exit 0
+  fi
+  MODE="convert"
+  EDITION="$CONVERT_TO"
+  # Convert defaults to latest; respect --version override if user passed one
+  # (useful when GitHub API is unreachable or for pinning to a specific target)
+elif [[ "$MODE" == "auto" ]]; then
   if [[ "$EXISTING" == "none" ]]; then
     MODE="install"
   elif [[ "$EXISTING" == "mixed" ]]; then
@@ -128,6 +168,9 @@ if [[ "$MODE" == "auto" ]]; then
 fi
 
 step "Mode: ${C_BOLD}${MODE}${C_OFF}"
+if [[ "$MODE" == "convert" ]]; then
+  step "Converting: ${C_BOLD}${EXISTING}${C_OFF} → ${C_BOLD}${CONVERT_TO}${C_OFF}"
+fi
 
 # ---- edition selection ----
 prompt_edition() {
@@ -207,6 +250,16 @@ if [[ "$MODE" == "upgrade" ]]; then
     say "Already on ${VERSION} — nothing to do."
     exit 0
   fi
+
+elif [[ "$MODE" == "convert" ]]; then
+  # Show the from-version for context (not used for any logic — convert always goes to latest target)
+  if [[ "$EXISTING" == "claude-code" ]]; then
+    CURRENT_VERSION=$(parse_current_version CLAUDE.md)
+  else
+    CURRENT_VERSION=$(parse_current_version AGENTS.md)
+  fi
+  step "Source: ${EXISTING} ${CURRENT_VERSION:-(unknown version)}"
+  step "Target: ${CONVERT_TO} ${VERSION}"
 fi
 
 # ---- asset URL ----
@@ -247,6 +300,18 @@ print_plan() {
     echo "  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/"
   fi
 
+  if [[ "$MODE" == "convert" ]]; then
+    local ts; ts=$(date +%Y%m%d-%H%M%S)
+    echo "  Backup:   .aidlc-backup-${ts}-from-${EXISTING}/"
+    echo "  Remove:   $(from_package_paths | tr '\n' ' ')"
+    echo "  Install:  $(package_paths | tr '\n' ' ')"
+    echo "  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/"
+    echo ""
+    echo "  ${C_YELLOW}Note:${C_OFF} Edition-specific customizations to roles/skills/rules will be"
+    echo "         preserved in the backup but NOT auto-ported to ${CONVERT_TO}."
+    echo "         Manual review of backup may be required if you customized files."
+  fi
+
   if $DRY_RUN; then
     echo ""; warn "DRY-RUN: no changes will be made."
   fi
@@ -255,6 +320,15 @@ print_plan() {
 
 package_paths() {
   if [[ "$EDITION" == "claude-code" ]]; then
+    printf "CLAUDE.md\nREADME.md\naidlc-rule-details/\n.claude/\n"
+  else
+    printf "AGENTS.md\nREADME.md\n.kiro/\n"
+  fi
+}
+
+# In convert mode, this returns the paths of the FROM edition (to be removed/backed up)
+from_package_paths() {
+  if [[ "$EXISTING" == "claude-code" ]]; then
     printf "CLAUDE.md\nREADME.md\naidlc-rule-details/\n.claude/\n"
   else
     printf "AGENTS.md\nREADME.md\n.kiro/\n"
@@ -325,6 +399,26 @@ backup_for_upgrade() {
     fi
   done < <(package_paths)
   say "Backup created at ${backup_dir}/"
+}
+
+# ---- action: backup FROM edition + remove its paths (convert mode) ----
+backup_for_convert() {
+  local ts; ts=$(date +%Y%m%d-%H%M%S)
+  local backup_dir=".aidlc-backup-${ts}-from-${EXISTING}"
+  step "Backing up ${EXISTING} edition files to ${backup_dir}/"
+
+  if $DRY_RUN; then
+    for p in $(from_package_paths); do echo "  [dry-run] mv $p $backup_dir/"; done
+    return 0
+  fi
+
+  mkdir -p "$backup_dir"
+  while IFS= read -r p; do
+    if [[ -e "$p" ]]; then
+      mv "$p" "$backup_dir/" 2>/dev/null || true
+    fi
+  done < <(from_package_paths)
+  say "Backup of ${EXISTING} edition created at ${backup_dir}/"
 }
 
 # ---- action: download + extract zip ----
@@ -406,6 +500,45 @@ If anything breaks, restore from the backup directory.
 EOF
 }
 
+print_next_steps_convert() {
+  local ide_name
+  ide_name=$( [[ "$CONVERT_TO" == "claude-code" ]] && echo "Claude Code" || echo "Kiro IDE" )
+  local entry
+  entry=$( [[ "$CONVERT_TO" == "claude-code" ]] && echo "Run #kafi-aidlc-onboarding" || echo "#kafi-aidlc-onboarding" )
+  cat <<EOF
+
+${C_BOLD}=== Edition conversion complete ===${C_OFF}
+
+  ${EXISTING} → ${CONVERT_TO} ${VERSION}
+
+Previous ${EXISTING} edition files backed up to:
+  .aidlc-backup-*-from-${EXISTING}/
+
+User content preserved (00-knowledge/, aidlc-docs/, src/, adrs/, ai-dlc/).
+These directories are edition-agnostic — the workflow rules in ${CONVERT_TO}
+reference the same paths.
+
+${C_BOLD}=== Next steps ===${C_OFF}
+
+1. Open the project in ${C_BOLD}${ide_name}${C_OFF}.
+
+2. Start your first ${CONVERT_TO} session:
+     ${C_DIM}${entry}${C_OFF}
+
+   The onboarding skill detects your current AI-DLC stage from
+   the preserved aidlc-docs/ and resumes accordingly.
+
+3. ${C_BOLD}If you customized any rule/skill/role files${C_OFF} in the previous edition,
+   they are in the backup folder but NOT auto-ported. Diff against the new
+   files in ${CONVERT_TO}'s structure and manually port if needed:
+     - Claude → Kiro:  .claude/skills/kafi/roles/X.md  →  .kiro/steering/roles/X.md  (add YAML frontmatter)
+     - Kiro → Claude:  .kiro/steering/roles/X.md       →  .claude/skills/kafi/roles/X.md  (strip YAML frontmatter)
+
+4. Stage + commit:   git add . && git commit -m "Convert AI-DLC: ${EXISTING} → ${CONVERT_TO}"
+
+EOF
+}
+
 # ============================================================
 # MAIN EXECUTION
 # ============================================================
@@ -422,6 +555,11 @@ elif [[ "$MODE" == "upgrade" ]]; then
   backup_for_upgrade
   download_and_extract
   print_next_steps_upgrade
+
+elif [[ "$MODE" == "convert" ]]; then
+  backup_for_convert
+  download_and_extract
+  print_next_steps_convert
 
 else
   err "Unsupported mode: $MODE"

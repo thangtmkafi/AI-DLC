@@ -25,6 +25,12 @@
 .PARAMETER NoMove
   Install mode: do NOT move existing files to 00-knowledge/references/.
 
+.PARAMETER ConvertTo
+  Convert current edition -> target edition (always latest).
+  Backs up current edition files to .aidlc-backup-<ts>-from-<edition>/,
+  installs target edition, preserves 00-knowledge/, aidlc-docs/, src/, adrs/, ai-dlc/.
+  Valid values: claude-code, kiro.
+
 .EXAMPLE
   .\install.ps1
   Auto-detect mode + prompt for edition.
@@ -36,17 +42,28 @@
 .EXAMPLE
   .\install.ps1 -Mode upgrade -Version v0.4
   Force upgrade to v0.4.
+
+.EXAMPLE
+  .\install.ps1 -ConvertTo kiro -Yes
+  Convert Claude Code edition -> Kiro edition (latest).
+
+.EXAMPLE
+  .\install.ps1 -ConvertTo claude-code -Yes
+  Convert Kiro edition -> Claude Code edition (latest).
 #>
 
 [CmdletBinding()]
 param(
-  [ValidateSet('auto','install','upgrade')]
+  [ValidateSet('auto','install','upgrade','convert')]
   [string]$Mode = 'auto',
 
   [ValidateSet('','claude-code','kiro')]
   [string]$Edition = '',
 
   [string]$Version = 'latest',
+
+  [ValidateSet('','claude-code','kiro')]
+  [string]$ConvertTo = '',
 
   [switch]$Yes,
   [switch]$DryRun,
@@ -103,7 +120,27 @@ function Get-ExistingEdition {
 
 $Existing = Get-ExistingEdition
 
-if ($Mode -eq 'auto') {
+# -ConvertTo overrides mode detection
+if (-not [string]::IsNullOrEmpty($ConvertTo)) {
+  if ($Existing -eq 'none') {
+    Err '-ConvertTo requires an existing AI-DLC installation.'
+    Err 'Found no CLAUDE.md or AGENTS.md in cwd. Run a fresh install instead.'
+    exit 70
+  }
+  if ($Existing -eq 'mixed') {
+    Err 'Both CLAUDE.md AND AGENTS.md present - mixed state.'
+    Err 'Decide which edition to keep, remove the other, then re-run -ConvertTo.'
+    exit 70
+  }
+  if ($Existing -eq $ConvertTo) {
+    Say "Already on $ConvertTo edition - nothing to convert."
+    exit 0
+  }
+  $Mode = 'convert'
+  $Edition = $ConvertTo
+  # Convert defaults to latest; respect -Version override if user passed one
+  # (useful when GitHub API is unreachable or for pinning to a specific target)
+} elseif ($Mode -eq 'auto') {
   switch ($Existing) {
     'none'  { $Mode = 'install' }
     'mixed' {
@@ -119,6 +156,9 @@ if ($Mode -eq 'auto') {
 }
 
 Step "Mode: $Mode"
+if ($Mode -eq 'convert') {
+  Step "Converting: $Existing -> $ConvertTo"
+}
 
 # ---- edition selection ----
 function Read-Edition {
@@ -192,6 +232,11 @@ if ($Mode -eq 'upgrade') {
     Say "Already on $Version - nothing to do."
     exit 0
   }
+} elseif ($Mode -eq 'convert') {
+  $rootFile = if ($Existing -eq 'claude-code') { 'CLAUDE.md' } else { 'AGENTS.md' }
+  $CurrentVersion = Parse-CurrentVersion -File (Join-Path $Cwd $rootFile)
+  Step "Source: $Existing $(if ($CurrentVersion) { $CurrentVersion } else { '(unknown version)' })"
+  Step "Target: $ConvertTo $Version"
 }
 
 # ---- asset URL ----
@@ -201,6 +246,15 @@ $AssetUrl  = "https://github.com/$GhRepo/releases/download/$Version/$AssetName"
 # ---- helpers: package paths + exclusion check ----
 function Get-PackagePaths {
   if ($Edition -eq 'claude-code') {
+    return @('CLAUDE.md', 'README.md', 'aidlc-rule-details', '.claude')
+  } else {
+    return @('AGENTS.md', 'README.md', '.kiro')
+  }
+}
+
+# In convert mode, returns paths of the FROM edition (to be removed/backed up)
+function Get-FromPackagePaths {
+  if ($Existing -eq 'claude-code') {
     return @('CLAUDE.md', 'README.md', 'aidlc-rule-details', '.claude')
   } else {
     return @('AGENTS.md', 'README.md', '.kiro')
@@ -249,6 +303,17 @@ function Show-Plan {
     Write-Host "  Backup:   .aidlc-backup-$ts\"
     Write-Host "  Replace:  $((Get-PackagePaths) -join ' ')"
     Write-Host "  Preserve: 00-knowledge\ aidlc-docs\ src\ adrs\ ai-dlc\ .git\"
+  }
+  if ($Mode -eq 'convert') {
+    $ts = Get-Date -Format 'yyyyMMdd-HHmmss'
+    Write-Host "  Backup:   .aidlc-backup-$ts-from-$Existing\"
+    Write-Host "  Remove:   $((Get-FromPackagePaths) -join ' ')"
+    Write-Host "  Install:  $((Get-PackagePaths) -join ' ')"
+    Write-Host "  Preserve: 00-knowledge\ aidlc-docs\ src\ adrs\ ai-dlc\ .git\"
+    Write-Host ''
+    Warn "Edition-specific customizations to roles/skills/rules will be"
+    Warn "preserved in the backup but NOT auto-ported to $ConvertTo."
+    Warn "Manual review of backup may be required if you customized files."
   }
   if ($DryRun) {
     Write-Host ""
@@ -311,6 +376,29 @@ function Backup-ForUpgrade {
     }
   }
   Say "Backup created at $(Split-Path -Leaf $backupDir)\"
+}
+
+# ---- action: backup FROM edition + remove its paths (convert mode) ----
+function Backup-ForConvert {
+  $ts = Get-Date -Format 'yyyyMMdd-HHmmss'
+  $backupDir = Join-Path $Cwd ".aidlc-backup-$ts-from-$Existing"
+  Step "Backing up $Existing edition files to $(Split-Path -Leaf $backupDir)\"
+
+  if ($DryRun) {
+    foreach ($p in Get-FromPackagePaths) {
+      Write-Host "  [dry-run] mv $p $(Split-Path -Leaf $backupDir)\"
+    }
+    return
+  }
+
+  New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
+  foreach ($p in Get-FromPackagePaths) {
+    $src = Join-Path $Cwd $p
+    if (Test-Path -LiteralPath $src) {
+      Move-Item -LiteralPath $src -Destination $backupDir -Force -ErrorAction SilentlyContinue
+    }
+  }
+  Say "Backup of $Existing edition created at $(Split-Path -Leaf $backupDir)\"
 }
 
 # ---- action: download + extract zip ----
@@ -395,6 +483,43 @@ If anything breaks, restore from the backup directory.
 "@ | Write-Host
 }
 
+function Show-NextStepsConvert {
+  $ideName = if ($ConvertTo -eq 'claude-code') { 'Claude Code' } else { 'Kiro IDE' }
+  $entry   = if ($ConvertTo -eq 'claude-code') { 'Run #kafi-aidlc-onboarding' } else { '#kafi-aidlc-onboarding' }
+@"
+
+=== Edition conversion complete ===
+
+  $Existing -> $ConvertTo $Version
+
+Previous $Existing edition files backed up to:
+  .aidlc-backup-*-from-$Existing\
+
+User content preserved (00-knowledge\, aidlc-docs\, src\, adrs\, ai-dlc\).
+These directories are edition-agnostic - the workflow rules in $ConvertTo
+reference the same paths.
+
+=== Next steps ===
+
+1. Open the project in $ideName.
+
+2. Start your first $ConvertTo session:
+     $entry
+
+   The onboarding skill detects your current AI-DLC stage from
+   the preserved aidlc-docs\ and resumes accordingly.
+
+3. If you customized any rule/skill/role files in the previous edition,
+   they are in the backup folder but NOT auto-ported. Diff against the new
+   files in $ConvertTo's structure and manually port if needed:
+     - Claude -> Kiro:  .claude\skills\kafi\roles\X.md  ->  .kiro\steering\roles\X.md  (add YAML frontmatter)
+     - Kiro -> Claude:  .kiro\steering\roles\X.md       ->  .claude\skills\kafi\roles\X.md  (strip YAML frontmatter)
+
+4. Stage + commit:   git add . ; git commit -m "Convert AI-DLC: $Existing -> $ConvertTo"
+
+"@ | Write-Host
+}
+
 # ============================================================
 # MAIN EXECUTION
 # ============================================================
@@ -412,6 +537,11 @@ switch ($Mode) {
     Backup-ForUpgrade
     Get-AndExtract
     Show-NextStepsUpgrade
+  }
+  'convert' {
+    Backup-ForConvert
+    Get-AndExtract
+    Show-NextStepsConvert
   }
   default {
     Err "Unsupported mode: $Mode"
