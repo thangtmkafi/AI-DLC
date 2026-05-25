@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KAFI AI-DLC · Installer Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --kafi-green: #00C694;
+  --kafi-teal: #07756D;
+  --kafi-dark: #101820;
+  --kafi-yellow: #F9CC4E;
+  --kafi-mint: #D8F5EE;
+  --kafi-mint-light: #E6FBF4;
+  --color-warning: #D4770A;
+  --color-warning-bg: #FFF8E1;
+  --color-danger: #D93025;
+  --color-danger-bg: #FFF0F0;
+  --page-bg: #F2F4F7;
+  --card-bg: #FFFFFF;
+  --text-primary: #101820;
+  --text-secondary: #585667;
+  --text-muted: #9095A0;
+  --border-card: 1.5px solid rgba(0,0,0,0.08);
+  --radius-card: 18px;
+  --radius-button: 32px;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.05);
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 48px 24px;
+}
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+}
+header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: var(--border-card);
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--kafi-dark);
+  margin-bottom: 12px;
+}
+.subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--kafi-dark);
+  margin: 48px 0 16px;
+}
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--kafi-dark);
+  margin: 32px 0 12px;
+}
+h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--kafi-dark);
+  margin: 16px 0 8px;
+}
+p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: rgba(0,0,0,0.05);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--kafi-dark);
+}
+pre {
+  margin: 12px 0;
+  padding: 16px 18px;
+  background: rgba(0,0,0,0.04);
+  border: var(--border-card);
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  overflow-x: auto;
+  color: var(--kafi-dark);
+}
+.cmd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+@media (max-width: 720px) {
+  .cmd-grid { grid-template-columns: 1fr; }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 10.5px;
+  border-bottom: 1.5px solid rgba(0,0,0,0.08);
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+td code { font-size: 11.5px; }
+.callout {
+  padding: 16px 20px;
+  border-radius: var(--radius-card);
+  border: var(--border-card);
+  background: var(--kafi-mint-light);
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.callout-warning {
+  background: var(--color-warning-bg);
+  border-color: rgba(212,119,10,0.25);
+}
+.callout strong { color: var(--kafi-dark); }
+.toc {
+  border: var(--border-card);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  background: var(--card-bg);
+  margin: 24px 0 48px;
+}
+.toc h3 { margin: 0 0 12px; }
+.toc ul { list-style: none; padding: 0; }
+.toc li {
+  padding: 4px 0;
+  font-size: 13.5px;
+}
+.toc a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.toc a:hover {
+  color: var(--kafi-green);
+  border-bottom-color: var(--kafi-green);
+}
+ul, ol {
+  padding-left: 24px;
+  margin: 12px 0 16px;
+}
+li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+li strong { color: var(--kafi-dark); }
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: var(--border-card);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a { color: var(--kafi-green); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="eyebrow">KAFI AI-DLC v0.4</div>
+  <h1>Installer Guide</h1>
+  <p class="subtitle">Cross-platform installer (bash + PowerShell) for setting up or upgrading AI-DLC in your project folder. Auto-detects mode, moves legacy files into <code>00-knowledge/references/</code>, and downloads the latest release from GitHub.</p>
+</header>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ul>
+    <li><a href="#quick-start">1 · Quick start</a></li>
+    <li><a href="#what-it-does">2 · What the installer does</a></li>
+    <li><a href="#install-mode">3 · Install mode (fresh workspace)</a></li>
+    <li><a href="#upgrade-mode">4 · Upgrade mode (existing AI-DLC)</a></li>
+    <li><a href="#flags">5 · Flags reference</a></li>
+    <li><a href="#safety">6 · Safety guardrails</a></li>
+    <li><a href="#troubleshooting">7 · Troubleshooting</a></li>
+    <li><a href="#after-install">8 · After install — first session</a></li>
+  </ul>
+</div>
+
+<h2 id="quick-start">1 · Quick start</h2>
+<p>Open your project folder in a terminal and run one command. The installer auto-detects whether you need a fresh install or an upgrade.</p>
+
+<div class="cmd-grid">
+  <div>
+    <h4>macOS / Linux</h4>
+    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash</pre>
+  </div>
+  <div>
+    <h4>Windows (PowerShell)</h4>
+    <pre>iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1</pre>
+  </div>
+</div>
+
+<div class="callout"><strong>Don't run <code>/init</code>.</strong> Both Claude Code and Kiro auto-load <code>CLAUDE.md</code> / <code>AGENTS.md</code> on every session start. <code>/init</code> is non-destructive (it suggests, not overwrites) but redundant on an AI-DLC project. After install, use the <code>kafi-aidlc-onboarding</code> skill instead — see §8.</div>
+
+<h2 id="what-it-does">2 · What the installer does</h2>
+<ol>
+  <li>Checks the current folder is safe (refuses if you're in <code>$HOME</code>, <code>~/Desktop</code>, <code>/</code>, or <code>C:\Users</code>).</li>
+  <li>Detects whether AI-DLC is already installed (presence of <code>CLAUDE.md</code> or <code>AGENTS.md</code>).</li>
+  <li>If absent → install mode: optionally moves legacy files into <code>00-knowledge/references/</code>, downloads the latest release, unzips into the current folder.</li>
+  <li>If present → upgrade mode: detects current version, fetches latest from GitHub, backs up package files to <code>.aidlc-backup-&lt;timestamp&gt;/</code>, replaces them with the new version. <strong>User content (<code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>) is never touched.</strong></li>
+  <li>Prints next-step instructions.</li>
+</ol>
+
+<h2 id="install-mode">3 · Install mode (fresh workspace)</h2>
+
+<p>Triggered when neither <code>CLAUDE.md</code> nor <code>AGENTS.md</code> exists in the current folder. The installer:</p>
+
+<ol>
+  <li><strong>Inventories the folder.</strong> Lists existing files, excluding <code>.git/</code>, <code>node_modules/</code>, lock files, IDE configs (see §6 exclusions list).</li>
+  <li><strong>Prompts for edition.</strong> Choose Claude Code or Kiro IDE (skip with <code>--edition=&lt;name&gt;</code>).</li>
+  <li><strong>Shows a 1-prompt summary.</strong> Lists what will be moved, downloaded, and unzipped. You approve with <kbd>Y</kbd>.</li>
+  <li><strong>Moves legacy files</strong> to <code>00-knowledge/references/</code> (skip with <code>--no-move</code>).</li>
+  <li><strong>Downloads the release zip</strong> from GitHub Releases.</li>
+  <li><strong>Unzips into the current folder.</strong> Both editions ship flat (no top-level subfolder inside the zip).</li>
+  <li><strong>Prints next-steps.</strong></li>
+</ol>
+
+<h3>Example output (fresh install with legacy files)</h3>
+<pre>=== Plan ===
+  Mode:     install
+  Edition:  claude-code
+  Version:  v0.4
+  Target:   /home/me/my-project
+  Asset:    kafi-aidlc-v0.4-claude-code.zip
+  Move:     12 existing item(s) → 00-knowledge/references/
+
+Proceed? [Y/n] Y
+
+→ Moving 12 item(s) → 00-knowledge/references/
+✓ Moved 12 item(s).
+→ Downloading https://github.com/Kafivn/KORA/releases/download/v0.4/...
+→ Extracting into /home/me/my-project…
+✓ Extracted AI-DLC v0.4 (claude-code).</pre>
+
+<h2 id="upgrade-mode">4 · Upgrade mode (existing AI-DLC)</h2>
+
+<p>Triggered when <code>CLAUDE.md</code> or <code>AGENTS.md</code> exists. The installer:</p>
+
+<ol>
+  <li><strong>Parses current version</strong> from <code>CLAUDE.md</code> / <code>AGENTS.md</code> line 3 (e.g., <code>**v0.3 · KAFI Transformation Office**</code>).</li>
+  <li><strong>Fetches latest version</strong> from <a href="https://api.github.com/repos/Kafivn/KORA/releases/latest" style="color: var(--kafi-green);">GitHub Releases API</a>.</li>
+  <li><strong>If equal → exits with "Already on latest"</strong> (no-op).</li>
+  <li><strong>Shows a 1-prompt summary</strong> with backup path, replace list, preserve list. You approve.</li>
+  <li><strong>Backs up package files</strong> to <code>.aidlc-backup-YYYYMMDD-HHMMSS/</code> in the current folder.</li>
+  <li><strong>Downloads + unzips the new release</strong> into the current folder.</li>
+  <li><strong>Prints diff suggestion</strong> (<code>git diff</code> to review).</li>
+</ol>
+
+<h3>What gets replaced vs preserved</h3>
+
+<table>
+  <thead>
+    <tr><th>Edition</th><th>Replaced (backed up first)</th><th>Preserved (never touched)</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Claude Code</td>
+      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></td>
+    </tr>
+    <tr>
+      <td>Kiro</td>
+      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
+      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Example output (v0.3 → v0.4 upgrade)</h3>
+<pre>=== Plan ===
+  Mode:     upgrade
+  Edition:  claude-code
+  Version:  v0.4 (upgrading from v0.3)
+  Target:   /home/me/my-project
+  Backup:   .aidlc-backup-20260525-180000/
+  Replace:  CLAUDE.md README.md aidlc-rule-details/ .claude/
+  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/
+
+Proceed? [Y/n] Y
+
+→ Creating backup at .aidlc-backup-20260525-180000/
+✓ Backup created.
+→ Downloading kafi-aidlc-v0.4-claude-code.zip…
+→ Extracting…
+✓ Extracted AI-DLC v0.4 (claude-code).</pre>
+
+<h2 id="flags">5 · Flags reference</h2>
+
+<table>
+  <thead>
+    <tr><th>bash flag</th><th>PowerShell flag</th><th>Default</th><th>Effect</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--mode=&lt;install|upgrade|auto&gt;</code></td>
+      <td><code>-Mode &lt;install|upgrade|auto&gt;</code></td>
+      <td><code>auto</code></td>
+      <td>Force a specific mode. Useful if auto-detection picks wrong.</td>
+    </tr>
+    <tr>
+      <td><code>--edition=&lt;claude-code|kiro&gt;</code></td>
+      <td><code>-Edition &lt;claude-code|kiro&gt;</code></td>
+      <td>prompt</td>
+      <td>Skip the edition prompt. Required for non-interactive (<code>--yes</code>).</td>
+    </tr>
+    <tr>
+      <td><code>--version=&lt;v0.4|latest&gt;</code></td>
+      <td><code>-Version &lt;v0.4|latest&gt;</code></td>
+      <td><code>latest</code></td>
+      <td>Pin to a specific version. Use to install older release.</td>
+    </tr>
+    <tr>
+      <td><code>--yes</code></td>
+      <td><code>-Yes</code></td>
+      <td>false</td>
+      <td>Skip the "Proceed?" confirmation. Combine with explicit edition.</td>
+    </tr>
+    <tr>
+      <td><code>--dry-run</code></td>
+      <td><code>-DryRun</code></td>
+      <td>false</td>
+      <td>Print all actions without making changes. Verify plan before committing.</td>
+    </tr>
+    <tr>
+      <td><code>--no-move</code></td>
+      <td><code>-NoMove</code></td>
+      <td>false</td>
+      <td>Install mode only: skip moving existing files to <code>00-knowledge/references/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>--help</code></td>
+      <td><code>-Help</code></td>
+      <td>false</td>
+      <td>Print usage and exit.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Common flag combinations</h3>
+
+<h4>Non-interactive install (CI / scripts)</h4>
+<pre>curl -fsSL .../install.sh | bash -s -- --edition=claude-code --yes</pre>
+
+<h4>Install older version</h4>
+<pre>curl -fsSL .../install.sh | bash -s -- --edition=kiro --version=v0.3</pre>
+
+<h4>Dry-run to preview</h4>
+<pre>curl -fsSL .../install.sh | bash -s -- --dry-run</pre>
+
+<h4>Install without moving existing files</h4>
+<pre>curl -fsSL .../install.sh | bash -s -- --edition=claude-code --no-move</pre>
+
+<h2 id="safety">6 · Safety guardrails</h2>
+
+<ul>
+  <li><strong>Sensitive path refusal.</strong> Installer aborts if you're in <code>$HOME</code>, <code>~/Desktop</code>, <code>~/Documents</code>, <code>/</code>, <code>C:\</code>, or <code>C:\Users</code>.</li>
+  <li><strong>Always backs up on upgrade.</strong> Existing package files move to <code>.aidlc-backup-&lt;timestamp&gt;/</code> before replacement. Restore with <code>mv .aidlc-backup-X/* .</code> if needed.</li>
+  <li><strong>Mixed-state detection.</strong> If both <code>CLAUDE.md</code> AND <code>AGENTS.md</code> exist (one project should not have both), installer refuses with guidance.</li>
+  <li><strong>Download integrity check.</strong> Zip must be &gt;50 KB; smaller suggests a failed download or wrong asset.</li>
+  <li><strong>Idempotent reruns.</strong> Re-running on a folder already at latest version exits with "Already on latest" — no destructive change.</li>
+  <li><strong>Atomic operations.</strong> Download lands in temp directory first; only moved into your folder after validation.</li>
+</ul>
+
+<h3>Exclusion list (skipped during install-mode move)</h3>
+
+<p>These files/folders stay in place when the installer moves legacy content into <code>00-knowledge/references/</code>:</p>
+
+<pre>.git/             .gitignore        .gitattributes
+.DS_Store         Thumbs.db         desktop.ini
+node_modules/     dist/             build/         target/    .next/    .cache/
+.vscode/          .idea/            .cursor/
+.env              .envrc            .env.local
+*.lock            package-lock.json yarn.lock      Cargo.lock
+.aidlc-backup-*/  (your own backups stay put)</pre>
+
+<h2 id="troubleshooting">7 · Troubleshooting</h2>
+
+<h3>"Refusing to install into '$HOME'"</h3>
+<p><code>cd</code> into a project subdirectory first. The installer protects you from contaminating your home with AI-DLC files. Example:</p>
+<pre>mkdir ~/projects/my-treasury-app
+cd ~/projects/my-treasury-app
+curl -fsSL .../install.sh | bash</pre>
+
+<h3>"Missing dependency: curl"</h3>
+<p>Install curl: <code>brew install curl</code> (macOS) or <code>apt install curl</code> (Linux).</p>
+
+<h3>"Download failed: github.com/..."</h3>
+<p>Verify the release exists at <a href="https://github.com/Kafivn/KORA/releases" style="color: var(--kafi-green);">github.com/Kafivn/KORA/releases</a>. If your network blocks GitHub, contact KAFI Transformation Office for a private mirror URL.</p>
+
+<h3>"Both CLAUDE.md AND AGENTS.md present — mixed state"</h3>
+<p>A project should run one edition (Claude Code or Kiro), not both. Decide which to keep, <code>rm</code> the other, then re-run the installer.</p>
+
+<h3>Upgrade replaced custom changes — how to recover?</h3>
+<p>The installer backed up your prior package files to <code>.aidlc-backup-&lt;timestamp&gt;/</code>. To restore the old version:</p>
+<pre>rm -rf CLAUDE.md aidlc-rule-details/ .claude/
+mv .aidlc-backup-20260525-180000/* .
+rmdir .aidlc-backup-20260525-180000</pre>
+
+<h3>PowerShell "execution policy" error</h3>
+<p>Windows may block running unsigned scripts. Unblock and retry:</p>
+<pre>Unblock-File -Path .\install.ps1
+.\install.ps1</pre>
+
+<h3>I want a fully manual install</h3>
+<p>Download the zip directly from <a href="https://github.com/Kafivn/KORA/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, and continue with the README steps. The installer is a convenience wrapper — not required.</p>
+
+<h2 id="after-install">8 · After install — first session</h2>
+
+<p>Open your project folder in Claude Code or Kiro IDE. In chat, type:</p>
+
+<pre><strong>Claude Code:</strong> Run #kafi-aidlc-onboarding
+<strong>Kiro IDE:</strong>    #kafi-aidlc-onboarding</pre>
+
+<p>The onboarding skill scans your project, detects the current AI-DLC stage, loads the matching role + prompt template, and starts a session — no manual paste needed. See the Introduction or Handbook docs for the full stage → role → template mapping.</p>
+
+<div class="callout"><strong>If you placed legacy files in <code>00-knowledge/</code></strong> (BRDs, PRDs, mockups, architecture docs), the onboarding skill detects them in Mode B and routes you to the right Pre-Inception sub-flow automatically.</div>
+
+<footer>
+  <p>KAFI AI-DLC v0.4 · Transformation Office, Kafi Securities · 2026-05-25</p>
+  <p>Related docs: <a href="KAFI-AIDLC-Introduction-Claude.html">Introduction (Claude)</a> · <a href="KAFI-AIDLC-Introduction-Kiro.html">Introduction (Kiro)</a> · <a href="KAFI-AIDLC-Handbook-Claude.html">Handbook (Claude)</a> · <a href="KAFI-AIDLC-Handbook-Kiro.html">Handbook (Kiro)</a></p>
+</footer>
+
+</div>
+
+</body>
+</html>

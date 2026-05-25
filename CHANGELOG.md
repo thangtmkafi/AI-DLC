@@ -4,6 +4,26 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
+### Added · Cross-platform installer
+- **`tools/install.sh`** (bash, macOS/Linux) + **`tools/install.ps1`** (PowerShell, Windows) — auto-detects install vs upgrade mode from current folder contents.
+  - Install mode: moves existing files to `00-knowledge/references/` (configurable exclusion list), downloads latest release zip from GitHub API, unzips into cwd.
+  - Upgrade mode: parses current version from `CLAUDE.md` / `AGENTS.md`, compares to latest, backs up package files to `.aidlc-backup-<timestamp>/`, replaces with new version. Preserves `00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/`.
+  - Flags: `--mode`, `--edition`, `--version`, `--yes`, `--dry-run`, `--no-move`. 1-prompt summary before destructive actions.
+  - Safety: refuses on `$HOME` / `~/Desktop` / `/` / `C:\Users`, mixed-state detection, atomic download → validate → unzip.
+  - Invocation: `curl -fsSL <raw>/tools/install.sh | bash` (Mac/Linux) or `iwr -useb <raw>/tools/install.ps1 -OutFile install.ps1; .\install.ps1` (Windows).
+
+### Added · Onboarding skill prompt templates
+- 6 role-specific prompt templates in `.claude/skills/kafi/onboarding/prompts/` (Claude) and `.kiro/steering/kafi-aidlc-onboarding-prompts/` (Kiro) — loaded internally by `kafi-aidlc-onboarding` skill when Mode B detects a stage. Each template has Your Role · Plan · Your Task scaffolding with placeholders the skill substitutes from detected context. **Users no longer manually copy-paste starter prompts** — the skill is the single entry point.
+- `kafi-aidlc-onboarding` SKILL.md (both editions) expanded with Stage → Role → Prompt mapping table + Prompt template loading protocol section.
+
+### Added · Installer documentation
+- `docs/KAFI-Installer-Guide.html` — full user guide with KAFI design system v2.2 styling: quick start, install/upgrade modes detail, flags reference, safety guardrails, exclusion list, troubleshooting, after-install onboarding.
+
+### Changed · Doc cleanup
+- `docs/KAFI-AIDLC-Introduction-{Claude,Kiro}.html` — added "Quick install" section near top; replaced "Role playbooks" section (6 large starter prompt blocks) with slim "How to start a session" pointing to onboarding skill + Stage → Role → Prompt mapping table. Both files trimmed ~228 lines.
+- `docs/KAFI-AIDLC-Handbook-{Claude,Kiro}.html` — added "Quick install" section at top of Part 1; replaced "Starter prompts" section (Part 1) with slim "How to start a session". Both files trimmed ~175 lines.
+- `packages/claude-code/README.md` + `packages/kiro/README.md` — "How to use" / "Quick start" now leads with one-liner installer; manual cp-r steps retained as fallback under "Manual install".
+
 ### Planned for v0.5
 Carry-over from original v0.4 plan (deferred to focus v0.4 on workflow correctness fixes):
 - Test artifacts stage + template (`test-plan.md`)

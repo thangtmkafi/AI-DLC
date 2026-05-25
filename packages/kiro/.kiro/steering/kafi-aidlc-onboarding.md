@@ -208,6 +208,35 @@ Order matters — apply top-down, first match wins.
 
 ---
 
+## Stage → Role → Prompt template mapping
+
+When Mode B detects a stage, load the corresponding prompt template from `kafi-aidlc-onboarding-prompts/` and paste it **verbatim** into the agent session start (replacing placeholders with detected context).
+
+| Detected position | Prompt template file |
+|---|---|
+| Pre-Inception D (author-from-brief), Stage 4 (Requirements), Stage 6 (Workflow Planning) | `pm-stage-4-requirements.md` |
+| Pre-Inception B/C (fill-gaps / map-existing), Stage 5 (User Stories) | `ba-stage-5-stories.md` |
+| Stage 3 (Reverse Engineering), Stage 8 (Application Design), Stage 9 (Units Generation), Stage 10 (Functional Design), Stage 11 (NFR Requirements), Stage 12 (NFR Design) | `sa-stage-8-app-design.md` |
+| Stage 7 (Product Design) | `designer-stage-7-product-design.md` |
+| Stage 14 (Code Generation), Stage 15 (Build) | `dev-stage-14-code-gen.md` |
+| Stage 13 (Infrastructure Design) | `devops-stage-13-infra-design.md` |
+
+## Prompt template loading protocol
+
+After Mode B detects current stage:
+
+1. Look up the matching template file from the mapping table above
+2. Read the template file from `.kiro/steering/kafi-aidlc-onboarding-prompts/<file>.md`
+3. Extract the prompt body (everything between `---` markers, excluding placeholder docs section)
+4. Substitute placeholders from detected context:
+   - `[PROJECT]` ← from `ai-dlc/project.md` Name field
+   - `[Lite | Standard]` ← from `aidlc-state.md` Mode field
+   - `[Stage N / Pre-Inception X]` ← from stage detection
+   - `[unit-name]`, `[N]` ← if stage is per-unit (10-14), from detected UNIT folder
+   - Other placeholders ← see template's own "Placeholders" section
+5. Paste the substituted prompt as the **first message** of the new session (or include it directly in the Mode B completion message under "Ready-to-use prompt")
+6. The user doesn't need to manually paste — agent applies the template internally
+
 ## Mode B output format
 
 Use this template for the completion message:
@@ -233,10 +262,12 @@ Reasoning: [1-2 sentences citing which specific files indicated this — e.g., "
 ### What's next
 [1 sentence on the recommended next stage and why]
 
-### Suggested first prompt
-Paste this into a fresh Kiro session:
+### Ready-to-use prompt (auto-loaded from template)
+Agent has already loaded the matching prompt template from `kafi-aidlc-onboarding-prompts/<file>.md` and substituted placeholders. The session is ready to start — no manual paste needed.
+
+If user wants to inspect / customize the prompt before starting, the verbatim content is:
 ```
-[Concrete prompt the user can paste — example below]
+[Full prompt body from kafi-aidlc-onboarding-prompts/<role>.md with placeholders substituted]
 ```
 
 ### Open items / inconsistencies
@@ -267,9 +298,13 @@ Reasoning: Found a 23-page legacy BRD (`product/treasury-brd-2025-q4.md`) plus a
 ### What's next
 Run Pre-Inception Sub-flow C to validate the legacy BRD, then map it into the AI-DLC Vision Document at `aidlc-docs/inception/discovery/vision.md`.
 
-### Suggested first prompt
+### Ready-to-use prompt (auto-loaded)
+Template selected: `kafi-aidlc-onboarding-prompts/ba-stage-5-stories.md` (Pre-Inception C requires BA-driven Vision mapping). Placeholders substituted from detected context. Session ready.
+
+If you want to see the prompt the agent will use:
 ```
-I'm onboarding to AI-DLC. I have a legacy BRD at 00-knowledge/product/treasury-brd-2025-q4.md and want to map it into the AI-DLC Vision template. Please run Pre-Inception Sub-flow C with [Answer]: C.
+Your Role: You are an expert Business Analyst at KAFI Securities, tasked with mapping legacy BRD into AI-DLC Vision template...
+(full prompt body, ~25 lines)
 ```
 
 ### Open items / inconsistencies

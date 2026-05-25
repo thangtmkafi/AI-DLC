@@ -816,6 +816,27 @@ footer {
   <h2 class="part-title">Orientation</h2>
 </div>
 
+<section id="quick-install">
+<h2>Quick install</h2>
+<p class="section-intro">One terminal command installs or upgrades AI-DLC in your project folder. Auto-detects mode, moves any legacy files into <code>00-knowledge/references/</code>, downloads the latest release from GitHub.</p>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+  <div>
+    <h4 style="font-size: 13px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 8px;">macOS / Linux</h4>
+    <pre style="margin: 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; font-family: var(--mono); font-size: 12px; overflow-x: auto;">curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash</pre>
+  </div>
+  <div>
+    <h4 style="font-size: 13px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 8px;">Windows (PowerShell)</h4>
+    <pre style="margin: 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; font-family: var(--mono); font-size: 12px; overflow-x: auto;">iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1</pre>
+  </div>
+</div>
+
+<p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Claude Code already auto-loads <code>CLAUDE.md</code> on every session start; <code>/init</code> is redundant on AI-DLC projects. Use <code>kafi-aidlc-onboarding</code> skill instead — auto-detects current stage and loads the right role + prompt.</p>
+
+<p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Full installation guide: <a href="KAFI-Installer-Guide.html" style="color: var(--kafi-green);">KAFI-Installer-Guide.html</a></p>
+</section>
+
 <section id="what-is">
 <h2>What is KAFI AI-DLC</h2>
 <p>An AI-driven software development workflow. The AI agent drafts artifacts, asks clarifying questions, and generates code. Humans review, decide, and approve at every gate. Three properties make it work:</p>
@@ -899,237 +920,62 @@ footer {
 </div>
 </section>
 
-<!-- ============ STARTER PROMPTS ============ -->
+<!-- ============ HOW TO START A SESSION ============ -->
 <section id="starter-prompts">
-<h2>Starter prompts</h2>
-<p class="section-intro">Six role-specific prompts following the AWS AI-DLC structure adapted for KAFI: <strong>Your Role</strong> (persona + responsibility) → <strong>Plan</strong> (standard plan-before-execute protocol) → <strong>Your Task</strong> (project context + brief) → output location. Each template is paired with a filled-in example from a realistic TRS-1 Bond Trading scenario.</p>
+<h2>How to start a session</h2>
+<p class="section-intro">After install, the <code>kafi-aidlc-onboarding</code> skill handles session start. It scans your project, detects current AI-DLC stage, loads the right role guide, and substitutes a stage-appropriate prompt template. You don't paste starter prompts manually anymore.</p>
 
 <div class="prompt-intro">
-  <p><strong>How to use:</strong> pick your role, copy the template, replace <span style="color:var(--kafi-green);font-family:var(--mono);">green placeholders</span> with project specifics, and paste at session start.</p>
-  <p><strong>What the agent does:</strong> writes <code>plan.md</code> with checkboxes, surfaces <code>[Question]</code> tags where it needs your input, waits for your approval, then executes step-by-step.</p>
+  <p><strong>How to use:</strong> in Claude Code chat, type: <code>Run #kafi-aidlc-onboarding</code>. The skill auto-discovers if you mention onboarding, "where am I", "what stage", or <code>/init</code>.</p>
+  <p><strong>What the skill does:</strong> scans <code>00-knowledge/</code> and <code>aidlc-docs/</code>, classifies project position against the 17-stage workflow (Mode B detection), reads the matching prompt template from <code>.claude/skills/kafi/onboarding/prompts/</code>, substitutes placeholders, and starts the session.</p>
 </div>
 
-<!-- PM Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">PM</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">Product Owner / PM</p>
-      <p class="prompt-role-sub">Stages 4 · 6 · Pre-Inception D</p>
-    </div>
-  </div>
+<h3 style="margin-top: 32px;">Stage → Role → Prompt mapping</h3>
+<p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">The skill picks the right template for you. This table is for transparency — edit templates to customize agent behavior at your KAFI project level.</p>
 
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with <span class="ph">[STAGE-SPECIFIC RESPONSIBILITY: e.g., authoring the Vision Document via Sub-flow D / producing requirements that become the contract for downstream stages / setting the execution plan for the workflow]</span> as mentioned in the Task section below.
+<table style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
+  <thead>
+    <tr style="border-bottom: 1.5px solid rgba(0,0,0,0.08);">
+      <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Detected position</th>
+      <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Role</th>
+      <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Prompt template</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <td style="padding: 10px 12px;">Pre-Inception D · Stage 4 · Stage 6</td>
+      <td style="padding: 10px 12px;">PM</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">pm-stage-4-requirements.md</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <td style="padding: 10px 12px;">Pre-Inception B/C · Stage 5</td>
+      <td style="padding: 10px 12px;">BA</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">ba-stage-5-stories.md</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <td style="padding: 10px 12px;">Stages 3 · 8 · 9 · 10 · 11 · 12</td>
+      <td style="padding: 10px 12px;">SA</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">sa-stage-8-app-design.md</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <td style="padding: 10px 12px;">Stage 7</td>
+      <td style="padding: 10px 12px;">Designer</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">designer-stage-7-product-design.md</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <td style="padding: 10px 12px;">Stages 14 · 15</td>
+      <td style="padding: 10px 12px;">Dev</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">dev-stage-14-code-gen.md</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px 12px;">Stage 13</td>
+      <td style="padding: 10px 12px;">DevOps</td>
+      <td style="padding: 10px 12px; font-family: var(--mono); font-size: 11.5px;">devops-stage-13-infra-design.md</td>
+    </tr>
+  </tbody>
+</table>
 
-Plan for the work ahead and write your steps in an md file (<span class="file">plan.md</span>) with checkboxes for each step. If any step needs my clarification, add the question with a <span class="key">[Question]</span> tag and an empty <span class="key">[Answer]</span> tag for me to fill. Do not make critical decisions on your own — surface any open items as "Open — pending [owner]" rather than fabricating an answer. Upon completing the plan, ask for my review and approval. After my approval, execute the plan one step at a time, marking checkboxes as done. Apply the AI Review Checklist (grounded · no secrets · scope · reversible · human-decidable) before each write. End each stage with a 2-option message: Request Changes / Continue to Next.
-
-<span class="key">Your Task:</span> I am the PM on <span class="ph">[PROJECT NAME]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception D / Stage 4 / Stage 6]</span>. The relevant project context lives in:
-  · <span class="file">00-knowledge/product/</span><span class="ph">[BRD/PRD files]</span>
-  · <span class="file">00-knowledge/architecture/</span><span class="ph">[relevant sections]</span>
-  · <span class="file">00-knowledge/open-items.md</span>
-
-Load <span class="file">.claude/skills/kafi/roles/pm.md</span> to apply my role's persistent behaviors. Write outputs to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage folder]</span><span class="file">/</span>. Push for measurable success metrics — numbers, not adjectives. Honor scope OUT as much as scope IN. Flag anything outside the active phase. Only focus on <span class="ph">[stage scope]</span> and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · TRS-1 Vision authoring</span><span class="key">Your Role:</span> You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with authoring the Vision Document for TRS-1 Bond Trading via Sub-flow D (author-from-brief) as mentioned in the Task section below.
-
-[Standard plan paragraph — same as template]
-
-<span class="key">Your Task:</span> I am the PM on TRS-1 Bond Trading — a brownfield extension of KOSMO Treasury. We are in Standard mode, in Phase 0 Foundation (May–Jun 2026). The active stage is Pre-Inception D. The brief: "TRS-1 covers BRD Priority 1 prop FI — Bond + CD. TRS Maker captures deals, RME.LM enforces issuer limits, positions update real-time. Settlement EOD via standard VSD/HNX routes. Legal sign-off on TRS-MO UI wording is a hard go-live prerequisite."
-
-Relevant project context:
-  · <span class="file">00-knowledge/product/trs-core-brd.md</span> (Priority 1 sections)
-  · <span class="file">00-knowledge/architecture/treasury.md</span>
-  · <span class="file">00-knowledge/open-items.md</span> (Legal gate L1, role taxonomy L2)
-
-Load <span class="file">.claude/skills/kafi/roles/pm.md</span>. Write to <span class="file">aidlc-docs/inception/discovery/vision.md</span>. Push for measurable success metrics — deal capture time (target &lt;3 min), STP percentage (&gt;95%), error rate (&lt;0.5%). Honor scope OUT — no retail products, no TRS-2 features. Flag any feature requirement that pushes into TRS-2 or later phases. Only focus on the Vision Document and nothing else.</div>
-</article>
-
-<!-- BA Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">BA</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">Business Analyst</p>
-      <p class="prompt-role-sub">Stages 4 · 5 · 10 · Pre-Inception B/C/D</p>
-    </div>
-  </div>
-
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert Business Analyst at KAFI Securities, tasked with <span class="ph">[translating intent into requirements with REQ-NN IDs / producing INVEST user stories with Given/When/Then acceptance criteria / detailing functional design per unit]</span> as mentioned in the Task section below.
-
-[Standard plan paragraph — write to <span class="file">plan.md</span>, use <span class="key">[Question]</span>/<span class="key">[Answer]</span>, surface open items, get approval, execute step-by-step, run AI Review Checklist, 2-option gate]
-
-<span class="key">Your Task:</span> I am the BA on <span class="ph">[PROJECT NAME]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception B/C/D / Stage 4 / Stage 5 / Stage 10]</span>. Relevant inputs:
-  · <span class="file">00-knowledge/product/</span> (BRD / PRD)
-  · <span class="file">aidlc-docs/inception/discovery/</span> (Vision + Tech Env)
-  · <span class="ph">[stage-specific prior outputs from aidlc-docs/]</span>
-
-Load <span class="file">.claude/skills/kafi/roles/ba.md</span>. Write outputs to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage]</span><span class="file">/</span>. Use Given/When/Then format for every acceptance criterion. Apply INVEST principles to every story. Use neutral role names (user, operator) until BTS confirms taxonomy. Cite KB sections in every requirement and story. Only focus on <span class="ph">[stage scope]</span> and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · TRS-1 User Stories</span><span class="key">Your Role:</span> You are an expert Business Analyst at KAFI Securities, tasked with producing INVEST user stories with Given/When/Then acceptance criteria for TRS-1 Bond Trading as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the BA on TRS-1 Bond Trading. We are in Standard mode, at Stage 5 User Stories. Stage 4 Requirements produced REQ-01 through REQ-24 covering bond capture, issuer limit check, position update, EOD settlement, and reporting. Relevant inputs:
-  · <span class="file">aidlc-docs/inception/requirements/requirements.md</span>
-  · <span class="file">aidlc-docs/inception/discovery/vision.md</span> (personas: TRS Maker, Checker, Director — flag as "neutral, pending BTS taxonomy L2")
-  · <span class="file">00-knowledge/product/trs-core-brd.md</span>
-
-Load <span class="file">.claude/skills/kafi/roles/ba.md</span>. Write to <span class="file">aidlc-docs/inception/user-stories/stories.md</span> and <span class="file">aidlc-docs/inception/user-stories/personas.md</span>. Use Given/When/Then format for every acceptance criterion. INVEST principles. Every bond capture story must reference the issuer limit check from REQ-12. Cite REQ-NN IDs in every story. Only focus on Stage 5 deliverables and nothing else.</div>
-</article>
-
-<!-- SA Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">SA</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">Solution Architect</p>
-      <p class="prompt-role-sub">Stages 3 · 8 · 9 · 11 · 12</p>
-    </div>
-  </div>
-
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert Solution Architect at KAFI Securities, tasked with <span class="ph">[documenting existing systems / designing components and opening ADRs for trade-offs / decomposing into Units of Work / specifying measurable NFR thresholds / selecting NFR design patterns]</span> as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the SA on <span class="ph">[PROJECT NAME]</span>. We are in <span class="ph">[Lite | Standard]</span> mode, <span class="ph">[greenfield | brownfield]</span> type. The active stage is <span class="ph">[Stage 3 / Stage 8 / Stage 9 / Stage 11 / Stage 12]</span>. Relevant inputs:
-  · <span class="file">00-knowledge/architecture/</span> (canonical layer/component map)
-  · <span class="file">00-knowledge/conventions/architecture-boundaries.md</span>
-  · <span class="file">aidlc-docs/inception/</span> (relevant prior outputs)
-
-Load <span class="file">.claude/skills/kafi/roles/sa.md</span>. Write outputs to <span class="file">aidlc-docs/</span><span class="ph">[path]</span><span class="file">/</span>. Open an ADR in <span class="file">adrs/</span> for every architectural trade-off (sync vs async, tech stack pick, data model shape, consistency model, build vs buy, cross-boundary calls). Push for measurable NFR thresholds — ms, percentile, load profile. No "should be fast" without numbers. Enforce architecture boundaries; if code contradicts KB, flag it — don't silently update either. Only focus on <span class="ph">[stage scope]</span> and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · TRS-1 Application Design</span><span class="key">Your Role:</span> You are an expert Solution Architect at KAFI Securities, tasked with designing application components and opening ADRs for architectural trade-offs on TRS-1 Bond Trading as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the SA on TRS-1 Bond Trading. We are in Standard mode, brownfield extension of KOSMO Treasury, at Stage 8 Application Design. Relevant inputs:
-  · <span class="file">00-knowledge/architecture/treasury.md</span> (canonical layer map)
-  · <span class="file">00-knowledge/conventions/architecture-boundaries.md</span> (KOS-MO governs, BO Cores execute; no direct writes to Bravo)
-  · <span class="file">aidlc-docs/inception/requirements/requirements.md</span>
-  · <span class="file">aidlc-docs/inception/reverse-engineering/component-inventory.md</span>
-
-Load <span class="file">.claude/skills/kafi/roles/sa.md</span>. Write to <span class="file">aidlc-docs/inception/application-design/</span>. Open ADRs in <span class="file">adrs/</span> for: real-time balance ownership (KOS-MO vs Bravo), issuer limit propagation (sync vs async), CFP calculation timing, and any cross-boundary calls. Push for measurable NFR thresholds. Risk fields (Repricing Gap, PV01, ΔNII, ΔEVE, CFP) must be captured at deal entry — not reconstructed retroactively. All exchange settlement through VSD/HNX standard routes. Only focus on Stage 8 deliverables and nothing else.</div>
-</article>
-
-<!-- Designer Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">Des</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">Product Designer</p>
-      <p class="prompt-role-sub">Stage 7 — UI involved only</p>
-    </div>
-  </div>
-
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert Product Designer at KAFI Securities, tasked with translating user stories into screen specifications and interaction patterns that Code Generation can consume directly, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the Product Designer on <span class="ph">[PROJECT NAME]</span>. The active stage is Stage 7 Product Design. Relevant inputs:
-  · <span class="file">aidlc-docs/inception/user-stories/</span> (this iteration's stories)
-  · <span class="file">aidlc-docs/inception/discovery/vision.md</span> (personas + scope)
-
-Load BOTH:
-  · <span class="file">.claude/skills/kafi/roles/designer.md</span> (role behaviors)
-  · <span class="file">.claude/skills/kafi/design-system/SKILL.md</span> (KAFI brand tokens, typography, components, patterns)
-
-Write outputs to <span class="file">aidlc-docs/inception/product-design/</span>. Reference the KAFI design system for every component; custom components require justification against the system. Cover empty / error / loading states — not just happy path. WCAG 2.1 AA minimum on all screens. Specify interactions with enough detail that Code Generation can implement directly. Only focus on Stage 7 deliverables and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · TRS-1 Trading screens</span><span class="key">Your Role:</span> You are an expert Product Designer at KAFI Securities, tasked with translating TRS-1 user stories into screen specifications and interaction patterns for the bond trading workflow, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the Product Designer on TRS-1 Bond Trading. The active stage is Stage 7 Product Design. We have 18 user stories (US-01 through US-18) covering bond capture (Maker), approval (Checker), authorization (Director), and reporting. Relevant inputs:
-  · <span class="file">aidlc-docs/inception/user-stories/stories.md</span>
-  · <span class="file">aidlc-docs/inception/discovery/vision.md</span> (TRS Maker/Checker/Director personas — neutral until BTS taxonomy L2 confirms)
-
-Load BOTH:
-  · <span class="file">.claude/skills/kafi/roles/designer.md</span>
-  · <span class="file">.claude/skills/kafi/design-system/SKILL.md</span>
-
-Write to <span class="file">aidlc-docs/inception/product-design/</span>. Apply KAFI design tokens — kafi-green for primary actions, max 3 text shades, border-only cards. Use existing KOSMO design system components for trading workflows. Cover deal entry empty state, limit-exceeded error state, settlement pending state — not just happy path. Spec the Maker → Checker → Director approval flow with interaction details Code Generation can consume directly. WCAG 2.1 AA on all screens. Only focus on Stage 7 deliverables and nothing else.</div>
-</article>
-
-<!-- Dev Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">Dev</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">Developer</p>
-      <p class="prompt-role-sub">Stages 14 · 15 — per-unit code + build</p>
-    </div>
-  </div>
-
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert Developer at KAFI Securities, pairing with me to generate working code that implements the functional and NFR designs for one Unit of Work, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the Developer on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT NAME]</span>. The active stage is Stage 14 Code Generation. Relevant inputs:
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/functional-design/</span>
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>
-  · <span class="file">aidlc-docs/inception/application-design/</span>
-
-Load <span class="file">.claude/skills/kafi/roles/dev.md</span>. Write code into <span class="file">src/</span> — NEVER inside <span class="file">aidlc-docs/</span>. Write file inventory and notes to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/code/</span>. No hardcoded secrets — env vars only. Auto-wire audit trail at every state-change boundary (per the audit-trail extension). Auto-wire privacy enforcement if PII fields are touched (per the personal-data-privacy extension). Show me the file-by-file plan first; only execute after my approval. Run the AI Review Checklist on every generated file. Only focus on UNIT-<span class="ph">[N]</span> code and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · UNIT-01 Bond Capture</span><span class="key">Your Role:</span> You are an expert Developer at KAFI Securities, pairing with me to generate working code for UNIT-01 Bond Capture of TRS-1, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the Developer on UNIT-01 Bond Capture of TRS-1 Bond Trading. The active stage is Stage 14 Code Generation. Relevant inputs:
-  · <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/functional-design/</span>
-  · <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/nfr-design/</span>
-  · <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/infrastructure-design/</span>
-  · <span class="file">aidlc-docs/inception/application-design/components.md</span>
-
-Load <span class="file">.claude/skills/kafi/roles/dev.md</span>. Write code into <span class="file">src/</span> — never <span class="file">aidlc-docs/</span>. Write file inventory and build notes to <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/code/</span>. No hardcoded secrets for Bravo/VSD connection strings — env vars only. Auto-wire audit trail on every deal-state mutation (per TT 96/2020). Risk fields (Repricing Gap, PV01, CFP) must be captured at deal entry per Stage 11 NFR — not nullable, not optional. Show me the file-by-file plan first; only execute after my approval. Run the AI Review Checklist on every generated file. Only focus on UNIT-01 code and nothing else.</div>
-</article>
-
-<!-- DevOps Prompt Card -->
-<article class="prompt-card">
-  <div class="prompt-head">
-    <div class="prompt-abbr">Ops</div>
-    <div class="prompt-titles">
-      <p class="prompt-role-name">DevOps / SRE</p>
-      <p class="prompt-role-sub">Stage 13 · placeholder Stages 16-17</p>
-    </div>
-  </div>
-
-  <div class="prompt-block">
-    <span class="prompt-block-label">TEMPLATE</span><span class="key">Your Role:</span> You are an expert DevOps / SRE at KAFI Securities, tasked with mapping logical infrastructure components to concrete services and defining the deployment topology for one Unit of Work, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the DevOps/SRE on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT NAME]</span>. The active stage is Stage 13 Infrastructure Design. Relevant inputs:
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
-  · <span class="file">aidlc-docs/inception/discovery/technical-environment.md</span>
-  · <span class="file">00-knowledge/architecture/</span><span class="ph">[integration map if exists]</span>
-
-Load <span class="file">.claude/skills/kafi/roles/devops.md</span>. Write outputs to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>. If the cloud target is undecided, use logical components only and surface "Open — pending [owner]". Plan-before-apply for any IaC; flag destructive operations. Document where secrets live and how they rotate. Identify observability hooks for declared NFR thresholds. Only focus on Stage 13 deliverables and nothing else.</div>
-
-  <div class="prompt-block prompt-block--example">
-    <span class="prompt-block-label">EXAMPLE · UNIT-01 Infrastructure</span><span class="key">Your Role:</span> You are an expert DevOps / SRE at KAFI Securities, tasked with mapping logical infrastructure to concrete services for UNIT-01 Bond Capture of TRS-1, as mentioned in the Task section below.
-
-[Standard plan paragraph]
-
-<span class="key">Your Task:</span> I am the DevOps/SRE on UNIT-01 Bond Capture of TRS-1 Bond Trading. The active stage is Stage 13 Infrastructure Design. Relevant inputs:
-  · <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/nfr-design/</span> (specifies issuer limit lookup &lt;50ms p95, audit retention 7 years)
-  · <span class="file">aidlc-docs/inception/discovery/technical-environment.md</span>
-  · <span class="file">00-knowledge/architecture/integration-map.md</span> (Bravo + VSD endpoints)
-
-Load <span class="file">.claude/skills/kafi/roles/devops.md</span>. Write to <span class="file">aidlc-docs/construction/UNIT-01-bond-capture/infrastructure-design/</span>. Cloud target is undecided (W2 open item) — use logical components only, surface as "Open — pending An/ITS + BTS". Issuer limit lookup needs caching for the p95 budget — plan the cache layer. VSD settlement is EOD batch — design batch ingestion, not real-time. Audit retention 7 years minimum (TT 96/2020). Plan-before-apply for any IaC. Document where secrets (Bravo creds, VSD certs) live and rotate. Only focus on Stage 13 deliverables and nothing else.</div>
-</article>
-
+<p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files are plain Markdown with placeholders (PROJECT, Stage, unit-name, etc.) that the skill substitutes from your detected context. Audit or customize via your IDE.</p>
 </section>
 
 <!-- ============ PART 2 PHASE BY PHASE ============ -->

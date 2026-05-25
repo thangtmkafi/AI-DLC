@@ -1085,6 +1085,28 @@ footer {
   </div>
 </section>
 
+<!-- ============ QUICK INSTALL ============ -->
+<section>
+  <h2>Quick install</h2>
+  <p class="section-intro">One terminal command drops AI-DLC into your project folder. The installer auto-detects whether to install fresh or upgrade an existing version, moves any legacy files into <code>00-knowledge/references/</code>, and downloads the latest release from GitHub. Cross-platform: macOS, Linux, Windows.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+    <div>
+      <h4 style="font-size: 13px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 8px;">macOS / Linux</h4>
+      <pre class="playbook-prompt" style="margin: 0;">curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash</pre>
+    </div>
+    <div>
+      <h4 style="font-size: 13px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 8px;">Windows (PowerShell)</h4>
+      <pre class="playbook-prompt" style="margin: 0;">iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1</pre>
+    </div>
+  </div>
+
+  <p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Claude Code already auto-loads <code>CLAUDE.md</code> on every session start. <code>/init</code> is non-destructive (it suggests, not overwrites) but is redundant on an AI-DLC project. The <code>kafi-aidlc-onboarding</code> skill replaces it — see below.</p>
+
+  <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Full installation guide with all flags, scenarios, and troubleshooting: <a href="KAFI-Installer-Guide.html" style="color: var(--kafi-green);">KAFI-Installer-Guide.html</a></p>
+</section>
+
 <!-- ============ DIAGRAM ============ -->
 <section>
   <h2>The workflow at a glance</h2>
@@ -1465,307 +1487,79 @@ footer {
   </div>
 </section>
 
-<!-- ============ ROLE PLAYBOOKS ============ -->
+<!-- ============ HOW TO START A SESSION ============ -->
 <section>
-  <h2>Role playbooks · how to start a session</h2>
-  <p class="section-intro">Each role has two complementary tools. Use both together for the best results.</p>
+  <h2>How to start a session</h2>
+  <p class="section-intro">After install, you don't manually pick a role or paste a starter prompt. The <code>kafi-aidlc-onboarding</code> skill handles routing — it scans your project, detects current AI-DLC stage, loads the right role guide, and starts the session with a stage-appropriate prompt template.</p>
 
   <div class="skills-note">
     <div class="skills-note-icon">i</div>
     <div>
-      <h4>Skills vs starter prompts</h4>
-      <p><strong>Role skills</strong> live at <code>.claude/skills/kafi/roles/[role].md</code>. They shape the agent's persistent behavior — what to push back on, what to cite, what to refuse. Manual inclusion in Claude Code.</p>
-      <p><strong>Starter prompts</strong> are pasted at session start. They set context (project, stage, key files) and instruct the agent to load the role skill. The skill keeps influencing every turn after that.</p>
-      <p>The recommended pattern: paste the starter prompt → it references the skill → the agent loads both and you're ready. Edit placeholders (in <span style="color:var(--kafi-green);font-family:'JetBrains Mono',monospace;">green</span>) before pasting.</p>
+      <h4>One entry point — three modes</h4>
+      <p>The onboarding skill auto-detects which mode you need:</p>
+      <ul style="font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 8px 0 0 0; padding-left: 24px;">
+        <li><strong>Mode A · Setup wizard</strong> — fresh install, no AI-DLC yet. Guides you through creating <code>ai-dlc/project.md</code> and orients <code>00-knowledge/</code>.</li>
+        <li><strong>Mode B · Stage detection</strong> — legacy artifacts in <code>00-knowledge/</code>, no <code>aidlc-docs/</code>. Scans your files, classifies position against the 17-stage workflow, loads the matching prompt template, starts the session.</li>
+        <li><strong>Mode C · Resume</strong> — <code>aidlc-state.md</code> exists. Cross-checks claimed state vs actual artifacts, reconciles drift, resumes from the right point.</li>
+      </ul>
     </div>
   </div>
 
-  <div class="playbook-grid">
-
-    <!-- PM PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">PM</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">Product Owner / PM</h3>
-          <p class="playbook-sub">Owns intent and scope · approves every gate</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Starting a new project (Pre-Inception D)</li>
-          <li>Reviewing requirements (Stage 4)</li>
-          <li>Setting the execution plan (Stage 6)</li>
-          <li>Approving any stage completion gate</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stages 4 · 6 · Pre-Inception D</strong> + every gate approval
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with <span class="ph">[authoring the Vision / producing requirements / setting the workflow plan]</span> as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the PM on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception D / Stage 4 / Stage 6]</span>. Context lives in:
-  · <span class="file">00-knowledge/product/</span><span class="ph">[BRD/PRD]</span>
-  · <span class="file">00-knowledge/architecture/</span><span class="ph">[sections]</span>
-  · <span class="file">00-knowledge/open-items.md</span>
-
-Load <span class="file">.claude/skills/kafi/roles/pm.md</span>. Write to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage]</span><span class="file">/</span>. Push for measurable success metrics — numbers, not adjectives. Honor scope OUT as much as scope IN. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> vague success metrics ("users will love it"), scope creep beyond Vision §4, features sneaking outside the active phase.
-        </div>
-      </div>
-    </div>
-
-    <!-- BA PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">BA</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">Business Analyst</h3>
-          <p class="playbook-sub">Intent → requirements → stories → functional design</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Authoring or mapping the Vision (Pre-Inception B/C/D)</li>
-          <li>Producing requirements with PM (Stage 4)</li>
-          <li>Writing user stories (Stage 5)</li>
-          <li>Detailing functional design per unit (Stage 10)</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stages 4 · 5 · 10 · Pre-Inception B/C/D</strong>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Business Analyst at KAFI Securities, tasked with <span class="ph">[translating intent into requirements / producing INVEST user stories / detailing functional design per unit]</span> as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the BA on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode. The active stage is <span class="ph">[Pre-Inception B/C/D / Stage 4 / Stage 5 / Stage 10]</span>. Inputs:
-  · <span class="file">00-knowledge/product/</span> (BRD / PRD)
-  · <span class="file">aidlc-docs/inception/discovery/</span>
-  · <span class="ph">[stage-specific prior outputs]</span>
-
-Load <span class="file">.claude/skills/kafi/roles/ba.md</span>. Write to <span class="file">aidlc-docs/inception/</span><span class="ph">[stage]</span><span class="file">/</span>. Use Given/When/Then for every AC. INVEST for every story. Neutral role names until BTS confirms taxonomy. Cite KB sections in every requirement. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> acceptance criteria that aren't testable, stories without personas, bundled capabilities (split them), vague language sneaking in from legacy docs.
-        </div>
-      </div>
-    </div>
-
-    <!-- SA PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">SA</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">Solution Architect</h3>
-          <p class="playbook-sub">Architecture · NFRs · ADRs · KB guardian</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Documenting existing systems (Stage 3, brownfield)</li>
-          <li>Application Design + opening ADRs (Stage 8)</li>
-          <li>Decomposing into Units (Stage 9)</li>
-          <li>NFR Requirements + Design per unit (Stages 11, 12)</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stages 3 · 8 · 9 · 11 · 12</strong> + ADR authoring across the workflow
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Solution Architect at KAFI Securities, tasked with <span class="ph">[documenting existing systems / designing components and opening ADRs / decomposing into Units / specifying NFR thresholds / selecting NFR patterns]</span> as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the SA on <span class="ph">[PROJECT]</span>. We are in <span class="ph">[Lite | Standard]</span> mode, <span class="ph">[greenfield | brownfield]</span> type. The active stage is <span class="ph">[Stage 3 / Stage 8 / Stage 9 / Stage 11 / Stage 12]</span>. Inputs:
-  · <span class="file">00-knowledge/architecture/</span>
-  · <span class="file">00-knowledge/conventions/architecture-boundaries.md</span>
-  · <span class="file">aidlc-docs/inception/</span>
-
-Load <span class="file">.claude/skills/kafi/roles/sa.md</span>. Write to <span class="file">aidlc-docs/</span><span class="ph">[path]</span><span class="file">/</span>. Open an ADR in <span class="file">adrs/</span> for every trade-off (sync vs async, tech pick, data shape, build vs buy, cross-boundary). Measurable NFR thresholds — ms, percentile, load profile. No "should be fast" without numbers. Only focus on <span class="ph">[stage scope]</span> and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> skipped Application Design when changes cross components, NFRs without measurable thresholds, cross-boundary calls without ADRs, code contradicting KB silently.
-        </div>
-      </div>
-    </div>
-
-    <!-- DESIGNER PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">Des</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">Product Designer</h3>
-          <p class="playbook-sub">User flows · screens · interaction specs</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Translating user stories into screens (Stage 7)</li>
-          <li>Defining interaction patterns for Code Generation</li>
-          <li>Reviewing UI changes that touch design system</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stage 7 Product Design</strong> — only when UI is in scope
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Product Designer at KAFI Securities, tasked with translating user stories into screen specifications and interaction patterns that Code Generation can consume directly, as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the Product Designer on <span class="ph">[PROJECT]</span>. The active stage is Stage 7 Product Design. Inputs:
-  · <span class="file">aidlc-docs/inception/user-stories/</span>
-  · <span class="file">aidlc-docs/inception/discovery/vision.md</span> (personas)
-
-Load BOTH:
-  · <span class="file">.claude/skills/kafi/roles/designer.md</span>
-  · <span class="file">.claude/skills/kafi/design-system/SKILL.md</span>
-
-Write to <span class="file">aidlc-docs/inception/product-design/</span>. Reference the KAFI design system for every component; custom components require justification. Cover empty / error / loading states — not just happy path. WCAG 2.1 AA minimum. Spec interactions Code Generation can consume directly. Only focus on Stage 7 deliverables and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> custom components when design system covers it, mockups without negative states, designs that ignore IA, ungrounded UX assumptions.
-        </div>
-      </div>
-    </div>
-
-    <!-- DEV PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">Dev</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">Developer</h3>
-          <p class="playbook-sub">Pairs with the AI agent on code + build</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Generating code for a unit (Stage 14)</li>
-          <li>Reviewing the code generation plan before Part 2 execution</li>
-          <li>Authoring build instructions (Stage 15)</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stages 14 · 15</strong> — per-unit code generation, then global build
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert Developer at KAFI Securities, pairing with me to generate working code that implements the functional and NFR designs for one Unit of Work, as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the Developer on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT]</span>. The active stage is Stage 14 Code Generation. Inputs:
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/functional-design/</span>
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>
-  · <span class="file">aidlc-docs/inception/application-design/</span>
-
-Load <span class="file">.claude/skills/kafi/roles/dev.md</span>. Write code into <span class="file">src/</span> — NEVER inside <span class="file">aidlc-docs/</span>. File inventory and notes to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/code/</span>. No hardcoded secrets — env vars only. Auto-wire audit trail at state-change boundaries; privacy enforcement on PII. Show me the file plan first; execute after my approval. Only focus on UNIT-<span class="ph">[N]</span> code and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> code in <code>aidlc-docs/</code> instead of <code>src/</code>, architecture boundary violations without ADRs, missing audit hooks, hardcoded config (URLs, IDs, timeouts).
-        </div>
-      </div>
-    </div>
-
-    <!-- DEVOPS PLAYBOOK -->
-    <div class="playbook">
-      <div class="playbook-header">
-        <div class="playbook-abbr">Ops</div>
-        <div class="playbook-titles">
-          <h3 class="playbook-role">DevOps / SRE</h3>
-          <p class="playbook-sub">Infrastructure · deployment · monitoring</p>
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <h4>When to open a session</h4>
-        <ul class="playbook-list">
-          <li>Mapping logical components to concrete services (Stage 13)</li>
-          <li>Reviewing infrastructure designs across units</li>
-          <li>Deployment + monitoring (Stages 16, 17 — v0.4 scope)</li>
-        </ul>
-      </div>
-
-      <div class="playbook-section">
-        <h4>You drive</h4>
-        <div class="playbook-stages">
-          <strong>Stage 13</strong> · placeholder for <strong>Stages 16 + 17</strong> in v0.3
-        </div>
-      </div>
-
-      <div class="playbook-section">
-        <pre class="playbook-prompt"><span class="key">Your Role:</span> You are an expert DevOps / SRE at KAFI Securities, tasked with mapping logical infrastructure components to concrete services and defining the deployment topology for one Unit of Work, as mentioned in the Task section below.
-
-<span class="dim">[Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]</span>
-
-<span class="key">Your Task:</span> I am the DevOps/SRE on UNIT-<span class="ph">[N]</span> of <span class="ph">[PROJECT]</span>. The active stage is Stage 13 Infrastructure Design. Inputs:
-  · <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/nfr-design/</span>
-  · <span class="file">aidlc-docs/inception/discovery/technical-environment.md</span>
-  · <span class="file">00-knowledge/architecture/</span><span class="ph">[integration map if exists]</span>
-
-Load <span class="file">.claude/skills/kafi/roles/devops.md</span>. Write to <span class="file">aidlc-docs/construction/</span><span class="ph">[unit-name]</span><span class="file">/infrastructure-design/</span>. If cloud target is undecided, use logical components only — surface "Open — pending [owner]". Plan-before-apply for any IaC; flag destructive ops. Document where secrets live + rotate. Identify observability hooks for declared NFR thresholds. Only focus on Stage 13 deliverables and nothing else.</pre>
-      </div>
-
-      <div class="playbook-section">
-        <div class="playbook-watch">
-          <strong>Watch for:</strong> "TBD" instead of "Open — pending [owner]" on cloud target, secrets in IaC, missing observability hooks for declared SLOs, tight cloud coupling before KAFI decides.
-        </div>
-      </div>
-    </div>
-
+  <div class="playbook-section" style="margin-top: 24px;">
+    <h4 style="font-size: 14px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 12px;">Just type this in Claude Code:</h4>
+    <pre class="playbook-prompt" style="margin: 0;"><span class="key">Run</span> #kafi-aidlc-onboarding</pre>
+    <p style="font-size: 12.5px; color: var(--text-muted); margin: 8px 0 0;">The skill is auto-discoverable — Claude Code routes to it when you mention onboarding, "where am I", "what stage", or <code>/init</code>.</p>
   </div>
+
+  <div class="playbook-section" style="margin-top: 32px;">
+    <h3 style="font-size: 16px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 16px;">Stage → Role → Prompt mapping</h3>
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">Reference table showing which prompt template the skill loads for each detected stage. <strong>You don't need to invoke these manually</strong> — the skill picks the right one. Listed here for transparency and customization.</p>
+
+    <table style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
+      <thead>
+        <tr style="border-bottom: 1.5px solid rgba(0,0,0,0.08);">
+          <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Detected position</th>
+          <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Role loaded</th>
+          <th style="text-align: left; padding: 8px 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px;">Prompt template</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <td style="padding: 10px 12px;">Pre-Inception D · Stage 4 · Stage 6</td>
+          <td style="padding: 10px 12px;">PM</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">pm-stage-4-requirements.md</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <td style="padding: 10px 12px;">Pre-Inception B/C · Stage 5</td>
+          <td style="padding: 10px 12px;">BA</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">ba-stage-5-stories.md</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <td style="padding: 10px 12px;">Stages 3 · 8 · 9 · 10 · 11 · 12</td>
+          <td style="padding: 10px 12px;">SA</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">sa-stage-8-app-design.md</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <td style="padding: 10px 12px;">Stage 7</td>
+          <td style="padding: 10px 12px;">Designer</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">designer-stage-7-product-design.md</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <td style="padding: 10px 12px;">Stages 14 · 15</td>
+          <td style="padding: 10px 12px;">Dev</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">dev-stage-14-code-gen.md</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px;">Stage 13</td>
+          <td style="padding: 10px 12px;">DevOps</td>
+          <td style="padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">devops-stage-13-infra-design.md</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files live in <code>.claude/skills/kafi/onboarding/prompts/</code>. Each contains the full prompt body (Your Role · Plan · Your Task) with placeholders the skill substitutes from detected context. Edit them to customize agent behavior at your KAFI project level.</p>
+  </div>
+
 </section>
 
 <!-- ============ GIT WORKFLOW ============ -->

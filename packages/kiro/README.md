@@ -8,29 +8,41 @@
 
 ## Quick start
 
+One terminal command. Auto-detects install vs upgrade, moves legacy files to `00-knowledge/references/`, downloads the latest release.
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash
+
+# Windows (PowerShell)
+iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1
+```
+
+Full installer guide with flags + troubleshooting: `docs/KAFI-Installer-Guide.html`.
+
+After install, open the folder in Kiro IDE. In chat:
+
+```
+#kafi-aidlc-onboarding
+```
+
+The steering file scans your project, detects current AI-DLC stage, and starts a session with the right role + prompt template — no manual paste needed.
+
+> 💡 **`/init` is not needed.** Kiro auto-loads `AGENTS.md` and all `inclusion: always` steering files on every session start. `/init` (where supported) is non-destructive — it suggests rather than overwrites — but on an AI-DLC project it is redundant. Use the onboarding steering instead.
+
+### Manual install (if you can't run the script)
+
 ```bash
 # Drop this package into your project root
-cp -r kafi-aidlc-v03-kiro/* my-project/
-cp -r kafi-aidlc-v03-kiro/.kiro my-project/
+cp -r kafi-aidlc-v04-kiro/* my-project/
+cp -r kafi-aidlc-v04-kiro/.kiro my-project/
 
 # Open in Kiro IDE
 kiro my-project
-
-# Kiro will auto-detect AGENTS.md + .kiro/steering/ on first chat
 ```
 
-Then in Kiro chat:
-
-```
-@AGENTS.md
-Help me plan a new AI-DLC project.
-```
-
-The AI agent will read AGENTS.md (always-loaded), plus everything in `.kiro/steering/` flagged `inclusion: always` (common rules, design system, audit-trail).
-
-> 💡 **`/init` is not needed.** Kiro auto-loads `AGENTS.md` (which already contains the 17-stage workflow spec) and all `inclusion: always` steering files on every session start. `/init` (where supported) is non-destructive — it scans and *suggests* updates rather than overwriting — but on an AI-DLC project it is redundant and its suggestions may dilute methodology focus if accepted blindly. Skip it.
-
-> 💡 **Not sure where you are in the workflow?** Drop any existing project files (BRDs, PRDs, mockups, architecture docs) into `00-knowledge/`, then in Kiro chat ask: *"#kafi-aidlc-onboarding — read 00-knowledge/ and tell me what AI-DLC stage I'm at."* The skill scans your materials and classifies the project against the 17-stage workflow with a suggested next prompt.
+Kiro auto-detects `AGENTS.md` + `.kiro/steering/` on first chat. Then load any role manually with `#pm`, `#ba`, etc.
 
 ---
 

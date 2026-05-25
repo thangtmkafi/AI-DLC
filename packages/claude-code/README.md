@@ -38,6 +38,25 @@
 
 ## How to use
 
+### Quick install (recommended)
+
+One terminal command. Auto-detects install vs upgrade mode, moves legacy files to `00-knowledge/references/`, downloads the latest release.
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash
+
+# Windows (PowerShell)
+iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1
+```
+
+Full installer guide with flags + troubleshooting: `docs/KAFI-Installer-Guide.html`.
+
+After install, in Claude Code chat: `Run #kafi-aidlc-onboarding`. The skill detects your current stage and loads the right role + prompt — no manual paste.
+
+### Manual install (if you can't run the script)
+
 1. Copy this entire folder structure to your project root.
 2. Add to git: `git add CLAUDE.md aidlc-rule-details/ .claude/settings.json .claude/skills/`
 3. Create `00-knowledge/` with your project's KB:

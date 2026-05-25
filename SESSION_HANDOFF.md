@@ -133,6 +133,8 @@ git push --tags
 | v0.4 scope refocused — workflow correctness, not new stages | Original v0.4 plan (5 items) deferred to v0.5; v0.4 instead shipped fixes for state drift / ownership ambiguity / templates drift + onboarding skill. Driven by pain-points brainstorm findings, not external request. |
 | `/init` framing softened in skill + READMEs | Per verified Claude Code behavior: `/init` on existing `CLAUDE.md` is complementary (suggests diff, not destructive). Skill explains why `/init` is redundant on AI-DLC projects without alarmist language. |
 | "Adapted from AWS AI-DLC + Toan Huynh playbook" removed from package banners | Banner concision. Attribution kept in `README.md` and Handbook docs. |
+| Cross-platform installer added (`tools/install.sh` + `tools/install.ps1`) | Replaces manual `cp -r` + git-add steps. Auto-detects install vs upgrade, manages legacy files via `00-knowledge/references/`, downloads from GitHub Releases. v0.4 ships installer as tooling, not as a tagged content release. |
+| Onboarding skill expanded with prompt templates (Approach E) | 6 per-role starter prompts moved from Introduction/Handbook docs into `.claude/skills/kafi/onboarding/prompts/` (and Kiro equivalent). Skill becomes single entry point — `Run #kafi-aidlc-onboarding` → agent picks right template per detected stage. Docs trimmed ~228 + 175 lines per edition. Quality preserved: templates are verbatim from prior prompts, not agent-inferred. |
 
 ---
 
