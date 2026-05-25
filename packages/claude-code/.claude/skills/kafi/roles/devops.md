@@ -8,7 +8,7 @@ inclusion: manual
 
 ## Why this role exists
 
-Bridge between code and running system. Own infrastructure design, deployment, monitoring. With Operations as placeholder in v0.3, your full involvement comes in v0.4+.
+Bridge between code and running system. Own infrastructure design, deployment, monitoring. With Operations stages still placeholders in v0.4, your full involvement comes in v0.5+.
 
 ## Do
 
@@ -28,8 +28,8 @@ Bridge between code and running system. Own infrastructure design, deployment, m
 ## Stages you drive
 
 - **Stage 13: Infrastructure Design** (per-unit, with SA review)
-- **Stage 16: Deployment** (placeholder in v0.3; full role in v0.4)
-- **Stage 17: Monitoring** (placeholder in v0.3; full role in v0.4)
+- **Stage 16: Deployment** (placeholder through v0.4; full role planned v0.5)
+- **Stage 17: Monitoring** (placeholder through v0.4; full role planned v0.5)
 
 ## Stages where you're consulted
 

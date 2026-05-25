@@ -1,4 +1,4 @@
-# KAFI AI-DLC v0.3 — Injection Package
+# KAFI AI-DLC v0.4 — Injection Package
 
 **Drop this folder structure into a KAFI project root.**
 
@@ -63,6 +63,10 @@
    - `naming-conventions` — project-defined
    ```
 5. Open in Claude Code. The agent reads `CLAUDE.md` and starts.
+
+> 💡 **`/init` is not needed.** Claude Code auto-loads `CLAUDE.md` (which already contains the 17-stage workflow spec) on every session start. `/init` is non-destructive — it scans and *suggests* updates rather than overwriting — but on an AI-DLC project it is redundant and its suggestions may dilute methodology focus if accepted blindly. Skip it.
+
+> 💡 **Not sure where you are in the workflow?** Drop any existing project files (BRDs, PRDs, mockups, architecture docs) into `00-knowledge/`, then in chat ask the agent: *"Run the kafi-aidlc-onboarding skill — read 00-knowledge/ and tell me what AI-DLC stage I'm at."* The skill scans your materials and classifies the project against the 17-stage workflow with a suggested next prompt.
 
 ## Starter prompts
 
@@ -314,14 +318,14 @@ The workflow produces 19 canonical document types across four phases. Templates 
 | Pre-Inception | **Vision Document** · `discovery/vision.md` | PM | What + why · scope · success metrics | ★ |
 | | **Technical Environment** · `discovery/technical-environment.md` | SA | Stack · cloud · constraints | ★ |
 | Inception | **Reverse Engineering Pack** · `reverse-engineering/` (6) | SA | Existing system · KB-first (brownfield only) | — |
-| | **Requirements** · `requirements/requirements.md` | PM + BA | REQ-NN entries · KB-cited · acceptance per entry | ★ |
+| | **Requirements** · `requirements/requirements.md` | PM | REQ-NN entries · KB-cited · acceptance per entry | ★ |
 | | **User Stories** · `user-stories/stories.md` | BA | US-NN · INVEST · G/W/T ACs · personas | ★ (single) |
 | | **Execution Plan** · `plans/execution-plan.md` | PM | Stages run · depth · gating | — |
 | | **Product Design Pack** · `product-design/` (6) | Designer | UX flows · screens · interactions (UI only) | — |
 | | **Application Design Pack** · `application-design/` (5) | SA | Components · methods · services · ADRs | ★ × 2 |
 | | **Units of Work** · `application-design/unit-of-work*.md` | SA | Unit decomposition · deps · story map · exit criteria | ★ |
 | Construction (per unit) | **Intent & Pinned Context** · `construction/{unit}/intent.md` | SA | Unit intent + KB pin list ≤ 4k tokens | — |
-| | **Functional Design Pack** · `{unit}/functional-design/` | BA + SA | Business logic · rules · entities · components | ★ |
+| | **Functional Design Pack** · `{unit}/functional-design/` | SA | Business logic · rules · entities · components | ★ |
 | | **NFR Requirements** · `{unit}/nfr-requirements/` | SA | Measurable thresholds across 9 NFR categories | ★ |
 | | **NFR Design** · `{unit}/nfr-design/` | SA | Patterns + tech that meet each NFR · ADRs | ★ |
 | | **Infrastructure Design** · `{unit}/infrastructure-design/` | DevOps + SA | Logical → concrete services · topology | — |

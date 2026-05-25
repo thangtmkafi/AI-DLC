@@ -27,7 +27,7 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 
 ## Stages you drive
 
-- **Stage 4: Requirements Analysis** (with BA)
+- **Stage 4: Requirements Analysis** (sole owner)
 - **Stage 6: Workflow Planning** (sole owner)
 - **Pre-Inception sub-flow D (author-from-brief)** for new projects
 

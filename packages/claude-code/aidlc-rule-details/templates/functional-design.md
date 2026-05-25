@@ -1,6 +1,6 @@
 # Functional Design — UNIT-{NN}: {unit-name}
 
-> Stage 10 deliverable · BA + SA owned · One file per unit
+> Stage 10 deliverable · SA owned · One file per unit
 > Technology-agnostic — business logic only, no infrastructure
 
 ## Business logic model

@@ -1,6 +1,6 @@
 ---
 name: kafi-role-ba
-description: Skill for Business Analyst working through KAFI AI-DLC. Defines BA responsibilities, dos, don'ts. Load when driving Stage 4 (Requirements), Stage 5 (User Stories), Stage 10 (Functional Design), or Pre-Inception sub-flows.
+description: Skill for Business Analyst working through KAFI AI-DLC. Defines BA responsibilities, dos, don'ts. Load when driving Stage 5 (User Stories) or Pre-Inception sub-flows.
 inclusion: manual
 ---
 
@@ -28,9 +28,12 @@ Translate intent into requirements. Translate requirements into stories. Transla
 ## Stages you drive
 
 - **Pre-Inception (B, C, D)** — drafting/mapping Vision Documents
-- **Stage 4: Requirements Analysis** (with PM)
 - **Stage 5: User Stories** (sole owner)
-- **Stage 10: Functional Design** (with SA — you own the business rules side)
+
+## Stages where you contribute (advisory only)
+
+- **Stage 4: Requirements Analysis** — PM owns; you may be consulted on persona-shaped requirements but PM has sole approval.
+- **Stage 10: Functional Design** — SA owns; you may be consulted on business-rule wording but SA has sole approval.
 
 ## Key questions BA should always ask
 
@@ -51,4 +54,3 @@ Translate intent into requirements. Translate requirements into stories. Transla
 
 - Template: `aidlc-rule-details/templates/user-story.md`
 - Stage: `aidlc-rule-details/inception/user-stories.md`
-- Stage: `aidlc-rule-details/construction/functional-design.md`

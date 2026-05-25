@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.3 · KAFI Transformation Office · Adapted from AWS AI-DLC + Toan Huynh playbook · Kiro IDE port**
+**v0.4 · KAFI Transformation Office · Kiro IDE port**
 
 > This file is the agent context for this KAFI project. It defines the AI-Driven Development Lifecycle. When the user requests development work, follow this workflow FIRST. Kiro reads this file alongside the `.kiro/steering/` library.
 
@@ -67,6 +67,7 @@ At workflow start, Kiro auto-loads all `inclusion: always` files from `.kiro/ste
 - Role guides — `.kiro/steering/roles/{pm,ba,sa,designer,dev,devops}.md`
 - Stage rules — `.kiro/steering/{pre-inception,inception,construction,operations}/*.md`
 - Opt-in extensions — `.kiro/steering/extensions/personal-data-privacy/*.md`
+- Onboarding skill — `.kiro/steering/kafi-aidlc-onboarding.md` (load on first session, when asked "where am I", or before `/init`)
 
 **Extensions:**
 
@@ -118,7 +119,7 @@ See `.kiro/steering/pre-inception/*.md` for sub-flow details. Load with `#subflo
 flowchart TB
     S1[1. Workspace Detection<br/>always · AI agent] --> S2[2. KB Context Loading<br/>always · AI agent]
     S2 --> S3[3. Reverse Engineering<br/>conditional · SA]
-    S3 --> S4[4. Requirements Analysis<br/>always · PM + BA]
+    S3 --> S4[4. Requirements Analysis<br/>always · PM]
     S4 --> S5[5. User Stories<br/>conditional · BA]
     S5 --> S6[6. Workflow Planning<br/>always · PM]
     S6 --> S7[7. Product Design<br/>conditional · Designer]
@@ -134,7 +135,7 @@ Each stage: load `.kiro/steering/inception/<stage>.md` via `#filename`, execute,
 
 ```mermaid
 flowchart TB
-    L[Per-unit loop] --> S10[10. Functional Design<br/>conditional · BA + SA]
+    L[Per-unit loop] --> S10[10. Functional Design<br/>conditional · SA]
     S10 --> S11[11. NFR Requirements<br/>conditional · SA]
     S11 --> S12[12. NFR Design<br/>conditional · SA]
     S12 --> S13[13. Infrastructure Design<br/>conditional · DevOps]
@@ -146,7 +147,7 @@ flowchart TB
 
 **NFR = Non-Functional Requirements** (performance, scalability, availability, security, observability, accessibility).
 
-**No test artifacts in v0.3** — deferred to v0.4+.
+**No test artifacts in v0.4 either** — deferred to v0.5.
 
 ---
 
@@ -158,7 +159,7 @@ flowchart LR
     S16 --> S17[17. Monitoring<br/>placeholder · DevOps + SRE]
 ```
 
-Format TBD in v0.4. No compliance verification stage in v0.3.
+Format TBD in v0.5. No compliance verification stage in v0.4.
 
 ---
 
@@ -167,14 +168,14 @@ Format TBD in v0.4. No compliance verification stage in v0.3.
 | Role | Drives | Steering file |
 |---|---|---|
 | PM (Product Owner) | Stages 4, 6 | `.kiro/steering/roles/pm.md` |
-| BA (Business Analyst) | Stages 4, 5, 10 + Pre-Inception | `.kiro/steering/roles/ba.md` |
-| SA (Solution Architect) | Stages 3, 8, 9, 11, 12 | `.kiro/steering/roles/sa.md` |
+| BA (Business Analyst) | Stage 5 + Pre-Inception | `.kiro/steering/roles/ba.md` |
+| SA (Solution Architect) | Stages 3, 8, 9, 10, 11, 12 | `.kiro/steering/roles/sa.md` |
 | Designer (Product Designer) | Stage 7 | `.kiro/steering/roles/designer.md` + `.kiro/steering/kafi-design-system.md` |
 | Dev (Developer) | Stages 14, 15 | `.kiro/steering/roles/dev.md` |
 | DevOps / SRE | Stages 13, 16, 17 | `.kiro/steering/roles/devops.md` |
 | AI Agent | Every stage | — |
 
-Manual role inclusion — load with `#pm`, `#ba`, etc. in Kiro chat when driving a stage. The **kafi-design-system** is auto-loaded (`inclusion: always`) and applies to every UI artifact.
+Manual role inclusion — load with `#pm`, `#ba`, etc. in Kiro chat when driving a stage. The **kafi-design-system** is auto-loaded (`inclusion: always`) and applies to every UI artifact. The **kafi-aidlc-onboarding** skill (`inclusion: manual`) loads via `#kafi-aidlc-onboarding` when the user just unzipped the package, asks where to start, mentions `/init`, or wants to scan `00-knowledge/` to determine current stage. Explains why `/init` is redundant on AI-DLC projects (AGENTS.md is already auto-loaded).
 
 ---
 
@@ -182,9 +183,12 @@ Manual role inclusion — load with `#pm`, `#ba`, etc. in Kiro chat when driving
 
 KAFI standard at `.kiro/templates/` · Project overrides at `00-knowledge/templates/`.
 
-`vision.md` · `technical-environment.md` · `user-story.md` · `adr.md` · `requirements.md` · `nfr-requirements.md` · `application-design.md` · `functional-design.md` · `nfr-design.md` · `components.md` · `unit-of-work.md`
+Available templates (11):
+`vision.md` · `technical-environment.md` · `requirements.md` · `user-story.md` · `application-design.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
 
 **Traceability:** `Intent → Vision → [BRD] → [PRD] → Epic → Story → Unit → ADR` · IDs: `REQ-NN · PRD-NN · EPIC-NN · US-NN · UNIT-NN · ADR-NN`
+
+> **Pending templates (planned, no scaffold yet):** `prd.md` · `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md` · `test-plan.md` (v0.4). Until shipped, author these freehand using the traceability chain above.
 
 ---
 
@@ -282,4 +286,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.3 Kiro Port · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.4 Kiro Port · Transformation Office, Kafi Securities*

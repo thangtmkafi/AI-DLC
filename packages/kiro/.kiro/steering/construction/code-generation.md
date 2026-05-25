@@ -85,9 +85,9 @@ Code Generation for UNIT-{N} complete.
 → Continue to next unit / Stage 15 (Build)
 ```
 
-## No tests in v0.3
+## No tests through v0.4
 
-Unit tests deferred to v0.4+. Code Generation produces code only.
+Unit tests deferred to v0.5. Code Generation produces code only.
 
 ## Watch for
 

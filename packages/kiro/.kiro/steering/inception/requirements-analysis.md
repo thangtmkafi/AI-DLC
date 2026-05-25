@@ -5,7 +5,7 @@ description: "Stage 4: Requirements Analysis"
 
 # Stage 4: Requirements Analysis
 
-**Owner:** PM + BA · **Always runs** · **Approval required**
+**Owner:** PM (sole) · **Always runs** · **Approval required**
 
 ## Purpose
 

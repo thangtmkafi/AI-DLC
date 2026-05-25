@@ -1,6 +1,6 @@
 # Requirements — {Project / Feature Name}
 
-> Stage 4 deliverable · PM + BA owned
+> Stage 4 deliverable · PM owned
 > One file per project or major feature scope
 > Every requirement is grounded in KB · cite source on every entry
 

@@ -8,7 +8,7 @@ inclusion: manual
 
 ## Why this role exists
 
-You turn design into running code. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. No unit tests required in v0.3 (deferred to v0.4+).
+You turn design into running code. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. No unit tests required through v0.4 (test artifacts deferred to v0.5).
 
 ## Do
 

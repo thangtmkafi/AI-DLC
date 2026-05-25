@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.3 · KAFI Transformation Office · Adapted from AWS AI-DLC + Toan Huynh playbook**
+**v0.4 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 
@@ -117,7 +117,7 @@ See `aidlc-rule-details/pre-inception/*.md` for sub-flow details.
 flowchart TB
     S1[1. Workspace Detection<br/>always · AI agent] --> S2[2. KB Context Loading<br/>always · AI agent]
     S2 --> S3[3. Reverse Engineering<br/>conditional · SA]
-    S3 --> S4[4. Requirements Analysis<br/>always · PM + BA]
+    S3 --> S4[4. Requirements Analysis<br/>always · PM]
     S4 --> S5[5. User Stories<br/>conditional · BA]
     S5 --> S6[6. Workflow Planning<br/>always · PM]
     S6 --> S7[7. Product Design<br/>conditional · Designer]
@@ -133,7 +133,7 @@ Each stage: load `inception/<stage>.md`, execute, append `audit.md`, present com
 
 ```mermaid
 flowchart TB
-    L[Per-unit loop] --> S10[10. Functional Design<br/>conditional · BA + SA]
+    L[Per-unit loop] --> S10[10. Functional Design<br/>conditional · SA]
     S10 --> S11[11. NFR Requirements<br/>conditional · SA]
     S11 --> S12[12. NFR Design<br/>conditional · SA]
     S12 --> S13[13. Infrastructure Design<br/>conditional · DevOps]
@@ -145,7 +145,7 @@ flowchart TB
 
 **NFR = Non-Functional Requirements** (performance, scalability, availability, security, observability, accessibility).
 
-**No test artifacts in v0.3** — deferred to v0.4+.
+**No test artifacts in v0.4 either** — deferred to v0.5.
 
 ---
 
@@ -157,7 +157,7 @@ flowchart LR
     S16 --> S17[17. Monitoring<br/>placeholder · DevOps + SRE]
 ```
 
-Format TBD in v0.4. No compliance verification stage in v0.3.
+Format TBD in v0.5. No compliance verification stage in v0.4.
 
 ---
 
@@ -166,14 +166,17 @@ Format TBD in v0.4. No compliance verification stage in v0.3.
 | Role | Drives | Skill |
 |---|---|---|
 | PM (Product Owner) | Stages 4, 6 | `skills/kafi/roles/pm.md` |
-| BA (Business Analyst) | Stages 4, 5, 10 + Pre-Inception | `skills/kafi/roles/ba.md` |
-| SA (Solution Architect) | Stages 3, 8, 9, 11, 12 | `skills/kafi/roles/sa.md` |
+| BA (Business Analyst) | Stage 5 + Pre-Inception | `skills/kafi/roles/ba.md` |
+| SA (Solution Architect) | Stages 3, 8, 9, 10, 11, 12 | `skills/kafi/roles/sa.md` |
 | Designer (Product Designer) | Stage 7 | `skills/kafi/roles/designer.md` + `skills/kafi/design-system/SKILL.md` |
 | Dev (Developer) | Stages 14, 15 | `skills/kafi/roles/dev.md` |
 | DevOps / SRE | Stages 13, 16, 17 | `skills/kafi/roles/devops.md` |
 | AI Agent | Every stage | — |
 
-Manual skill inclusion — load when driving a stage. The **kafi-design-system** skill is auto-discoverable (proper SKILL.md format) and should be loaded whenever a stage produces UI artifacts.
+Manual skill inclusion — load when driving a stage. Two skills are auto-discoverable (proper SKILL.md format) and load automatically when their description matches the user's intent:
+
+- **kafi-design-system** — loads whenever a stage produces UI artifacts
+- **kafi-aidlc-onboarding** — loads when the user just unzipped the package, asks where to start, mentions `/init`, or wants to scan `00-knowledge/` to determine which AI-DLC stage their project is at. Explains why `/init` is redundant on AI-DLC projects (CLAUDE.md is already auto-loaded).
 
 ---
 
@@ -181,9 +184,12 @@ Manual skill inclusion — load when driving a stage. The **kafi-design-system**
 
 KAFI standard at `aidlc-rule-details/templates/` · Project overrides at `00-knowledge/templates/`.
 
-`vision.md` · `technical-environment.md` · `user-story.md` · `epic.md` · `adr.md` · `prd.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md`
+Available templates (11):
+`vision.md` · `technical-environment.md` · `requirements.md` · `user-story.md` · `application-design.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
 
 **Traceability:** `Intent → Vision → [BRD] → [PRD] → Epic → Story → Unit → ADR` · IDs: `REQ-NN · PRD-NN · EPIC-NN · US-NN · UNIT-NN · ADR-NN`
+
+> **Pending templates (planned, no scaffold yet):** `prd.md` · `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md` · `test-plan.md` (v0.4). Until shipped, author these freehand using the traceability chain above.
 
 ---
 
@@ -254,4 +260,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.3 · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.4 · Transformation Office, Kafi Securities*

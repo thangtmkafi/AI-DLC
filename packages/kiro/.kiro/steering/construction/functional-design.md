@@ -5,7 +5,7 @@ description: "Stage 10: Functional Design"
 
 # Stage 10: Functional Design
 
-**Owner:** BA + Solution Architect (SA) · **Conditional** (per-unit) · **Approval required**
+**Owner:** Solution Architect (SA, sole) · **Conditional** (per-unit) · **Approval required**
 
 ## When to run / skip
 

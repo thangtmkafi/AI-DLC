@@ -1,4 +1,4 @@
-# KAFI AI-DLC v0.3 · Kiro Port
+# KAFI AI-DLC v0.4 · Kiro Port
 
 **Drop-in package for Kiro IDE.** Ports the original Claude Code package (`CLAUDE.md` + `.claude/skills/`) to Kiro's native `AGENTS.md` + `.kiro/steering/` conventions.
 
@@ -27,6 +27,10 @@ Help me plan a new AI-DLC project.
 ```
 
 The AI agent will read AGENTS.md (always-loaded), plus everything in `.kiro/steering/` flagged `inclusion: always` (common rules, design system, audit-trail).
+
+> 💡 **`/init` is not needed.** Kiro auto-loads `AGENTS.md` (which already contains the 17-stage workflow spec) and all `inclusion: always` steering files on every session start. `/init` (where supported) is non-destructive — it scans and *suggests* updates rather than overwriting — but on an AI-DLC project it is redundant and its suggestions may dilute methodology focus if accepted blindly. Skip it.
+
+> 💡 **Not sure where you are in the workflow?** Drop any existing project files (BRDs, PRDs, mockups, architecture docs) into `00-knowledge/`, then in Kiro chat ask: *"#kafi-aidlc-onboarding — read 00-knowledge/ and tell me what AI-DLC stage I'm at."* The skill scans your materials and classifies the project against the 17-stage workflow with a suggested next prompt.
 
 ---
 
@@ -86,7 +90,7 @@ Three inclusion modes:
 |---|---|---|
 | `always` | Every chat session | common rules, design system, audit-trail |
 | `manual` | When user types `#filename` in chat | role guides, stage rules, opt-in extensions |
-| `fileMatch` | When matching files referenced in chat | (not used in v0.3; reserve for v0.4) |
+| `fileMatch` | When matching files referenced in chat | (not used in v0.4; reserve for v0.5) |
 
 To load a role manually: `#sa` → loads `.kiro/steering/roles/sa.md`
 To load a stage: `#requirements-analysis` → loads `.kiro/steering/inception/requirements-analysis.md`
@@ -95,7 +99,7 @@ To load a stage: `#requirements-analysis` → loads `.kiro/steering/inception/re
 
 ## Key differences from Claude Code package
 
-| | Claude Code v0.3 | Kiro v0.3 |
+| | Claude Code v0.4 | Kiro v0.4 |
 |---|---|---|
 | Root rules file | `CLAUDE.md` | `AGENTS.md` (universal agents.md spec) |
 | Skills folder | `.claude/skills/kafi/` | `.kiro/steering/` |
@@ -105,7 +109,7 @@ To load a stage: `#requirements-analysis` → loads `.kiro/steering/inception/re
 | Spec-driven mode | Not native | `.kiro/specs/<feature>/` with `requirements.md` + `design.md` + `tasks.md` |
 | Templates | `aidlc-rule-details/templates/` | `.kiro/templates/` |
 
-**Content parity:** All 53 rule + role + template files from v0.3 are preserved. Only paths and front-matter are reorganized for Kiro idioms.
+**Content parity:** All rule + role + template files from v0.4 are preserved across both editions. Only paths and front-matter are reorganized for Kiro idioms.
 
 ---
 
@@ -166,8 +170,9 @@ After dropping into a project:
 
 ## Versioning
 
+- **v0.4-kiro** · 25 May 2026 · Workflow correctness fixes (state file drift · Stage 4/10 ownership · templates drift · onboarding skill). See `CHANGELOG.md` for full list.
 - **v0.3-kiro** · 15 May 2026 · Initial Kiro port from v0.3 Claude Code package
-- Roadmap items deferred to v0.4: test artifacts, compliance verification, full Operations phase, project-extension YAML examples
+- Roadmap items deferred to v0.5: test artifacts, compliance verification, full Operations phase, project-extension YAML examples, `kafi-git-stage-flow` skill
 
 ---
 
