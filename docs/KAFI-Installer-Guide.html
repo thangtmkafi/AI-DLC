@@ -230,11 +230,11 @@ footer a { color: var(--kafi-green); text-decoration: none; }
 <div class="cmd-grid">
   <div>
     <h4>macOS / Linux</h4>
-    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash</pre>
+    <pre>curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash</pre>
   </div>
   <div>
     <h4>Windows (PowerShell)</h4>
-    <pre>iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+    <pre>iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.ps1 -OutFile install.ps1
 .\install.ps1</pre>
   </div>
 </div>
@@ -277,7 +277,7 @@ Proceed? [Y/n] Y
 
 → Moving 12 item(s) → 00-knowledge/references/
 ✓ Moved 12 item(s).
-→ Downloading https://github.com/Kafivn/KORA/releases/download/v0.4/...
+→ Downloading https://github.com/thangtmkafi/AI-DLC/releases/download/v0.4/...
 → Extracting into /home/me/my-project…
 ✓ Extracted AI-DLC v0.4 (claude-code).</pre>
 
@@ -287,7 +287,7 @@ Proceed? [Y/n] Y
 
 <ol>
   <li><strong>Parses current version</strong> from <code>CLAUDE.md</code> / <code>AGENTS.md</code> line 3 (e.g., <code>**v0.3 · KAFI Transformation Office**</code>).</li>
-  <li><strong>Fetches latest version</strong> from <a href="https://api.github.com/repos/Kafivn/KORA/releases/latest" style="color: var(--kafi-green);">GitHub Releases API</a>.</li>
+  <li><strong>Fetches latest version</strong> from <a href="https://api.github.com/repos/thangtmkafi/AI-DLC/releases/latest" style="color: var(--kafi-green);">GitHub Releases API</a>.</li>
   <li><strong>If equal → exits with "Already on latest"</strong> (no-op).</li>
   <li><strong>Shows a 1-prompt summary</strong> with backup path, replace list, preserve list. You approve.</li>
   <li><strong>Backs up package files</strong> to <code>.aidlc-backup-YYYYMMDD-HHMMSS/</code> in the current folder.</li>
@@ -351,7 +351,7 @@ Proceed? [Y/n] Y
 <div class="cmd-grid">
   <div>
     <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">macOS / Linux</h4>
-    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh \
+    <pre>curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh \
   | bash -s -- --convert-to=kiro --yes</pre>
   </div>
   <div>
@@ -364,7 +364,7 @@ Proceed? [Y/n] Y
 <div class="cmd-grid">
   <div>
     <h4 style="font-size: 12px; color: var(--text-muted); margin: 0 0 4px;">macOS / Linux</h4>
-    <pre>curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh \
+    <pre>curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh \
   | bash -s -- --convert-to=claude-code --yes</pre>
   </div>
   <div>
@@ -567,7 +567,7 @@ curl -fsSL .../install.sh | bash</pre>
 <p>Install curl: <code>brew install curl</code> (macOS) or <code>apt install curl</code> (Linux).</p>
 
 <h3>"Download failed: github.com/..."</h3>
-<p>Verify the release exists at <a href="https://github.com/Kafivn/KORA/releases" style="color: var(--kafi-green);">github.com/Kafivn/KORA/releases</a>. If your network blocks GitHub, contact KAFI Transformation Office for a private mirror URL.</p>
+<p>Verify the release exists at <a href="https://github.com/thangtmkafi/AI-DLC/releases" style="color: var(--kafi-green);">github.com/thangtmkafi/AI-DLC/releases</a>. If your network blocks GitHub, contact KAFI Transformation Office for a private mirror URL.</p>
 
 <h3>"Both CLAUDE.md AND AGENTS.md present — mixed state"</h3>
 <p>A project should run one edition (Claude Code or Kiro), not both. Decide which to keep, <code>rm</code> the other, then re-run the installer.</p>
@@ -595,7 +595,7 @@ rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
 .\install.ps1</pre>
 
 <h3>I want a fully manual install</h3>
-<p>Download the zip directly from <a href="https://github.com/Kafivn/KORA/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, and continue with the README steps. The installer is a convenience wrapper — not required.</p>
+<p>Download the zip directly from <a href="https://github.com/thangtmkafi/AI-DLC/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, and continue with the README steps. The installer is a convenience wrapper — not required.</p>
 
 <h2 id="after-install">9 · After install — first session</h2>
 

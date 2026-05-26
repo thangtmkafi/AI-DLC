@@ -2,8 +2,8 @@
 # KAFI AI-DLC installer · cross-platform bash (macOS, Linux)
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash -s -- --edition=claude-code
+#   curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash -s -- --edition=claude-code
 #
 # Auto-detects mode (install vs upgrade) based on cwd contents.
 
@@ -17,7 +17,7 @@ CONVERT_TO=""
 ASSUME_YES=false
 DRY_RUN=false
 NO_MOVE=false
-GH_REPO="Kafivn/KORA"
+GH_REPO="thangtmkafi/AI-DLC"
 API_BASE="https://api.github.com/repos/${GH_REPO}/releases"
 
 # ---- color helpers ----

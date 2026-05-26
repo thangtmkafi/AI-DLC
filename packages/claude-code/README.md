@@ -44,10 +44,10 @@ One terminal command. Auto-detects install vs upgrade mode, moves legacy files t
 
 ```bash
 # macOS / Linux
-curl -fsSL https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash
 
 # Windows (PowerShell)
-iwr -useb https://raw.githubusercontent.com/Kafivn/KORA/main/tools/install.ps1 -OutFile install.ps1
+iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.ps1 -OutFile install.ps1
 .\install.ps1
 ```
 

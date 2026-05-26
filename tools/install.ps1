@@ -72,7 +72,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$GhRepo = 'Kafivn/KORA'
+$GhRepo = 'thangtmkafi/AI-DLC'
 $ApiBase = "https://api.github.com/repos/$GhRepo/releases"
 
 # ---- helpers ----
