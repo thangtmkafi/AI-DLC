@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC Handbook · v0.4 · Claude Code + Kiro</title>
+<title>KAFI AI-DLC Handbook · v0.5 · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -824,7 +824,7 @@ footer {
 
 <!-- ============ HEADER ============ -->
 <header class="doc-header">
-  <div class="doc-eyebrow">Transformation Office · v0.4 · Covers Claude Code + Kiro editions</div>
+  <div class="doc-eyebrow">Transformation Office · v0.5 · Covers Claude Code + Kiro editions</div>
   <h1 class="doc-title">KAFI AI-DLC Handbook</h1>
   <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code> for Claude Code; <code>AGENTS.md</code> for Kiro). This unified doc covers both editions — edition-specific paths and commands are called out inline.</p>
   <div class="doc-meta-row">
@@ -1614,11 +1614,11 @@ footer {
   <div class="stage-head">
     <div>
       <div class="stage-tag">Stage 4</div>
-      <h3 class="stage-title">Requirements Analysis</h3>
+      <h3 class="stage-title">Requirements Analysis · PRD + Requirements</h3>
     </div>
     <div class="stage-badges">
       <span class="badge badge-always">Always</span>
-      <span class="badge badge-owner">PM + BA</span>
+      <span class="badge badge-owner">PM (sole)</span>
       <span class="badge badge-mode">Both modes</span>
     </div>
   </div>
@@ -1630,31 +1630,34 @@ footer {
         <li>aidlc-docs/inception/discovery/technical-environment.md</li>
         <li>00-knowledge/product/ (BRD/PRD)</li>
         <li>00-knowledge/open-items.md</li>
+        <li>(if exists) aidlc-docs/ba-authoring/&lt;feature&gt;/prd-draft.md from Sub-flow D mode C</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
     <div class="io-col">
       <h4>Outputs · inception/requirements/</h4>
       <ul class="io-list">
-        <li>requirements.md (REQ-NN IDs with citations)</li>
+        <li><strong>prd-&lt;feature&gt;.md</strong> (one per major feature, PRD-NN with success criteria) — new in v0.5</li>
+        <li>requirements.md (REQ-NN, each cites parent PRD-NN)</li>
         <li>requirement-verification-questions.md</li>
       </ul>
     </div>
   </div>
   <div class="stage-steps">
-    <h4>What happens</h4>
+    <h4>What happens · two-part deliverable</h4>
     <ol>
-      <li>Read Vision + Tech Env + KB sections.</li>
+      <li>Read Vision + Tech Env + KB sections. Identify distinct features (each gets its own PRD file).</li>
       <li>Run intent analysis — what's actually being asked for?</li>
-      <li>Determine depth: Minimal / Standard / Comprehensive based on scope.</li>
-      <li>Generate REQ-NN entries. Cite KB and Vision sections per requirement.</li>
-      <li>For requirements touching open items, emit canonical line: <code>Open — pending [owner]</code>. Never fabricate.</li>
-      <li>Write clarifying questions to a separate file for ambiguous areas.</li>
+      <li>Determine depth: Minimal (PRD inlined as preamble) / Standard (1 PRD + REQs) / Comprehensive (PRD per feature + full PRD-NN→REQ-NN traceability).</li>
+      <li><strong>Step 6a · PRD generation</strong> — per feature, produce <code>prd-&lt;feature&gt;.md</code> using <code>templates/prd.md</code>. PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.</li>
+      <li><strong>Step 6b · Requirements generation</strong> — produce <code>requirements.md</code> with REQ-NN entries. Each REQ cites parent PRD-NN: <code>**Parent PRD:** prd-&lt;feature&gt;.md#PRD-NN</code>.</li>
+      <li>Backfill PRD traceability footers — each PRD-NN lists the REQ-NN it decomposes into.</li>
+      <li>For PRDs/REQs touching open items, emit canonical line: <code>Open — pending [owner]</code>. Never fabricate.</li>
     </ol>
   </div>
   <div class="callout callout-watch">
     <div class="callout-label">Watch for</div>
-    Vague NFRs slipping in — "should be fast", "user-friendly". Push them to Stage 11 (NFR Requirements) with measurable thresholds, don't accept here.
+    <strong>PRD without measurable success criteria</strong> — "Improve UX" is not a PRD; "Reduce capture time 12 → 3 min" is. <strong>REQs without parent PRD</strong> — either PRD incomplete or scope creep. <strong>Vague NFRs</strong> — push to Stage 11 with measurable thresholds.
   </div>
 </article>
 
@@ -2265,16 +2268,30 @@ footer {
 
 <div class="doc-type">
   <div class="doc-head">
+    <h3 class="doc-name">PRD · Product Requirements Document</h3>
+    <div class="doc-badges">
+      <span class="doc-badge">Stage 4</span>
+      <span class="doc-badge">PM (sole)</span>
+      <span class="doc-badge doc-badge--tmpl">★ template (new v0.5)</span>
+    </div>
+  </div>
+  <div class="doc-path"><code>aidlc-docs/inception/requirements/prd-&lt;feature&gt;.md</code> (one per major feature)</div>
+  <p class="doc-purpose">The product narrative: <em>WHAT</em> we're building and <em>FOR WHOM</em>. Feature-level, written for stakeholders + Designer + engineering. Sits between Vision (north-star) and Requirements (technical decomposition). Every PRD-NN traces forward to one or more REQ-NN.</p>
+  <p class="doc-contains"><strong>Contains:</strong> feature overview · problem statement · target users / personas · user journey · PRD-NN features with Must/Should/Could priority · measurable success metrics · scope IN/OUT · dependencies · risks · constraints · traceability footer.</p>
+</div>
+
+<div class="doc-type">
+  <div class="doc-head">
     <h3 class="doc-name">Requirements</h3>
     <div class="doc-badges">
       <span class="doc-badge">Stage 4</span>
-      <span class="doc-badge">PM + BA</span>
+      <span class="doc-badge">PM (sole)</span>
       <span class="doc-badge doc-badge--tmpl">★ template</span>
     </div>
   </div>
   <div class="doc-path"><code>aidlc-docs/inception/requirements/requirements.md</code></div>
-  <p class="doc-purpose">The contract between business intent and the system. REQ-NN entries with citations back to Vision and BRD. Functional capabilities, regulatory constraints, architectural constraints, phase scope, and explicit out-of-scope.</p>
-  <p class="doc-contains"><strong>Contains:</strong> functional capabilities (REQ-NN) · regulatory constraints (REQ-REG-NN) · architectural constraints (REQ-ARCH-NN) · phase constraints (REQ-PHASE-NN) · out of scope · open items.</p>
+  <p class="doc-purpose">Technical decomposition: <em>HOW THE SYSTEM MUST BEHAVE</em>. REQ-NN entries derived from PRD-NN. Each REQ cites its parent PRD via <code>**Parent PRD:** prd-&lt;feature&gt;.md#PRD-NN</code>. Functional capabilities, regulatory constraints, architectural constraints, phase scope, and explicit out-of-scope.</p>
+  <p class="doc-contains"><strong>Contains:</strong> functional capabilities (REQ-NN) · regulatory constraints (REQ-REG-NN) · architectural constraints (REQ-ARCH-NN) · phase constraints (REQ-PHASE-NN) · parent PRD-NN traceability · out of scope · open items.</p>
 </div>
 
 <div class="doc-type">
@@ -2994,7 +3011,7 @@ build/
 </section>
 
 <footer>
-  <span>KAFI Transformation Office · v0.3 Draft · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>KAFI Transformation Office · v0.5 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
   <span>Companion: KAFI-AIDLC-Introduction.html · CLAUDE.md (workflow spec) · injection package zip</span>
 </footer>
 

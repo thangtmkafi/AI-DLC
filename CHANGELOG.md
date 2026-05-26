@@ -4,7 +4,45 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
-### Added · Cross-platform installer
+### Planned for v0.6
+Carry-over from v0.5 backlog (deferred to keep v0.5 focused on PRD formalization):
+- Test artifacts stage + template (`test-plan.md`) — Stream A1
+- Compliance verification stage — Stream A2
+- Operations stages expanded from placeholder to concrete specs — Stream A3
+- Project extension YAML examples — Stream A4
+- CI parity check (semantic diff, not just word count) — Stream A5
+- `phase-delivery` extension (Stream B1)
+- Per-phase `aidlc-docs/` folder schema (B2)
+- MVP exit ramp at Stage 14 (B3)
+- Loop-back protocol S17 → S4 (B4)
+- `kafi-git-stage-flow` skill (B5)
+- Sentinel + CI hook for CLAUDE.md/AGENTS.md (B6)
+- Audit log rotation (B7)
+- Open-items aggregator skill (B8)
+- AI review hard-gate (B9)
+- Designer-BA review pattern (B10)
+- 2-part stage decision rule (B11)
+- Retrospective stage (B12)
+- Standalone `epic.md` template + Epic stage (split from PRD-NN decomposition)
+- Automated PRD-NN → REQ-NN traceability checker
+
+## [0.5] · 2026-05-26
+
+### Added · PRD as Stage 4 co-deliverable
+- **`prd.md` template** at `packages/claude-code/aidlc-rule-details/templates/` and `packages/kiro/.kiro/templates/`. Feature-scoped product narrative with 11 sections: feature overview, problem statement, target users/personas, user journey, PRD-NN features with Must/Should/Could priority, measurable success metrics, scope IN/OUT, dependencies, risks, constraints, open items, plus traceability footer mapping PRD-NN → REQ-NN → US-NN → UNIT-NN.
+- **Stage 4 rule expanded to two-step deliverable** — Step 6a generates `prd-<feature>.md` per major feature (PRD answers *WHAT* and *FOR WHOM*); Step 6b derives `requirements.md` with REQ-NN entries each citing parent PRD-NN. Adaptive depth: Minimal (PRD inlined as preamble), Standard (1 PRD + REQs), Comprehensive (PRD per feature + full traceability). Files updated: `inception/requirements-analysis.md` in both editions.
+- **PRD rubric (13 items)** added to `pre-inception/document-validator.md` — fills the prior "see individual rubric files" placeholder. Items mirror PRD template structure for consent-first classification of legacy attached docs.
+- **Sub-flow D mode C** now references `prd.md` template explicitly. When mode C "Comprehensive" is selected, agent drafts `aidlc-docs/ba-authoring/<feature>/prd-draft.md` which feeds Stage 4 step 6a as PM finalizes the official PRD.
+- **PM role file** + onboarding prompt template updated to reflect dual deliverable. PM now owns both PRD and Requirements at Stage 4; new "Trace REQ → PRD" rule prevents scope creep (REQ without parent PRD = incomplete PRD or scope creep, must resolve before approval).
+- **Onboarding skill rubric** adds row mapping `prd-*.md` presence to Stage 4 in-progress state. State drift detection now considers PRD files alongside `requirements.md`.
+
+### Changed
+- Templates active list: 11 → 12 (added `prd.md`). Pending templates list updated — `prd.md` removed (now shipped); pending list narrowed to `epic.md`, `personas.md`, `risk-register.md`, `design-lite.md`, `story-map.md`, `dod.md`, `test-plan.md` (v0.6+).
+- Traceability chain documentation reordered: `Intent → Vision → [BRD] → PRD → REQ → Epic → Story → Unit → ADR`. PRD now ahead of REQ in the chain (was bracketed and undefined in v0.4).
+- Stage 4 ownership badge in Handbook fixed: PM + BA → PM (sole). Carry-over correction from v0.4 (rule files were already updated but HTML doc was missed).
+- Version banner v0.4 → v0.5 in `CLAUDE.md`, `AGENTS.md`, `.kiro/settings/config.json`, all 4 documentation HTML files, `docs/index.html`.
+
+### Added · Cross-platform installer (shipped with v0.5; built in v0.4 cycle, untagged at the time)
 - **`tools/install.sh`** (bash, macOS/Linux) + **`tools/install.ps1`** (PowerShell, Windows) — auto-detects install vs upgrade vs convert mode from current folder contents.
   - Install mode: moves existing files to `00-knowledge/references/` (configurable exclusion list), downloads latest release zip from GitHub API, unzips into cwd.
   - Upgrade mode: parses current version from `CLAUDE.md` / `AGENTS.md`, compares to latest, backs up package files to `.aidlc-backup-<timestamp>/`, replaces with new version. Preserves `00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/`.
@@ -24,24 +62,6 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 - `docs/KAFI-AIDLC-Introduction-{Claude,Kiro}.html` — added "Quick install" section near top; replaced "Role playbooks" section (6 large starter prompt blocks) with slim "How to start a session" pointing to onboarding skill + Stage → Role → Prompt mapping table. Both files trimmed ~228 lines.
 - `docs/KAFI-AIDLC-Handbook-{Claude,Kiro}.html` — added "Quick install" section at top of Part 1; replaced "Starter prompts" section (Part 1) with slim "How to start a session". Both files trimmed ~175 lines.
 - `packages/claude-code/README.md` + `packages/kiro/README.md` — "How to use" / "Quick start" now leads with one-liner installer; manual cp-r steps retained as fallback under "Manual install".
-
-### Planned for v0.5
-Carry-over from original v0.4 plan (deferred to focus v0.4 on workflow correctness fixes):
-- Test artifacts stage + template (`test-plan.md`)
-- Compliance verification stage
-- Operations stages expanded from placeholder to concrete specs
-- Project extension YAML examples
-- CI parity check (semantic diff, not just word count)
-
-From v0.4 pain-points brainstorm (`docs/ai-dlc-pain-points-2026-05.md`):
-- `phase-delivery` extension (replaces unimplemented `phase-discipline` manifest)
-- Per-phase `aidlc-docs/` folder schema (avoid overwrites on revisit)
-- MVP exit ramp at Stage 14 (3-option gate: Request Changes / Continue / Ship MVP)
-- Loop-back protocol S17 → S4 for phase N+1
-- `kafi-git-stage-flow` skill (wraps 6-8 git commands into stage macros for non-dev roles)
-- Open-items aggregator skill
-- Retrospective stage (Stage 18 or extension)
-- Sentinel + CI hook for CLAUDE.md/AGENTS.md (Problem 4.12 Option C — defense-in-depth)
 
 ## [0.4] · 2026-05-25
 

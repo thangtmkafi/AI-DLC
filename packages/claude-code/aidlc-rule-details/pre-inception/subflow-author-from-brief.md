@@ -36,7 +36,7 @@ Ask depth question:
 ## Question: Drafting depth
 A) Minimal — Vision + Tech Env, lean, MVP-focused
 B) Standard — Vision + Tech Env + risk register + personas
-C) Comprehensive — full template including BRD/PRD/story map for complex projects
+C) Comprehensive — Vision + Tech Env + draft PRD(s) per feature (using `templates/prd.md`) + risk register + personas. Draft PRD becomes input to Stage 4 PM finalization.
 D) Other (describe below)
 
 [Answer]: 
@@ -114,3 +114,4 @@ If user requests revision, loop back only on named sections.
 - `aidlc-docs/ba-authoring/<feature>/plan.md`
 - `aidlc-docs/ba-authoring/<feature>/parsed-brief.md`
 - `aidlc-docs/ba-authoring/<feature>/audit.md`
+- (Mode C only) `aidlc-docs/ba-authoring/<feature>/prd-draft.md` — feeds Stage 4 step 6a (PM finalizes into `aidlc-docs/inception/requirements/prd-<feature>.md`)

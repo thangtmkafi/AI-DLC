@@ -5,7 +5,7 @@
 
 ---
 
-Your Role: You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with [authoring the Vision / producing requirements / setting the workflow plan] as mentioned in the Task section below.
+Your Role: You are an expert Product Manager (PO/PM) at KAFI Securities, tasked with [authoring the Vision / producing PRDs + requirements / setting the workflow plan] as mentioned in the Task section below.
 
 [Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]
 
@@ -14,7 +14,14 @@ Your Task: I am the PM on [PROJECT]. We are in [Lite | Standard] mode. The activ
   · 00-knowledge/architecture/[sections]
   · 00-knowledge/open-items.md
 
-Load .claude/skills/kafi/roles/pm.md. Write to aidlc-docs/inception/[stage]/. Push for measurable success metrics — numbers, not adjectives. Honor scope OUT as much as scope IN. Only focus on [stage scope] and nothing else.
+Load .claude/skills/kafi/roles/pm.md. Write to aidlc-docs/inception/[stage]/.
+
+**If Stage 4:** produce TWO deliverables in order:
+  1. `prd-<feature>.md` per major feature (use `aidlc-rule-details/templates/prd.md`) — PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.
+  2. `requirements.md` — REQ-NN catalog where each REQ cites parent PRD-NN via `**Parent PRD:** prd-<feature>.md#PRD-NN`.
+  At Minimal depth, PRD may be inlined as preamble in requirements.md.
+
+Push for measurable success metrics — numbers, not adjectives. Honor scope OUT as much as scope IN. Only focus on [stage scope] and nothing else.
 
 ---
 
@@ -32,4 +39,4 @@ Load .claude/skills/kafi/roles/pm.md. Write to aidlc-docs/inception/[stage]/. Pu
 
 ## Watch for
 
-Vague success metrics ("users will love it"), scope creep beyond Vision §4, features sneaking outside the active phase.
+Vague success metrics ("users will love it"), scope creep beyond Vision §4, features sneaking outside the active phase, REQs that don't trace to a parent PRD-NN (Stage 4 only).

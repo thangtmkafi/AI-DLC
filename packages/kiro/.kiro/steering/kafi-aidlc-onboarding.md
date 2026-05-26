@@ -173,7 +173,7 @@ If `aidlc-docs/aidlc-state.md` exists:
 
 1. Read it.
 2. Cross-check the claimed stage against what's actually in `aidlc-docs/`:
-   - State says Stage 4 pending but `requirements.md` exists → state drifted (see `process-overview.md` step 9). Update state file to match reality, then proceed.
+   - State says Stage 4 pending but `requirements.md` (or `prd-*.md`) exists → state drifted (see `process-overview.md` step 9). Update state file to match reality, then proceed.
    - State says complete but `aidlc-docs/` is empty → stale state file from prior project. Re-detect via Mode B.
 3. If state and reality agree, present resume per `session-continuity.md`:
    - `Status: awaiting-approval` → re-present last completion message
@@ -193,8 +193,9 @@ Order matters — apply top-down, first match wins.
 | Legacy BRD/PRD in `00-knowledge/product/`, no `vision.md` | Pre-Inception · Sub-flow C (map-existing) | Validate legacy BRD against AI-DLC Vision template |
 | `vision.md` drafted in `00-knowledge/` but not in `aidlc-docs/inception/discovery/` | Pre-Inception · Sub-flow B (fill-gaps) | Move/refine Vision + add Technical Environment |
 | Vision exists, `src/` has substantial code (brownfield), no `aidlc-docs/` | Pre-Inception then Stage 3 | Sub-flow A/B/C + queue Stage 3 Reverse Engineering |
-| `aidlc-docs/inception/discovery/vision.md` AND `technical-environment.md` exist | Stage 2 complete (KB Context loaded) | Stage 4 (Requirements Analysis · PM) |
-| `requirements.md` exists in `aidlc-docs/inception/requirements/` | Stage 4 complete | Stage 5 (User Stories · BA) if user-facing, else Stage 6 |
+| `aidlc-docs/inception/discovery/vision.md` AND `technical-environment.md` exist | Stage 2 complete (KB Context loaded) | Stage 4 (Requirements Analysis · PM — produces PRD + Requirements) |
+| `prd-*.md` exists in `aidlc-docs/inception/requirements/` but `requirements.md` does NOT | Stage 4 in progress (PRD step 6a done, REQ step 6b pending) | Continue Stage 4 — derive REQ-NN from PRD-NN |
+| `requirements.md` exists in `aidlc-docs/inception/requirements/` (with or without `prd-*.md`) | Stage 4 complete | Stage 5 (User Stories · BA) if user-facing, else Stage 6 |
 | `stories.md` exists | Stage 5 complete | Stage 6 (Workflow Planning · PM) |
 | `execution-plan.md` exists | Stage 6 complete | Stage 7/8/9 per plan |
 | `product-design/` pack exists | Stage 7 complete | Stage 8 (Application Design · SA) |
@@ -203,7 +204,7 @@ Order matters — apply top-down, first match wins.
 | `aidlc-docs/construction/UNIT-NN/functional-design/` exists for any unit | Stage 10 in progress (per unit · SA) | Stage 11 (NFR Requirements) for that unit |
 | Per-unit `nfr-requirements/` + `nfr-design/` exist, no code | Stages 11-12 complete for unit | Stage 13 (Infrastructure) or Stage 14 (Code Generation) |
 | `code/` summaries exist per unit | Stage 14 complete for unit | Next unit OR Stage 15 (Build) |
-| `aidlc-docs/construction/build/` exists | Stage 15 complete | Stage 16/17 (Operations — still placeholder in v0.4) |
+| `aidlc-docs/construction/build/` exists | Stage 15 complete | Stage 16/17 (Operations — still placeholder in v0.5) |
 | Inconsistency: `aidlc-state.md` says Stage N, but Stage N+M artifacts exist | State drift detected | Reconcile state file first, then continue |
 
 ---

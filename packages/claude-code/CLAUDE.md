@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.4 · KAFI Transformation Office**
+**v0.5 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 
@@ -184,12 +184,14 @@ Manual skill inclusion — load when driving a stage. Two skills are auto-discov
 
 KAFI standard at `aidlc-rule-details/templates/` · Project overrides at `00-knowledge/templates/`.
 
-Available templates (11):
-`vision.md` · `technical-environment.md` · `requirements.md` · `user-story.md` · `application-design.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
+Available templates (12):
+`vision.md` · `technical-environment.md` · `prd.md` · `requirements.md` · `user-story.md` · `application-design.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
 
-**Traceability:** `Intent → Vision → [BRD] → [PRD] → Epic → Story → Unit → ADR` · IDs: `REQ-NN · PRD-NN · EPIC-NN · US-NN · UNIT-NN · ADR-NN`
+**Traceability:** `Intent → Vision → [BRD] → PRD → REQ → Epic → Story → Unit → ADR` · IDs: `PRD-NN · REQ-NN · EPIC-NN · US-NN · UNIT-NN · ADR-NN`
 
-> **Pending templates (planned, no scaffold yet):** `prd.md` · `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md` · `test-plan.md` (v0.4). Until shipped, author these freehand using the traceability chain above.
+> **PRD vs Requirements:** PRD answers *WHAT* and *FOR WHOM* (product narrative, feature-level, PM-owned). `requirements.md` answers *HOW THE SYSTEM MUST BEHAVE* (testable functional + NFR, derived from PRD-NN). Both produced at Stage 4. See `aidlc-rule-details/templates/prd.md`.
+
+> **Pending templates (planned, no scaffold yet):** `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md` · `test-plan.md` (v0.6+). Until shipped, author these freehand using the traceability chain above.
 
 ---
 

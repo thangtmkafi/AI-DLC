@@ -13,7 +13,9 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 ## Do
 
 - **Own the Vision Document.** Author it (Pre-Inception D), validate it (C), or confirm it (A/B).
-- **Push for measurable success metrics.** No "users will love it" — give numbers.
+- **Own the PRD.** At Stage 4 you produce one `prd-<feature>.md` per major feature before decomposing into REQs. PRD answers *WHAT* and *FOR WHOM*; REQs answer *HOW THE SYSTEM MUST BEHAVE*.
+- **Push for measurable success metrics.** No "users will love it" — give numbers. This applies to PRD success criteria first, REQ acceptance second.
+- **Trace REQ → PRD.** Every REQ-NN must cite a parent PRD-NN. If a REQ has no parent, either the PRD is incomplete or the REQ is scope creep.
 - **Define scope OUT** as carefully as scope IN. Out-of-scope features prevent scope creep.
 - **Decide stage inclusion/exclusion at Workflow Planning** based on what adds value, not what's traditional.
 - **Open items:** when you don't know, say "Open — pending [whoever owns the decision]." Don't guess.
@@ -27,9 +29,11 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 
 ## Stages you drive
 
-- **Stage 4: Requirements Analysis** (sole owner)
+- **Stage 4: Requirements Analysis** (sole owner) — produces TWO deliverables:
+  1. `prd-<feature>.md` (one per major feature, PRD-NN entries)
+  2. `requirements.md` (REQ-NN catalog, each REQ cites parent PRD-NN)
 - **Stage 6: Workflow Planning** (sole owner)
-- **Pre-Inception sub-flow D (author-from-brief)** for new projects
+- **Pre-Inception sub-flow D (author-from-brief)** for new projects — may include a draft PRD when mode C "Comprehensive" is selected.
 
 ## Stages where you approve
 
@@ -41,9 +45,12 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 - "What's the scope OUT here?"
 - "Are we sneaking features outside the current phase?"
 - "What measurement tells us this worked?"
+- "Which PRD-NN does this REQ trace back to?"
 
 ## References
 
 - Template: `aidlc-rule-details/templates/vision.md`
+- Template: `aidlc-rule-details/templates/prd.md`
+- Template: `aidlc-rule-details/templates/requirements.md`
 - Stage: `aidlc-rule-details/inception/requirements-analysis.md`
 - Stage: `aidlc-rule-details/inception/workflow-planning.md`

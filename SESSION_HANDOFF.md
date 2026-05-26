@@ -1,7 +1,7 @@
 # Session Handoff · KAFI AI-DLC
 
 > **Drop this file at repo root.** When opening this repo in Claude Code, your first prompt should be:
-> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.5 backlog."*
+> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.6 backlog."*
 
 ---
 
@@ -16,23 +16,36 @@ This is the **KAFI AI-DLC methodology repo** — it contains the workflow rules,
 
 Don't conflate the two. Editing the root one shapes how this repo is developed; editing the package one ships to every KAFI project using AI-DLC.
 
-**Current state:** v0.4 shipped 25 May 2026. Two editions, content parity verified.
+**Current state:** v0.5 shipped 26 May 2026. Two editions, content parity verified.
 
 - **Claude Code Edition** — `packages/claude-code/` · `CLAUDE.md` + `.claude/skills/` + `aidlc-rule-details/`
 - **Kiro Edition** — `packages/kiro/` · `AGENTS.md` + `.kiro/steering/` with YAML inclusion modes
 
-Both ship as zip files in `releases/v0.4/`. GitHub Actions auto-builds new zips on tag push.
+Both ship as zip files in `releases/v0.5/`. GitHub Actions auto-builds new zips on tag push.
+
+### v0.5 changes (shipped 2026-05-26)
+
+PRD formalization + installer/onboarding tooling consolidation.
+
+- **Added** · `prd.md` template (both editions, ~80 lines). Sits between Vision and Requirements in the traceability chain — PRD answers *WHAT* and *FOR WHOM* with measurable success criteria; Requirements (REQ-NN) answer *HOW THE SYSTEM MUST BEHAVE*.
+- **Added** · Stage 4 dual deliverable. PM now produces both `prd-<feature>.md` (step 6a) and `requirements.md` (step 6b, each REQ cites parent PRD-NN). Adaptive depth: Minimal/Standard/Comprehensive. Files: `inception/requirements-analysis.md` in both editions.
+- **Added** · PRD rubric (13 items) in `pre-inception/document-validator.md` — replaces "see individual rubric files" placeholder.
+- **Added** · Onboarding skill rubric row mapping `prd-*.md` files to Stage 4 in-progress.
+- **Changed** · Templates count 11 → 12. Pending list narrowed (drops `prd.md`, retains `epic.md`/`personas.md`/etc as v0.6+).
+- **Changed** · Traceability chain documentation: `Vision → [BRD] → PRD → REQ → Epic → Story → Unit → ADR`. PRD no longer bracketed.
+- **Changed** · Stage 4 ownership badge in Handbook fixed (PM + BA → PM sole) — v0.4 carry-over correction in HTML doc.
+- **Tooling consolidation** · Cross-platform installer (`tools/install.sh` + `install.ps1`), 6 onboarding skill prompt templates, `KAFI-Installer-Guide.html`, doc cleanup — all built in v0.4 cycle but untagged at the time, now ship with v0.5.
 
 ### v0.4 changes (shipped 2026-05-25)
 
 Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow correctness, not new stages.
 
-- **Fixed** · Problem 1 — `aidlc-state.md` drift: stage cycle now 10 steps with step 9 = "update state file". State file maintenance rules added for all status transitions.
-- **Fixed** · Problem 4.7 — CLAUDE.md templates list reconciled with disk reality (was claiming 7 phantom templates).
+- **Fixed** · Problem 1 — `aidlc-state.md` drift: stage cycle now 10 steps with step 9 = "update state file".
+- **Fixed** · Problem 4.7 — CLAUDE.md templates list reconciled with disk reality.
 - **Changed** · Problem 4.6 — Stage 4 ownership PM+BA → PM (sole). Stage 10 ownership BA+SA → SA (sole). BA scope narrowed to Stage 5 + Pre-Inception.
-- **Added** · Problem 4.11 — `kafi-aidlc-onboarding` skill (3 modes: setup wizard, stage detection from 00-knowledge/, resume verification). 16-row stage detection rubric.
-- **Documentation** — `docs/ai-dlc-pain-points-2026-05.md` brainstorm doc with 21 findings as input to v0.5 triage.
-- **Removed** "Adapted from AWS AI-DLC + Toan Huynh playbook" attribution from `CLAUDE.md` / `AGENTS.md` banners (kept in README + Handbook).
+- **Added** · Problem 4.11 — `kafi-aidlc-onboarding` skill (3 modes: setup wizard, stage detection from 00-knowledge/, resume verification).
+- **Documentation** — `docs/ai-dlc-pain-points-2026-05.md` brainstorm doc with 21 findings.
+- **Removed** "Adapted from AWS AI-DLC + Toan Huynh playbook" attribution from package banners.
 
 ---
 
@@ -40,7 +53,7 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 **1 · Parity rule.** Every change to one edition must apply to the other in the same PR. The Claude Code edition uses no front-matter; the Kiro edition uses YAML `inclusion: always|manual`. Content stays in sync. See `CONTRIBUTING.md`.
 
-**2 · Single version, both editions.** `v0.5` ships both zips. No `v0.5-claude-code` vs `v0.5-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
+**2 · Single version, both editions.** `v0.6` ships both zips. No `v0.6-claude-code` vs `v0.6-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
 
 **3 · KAFI design system v2.2 for any visual output.** Inter font · kafi-green `#00C694` sole accent · border-only cards 18px radius · max 3 text shades (`#101820` / `#585667` / `#9095A0`). HTML docs in `docs/` follow this strictly.
 
@@ -48,11 +61,11 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 ---
 
-## v0.5 backlog (prioritized)
+## v0.6 backlog (prioritized)
 
-From `CHANGELOG.md` `## [Unreleased]`. Two streams: carry-over from original v0.4 plan + brainstorm doc items.
+From `CHANGELOG.md` `## [Unreleased]`. v0.5 already shipped PRD formalization; remaining items carry over.
 
-### Stream A · Carry-over (originally planned v0.4)
+### Stream A · Carry-over (originally planned v0.4 → v0.5 → now v0.6)
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
@@ -79,7 +92,15 @@ From `CHANGELOG.md` `## [Unreleased]`. Two streams: carry-over from original v0.
 | B11 | 2-part stage decision rule | 4.9 | 0.5 day |
 | B12 | Retrospective stage (Stage 18 or extension) | 4.10 | 1 day |
 
-Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (1-hour safety win), then triage A2-A5 vs B1-B5 with BTS.
+### Stream C · PRD follow-ups (new in v0.6)
+
+| # | Item | Rough size | Notes |
+|---|---|---|---|
+| C1 | Standalone `epic.md` template + Epic stage | 1 week | Split Epic from PRD-NN decomposition. PRD groups Epics; each Epic groups User Stories. |
+| C2 | PRD-NN → REQ-NN traceability checker | 2 days | CI lint catching REQs without parent PRD-NN |
+| C3 | BRD template | 1 week | Sibling to PRD when stakeholder approval needs business case detail |
+
+Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (1-hour safety win), then triage rest with BTS.
 
 ---
 
@@ -103,15 +124,15 @@ Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (
 
 ### Build releases locally
 ```bash
-./tools/build-releases.sh v0.5-dev
-# Output → releases/v0.5-dev/
+./tools/build-releases.sh v0.6-dev
+# Output → releases/v0.6-dev/
 # Verify content before tagging real release
 ```
 
 ### Cut a release
 ```bash
-# After merging develop → main via "Release v0.5" PR
-git tag v0.5
+# After merging develop → main via "Release v0.6" PR
+git tag v0.6
 git push --tags
 # GitHub Actions builds zips + creates GitHub Release automatically
 ```
@@ -133,8 +154,9 @@ git push --tags
 | v0.4 scope refocused — workflow correctness, not new stages | Original v0.4 plan (5 items) deferred to v0.5; v0.4 instead shipped fixes for state drift / ownership ambiguity / templates drift + onboarding skill. Driven by pain-points brainstorm findings, not external request. |
 | `/init` framing softened in skill + READMEs | Per verified Claude Code behavior: `/init` on existing `CLAUDE.md` is complementary (suggests diff, not destructive). Skill explains why `/init` is redundant on AI-DLC projects without alarmist language. |
 | "Adapted from AWS AI-DLC + Toan Huynh playbook" removed from package banners | Banner concision. Attribution kept in `README.md` and Handbook docs. |
-| Cross-platform installer added (`tools/install.sh` + `tools/install.ps1`) | Replaces manual `cp -r` + git-add steps. Auto-detects install vs upgrade, manages legacy files via `00-knowledge/references/`, downloads from GitHub Releases. v0.4 ships installer as tooling, not as a tagged content release. |
+| Cross-platform installer added (`tools/install.sh` + `tools/install.ps1`) | Replaces manual `cp -r` + git-add steps. Auto-detects install vs upgrade, manages legacy files via `00-knowledge/references/`, downloads from GitHub Releases. Built in v0.4 cycle but only first tagged in v0.5. |
 | Onboarding skill expanded with prompt templates (Approach E) | 6 per-role starter prompts moved from Introduction/Handbook docs into `.claude/skills/kafi/onboarding/prompts/` (and Kiro equivalent). Skill becomes single entry point — `Run #kafi-aidlc-onboarding` → agent picks right template per detected stage. Docs trimmed ~228 + 175 lines per edition. Quality preserved: templates are verbatim from prior prompts, not agent-inferred. |
+| **PRD formalized as Stage 4 co-deliverable with Requirements (v0.5)** | PRD ≠ Requirements. PRD = product narrative (PRD-NN, *WHAT/FOR WHOM*). Requirements = technical decomposition (REQ-NN, *HOW BEHAVE*). Stage 4 produces both, each REQ cites parent PRD-NN. Adaptive depth allows skipping PRD at Minimal complexity. Closes the long-standing "Pending templates" gap on `prd.md`. |
 
 ---
 
@@ -190,4 +212,4 @@ Keep it under ~250 lines. If it grows, that's a signal to split into multiple se
 
 ---
 
-*Last updated: 25 May 2026 · v0.4 ship + brainstorm-driven correctness fixes*
+*Last updated: 26 May 2026 · v0.5 ship — PRD formalization + installer/onboarding consolidation*

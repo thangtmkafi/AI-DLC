@@ -1074,7 +1074,7 @@ footer {
       <span class="logo-x"></span>
       <span class="logo-text">Kafi</span>
     </div>
-    <div class="doc-eyebrow">Transformation Office · v0.4 · Covers Claude Code + Kiro editions</div>
+    <div class="doc-eyebrow">Transformation Office · v0.5 · Covers Claude Code + Kiro editions</div>
     <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
     <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders. This unified doc covers both Claude Code and Kiro IDE editions — edition-specific paths and commands are called out inline.</p>
   </div>
@@ -1769,9 +1769,16 @@ footer {
       </tr>
       <tr class="phase-in">
         <td class="phase-cell"></td>
+        <td><strong>PRD</strong><br/><code>requirements/prd-&lt;feature&gt;.md</code> <span style="font-size: 10px; color: var(--kafi-green); font-weight: 600;">new v0.5</span></td>
+        <td>PM</td>
+        <td>PRD-NN features · WHAT we build, FOR WHOM · measurable success criteria</td>
+        <td>★</td>
+      </tr>
+      <tr class="phase-in">
+        <td class="phase-cell"></td>
         <td><strong>Requirements</strong><br/><code>requirements/requirements.md</code></td>
-        <td>PM + BA</td>
-        <td>REQ-NN entries · KB-cited · with measurable acceptance</td>
+        <td>PM (sole)</td>
+        <td>REQ-NN entries · each cites parent PRD-NN · KB-cited · measurable acceptance</td>
         <td>★</td>
       </tr>
       <tr class="phase-in">
@@ -1931,10 +1938,10 @@ footer {
       </tr>
       <tr class="phase-in">
         <td class="num">4</td>
-        <td class="stage"><strong>Requirements Analysis</strong></td>
-        <td class="role">PM + BA</td>
+        <td class="stage"><strong>Requirements Analysis</strong><br/><span style="font-size: 10.5px; color: var(--text-muted);">PRD + Requirements (v0.5+)</span></td>
+        <td class="role">PM (sole)</td>
         <td class="path"><code>aidlc-docs/inception/discovery/</code><br/><code>00-knowledge/product/</code><br/><code>00-knowledge/open-items.md</code></td>
-        <td class="path"><code>aidlc-docs/inception/requirements/requirements.md</code><br/><code>requirement-verification-questions.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/requirements/prd-&lt;feature&gt;.md</code><br/><code>aidlc-docs/inception/requirements/requirements.md</code><br/><code>requirement-verification-questions.md</code></td>
       </tr>
       <tr class="phase-in">
         <td class="num">5</td>

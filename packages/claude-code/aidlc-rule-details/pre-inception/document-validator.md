@@ -59,7 +59,22 @@ Each class has a rubric. Score each item Pass / Partial / Missing.
 12. Stakeholders identified
 13. Decision-makers identified
 
-**BRD rubric, PRD rubric, etc.** — see individual rubric files.
+**PRD rubric (13 items)** — for product-level feature spec, mirrors `templates/prd.md` structure:
+1. Feature overview (1-sentence summary)
+2. Problem statement (user pain articulated)
+3. Target users / personas
+4. User journey / scenarios (≥1 happy path + ≥1 edge case)
+5. Features with PRD-NN IDs and Must/Should/Could priority
+6. Success metrics (measurable — numbers, not adjectives)
+7. Scope IN (explicit list)
+8. Scope OUT (explicit list)
+9. Dependencies on other PRDs / external systems
+10. Risks + mitigations
+11. Constraints (regulatory, technical, business)
+12. Open items (with owners)
+13. Traceability footer reserving REQ-NN / US-NN slots
+
+**BRD rubric, User-story pack rubric, etc.** — see individual rubric files (TBD v0.6+).
 
 ## Vague-language flags
 
