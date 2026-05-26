@@ -69,7 +69,7 @@ From v0.4 pain-points brainstorm (`docs/ai-dlc-pain-points-2026-05.md`):
   - `.kiro/steering/` library with YAML `inclusion: always|manual` front-matter
   - `.kiro/specs/_template/` for Kiro-native spec-driven workflows (4 files: spec.json + requirements.md + design.md + tasks.md)
   - 39 steering files with 8 always-loaded + 31 manual-loaded inclusion modes
-  - Companion `KAFI-AIDLC-Introduction-Kiro.html` and `KAFI-AIDLC-Handbook-Kiro.html`
+  - Companion `KAFI-AIDLC-Introduction.html` and `KAFI-AIDLC-Handbook.html`
 - Visual walkthrough section in Handbook showing Kiro UI moments (project layout, agent startup, role loading)
 - Kiro spec mode section in Handbook explaining native feature-scoped pattern alongside full AI-DLC lifecycle
 

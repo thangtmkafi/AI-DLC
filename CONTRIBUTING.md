@@ -43,7 +43,7 @@ The Kiro version needs YAML front-matter declaring `inclusion: always|manual`. T
 1. **Open an issue first** for non-trivial changes (new rules, new roles, structural changes). Tag it `proposal:` and describe the use case in 3-5 sentences.
 2. **Fork or branch from `develop`** — never from `main`.
 3. **Make changes in both editions** — see parity rule above.
-4. **Update docs** — if the change affects the workflow, update `docs/KAFI-AIDLC-Handbook-Claude.html` AND `docs/KAFI-AIDLC-Handbook-Kiro.html`.
+4. **Update docs** — if the change affects the workflow, update `docs/KAFI-AIDLC-Handbook.html` AND `docs/KAFI-AIDLC-Handbook.html`.
 5. **Add a CHANGELOG entry** under `## [Unreleased]` describing what changed.
 6. **Open a pull request** targeting `develop`. Use the PR template; fill out every section.
 7. **Wait for review** — CODEOWNERS approval is required for changes in `packages/` or `docs/`. Reviewers check parity, soundness, and KAFI design system compliance.
@@ -62,7 +62,7 @@ find packages/claude-code -type f | wc -l    # ~53 files expected
 find packages/kiro -type f | wc -l           # ~57 files expected
 
 # Open the rebuilt docs in a browser to verify rendering
-open docs/KAFI-AIDLC-Handbook-Kiro.html
+open docs/KAFI-AIDLC-Handbook.html
 ```
 
 ## Style conventions

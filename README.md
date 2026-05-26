@@ -37,8 +37,8 @@ Built around:
 | **Skill loading** | Slash-command or prompt | `#filename` reference in chat |
 | **Native spec mode** | — | `.kiro/specs/<feature>/` (requirements + design + tasks) |
 | **Latest package** | [`v0.3-claude-code.zip`](releases/v0.3/) | [`v0.3-kiro.zip`](releases/v0.3/) |
-| **Introduction** | [HTML](docs/KAFI-AIDLC-Introduction-Claude.html) | [HTML](docs/KAFI-AIDLC-Introduction-Kiro.html) |
-| **Handbook** | [HTML](docs/KAFI-AIDLC-Handbook-Claude.html) | [HTML](docs/KAFI-AIDLC-Handbook-Kiro.html) |
+| **Introduction** | [HTML](docs/KAFI-AIDLC-Introduction.html) | [HTML](docs/KAFI-AIDLC-Introduction.html) |
+| **Handbook** | [HTML](docs/KAFI-AIDLC-Handbook.html) | [HTML](docs/KAFI-AIDLC-Handbook.html) |
 
 Both editions ship the **same rules, same roles, same templates** — only the loading mechanism and folder syntax differ. A team can switch editions without losing institutional knowledge.
 
@@ -85,10 +85,10 @@ kafi-ai-dlc/
 ├── CONTRIBUTING.md                   ← how to propose changes
 │
 ├── docs/                             ← rendered HTML reference docs
-│   ├── KAFI-AIDLC-Introduction-Claude.html    (high-level overview)
-│   ├── KAFI-AIDLC-Introduction-Kiro.html
-│   ├── KAFI-AIDLC-Handbook-Claude.html        (per-stage reference)
-│   └── KAFI-AIDLC-Handbook-Kiro.html
+│   ├── KAFI-AIDLC-Introduction.html    (high-level overview)
+│   ├── KAFI-AIDLC-Introduction.html
+│   ├── KAFI-AIDLC-Handbook.html        (per-stage reference)
+│   └── KAFI-AIDLC-Handbook.html
 │
 ├── packages/                         ← editable source for each platform
 │   ├── claude-code/                  ← Claude Code edition source

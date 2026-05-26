@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC Handbook · v0.3</title>
+<title>KAFI AI-DLC Handbook · v0.4 · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -194,6 +194,32 @@ h1.doc-title {
   font-weight: 600;
   margin-right: 4px;
 }
+
+/* ============ EDITION CALLOUTS (Claude Code vs Kiro inline notes) ============ */
+.edition-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+@media (max-width: 700px) {
+  .edition-split { grid-template-columns: 1fr; }
+}
+.edition-card {
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.015);
+}
+.edition-card-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.edition-card code { font-size: 12px; }
 
 /* ============ HEADINGS ============ */
 section { margin-bottom: var(--sp8); }
@@ -798,9 +824,9 @@ footer {
 
 <!-- ============ HEADER ============ -->
 <header class="doc-header">
-  <div class="doc-eyebrow">Transformation Office · v0.3 Draft</div>
+  <div class="doc-eyebrow">Transformation Office · v0.4 · Covers Claude Code + Kiro editions</div>
   <h1 class="doc-title">KAFI AI-DLC Handbook</h1>
-  <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code>).</p>
+  <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code> for Claude Code; <code>AGENTS.md</code> for Kiro). This unified doc covers both editions — edition-specific paths and commands are called out inline.</p>
   <div class="doc-meta-row">
     <span><strong>17</strong> stages</span>
     <span><strong>4</strong> Pre-Inception sub-flows</span>
@@ -832,7 +858,7 @@ footer {
   </div>
 </div>
 
-<p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Claude Code already auto-loads <code>CLAUDE.md</code> on every session start; <code>/init</code> is redundant on AI-DLC projects. Use <code>kafi-aidlc-onboarding</code> skill instead — auto-detects current stage and loads the right role + prompt.</p>
+<p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Both editions auto-load the workflow file on every session start (Claude Code → <code>CLAUDE.md</code>; Kiro → <code>AGENTS.md</code> + <code>inclusion: always</code> steering files); <code>/init</code> is redundant on AI-DLC projects. Use <code>kafi-aidlc-onboarding</code> skill / steering instead — auto-detects current stage and loads the right role + prompt.</p>
 
 <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Full installation guide: <a href="KAFI-Installer-Guide.html" style="color: var(--kafi-green);">KAFI-Installer-Guide.html</a></p>
 </section>
@@ -904,13 +930,13 @@ footer {
   </div>
   <div class="minicard">
     <h4>Step 2</h4>
-    <h3>Open Claude Code</h3>
-    <p>The agent reads <code>CLAUDE.md</code> automatically. It announces detected mode (Lite or Standard) and proposes the first stage.</p>
+    <h3>Open your IDE</h3>
+    <p><strong>Claude Code:</strong> agent reads <code>CLAUDE.md</code> automatically. <strong>Kiro IDE:</strong> agent reads <code>AGENTS.md</code> + every <code>.kiro/steering/</code> file with <code>inclusion: always</code>. Either way: agent announces detected mode (Lite or Standard) and proposes the first stage.</p>
   </div>
   <div class="minicard">
     <h4>Step 3</h4>
     <h3>Drive your stage</h3>
-    <p>Paste your role's starter prompt (from the Introduction document). The agent loads the skill and produces a plan with <code>[Answer]:</code> tags.</p>
+    <p>Type <code>Run #kafi-aidlc-onboarding</code> (Claude Code) or <code>#kafi-aidlc-onboarding</code> (Kiro). The onboarding skill / steering detects your current stage, loads the right role, applies the matching prompt template, and produces a plan with <code>[Answer]:</code> tags.</p>
   </div>
   <div class="minicard">
     <h4>Step 4</h4>
@@ -918,20 +944,203 @@ footer {
     <p>Read the artifacts the agent writes to <code>aidlc-docs/</code>. Fill in answers, edit files directly if needed, request changes. Approve when ready.</p>
   </div>
 </div>
+
+<details style="margin-top: var(--sp5); border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 16px;">
+  <summary style="font-weight: 700; font-size: 14px; cursor: pointer; color: var(--kafi-dark);">Kiro IDE — visual walkthrough of these steps <span style="font-weight: 400; color: var(--text-muted); font-size: 12.5px;">(expand to view · Claude Code users may skip)</span></summary>
+  <div style="margin-top: var(--sp4);">
+<!-- ============ KIRO UI VISUAL WALKTHROUGH ============ -->
+<div style="margin-top: var(--sp7);">
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: var(--sp3);">Visual walkthrough · what each step looks like in Kiro</h3>
+  <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: var(--sp5);">Diagrammatic representations of key Kiro IDE moments. These are conceptual sketches — your actual Kiro window may differ in layout, but the elements shown (file tree, agent panel, chat bubbles, steering badges) are present.</p>
+
+  <!-- Illustration 1 · Project tree after unzip -->
+  <div style="background: var(--section-alt); border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: var(--sp5); margin-bottom: var(--sp4);">
+    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--kafi-green); margin-bottom: var(--sp2);">Step 1 · project layout after <code style="font-size: 10.5px;">unzip kafi-aidlc-v03-kiro.zip</code></div>
+    <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block; font-family: 'Inter', sans-serif;">
+      <!-- Window chrome -->
+      <rect x="0" y="0" width="800" height="320" rx="8" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+      <rect x="0" y="0" width="800" height="32" rx="8" fill="#F7F8FA"/>
+      <rect x="0" y="20" width="800" height="12" fill="#F7F8FA"/>
+      <circle cx="16" cy="16" r="5" fill="#FF5F57"/>
+      <circle cx="32" cy="16" r="5" fill="#FEBC2E"/>
+      <circle cx="48" cy="16" r="5" fill="#28C840"/>
+      <text x="400" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#585667">my-kafi-project · Kiro IDE</text>
+
+      <!-- File tree (mono font for paths) -->
+      <g font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#101820">
+        <!-- Tree characters -->
+        <text x="32" y="68" font-weight="600">📁 my-project/</text>
+
+        <text x="48" y="92">├──</text>
+        <text x="85" y="92" font-weight="700">📄 AGENTS.md</text>
+        <rect x="220" y="78" width="155" height="20" rx="10" fill="#D8F5EE" stroke="#00C694" stroke-width="1"/>
+        <text x="298" y="92" text-anchor="middle" font-size="10" font-weight="700" fill="#07756D">Kiro auto-reads</text>
+
+        <text x="48" y="116">├──</text>
+        <text x="85" y="116">📄 README.md</text>
+
+        <text x="48" y="140">├──</text>
+        <text x="85" y="140" font-weight="700">📁 .kiro/</text>
+        <rect x="160" y="126" width="195" height="20" rx="10" fill="#D8F5EE" stroke="#00C694" stroke-width="1"/>
+        <text x="258" y="140" text-anchor="middle" font-size="10" font-weight="700" fill="#07756D">steering library · 39 files</text>
+
+        <text x="76" y="164">│   ├── 📁 settings/</text>
+        <text x="76" y="188">│   ├── 📁 steering/</text>
+        <text x="500" y="188" font-size="10.5" fill="#9095A0">common · roles · stages · extensions</text>
+        <text x="76" y="212">│   ├── 📁 specs/</text>
+        <text x="500" y="212" font-size="10.5" fill="#9095A0">_template + your features</text>
+        <text x="76" y="236">│   └── 📁 templates/</text>
+        <text x="500" y="236" font-size="10.5" fill="#9095A0">11 AI-DLC artifacts</text>
+
+        <text x="48" y="264">└──</text>
+        <text x="85" y="264" font-weight="700">📁 00-knowledge/</text>
+        <rect x="220" y="250" width="195" height="20" rx="10" fill="#FFFFFF" stroke="#9095A0" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="318" y="264" text-anchor="middle" font-size="10" font-weight="700" fill="#585667">you create this</text>
+
+        <text x="76" y="288">    ├── 📄 (your BRD)</text>
+        <text x="76" y="306">    └── 📄 (your PRD)</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Illustration 2 · Kiro opens, auto-loads -->
+  <div style="background: var(--section-alt); border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: var(--sp5); margin-bottom: var(--sp4);">
+    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--kafi-green); margin-bottom: var(--sp2);">Step 2 · Kiro auto-loads AGENTS.md + always-included steering files</div>
+    <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block; font-family: 'Inter', sans-serif;">
+      <!-- Window chrome -->
+      <rect x="0" y="0" width="800" height="420" rx="8" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+      <rect x="0" y="0" width="800" height="32" rx="8" fill="#F7F8FA"/>
+      <rect x="0" y="20" width="800" height="12" fill="#F7F8FA"/>
+      <circle cx="16" cy="16" r="5" fill="#FF5F57"/>
+      <circle cx="32" cy="16" r="5" fill="#FEBC2E"/>
+      <circle cx="48" cy="16" r="5" fill="#28C840"/>
+      <text x="400" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#585667">my-kafi-project · Kiro IDE · Agent active</text>
+
+      <!-- Left pane: file explorer -->
+      <rect x="0" y="32" width="240" height="388" fill="#FAFCFB" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+      <text x="16" y="58" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#9095A0">EXPLORER</text>
+
+      <g font-family="'JetBrains Mono', monospace" font-size="11.5" fill="#101820">
+        <text x="16" y="84">📁 my-project</text>
+        <rect x="16" y="92" width="208" height="22" rx="4" fill="#D8F5EE"/>
+        <text x="28" y="108" font-weight="700" fill="#07756D">📄 AGENTS.md</text>
+        <text x="16" y="132">📄 README.md</text>
+        <text x="16" y="156">📁 .kiro</text>
+        <text x="32" y="178" font-size="11" fill="#585667">📁 steering</text>
+        <text x="48" y="198" font-size="10.5" fill="#9095A0">📄 kafi-design-system</text>
+        <text x="48" y="216" font-size="10.5" fill="#9095A0">📁 common (6)</text>
+        <text x="48" y="234" font-size="10.5" fill="#9095A0">📁 roles (6)</text>
+        <text x="48" y="252" font-size="10.5" fill="#9095A0">📁 inception (9)</text>
+        <text x="48" y="270" font-size="10.5" fill="#9095A0">📁 construction (6)</text>
+        <text x="48" y="288" font-size="10.5" fill="#9095A0">📁 extensions</text>
+        <text x="32" y="310" font-size="11" fill="#585667">📁 templates</text>
+        <text x="32" y="332" font-size="11" fill="#585667">📁 specs</text>
+        <text x="16" y="358">📁 00-knowledge</text>
+      </g>
+
+      <!-- Right pane: agent chat -->
+      <rect x="240" y="32" width="560" height="388" fill="#FFFFFF"/>
+      <text x="260" y="58" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#9095A0">AGENT · KAFI AI-DLC</text>
+
+      <!-- Agent welcome bubble -->
+      <rect x="260" y="74" width="520" height="200" rx="12" fill="#FAFCFB" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <text x="276" y="98" font-size="11.5" font-weight="700" fill="#101820">KAFI AI-DLC v0.3 · Kiro Edition</text>
+
+      <text x="276" y="120" font-size="11" fill="#585667">📖 Loaded <tspan font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#101820">AGENTS.md</tspan></text>
+      <text x="276" y="140" font-size="11" fill="#585667">📖 Loaded 8 always-included steering files:</text>
+
+      <g font-size="10.5" font-family="'JetBrains Mono', monospace" fill="#07756D">
+        <rect x="284" y="148" width="172" height="18" rx="9" fill="#D8F5EE"/>
+        <text x="293" y="161">common/*.md · 6 files</text>
+
+        <rect x="464" y="148" width="138" height="18" rx="9" fill="#D8F5EE"/>
+        <text x="473" y="161">kafi-design-system</text>
+
+        <rect x="284" y="174" width="160" height="18" rx="9" fill="#D8F5EE"/>
+        <text x="293" y="187">extensions/audit-trail</text>
+      </g>
+
+      <text x="276" y="216" font-size="11" fill="#585667">🔍 Workspace detection: <tspan font-weight="700" fill="#101820">existing code found</tspan></text>
+      <text x="276" y="234" font-size="11" fill="#585667">↳ Routing to <tspan font-weight="700" fill="#101820">Standard mode</tspan> with Pre-Inception</text>
+
+      <rect x="276" y="244" width="120" height="22" rx="11" fill="#00C694"/>
+      <text x="336" y="259" font-size="11" font-weight="700" fill="white" text-anchor="middle">▶ Ready to begin</text>
+
+      <!-- Input box -->
+      <rect x="260" y="368" width="520" height="40" rx="20" fill="#FFFFFF" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+      <text x="280" y="393" font-size="12" fill="#9095A0" font-style="italic">Type a message or # to reference a steering file…</text>
+    </svg>
+  </div>
+
+  <!-- Illustration 3 · Loading a role -->
+  <div style="background: var(--section-alt); border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: var(--sp5);">
+    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--kafi-green); margin-bottom: var(--sp2);">Step 3 · loading a role via <code style="font-size: 10.5px;">#sa</code> (manual-inclusion steering)</div>
+    <svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block; font-family: 'Inter', sans-serif;">
+      <!-- Window chrome -->
+      <rect x="0" y="0" width="800" height="380" rx="8" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
+      <rect x="0" y="0" width="800" height="32" rx="8" fill="#F7F8FA"/>
+      <rect x="0" y="20" width="800" height="12" fill="#F7F8FA"/>
+      <circle cx="16" cy="16" r="5" fill="#FF5F57"/>
+      <circle cx="32" cy="16" r="5" fill="#FEBC2E"/>
+      <circle cx="48" cy="16" r="5" fill="#28C840"/>
+      <text x="400" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#585667">my-kafi-project · Kiro IDE · #sa</text>
+
+      <text x="32" y="62" font-size="10" font-weight="700" letter-spacing="0.08em" fill="#9095A0">AGENT · CHAT</text>
+
+      <!-- User message (right-aligned) -->
+      <rect x="540" y="76" width="228" height="40" rx="20" fill="#101820"/>
+      <text x="654" y="102" font-size="13" font-weight="600" fill="white" text-anchor="middle" font-family="'JetBrains Mono', monospace">#sa</text>
+      <text x="654" y="130" font-size="10" fill="#9095A0" text-anchor="middle">You · 14:32</text>
+
+      <!-- Kiro system message -->
+      <rect x="32" y="156" width="500" height="40" rx="20" fill="#FAFCFB" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <text x="48" y="180" font-size="12" fill="#585667">📖 Loaded steering file: <tspan font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#101820">.kiro/steering/roles/sa.md</tspan></text>
+      <rect x="500" y="166" width="20" height="20" rx="10" fill="#00C694"/>
+      <text x="510" y="180" font-size="10" font-weight="700" fill="white" text-anchor="middle">✓</text>
+
+      <!-- Agent response bubble -->
+      <rect x="32" y="216" width="600" height="130" rx="12" fill="#FFFFFF" stroke="rgba(0,198,148,0.4)" stroke-width="1.5"/>
+      <text x="48" y="238" font-size="11" font-weight="700" fill="#07756D">SA · Solution Architect role active</text>
+
+      <text x="48" y="260" font-size="12" fill="#585667">I'll drive the architectural stages (3, 8, 9, 11, 12). I'll:</text>
+      <text x="60" y="280" font-size="11.5" fill="#101820">• Open an ADR in <tspan font-family="'JetBrains Mono', monospace" font-size="11">adrs/</tspan> for every architectural trade-off</text>
+      <text x="60" y="298" font-size="11.5" fill="#101820">• Push for measurable NFR thresholds (ms, percentile, load)</text>
+      <text x="60" y="316" font-size="11.5" fill="#101820">• Enforce architecture boundaries from the KB</text>
+      <text x="60" y="334" font-size="11.5" fill="#101820">• Surface conflicts rather than silently update either side</text>
+
+      <text x="48" y="362" font-size="10" fill="#9095A0">Kiro · 14:32 · <tspan fill="#07756D" font-weight="600">inclusion: manual</tspan></text>
+    </svg>
+  </div>
+
+</div>
+
+  </div>
+</details>
+
 </section>
 
 <!-- ============ HOW TO START A SESSION ============ -->
 <section id="starter-prompts">
 <h2>How to start a session</h2>
-<p class="section-intro">After install, the <code>kafi-aidlc-onboarding</code> skill handles session start. It scans your project, detects current AI-DLC stage, loads the right role guide, and substitutes a stage-appropriate prompt template. You don't paste starter prompts manually anymore.</p>
+<p class="section-intro">After install, the <code>kafi-aidlc-onboarding</code> skill / steering handles session start. It scans your project, detects current AI-DLC stage, loads the right role guide, and substitutes a stage-appropriate prompt template. You don't paste starter prompts manually anymore.</p>
 
-<div class="prompt-intro">
-  <p><strong>How to use:</strong> in Claude Code chat, type: <code>Run #kafi-aidlc-onboarding</code>. The skill auto-discovers if you mention onboarding, "where am I", "what stage", or <code>/init</code>.</p>
-  <p><strong>What the skill does:</strong> scans <code>00-knowledge/</code> and <code>aidlc-docs/</code>, classifies project position against the 17-stage workflow (Mode B detection), reads the matching prompt template from <code>.claude/skills/kafi/onboarding/prompts/</code>, substitutes placeholders, and starts the session.</p>
+<div class="edition-split">
+  <div class="edition-card">
+    <div class="edition-card-label">Claude Code</div>
+    <p style="font-size: 12.5px; margin: 0 0 6px;">In chat, type: <code>Run #kafi-aidlc-onboarding</code></p>
+    <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Skill auto-discovers when you mention onboarding, "where am I", "what stage", or <code>/init</code>. Template files at <code>.claude/skills/kafi/onboarding/prompts/</code>.</p>
+  </div>
+  <div class="edition-card">
+    <div class="edition-card-label">Kiro IDE</div>
+    <p style="font-size: 12.5px; margin: 0 0 6px;">In chat, type: <code>#kafi-aidlc-onboarding</code></p>
+    <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Manual inclusion via Kiro's <code>#filename</code> syntax. Template files at <code>.kiro/steering/kafi-aidlc-onboarding-prompts/</code>.</p>
+  </div>
 </div>
 
+<p style="font-size: 13px; color: var(--text-secondary); margin: 16px 0 0;"><strong>What the onboarding does:</strong> scans <code>00-knowledge/</code> and <code>aidlc-docs/</code>, classifies project position against the 17-stage workflow (Mode B detection), reads the matching prompt template, substitutes placeholders, and starts the session.</p>
+
 <h3 style="margin-top: 32px;">Stage → Role → Prompt mapping</h3>
-<p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">The skill picks the right template for you. This table is for transparency — edit templates to customize agent behavior at your KAFI project level.</p>
+<p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">The skill / steering picks the right template for you. This table is for transparency — edit templates to customize agent behavior at your KAFI project level.</p>
 
 <table style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
   <thead>
@@ -1556,7 +1765,7 @@ footer {
       <h4>Inputs</h4>
       <ul class="io-list">
         <li>aidlc-docs/inception/user-stories/</li>
-        <li>.claude/skills/kafi/design-system/SKILL.md</li>
+        <li>.claude/skills/kafi/design-system/SKILL.md · .kiro/steering/kafi-design-system.md</li>
         <li>00-knowledge/design-system/ (if project has overrides)</li>
       </ul>
     </div>
@@ -1576,7 +1785,7 @@ footer {
   <div class="stage-steps">
     <h4>What happens</h4>
     <ol>
-      <li><strong>Load the KAFI design system skill</strong> (.claude/skills/kafi/design-system/SKILL.md). Apply tokens, typography, components, patterns.</li>
+      <li><strong>Load the KAFI design system</strong> (Claude Code: <code>.claude/skills/kafi/design-system/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-design-system.md</code>). Apply tokens, typography, components, patterns.</li>
       <li>Define user flows and journey maps from stories.</li>
       <li>Produce information architecture.</li>
       <li>Create key screen designs at appropriate fidelity.</li>
@@ -2283,18 +2492,19 @@ footer {
 
 <section id="skills">
 <h2>Skills</h2>
-<p class="section-intro">All skills at <code>.claude/skills/kafi/</code>. The design-system is a proper auto-discoverable SKILL.md. The role guides are loaded explicitly via starter prompts.</p>
+<p class="section-intro">Skills live at <code>.claude/skills/kafi/</code> in Claude Code edition, or as steering files in <code>.kiro/steering/</code> + <code>.kiro/steering/roles/</code> in Kiro edition. The design system loads on every session in both editions; role guides load manually when driving a stage.</p>
 
 <table>
-  <thead><tr><th>Skill</th><th>Path</th><th>Loaded</th></tr></thead>
+  <thead><tr><th>Skill / steering file</th><th>Claude Code path</th><th>Kiro path</th><th>Loaded</th></tr></thead>
   <tbody>
-    <tr><td><strong>kafi-design-system</strong></td><td><code>.claude/skills/kafi/design-system/SKILL.md</code></td><td>Auto-discoverable · always for UI work</td></tr>
-    <tr><td>PM role guide</td><td><code>.claude/skills/kafi/roles/pm.md</code></td><td>Via starter prompt</td></tr>
-    <tr><td>BA role guide</td><td><code>.claude/skills/kafi/roles/ba.md</code></td><td>Via starter prompt</td></tr>
-    <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td>Via starter prompt</td></tr>
-    <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td>Via starter prompt — pair with design-system</td></tr>
-    <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td>Via starter prompt</td></tr>
-    <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td>Via starter prompt</td></tr>
+    <tr><td><strong>kafi-design-system</strong></td><td><code>.claude/skills/kafi/design-system/SKILL.md</code></td><td><code>.kiro/steering/kafi-design-system.md</code></td><td>Auto · always for UI work</td></tr>
+    <tr><td><strong>kafi-aidlc-onboarding</strong></td><td><code>.claude/skills/kafi/onboarding/SKILL.md</code></td><td><code>.kiro/steering/kafi-aidlc-onboarding.md</code></td><td>Auto · on first session or <code>/init</code></td></tr>
+    <tr><td>PM role guide</td><td><code>.claude/skills/kafi/roles/pm.md</code></td><td><code>.kiro/steering/roles/pm.md</code></td><td>Manual · when driving Stage 4 or 6</td></tr>
+    <tr><td>BA role guide</td><td><code>.claude/skills/kafi/roles/ba.md</code></td><td><code>.kiro/steering/roles/ba.md</code></td><td>Manual · when driving Stage 5 or Pre-Inception</td></tr>
+    <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
+    <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
+    <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14 or 15</td></tr>
+    <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13</td></tr>
   </tbody>
 </table>
 </section>
@@ -2760,9 +2970,10 @@ build/
 <section id="glossary">
 <table>
   <tbody>
-    <tr><td><strong>AI agent</strong></td><td>The LLM-driven assistant (Claude Code) that drafts artifacts, asks questions, generates code.</td></tr>
+    <tr><td><strong>AI agent</strong></td><td>The LLM-driven assistant (Claude Code or Kiro IDE) that drafts artifacts, asks questions, generates code.</td></tr>
+    <tr><td><strong>AGENTS.md</strong></td><td>Workflow specification at project root for Kiro edition. Kiro reads this automatically (universal agents.md spec).</td></tr>
     <tr><td><strong>Brownfield</strong></td><td>Project with existing code or systems to extend or integrate with.</td></tr>
-    <tr><td><strong>CLAUDE.md</strong></td><td>Workflow specification at project root. Claude Code reads this automatically.</td></tr>
+    <tr><td><strong>CLAUDE.md</strong></td><td>Workflow specification at project root for Claude Code edition. Claude Code reads this automatically.</td></tr>
     <tr><td><strong>Construction</strong></td><td>Phase 3 of AI-DLC — determines HOW to build (per-unit, then Build).</td></tr>
     <tr><td><strong>Extension</strong></td><td>A rule pack the workflow loads conditionally. KAFI-wide or project-defined.</td></tr>
     <tr><td><strong>Greenfield</strong></td><td>Brand-new project with no existing code.</td></tr>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC — Introduction</title>
+<title>KAFI AI-DLC — Introduction · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -160,6 +160,32 @@ body {
   color: var(--text-muted);
 }
 .doc-meta strong { color: var(--text-secondary); display: block; font-weight: 600; margin-bottom: 2px; }
+
+/* ============ EDITION CALLOUTS (Claude Code vs Kiro inline notes) ============ */
+.edition-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+@media (max-width: 700px) {
+  .edition-split { grid-template-columns: 1fr; }
+}
+.edition-card {
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.015);
+}
+.edition-card-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.edition-card code { font-size: 12px; }
 
 /* ============ SECTIONS ============ */
 section { margin-bottom: var(--sp9); }
@@ -1048,9 +1074,9 @@ footer {
       <span class="logo-x"></span>
       <span class="logo-text">Kafi</span>
     </div>
-    <div class="doc-eyebrow">Transformation Office · v0.3 Draft</div>
+    <div class="doc-eyebrow">Transformation Office · v0.4 · Covers Claude Code + Kiro editions</div>
     <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
-    <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders.</p>
+    <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders. This unified doc covers both Claude Code and Kiro IDE editions — edition-specific paths and commands are called out inline.</p>
   </div>
   <div class="doc-meta">
     <strong>Audience</strong>
@@ -1102,7 +1128,7 @@ footer {
     </div>
   </div>
 
-  <p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Claude Code already auto-loads <code>CLAUDE.md</code> on every session start. <code>/init</code> is non-destructive (it suggests, not overwrites) but is redundant on an AI-DLC project. The <code>kafi-aidlc-onboarding</code> skill replaces it — see below.</p>
+  <p style="font-size: 13px; color: var(--text-secondary); margin-top: 16px;"><strong>Don't run <code>/init</code>.</strong> Both editions auto-load the workflow file on every session start (Claude Code → <code>CLAUDE.md</code>; Kiro → <code>AGENTS.md</code> + <code>inclusion: always</code> steering files). <code>/init</code> is non-destructive but redundant on an AI-DLC project. The <code>kafi-aidlc-onboarding</code> skill/steering replaces it — see below.</p>
 
   <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Full installation guide with all flags, scenarios, and troubleshooting: <a href="KAFI-Installer-Guide.html" style="color: var(--kafi-green);">KAFI-Installer-Guide.html</a></p>
 </section>
@@ -1358,8 +1384,8 @@ footer {
       <div class="route-io">
         <strong>Reads</strong>
         Whichever input exists<br/>
-        aidlc-rule-details/templates/vision.md<br/>
-        aidlc-rule-details/templates/technical-environment.md
+        aidlc-rule-details/templates/vision.md (Claude) · .kiro/templates/vision.md (Kiro)<br/>
+        aidlc-rule-details/templates/technical-environment.md · .kiro/templates/technical-environment.md
       </div>
       <div class="route-io">
         <strong>Writes</strong>
@@ -1376,7 +1402,7 @@ footer {
       <div class="route-io">
         <strong>Reads</strong>
         Legacy BRD/PRD source file<br/>
-        aidlc-rule-details/templates/vision.md
+        aidlc-rule-details/templates/vision.md (Claude) · .kiro/templates/vision.md (Kiro)
       </div>
       <div class="route-io">
         <strong>Writes</strong>
@@ -1396,7 +1422,7 @@ footer {
       <div class="route-io">
         <strong>Reads</strong>
         User's brief or intent message<br/>
-        aidlc-rule-details/templates/vision.md
+        aidlc-rule-details/templates/vision.md (Claude) · .kiro/templates/vision.md (Kiro)
       </div>
       <div class="route-io">
         <strong>Writes</strong>
@@ -1496,7 +1522,7 @@ footer {
     <div class="skills-note-icon">i</div>
     <div>
       <h4>One entry point — three modes</h4>
-      <p>The onboarding skill auto-detects which mode you need:</p>
+      <p>The onboarding skill / steering file auto-detects which mode you need:</p>
       <ul style="font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 8px 0 0 0; padding-left: 24px;">
         <li><strong>Mode A · Setup wizard</strong> — fresh install, no AI-DLC yet. Guides you through creating <code>ai-dlc/project.md</code> and orients <code>00-knowledge/</code>.</li>
         <li><strong>Mode B · Stage detection</strong> — legacy artifacts in <code>00-knowledge/</code>, no <code>aidlc-docs/</code>. Scans your files, classifies position against the 17-stage workflow, loads the matching prompt template, starts the session.</li>
@@ -1506,14 +1532,24 @@ footer {
   </div>
 
   <div class="playbook-section" style="margin-top: 24px;">
-    <h4 style="font-size: 14px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 12px;">Just type this in Claude Code:</h4>
-    <pre class="playbook-prompt" style="margin: 0;"><span class="key">Run</span> #kafi-aidlc-onboarding</pre>
-    <p style="font-size: 12.5px; color: var(--text-muted); margin: 8px 0 0;">The skill is auto-discoverable — Claude Code routes to it when you mention onboarding, "where am I", "what stage", or <code>/init</code>.</p>
+    <h4 style="font-size: 14px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 12px;">Just type this in your IDE chat:</h4>
+    <div class="edition-split">
+      <div class="edition-card">
+        <div class="edition-card-label">Claude Code</div>
+        <pre class="playbook-prompt" style="margin: 0;"><span class="key">Run</span> #kafi-aidlc-onboarding</pre>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 0;">Skill is auto-discoverable — Claude Code routes to it when you mention onboarding, "where am I", "what stage", or <code>/init</code>.</p>
+      </div>
+      <div class="edition-card">
+        <div class="edition-card-label">Kiro IDE</div>
+        <pre class="playbook-prompt" style="margin: 0;">#kafi-aidlc-onboarding</pre>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 0;">Manual inclusion via Kiro's <code>#filename</code> syntax. Steering file at <code>.kiro/steering/kafi-aidlc-onboarding.md</code>.</p>
+      </div>
+    </div>
   </div>
 
   <div class="playbook-section" style="margin-top: 32px;">
     <h3 style="font-size: 16px; font-weight: 700; color: var(--kafi-dark); margin: 0 0 16px;">Stage → Role → Prompt mapping</h3>
-    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">Reference table showing which prompt template the skill loads for each detected stage. <strong>You don't need to invoke these manually</strong> — the skill picks the right one. Listed here for transparency and customization.</p>
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">Reference table showing which prompt template the onboarding (skill / steering) loads for each detected stage. <strong>You don't need to invoke these manually</strong> — the onboarding picks the right one. Listed here for transparency and customization.</p>
 
     <table style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
       <thead>
@@ -1557,7 +1593,7 @@ footer {
       </tbody>
     </table>
 
-    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files live in <code>.claude/skills/kafi/onboarding/prompts/</code>. Each contains the full prompt body (Your Role · Plan · Your Task) with placeholders the skill substitutes from detected context. Edit them to customize agent behavior at your KAFI project level.</p>
+    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files live in <code>.claude/skills/kafi/onboarding/prompts/</code> (Claude Code) or <code>.kiro/steering/kafi-aidlc-onboarding-prompts/</code> (Kiro). Each contains the full prompt body (Your Role · Plan · Your Task) with placeholders that the onboarding substitutes from detected context. Edit them to customize agent behavior at your KAFI project level.</p>
   </div>
 
 </section>
@@ -1696,7 +1732,7 @@ footer {
 <!-- ============ DOCUMENT TYPES SUMMARY ============ -->
 <section>
   <h2>Document types</h2>
-  <p class="section-intro">19 canonical document types across four phases. Templates marked <strong>★</strong> are pre-built scaffolds in <code>aidlc-rule-details/templates/</code>; the agent uses them as a starting frame and fills in project specifics. Full per-type detail is in the Handbook Part 3.</p>
+  <p class="section-intro">19 canonical document types across four phases. Templates marked <strong>★</strong> are pre-built scaffolds in <code>aidlc-rule-details/templates/</code> (Claude Code) or <code>.kiro/templates/</code> (Kiro); the agent uses them as a starting frame and fills in project specifics. Full per-type detail is in the Handbook Part 3.</p>
 
   <table class="io-table">
     <thead>
@@ -1883,7 +1919,7 @@ footer {
         <td class="num">P</td>
         <td class="stage"><strong>Pre-Inception (A/B/C/D)</strong></td>
         <td class="role">PO + BA</td>
-        <td class="path">User intent · attached docs<br/><code>aidlc-rule-details/templates/</code></td>
+        <td class="path">User intent · attached docs<br/><code>aidlc-rule-details/templates/</code> · <code>.kiro/templates/</code></td>
         <td class="path"><code>aidlc-docs/inception/discovery/</code><br/><code>aidlc-docs/ba-authoring/</code> (route D)</td>
       </tr>
       <tr class="phase-in">
@@ -1918,7 +1954,7 @@ footer {
         <td class="num">7</td>
         <td class="stage"><strong>Product Design</strong></td>
         <td class="role">Designer</td>
-        <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi/design-system/SKILL.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi/design-system/SKILL.md</code> · <code>.kiro/steering/kafi-design-system.md</code></td>
         <td class="path"><code>aidlc-docs/inception/product-design/</code><br/>(user-flows · IA · wireframes · screens · interactions)</td>
       </tr>
       <tr class="phase-in">
@@ -1999,6 +2035,17 @@ footer {
 <section>
   <h3>The complete folder anatomy</h3>
   <p class="section-intro">Color-coded by phase. Code lives only in <code>src/</code>; documentation only in <code>aidlc-docs/</code>; the team-managed KB only in <code>00-knowledge/</code>. ADRs in their own directory.</p>
+
+  <div class="edition-split" style="margin-bottom: 16px;">
+    <div class="edition-card">
+      <div class="edition-card-label">Claude Code edition · paths shown</div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">Workflow file: <code>CLAUDE.md</code> · Rules: <code>aidlc-rule-details/</code> · Skills: <code>.claude/skills/kafi/</code> · Settings: <code>.claude/settings.json</code></p>
+    </div>
+    <div class="edition-card">
+      <div class="edition-card-label">Kiro edition · path equivalents</div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">Workflow file: <code>AGENTS.md</code> · Rules + skills: <code>.kiro/steering/</code> · Templates: <code>.kiro/templates/</code> · Settings: <code>.kiro/settings/config.json</code></p>
+    </div>
+  </div>
 
   <div class="folder-tree">
 <span class="root">project-root/</span><br/>
@@ -2521,7 +2568,7 @@ footer {
       </div>
       <div class="req-item">
         <div class="req-title">Local cache</div>
-        <div class="req-body">Pulled skills land in <code>.claude/skills/</code> and stay for the project. Skill versions pinned per project for reproducibility.</div>
+        <div class="req-body">Pulled skills land in <code>.claude/skills/</code> (Claude Code) or <code>.kiro/steering/</code> (Kiro) and stay for the project. Versions pinned per project for reproducibility.</div>
       </div>
     </div>
 

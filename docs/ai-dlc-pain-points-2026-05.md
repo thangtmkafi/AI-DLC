@@ -117,8 +117,8 @@ Thêm step `8a` vào `process-overview.md`:
 - `packages/kiro/.kiro/steering/common/process-overview.md`
 
 **Handbook update:**
-- `docs/KAFI-AIDLC-Handbook-Claude.html` — Part 1 §"Stage execution cycle"
-- `docs/KAFI-AIDLC-Handbook-Kiro.html` — same
+- `docs/KAFI-AIDLC-Handbook.html` — Part 1 §"Stage execution cycle"
+- `docs/KAFI-AIDLC-Handbook.html` — same
 
 ---
 
@@ -686,8 +686,8 @@ Trước khi triage, BTS cần chốt:
 ### Entry + docs
 - `packages/claude-code/CLAUDE.md` (workflow definition)
 - `packages/claude-code/README.md` (git workflow §241-306)
-- `docs/KAFI-AIDLC-Handbook-Claude.html`
-- `docs/KAFI-AIDLC-Handbook-Kiro.html`
+- `docs/KAFI-AIDLC-Handbook.html`
+- `docs/KAFI-AIDLC-Handbook.html`
 - `docs/KAFI-Git-Guide-NonDev.html` (177KB — existing partial mitigation for Problem 3)
 
 ### Parity twin verified

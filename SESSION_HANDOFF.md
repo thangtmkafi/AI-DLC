@@ -88,18 +88,18 @@ Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (
 ### Add a rule
 1. Drop file in **both** `packages/claude-code/aidlc-rule-details/<folder>/` and `packages/kiro/.kiro/steering/<folder>/`
 2. Kiro version: prepend YAML front-matter — `inclusion: always|manual` + `description: "..."`
-3. Update the relevant section in both `docs/KAFI-AIDLC-Handbook-Claude.html` and `docs/KAFI-AIDLC-Handbook-Kiro.html`
+3. Update the relevant section in `docs/KAFI-AIDLC-Handbook.html` (unified doc) with edition callouts where paths differ
 4. Append entry to `CHANGELOG.md` under `## [Unreleased]`
 
 ### Add a role
 1. Both `packages/claude-code/.claude/skills/kafi/roles/<role>.md` and `packages/kiro/.kiro/steering/roles/<role>.md` (Kiro: `inclusion: manual`)
-2. Starter prompt in both `docs/KAFI-AIDLC-Introduction-*.html`
-3. Row in Roles tables of both Handbook docs
+2. Add new prompt template at `packages/claude-code/.claude/skills/kafi/onboarding/prompts/<role>-stage-X.md` AND mirror at `packages/kiro/.kiro/steering/kafi-aidlc-onboarding-prompts/<role>-stage-X.md`. Update Stage→Role→Prompt mapping table in onboarding SKILL.md / steering file.
+3. Row in Roles section of `docs/KAFI-AIDLC-Handbook.html` (skills table with both edition path columns)
 
 ### Add a template
 1. Both `packages/claude-code/aidlc-rule-details/templates/<name>.md` and `packages/kiro/.kiro/templates/<name>.md`
 2. No front-matter needed (templates are reference docs)
-3. Reference from Templates section of both Handbook docs
+3. Reference from Templates section of `docs/KAFI-AIDLC-Handbook.html` (mention both edition paths inline)
 
 ### Build releases locally
 ```bash
@@ -171,8 +171,8 @@ git push --tags
 | `README.md` | Public-facing entry · explains what AI-DLC is |
 | `CONTRIBUTING.md` | Parity rule details · release process · style |
 | `CHANGELOG.md` | Version history · current Unreleased backlog |
-| `docs/KAFI-AIDLC-Handbook-Claude.html` | Per-stage reference · use to understand the workflow |
-| `docs/KAFI-AIDLC-Handbook-Kiro.html` | Same content, Kiro framing · use to understand inclusion modes |
+| `docs/KAFI-AIDLC-Handbook.html` | Per-stage reference · use to understand the workflow |
+| `docs/KAFI-AIDLC-Handbook.html` | Same content, Kiro framing · use to understand inclusion modes |
 | `tools/build-releases.sh` | Build automation · run to test locally |
 | `.github/PULL_REQUEST_TEMPLATE.md` | What reviewers check on every PR |
 

@@ -31,7 +31,7 @@ If you're about to edit one edition without the other, stop and verify parity wi
 |---|---|
 | Current backlog, in-flight work, resume context | `SESSION_HANDOFF.md` |
 | Contribution process, release flow, style | `CONTRIBUTING.md` |
-| What the workflow rules actually say | `docs/KAFI-AIDLC-Handbook-Claude.html` or `-Kiro.html` |
+| What the workflow rules actually say | `docs/KAFI-AIDLC-Handbook.html` or `-Kiro.html` |
 | Public-facing intro | `README.md` |
 
 Use the Handbook docs to understand the existing rules before changing them. The rules are content; this repo is the source-of-truth for that content.
