@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.5 · KAFI Transformation Office · Kiro IDE port**
+**v0.6 · KAFI Transformation Office · Kiro IDE port**
 
 > This file is the agent context for this KAFI project. It defines the AI-Driven Development Lifecycle. When the user requests development work, follow this workflow FIRST. Kiro reads this file alongside the `.kiro/steering/` library.
 

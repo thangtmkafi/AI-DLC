@@ -1,6 +1,6 @@
 {
-  "_comment": "KAFI AI-DLC v0.5 — Kiro workspace settings (committed to repo)",
-  "version": "0.5-kiro",
+  "_comment": "KAFI AI-DLC v0.6 — Kiro workspace settings (committed to repo)",
+  "version": "0.6-kiro",
   "steering": {
     "_comment": "Steering files in .kiro/steering/ are auto-discovered. Inclusion mode is per-file via front-matter.",
     "autoLoad": true
@@ -9,6 +9,6 @@
     "_comment": "Restrict to project files + git; deny network reads of credentials. Adjust per project compliance posture."
   },
   "telemetry": {
-    "_comment": "KAFI compliance posture: audit logs are append-only in audit.md per AI-DLC v0.5 (see extensions/audit-trail)"
+    "_comment": "KAFI compliance posture: audit logs are append-only in audit.md per AI-DLC v0.6 (see extensions/audit-trail)"
   }
 }

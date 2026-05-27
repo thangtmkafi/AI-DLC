@@ -198,7 +198,7 @@ Order matters — apply top-down, first match wins.
 | `requirements.md` exists in `aidlc-docs/inception/requirements/` (with or without `prd-*.md`) | Stage 4 complete | Stage 5 (User Stories · BA) if user-facing, else Stage 6 |
 | `stories.md` exists | Stage 5 complete | Stage 6 (Workflow Planning · PM) |
 | `execution-plan.md` exists | Stage 6 complete | Stage 7/8/9 per plan |
-| `product-design/` pack exists | Stage 7 complete | Stage 8 (Application Design · SA) |
+| `product-design/mockups/*.html` exist (+ `mockups/index.md`) | Stage 7 complete — HTML mockups are FE source of truth for Stage 14 | Stage 8 (Application Design · SA) |
 | `application-design/` pack exists, no units | Stage 8 complete | Stage 9 (Units Generation · SA) |
 | `unit-of-work*.md` files exist | Stage 9 complete | Construction begins |
 | `aidlc-docs/construction/UNIT-NN/functional-design/` exists for any unit | Stage 10 in progress (per unit · SA) | Stage 11 (NFR Requirements) for that unit |

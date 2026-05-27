@@ -4,8 +4,8 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
-### Planned for v0.6
-Carry-over from v0.5 backlog (deferred to keep v0.5 focused on PRD formalization):
+### Planned for v0.7
+Carry-over (deferred to keep v0.6 focused on HTML mockups + FE fidelity):
 - Test artifacts stage + template (`test-plan.md`) — Stream A1
 - Compliance verification stage — Stream A2
 - Operations stages expanded from placeholder to concrete specs — Stream A3
@@ -23,8 +23,26 @@ Carry-over from v0.5 backlog (deferred to keep v0.5 focused on PRD formalization
 - Designer-BA review pattern (B10)
 - 2-part stage decision rule (B11)
 - Retrospective stage (B12)
-- Standalone `epic.md` template + Epic stage (split from PRD-NN decomposition)
-- Automated PRD-NN → REQ-NN traceability checker
+- Standalone `epic.md` template + Epic stage (split from PRD-NN decomposition) — Stream C1
+- Automated PRD-NN → REQ-NN traceability checker — Stream C2
+- BRD template — Stream C3
+- Visual-diff tooling (screenshot mockup vs rendered FE) — automated FE fidelity check
+- Mockup → component scaffold mode (literal HTML reuse) as opt-in alternative to visual+structural contract
+
+## [0.6] · 2026-05-27
+
+### Added · HTML mockups as FE source of truth
+- **Stage 7 Product Design now produces self-contained HTML mockups** (`aidlc-docs/inception/product-design/mockups/*.html`) as the canonical hi-fi deliverable, built with the design-system skill (inline CSS, KAFI tokens — opens standalone in a browser). One file per key screen, every state shown (default/empty/error/loading). Plus a `mockups/index.md` manifest mapping screen → file → US-NN → target unit. Replaces the prior vague "screen-designs/ (Markdown + image links)" as the primary output. Files: `inception/product-design.md` in both editions.
+- **Stage 14 Code Generation now has an explicit `## Inputs` section** (previously had none) listing functional-design, nfr-design, `product-design/mockups/` (REQUIRED if UI), interaction-specs, and conventions.
+- **Stage 14 FE fidelity gate (mandatory when unit has UI)** — the HTML mockup is the source of truth. Generated FE must reproduce the mockup's layout, component hierarchy, design tokens, and all states in the target framework (visual + structural contract, framework-agnostic). A screen-by-screen fidelity check is **Request-Changes-blocking**. UI with no source mockup ⇒ STOP + open item back to Stage 7 (no improvised UI). `code-generation-plan.md` gains a Mockup mapping table; approval gate gains a blocking fidelity line.
+
+### Changed
+- **Stage 10 Functional Design** inputs now reference `product-design/mockups/`; `frontend-components.md` components each cite their source mockup file.
+- **Stage 8 Application Design** input note clarifies `product-design/` includes the HTML mockups; component boundaries should respect mockup screen structure.
+- **Designer role** — deliverable is now self-contained HTML mockups (design-system skill), the FE source of truth, not reference images. **Dev role** — added hard rule "Generated FE MUST match the Stage 7 HTML mockup (layout, hierarchy, tokens, all states)"; key question + anti-patterns updated; stale "through v0.4" test-deferral refs fixed.
+- **Onboarding prompts** (designer Stage 7 + dev Stage 14, both editions) updated for HTML mockup output + FE fidelity. **Onboarding stage-detection rubric** maps `mockups/*.html` to Stage 7 complete.
+- **HTML docs** (Handbook + Introduction) Stage 7 + Stage 14 sections rewritten for HTML mockups + fidelity gate. Stale "Stage 4 PM + BA" folder-map label corrected to PM (sole).
+- Version banner v0.5 → v0.6 in `CLAUDE.md`, `AGENTS.md`, `.kiro/settings/config.json`, all documentation HTML files, `docs/index.html`.
 
 ## [0.5] · 2026-05-26
 

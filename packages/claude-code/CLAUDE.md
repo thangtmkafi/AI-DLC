@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.5 · KAFI Transformation Office**
+**v0.6 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 

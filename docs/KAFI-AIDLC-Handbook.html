@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC Handbook · v0.5 · Claude Code + Kiro</title>
+<title>KAFI AI-DLC Handbook · v0.6 · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -824,7 +824,7 @@ footer {
 
 <!-- ============ HEADER ============ -->
 <header class="doc-header">
-  <div class="doc-eyebrow">Transformation Office · v0.5 · Covers Claude Code + Kiro editions</div>
+  <div class="doc-eyebrow">Transformation Office · v0.6 · Covers Claude Code + Kiro editions</div>
   <h1 class="doc-title">KAFI AI-DLC Handbook</h1>
   <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code> for Claude Code; <code>AGENTS.md</code> for Kiro). This unified doc covers both editions — edition-specific paths and commands are called out inline.</p>
   <div class="doc-meta-row">
@@ -1776,12 +1776,13 @@ footer {
     <div class="io-col">
       <h4>Outputs · inception/product-design/</h4>
       <ul class="io-list">
+        <li><strong>mockups/ — self-contained HTML, one per screen</strong> (design-system styled · FE source of truth · new v0.6)</li>
+        <li>mockups/index.md (screen → file → US-NN → unit)</li>
         <li>user-flows.md</li>
         <li>information-architecture.md</li>
-        <li>wireframes/</li>
-        <li>screen-designs/</li>
         <li>interaction-specs.md</li>
         <li>accessibility-notes.md</li>
+        <li>wireframes/ · screen-designs/ (optional)</li>
       </ul>
     </div>
   </div>
@@ -1791,14 +1792,14 @@ footer {
       <li><strong>Load the KAFI design system</strong> (Claude Code: <code>.claude/skills/kafi/design-system/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-design-system.md</code>). Apply tokens, typography, components, patterns.</li>
       <li>Define user flows and journey maps from stories.</li>
       <li>Produce information architecture.</li>
-      <li>Create key screen designs at appropriate fidelity.</li>
-      <li>Define interaction specs (states, transitions, edge cases) for Code Generation to consume.</li>
-      <li>Cover empty / error / loading states — not just happy path. WCAG 2.1 AA minimum.</li>
+      <li><strong>Render each key screen as a self-contained HTML mockup</strong> (inline CSS, KAFI tokens) in <code>mockups/</code> using the design-system skill. One file per screen, every state shown. These HTML mockups are the FE source of truth Stage 14 must reproduce.</li>
+      <li>Define interaction specs (states, transitions, edge cases) in <code>interaction-specs.md</code>.</li>
+      <li>Write <code>mockups/index.md</code> mapping each file → stories → target unit. Cover empty / error / loading states. WCAG 2.1 AA minimum.</li>
     </ol>
   </div>
   <div class="callout callout-watch">
     <div class="callout-label">Watch for</div>
-    Custom components when design system covers it · mockups missing negative states · designs ignoring IA · ungrounded UX assumptions.
+    Custom components when design system covers it · HTML mockups missing negative states · screens referenced by a story but with no mockup (Stage 14 blocks on these) · designs ignoring IA · ungrounded UX assumptions.
   </div>
 </article>
 
@@ -2094,10 +2095,11 @@ footer {
     <div class="io-col">
       <h4>Inputs</h4>
       <ul class="io-list">
-        <li>aidlc-docs/construction/{unit}/functional-design/</li>
+        <li>aidlc-docs/construction/{unit}/functional-design/ (incl. frontend-components.md)</li>
         <li>aidlc-docs/construction/{unit}/nfr-design/</li>
         <li>aidlc-docs/construction/{unit}/infrastructure-design/</li>
-        <li>aidlc-docs/inception/product-design/ (if UI)</li>
+        <li><strong>aidlc-docs/inception/product-design/mockups/ — REQUIRED if UI</strong> (FE source of truth)</li>
+        <li>aidlc-docs/inception/product-design/interaction-specs.md</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
@@ -2105,20 +2107,24 @@ footer {
       <h4>Outputs</h4>
       <ul class="io-list">
         <li><strong>src/</strong> ← actual code files</li>
-        <li>aidlc-docs/construction/{unit}/code/ ← markdown summaries only</li>
+        <li>aidlc-docs/construction/{unit}/code/ ← markdown summaries + component→mockup map</li>
       </ul>
     </div>
   </div>
   <div class="stage-steps">
     <h4>What happens · 2-part stage</h4>
     <ol>
-      <li><strong>Plan part:</strong> code-generation-plan.md with file structure, dependencies, build order. Dev approves.</li>
+      <li><strong>Plan part:</strong> code-generation-plan.md with file structure, dependencies, build order, + a <strong>Mockup mapping</strong> table for UI units. Dev approves.</li>
       <li><strong>Execution part:</strong> generate code per the approved plan, ticking checkboxes.</li>
+      <li><strong>Frontend: build each component to match its source mockup</strong> — layout, hierarchy, design tokens, every state. No divergence.</li>
       <li>Auto-wire audit trail at state-change boundaries (via audit-trail extension).</li>
       <li>Auto-wire privacy enforcement if PII fields touched (via privacy extension).</li>
-      <li>Enforce architecture boundaries.</li>
-      <li>Run AI Review Checklist on every file (soft warnings).</li>
+      <li>Enforce architecture boundaries. Run AI Review Checklist + FE fidelity self-check.</li>
     </ol>
+  </div>
+  <div class="callout callout-watch">
+    <div class="callout-label">Mandatory · FE fidelity gate (v0.6)</div>
+    The Stage 7 HTML mockup is the source of truth — NOT a suggestion. Generated FE must reproduce the mockup's layout, component hierarchy, design tokens, and all states. A screen-by-screen fidelity check <strong>blocks approval</strong>: any screen that diverges ⇒ Request Changes. If a needed screen has no mockup, codegen STOPS and opens an item back to Stage 7 — it never improvises UI.
   </div>
   <div class="callout callout-watch">
     <div class="callout-label">Critical · Where code lives</div>
@@ -2331,9 +2337,9 @@ footer {
       <span class="doc-badge">UI involved only</span>
     </div>
   </div>
-  <div class="doc-path"><code>aidlc-docs/inception/product-design/</code> (6 files / folders)</div>
-  <p class="doc-purpose">UX deliverables specific enough for Code Generation to consume directly. References the KAFI design system for every component; custom components require justification. Empty, error, and loading states are covered, not just happy path.</p>
-  <p class="doc-contains"><strong>Contains:</strong> <code>user-flows.md</code> · <code>information-architecture.md</code> · <code>wireframes/</code> · <code>screen-designs/</code> · <code>interaction-specs.md</code> · <code>accessibility-notes.md</code>.</p>
+  <div class="doc-path"><code>aidlc-docs/inception/product-design/</code></div>
+  <p class="doc-purpose">UX deliverables specific enough for Code Generation to consume directly. The canonical hi-fi deliverable is a set of <strong>self-contained HTML mockups</strong> (<code>mockups/</code>, design-system styled) — the FE source of truth Stage 14 must reproduce screen-by-screen. References the KAFI design system for every component; custom components require justification. Empty, error, and loading states are covered, not just happy path.</p>
+  <p class="doc-contains"><strong>Contains:</strong> <code>mockups/</code> (self-contained HTML, one per screen) · <code>mockups/index.md</code> (screen → file → US-NN → unit) · <code>user-flows.md</code> · <code>information-architecture.md</code> · <code>interaction-specs.md</code> · <code>accessibility-notes.md</code> · optional <code>wireframes/</code> · <code>screen-designs/</code>.</p>
 </div>
 
 <div class="doc-type">
@@ -3011,7 +3017,7 @@ build/
 </section>
 
 <footer>
-  <span>KAFI Transformation Office · v0.5 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>KAFI Transformation Office · v0.6 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
   <span>Companion: KAFI-AIDLC-Introduction.html · CLAUDE.md (workflow spec) · injection package zip</span>
 </footer>
 

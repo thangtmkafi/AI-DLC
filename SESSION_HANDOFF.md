@@ -1,7 +1,7 @@
 # Session Handoff · KAFI AI-DLC
 
 > **Drop this file at repo root.** When opening this repo in Claude Code, your first prompt should be:
-> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.6 backlog."*
+> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.7 backlog."*
 
 ---
 
@@ -16,12 +16,20 @@ This is the **KAFI AI-DLC methodology repo** — it contains the workflow rules,
 
 Don't conflate the two. Editing the root one shapes how this repo is developed; editing the package one ships to every KAFI project using AI-DLC.
 
-**Current state:** v0.5 shipped 26 May 2026. Two editions, content parity verified.
+**Current state:** v0.6 shipped 27 May 2026. Two editions, content parity verified.
 
 - **Claude Code Edition** — `packages/claude-code/` · `CLAUDE.md` + `.claude/skills/` + `aidlc-rule-details/`
 - **Kiro Edition** — `packages/kiro/` · `AGENTS.md` + `.kiro/steering/` with YAML inclusion modes
 
-Both ship as zip files in `releases/v0.5/`. GitHub Actions auto-builds new zips on tag push.
+Both ship as zip files in `releases/v0.6/`. GitHub Actions auto-builds new zips on tag push.
+
+### v0.6 changes (shipped 2026-05-27)
+
+HTML mockups as FE source of truth + strict Stage 14 fidelity gate.
+
+- **Added** · Stage 7 produces self-contained HTML mockups (`product-design/mockups/*.html`, design-system styled) as canonical hi-fi deliverable + `mockups/index.md` manifest. Replaces vague Markdown+image screen-designs.
+- **Added** · Stage 14 gains an explicit Inputs section (previously had none) + a mandatory FE fidelity gate. Mockup = source of truth; generated FE must reproduce layout/hierarchy/tokens/all-states (visual+structural contract, framework-agnostic). Screen-by-screen check is Request-Changes-blocking. No mockup ⇒ STOP + open item back to Stage 7.
+- **Changed** · Stage 10 references mockups; frontend-components cite source mockup. Stage 8 input note clarified. Designer role (HTML mockup deliverable) + Dev role (hard "match mockup" rule) + onboarding prompts + rubric updated. HTML docs Stage 7/14 rewritten.
 
 ### v0.5 changes (shipped 2026-05-26)
 
@@ -53,7 +61,7 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 **1 · Parity rule.** Every change to one edition must apply to the other in the same PR. The Claude Code edition uses no front-matter; the Kiro edition uses YAML `inclusion: always|manual`. Content stays in sync. See `CONTRIBUTING.md`.
 
-**2 · Single version, both editions.** `v0.6` ships both zips. No `v0.6-claude-code` vs `v0.6-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
+**2 · Single version, both editions.** `v0.7` ships both zips. No `v0.7-claude-code` vs `v0.7-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
 
 **3 · KAFI design system v2.2 for any visual output.** Inter font · kafi-green `#00C694` sole accent · border-only cards 18px radius · max 3 text shades (`#101820` / `#585667` / `#9095A0`). HTML docs in `docs/` follow this strictly.
 
@@ -61,11 +69,11 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 ---
 
-## v0.6 backlog (prioritized)
+## v0.7 backlog (prioritized)
 
-From `CHANGELOG.md` `## [Unreleased]`. v0.5 already shipped PRD formalization; remaining items carry over.
+From `CHANGELOG.md` `## [Unreleased]`. v0.6 shipped HTML mockups + FE fidelity gate; remaining items carry over.
 
-### Stream A · Carry-over (originally planned v0.4 → v0.5 → now v0.6)
+### Stream A · Carry-over (originally planned v0.4 → … → now v0.7)
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
@@ -92,13 +100,20 @@ From `CHANGELOG.md` `## [Unreleased]`. v0.5 already shipped PRD formalization; r
 | B11 | 2-part stage decision rule | 4.9 | 0.5 day |
 | B12 | Retrospective stage (Stage 18 or extension) | 4.10 | 1 day |
 
-### Stream C · PRD follow-ups (new in v0.6)
+### Stream C · PRD follow-ups (from v0.5)
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
 | C1 | Standalone `epic.md` template + Epic stage | 1 week | Split Epic from PRD-NN decomposition. PRD groups Epics; each Epic groups User Stories. |
 | C2 | PRD-NN → REQ-NN traceability checker | 2 days | CI lint catching REQs without parent PRD-NN |
 | C3 | BRD template | 1 week | Sibling to PRD when stakeholder approval needs business case detail |
+
+### Stream D · Mockup/FE-fidelity follow-ups (from v0.6)
+
+| # | Item | Rough size | Notes |
+|---|---|---|---|
+| D1 | Visual-diff tooling (screenshot mockup vs rendered FE) | 3-5 days | Automate the screen-by-screen fidelity check now done manually |
+| D2 | Mockup → component scaffold mode (literal HTML reuse) | 2 days | Opt-in alternative to visual+structural contract for web stacks |
 
 Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (1-hour safety win), then triage rest with BTS.
 
@@ -124,15 +139,15 @@ Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (
 
 ### Build releases locally
 ```bash
-./tools/build-releases.sh v0.6-dev
-# Output → releases/v0.6-dev/
+./tools/build-releases.sh v0.7-dev
+# Output → releases/v0.7-dev/
 # Verify content before tagging real release
 ```
 
 ### Cut a release
 ```bash
-# After merging develop → main via "Release v0.6" PR
-git tag v0.6
+# After merging develop → main via "Release v0.7" PR
+git tag v0.7
 git push --tags
 # GitHub Actions builds zips + creates GitHub Release automatically
 ```
@@ -157,6 +172,7 @@ git push --tags
 | Cross-platform installer added (`tools/install.sh` + `tools/install.ps1`) | Replaces manual `cp -r` + git-add steps. Auto-detects install vs upgrade, manages legacy files via `00-knowledge/references/`, downloads from GitHub Releases. Built in v0.4 cycle but only first tagged in v0.5. |
 | Onboarding skill expanded with prompt templates (Approach E) | 6 per-role starter prompts moved from Introduction/Handbook docs into `.claude/skills/kafi/onboarding/prompts/` (and Kiro equivalent). Skill becomes single entry point — `Run #kafi-aidlc-onboarding` → agent picks right template per detected stage. Docs trimmed ~228 + 175 lines per edition. Quality preserved: templates are verbatim from prior prompts, not agent-inferred. |
 | **PRD formalized as Stage 4 co-deliverable with Requirements (v0.5)** | PRD ≠ Requirements. PRD = product narrative (PRD-NN, *WHAT/FOR WHOM*). Requirements = technical decomposition (REQ-NN, *HOW BEHAVE*). Stage 4 produces both, each REQ cites parent PRD-NN. Adaptive depth allows skipping PRD at Minimal complexity. Closes the long-standing "Pending templates" gap on `prd.md`. |
+| **HTML mockups are FE source of truth; Stage 14 enforces screen-by-screen fidelity (v0.6)** | Stage 7 outputs self-contained HTML mockups (design-system skill) in `product-design/mockups/`. Stage 14 reproduces them in the target framework — visual + structural contract, framework-agnostic (NOT literal HTML reuse). Fidelity check is Request-Changes-blocking; UI with no mockup ⇒ STOP + open item back to Stage 7. Chosen over literal-scaffold mode (which is a deferred v0.7 opt-in, Stream D2). |
 
 ---
 
@@ -212,4 +228,4 @@ Keep it under ~250 lines. If it grows, that's a signal to split into multiple se
 
 ---
 
-*Last updated: 26 May 2026 · v0.5 ship — PRD formalization + installer/onboarding consolidation*
+*Last updated: 27 May 2026 · v0.6 ship — HTML mockups as FE source of truth + Stage 14 fidelity gate*

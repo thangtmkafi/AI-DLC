@@ -22,7 +22,7 @@ Architectural design — components, methods, services, dependencies. Open ADRs 
 ## Inputs
 
 - `requirements.md`, `stories.md`
-- `product-design/` if Stage 7 ran
+- `product-design/` if Stage 7 ran — including the HTML mockups in `product-design/mockups/`; component boundaries should respect mockup screen structure
 - `reverse-engineering/` if brownfield
 - `00-knowledge/conventions/architecture-boundaries.md`
 

@@ -1074,7 +1074,7 @@ footer {
       <span class="logo-x"></span>
       <span class="logo-text">Kafi</span>
     </div>
-    <div class="doc-eyebrow">Transformation Office · v0.5 · Covers Claude Code + Kiro editions</div>
+    <div class="doc-eyebrow">Transformation Office · v0.6 · Covers Claude Code + Kiro editions</div>
     <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
     <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders. This unified doc covers both Claude Code and Kiro IDE editions — edition-specific paths and commands are called out inline.</p>
   </div>
@@ -1797,9 +1797,9 @@ footer {
       </tr>
       <tr class="phase-in">
         <td class="phase-cell"></td>
-        <td><strong>Product Design Pack</strong><br/><code>product-design/</code> · 6 files</td>
+        <td><strong>Product Design Pack</strong><br/><code>product-design/mockups/*.html</code></td>
         <td>Designer</td>
-        <td>UX flows · screens · interactions · accessibility (UI only)</td>
+        <td>Self-contained HTML mockups (design-system styled) = FE source of truth · flows · interactions · accessibility (UI only)</td>
         <td>—</td>
       </tr>
       <tr class="phase-in">
@@ -1959,10 +1959,10 @@ footer {
       </tr>
       <tr class="phase-ux">
         <td class="num">7</td>
-        <td class="stage"><strong>Product Design</strong></td>
+        <td class="stage"><strong>Product Design</strong><br/><span style="font-size: 10.5px; color: var(--text-muted);">HTML mockups (v0.6+)</span></td>
         <td class="role">Designer</td>
         <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi/design-system/SKILL.md</code> · <code>.kiro/steering/kafi-design-system.md</code></td>
-        <td class="path"><code>aidlc-docs/inception/product-design/</code><br/>(user-flows · IA · wireframes · screens · interactions)</td>
+        <td class="path"><code>aidlc-docs/inception/product-design/mockups/*.html</code> (FE source of truth)<br/><code>mockups/index.md</code> · interactions · IA · accessibility</td>
       </tr>
       <tr class="phase-in">
         <td class="num">8</td>
@@ -2008,10 +2008,10 @@ footer {
       </tr>
       <tr class="phase-cn">
         <td class="num">14</td>
-        <td class="stage"><strong>Code Generation</strong> · per-unit</td>
+        <td class="stage"><strong>Code Generation</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--text-muted);">FE must match mockup (v0.6+)</span></td>
         <td class="role">Developer</td>
-        <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>aidlc-docs/inception/application-design/</code></td>
-        <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← actual code<br/><code>aidlc-docs/construction/{unit}/code/</code> ← summaries only</td>
+        <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>aidlc-docs/inception/application-design/</code><br/><code>product-design/mockups/</code> (REQUIRED if UI)</td>
+        <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← actual code (FE matches mockup screen-by-screen)<br/><code>aidlc-docs/construction/{unit}/code/</code> ← summaries only</td>
       </tr>
       <tr class="phase-cn">
         <td class="num">15</td>
@@ -2095,10 +2095,10 @@ footer {
 │   │   │   ├── <span class="file">source-appendix.md</span>            <span class="comment">Route C only</span><br/>
 │   │   │   └── <span class="folder">validation/</span>                 <span class="comment">Document Validator output</span><br/>
 │   │   ├── <span class="folder">reverse-engineering/</span>            <span class="comment"><span class="tag in">Stage 3</span> SA · brownfield</span><br/>
-│   │   ├── <span class="folder">requirements/</span>                   <span class="comment"><span class="tag in">Stage 4</span> PM + BA</span><br/>
+│   │   ├── <span class="folder">requirements/</span>                   <span class="comment"><span class="tag in">Stage 4</span> PM · PRD + requirements</span><br/>
 │   │   ├── <span class="folder">user-stories/</span>                   <span class="comment"><span class="tag in">Stage 5</span> BA</span><br/>
 │   │   ├── <span class="folder">plans/</span>                          <span class="comment"><span class="tag in">Stage 6</span> PM · execution plan</span><br/>
-│   │   ├── <span class="folder">product-design/</span>                 <span class="comment"><span class="tag ux">Stage 7</span> Designer · UI only</span><br/>
+│   │   ├── <span class="folder">product-design/</span>                 <span class="comment"><span class="tag ux">Stage 7</span> Designer · <span class="folder">mockups/</span> HTML = FE source of truth</span><br/>
 │   │   └── <span class="folder">application-design/</span>             <span class="comment"><span class="tag in">Stages 8 + 9</span> SA · components + units</span><br/>
 │   ├── <span class="folder">ba-authoring/</span>                       <span class="comment">Route D only — drafting workspace</span><br/>
 │   ├── <span class="folder">construction/</span><br/>

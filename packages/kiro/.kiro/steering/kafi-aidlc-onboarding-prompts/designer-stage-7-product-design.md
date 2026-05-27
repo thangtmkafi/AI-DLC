@@ -16,7 +16,7 @@ Load BOTH:
   · .kiro/steering/roles/designer.md
   · .kiro/steering/kafi-design-system.md
 
-Write to aidlc-docs/inception/product-design/. Reference the KAFI design system for every component; custom components require justification. Cover empty / error / loading states — not just happy path. WCAG 2.1 AA minimum. Spec interactions Code Generation can consume directly. Only focus on Stage 7 deliverables and nothing else.
+Write to aidlc-docs/inception/product-design/. **Produce each key screen as a self-contained HTML mockup** (inline CSS, KAFI design tokens — opens standalone in a browser) in `mockups/`, one file per screen, showing every state (default/empty/error/loading). These HTML mockups are the **FE source of truth** — Stage 14 Code Generation reproduces them screen-by-screen. Write a `mockups/index.md` manifest mapping each file → stories (US-NN) → target unit. Reference the KAFI design system for every component; custom components require justification. WCAG 2.1 AA minimum. Spec interactions in interaction-specs.md. Only focus on Stage 7 deliverables and nothing else.
 
 ---
 
@@ -28,4 +28,4 @@ Write to aidlc-docs/inception/product-design/. Reference the KAFI design system 
 
 ## Watch for
 
-Custom components when design system covers it, mockups without negative states, designs that ignore IA, ungrounded UX assumptions.
+Custom components when design system covers it, HTML mockups without negative states (empty/error/loading), screens referenced by a story but with no mockup (Stage 14 will block on these), designs that ignore IA, ungrounded UX assumptions.

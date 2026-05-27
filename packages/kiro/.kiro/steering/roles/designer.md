@@ -12,17 +12,18 @@ Translate stories into experience specifications. Inform Application Design (com
 ## Do
 
 - **Reference the KAFI design system** for every component. Custom components require justification.
+- **Produce hi-fi screens as self-contained HTML mockups** using the design system. Write them to `aidlc-docs/inception/product-design/mockups/`. These are the **FE source of truth for Code Generation** — Stage 14 reproduces them screen-by-screen — not throwaway reference images.
 - **Produce interaction specs that Code Generation can consume directly.** States, transitions, edge cases — not just static designs.
-- **Map screens to stories.** Every story with UI must have at least one screen design or interaction spec.
+- **Map screens to stories.** Every story with UI must have at least one HTML mockup. Record the mapping in `mockups/index.md`.
 - **Document accessibility considerations** — WCAG 2.1 AA minimum for KAFI.
-- **Diverge early, converge late.** Low-fidelity wireframes for exploration; high-fidelity specs only after direction is locked.
+- **Diverge early, converge late.** Low-fidelity wireframes for exploration; high-fidelity HTML mockups only after direction is locked.
 
 ## Don't
 
 - Don't invent new components when design system covers it. Use what exists.
 - Don't ship hi-fi designs before story scope is locked.
 - Don't bake assumptions about user behavior into IA — verify with persona research or research sessions.
-- Don't skip empty states, error states, loading states. They're as important as happy path.
+- Don't skip empty states, error states, loading states. Each HTML mockup must show them — they're as important as happy path, and Stage 14 must implement every one.
 - Don't design in isolation — Application Design (SA) and you must align on component boundaries.
 
 ## Stages you drive

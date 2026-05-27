@@ -7,15 +7,16 @@ description: "Role: Dev (Developer)"
 
 ## Why this role exists
 
-You turn design into running code. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. No unit tests required through v0.4 (test artifacts deferred to v0.5).
+You turn design into running code. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. Unit tests not generated yet (test artifacts are a backlog item, Stream A1).
 
 ## Do
 
-- **Review the code generation plan** before approving Part 2 execution. Catch architecture issues at plan time, not after files are written.
+- **Match the mockup — strictly.** Generated FE MUST reproduce the Stage 7 HTML mockup: layout, component hierarchy, design tokens, and every state (default/hover/empty/error/loading/disabled). The mockup is the source of truth, not a suggestion. If a screen this unit needs has no mockup → **STOP, open item back to Stage 7, don't improvise UI.**
+- **Review the code generation plan** before approving Part 2 execution. Catch architecture issues at plan time, not after files are written. For UI units, confirm the plan's Mockup mapping covers every screen.
 - **Verify the build runs locally** before approving Stage 14 completion.
 - **Document build instructions** in Stage 15 such that someone with zero context could rebuild from a fresh clone.
 - **Run the AI Review Checklist** mentally on every generated file. Critical fails should be addressed before merge.
-- **Cite designs.** Generated code should reference functional-design / nfr-design / interaction-specs in comments where relevant.
+- **Cite designs.** Generated code should reference functional-design / nfr-design / interaction-specs / source mockup in comments where relevant.
 
 ## Don't
 
@@ -37,7 +38,7 @@ You turn design into running code. With AI-DLC, you pair with the agent: the age
 
 ## Key questions Dev should always ask
 
-- "Does this code match the design?"
+- "Does the generated FE match the mockup screen-by-screen — layout, tokens, all states?"
 - "Are there any architecture boundary violations?"
 - "Is the audit trail wired?"
 - "Are secrets in env vars only?"
@@ -45,11 +46,12 @@ You turn design into running code. With AI-DLC, you pair with the agent: the age
 
 ## Anti-patterns to call out
 
+- FE that diverges from the mockup (re-styled, restructured, missing states, ad-hoc colors)
+- UI generated for a screen with no source mockup
 - Generated code that imports across boundaries without ADR
 - Logging PII
 - Hardcoded config (URLs, IDs, timeouts)
 - Missing error handling on external calls
-- Tests imported as "todos" — defer until v0.4
 
 ## References
 
