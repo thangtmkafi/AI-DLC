@@ -8,7 +8,7 @@ inclusion: manual
 
 ## Why this role exists
 
-You turn design into running code. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. Unit tests not generated yet (test artifacts are a backlog item, Stream A1).
+You turn design into running code AND its unit tests. With AI-DLC, you pair with the agent: the agent drafts, you review, you decide. **v0.7 split:** Stage 14a (production code, this role) → Stage 14b (unit test code, this role, derived from QA's test-cases.md) → Stage 14c (conformance audit, QA-owned, blocking). Test execution is the project's CI/local choice (outside AI-DLC).
 
 ## Do
 
@@ -29,7 +29,8 @@ You turn design into running code. With AI-DLC, you pair with the agent: the age
 
 ## Stages you drive
 
-- **Stage 14: Code Generation** (pair with AI agent)
+- **Stage 14a: Production Code Generation** (pair with AI agent — production code only in `src/`)
+- **Stage 14b: Unit Test Code Generation** (NEW v0.7 — translate QA's `test-cases.md` into test code in chosen framework, lives alongside production code)
 - **Stage 15: Build** (sole owner)
 
 ## Stages where you're consulted

@@ -9,13 +9,19 @@
 2. Load this stage's rule-detail file
 3. Load prior stage outputs as inputs
 4. Execute (plan → questions → generation)
-5. Run AI Review Checklist (soft)
+5. Run AI Review Checklist (Hard = blocking, Soft = warnings)
+5.5. Spec conformance trace-back (NEW v0.7 · mechanical, not human judgment):
+     for each output produced, verify it cites a parent ID from the upstream stage
+     (PRD-NN → REQ-NN → US-NN → ENT-NN → UNIT-NN → TC-NN).
+     Outputs without parent citation → block, return to step 4.
 6. Present 2-option completion
 7. Wait for explicit approval
 8. Log user response → audit.md
 9. Update aidlc-state.md (advance current stage, append to Stages Completed)
 10. Proceed to next stage
 ```
+
+**Critical items in `ai-review-checklist.md` are blocking; quality items remain soft warnings.** A gate cannot be presented while any Hard item fails. The trace-back step (5.5) is part of the Hard set — mechanical, deterministic, no exceptions.
 
 ## 2-Option Completion Message Format
 

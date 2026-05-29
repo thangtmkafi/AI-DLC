@@ -1,16 +1,23 @@
-# Stage 14: Code Generation
+# Stage 14a: Production Code Generation
 
-**Owner:** Developer · **Always runs** (per-unit) · **Approval required**
+**Owner:** Developer · **Always runs** (per-unit) · **Approval required** · Advances to Stage 14b (Unit Test Code Generation)
+
+> **Stage 14 split (v0.7):** 14a Production Code (this file, Dev) · 14b Unit Test Code (Dev) · 14c Conformance Audit (QA). The FE fidelity gate (v0.6) is enforced at 14c, not here.
 
 ## Purpose
 
-Generate working code from the unit's design artifacts. Code goes to `src/`; only summaries in `aidlc-docs/`.
+Generate **production code only** from the unit's design artifacts. Test code is Stage 14b; conformance audit is Stage 14c.
+
+Code goes to `src/`; only summaries in `aidlc-docs/`.
 
 ## Inputs
 
 - `aidlc-docs/construction/{unit}/functional-design/` — business logic, rules, domain entities, `frontend-components.md`
 - `aidlc-docs/construction/{unit}/nfr-design/`
-- `aidlc-docs/inception/product-design/mockups/` — **HTML mockups for this unit's screens · REQUIRED if the unit has UI** (see `mockups/index.md` for the screen → unit map)
+- `aidlc-docs/inception/application-design/data-model.md` — ENT-NN reference (entity names + types are stable)
+- `aidlc-docs/inception/product-design/design-tokens.md` — token catalog (FE must use only these tokens — v0.7)
+- `aidlc-docs/inception/product-design/mockups/` — **HTML mockups for this unit's screens · REQUIRED if the unit has UI**
+- `aidlc-docs/inception/product-design/mockups/<screen>.view-model.md` — **data binding contract per screen** (v0.7)
 - `aidlc-docs/inception/product-design/interaction-specs.md` — states, transitions
 - `00-knowledge/conventions/` — architecture boundaries, naming conventions
 
@@ -24,7 +31,7 @@ The Stage 7 HTML mockup is the **source of truth** for all generated frontend. I
 - **Do NOT introduce** screens, components, or layouts absent from the mockup. If a screen needed by this unit has no mockup → **STOP. Emit an open item back to Stage 7. Do not improvise UI.**
 - **Map** each generated UI component to its source mockup file in `code-summary.md`.
 
-The fidelity gate below is **Request-Changes-blocking** — a unit with UI cannot pass Stage 14 if the generated FE diverges from its mockup.
+The FE fidelity gate is enforced at **Stage 14c** (Conformance Audit, QA-owned) — a unit with UI cannot pass Stage 14c if the generated FE diverges from its mockup, breaks token discipline (per `design-tokens.md`), or ignores view-model bindings (per `view-model.md`). Stage 14a writes the code; Stage 14c verifies.
 
 ## 2-part execution
 
@@ -95,22 +102,25 @@ User approves plan.
 ## Approval gate
 
 ```
-Code Generation for UNIT-{N} complete.
+Production Code Generation (Stage 14a) for UNIT-{N} complete.
 - Files created: [N]
 - Files modified: [M]
 - External packages added: [list]
-- FE fidelity vs mockup: [screen-by-screen ✓ / ✗ with diffs]   ← blocking for UI units
 - Audit trail wired: ✓
 - Architecture boundaries: ✓ enforced
+- View-model bindings respected (UI units): ✓ all fields cite ENT-NN with declared format
+- Design tokens used (UI units): ✓ no ad-hoc hex/px values
 - AI Review Checklist: [pass / N warnings — listed]
 
-→ Request Changes   (mandatory if any FE screen ✗ against its mockup)
-→ Continue to next unit / Stage 15 (Build)
+→ Request Changes
+→ Continue to Stage 14b (Unit Test Code Generation)
 ```
 
-## Tests deferred
+Stage 14a ends here. Stage 14b (Dev) generates test code; Stage 14c (QA) audits everything.
 
-Unit tests not generated yet — test artifacts are a backlog item (Stream A1). Code Generation produces code only.
+## Tests handled in Stage 14b
+
+This stage produces production code only. The unit test code is generated at Stage 14b (Dev), translating QA's `test-cases.md` into the framework declared in `test-plan.md`. Stage 14c (QA conformance audit) is the blocking gate before this unit advances.
 
 ## Watch for
 

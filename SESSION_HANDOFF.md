@@ -1,7 +1,7 @@
 # Session Handoff · KAFI AI-DLC
 
 > **Drop this file at repo root.** When opening this repo in Claude Code, your first prompt should be:
-> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.7 backlog."*
+> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.8 backlog."*
 
 ---
 
@@ -16,12 +16,25 @@ This is the **KAFI AI-DLC methodology repo** — it contains the workflow rules,
 
 Don't conflate the two. Editing the root one shapes how this repo is developed; editing the package one ships to every KAFI project using AI-DLC.
 
-**Current state:** v0.6 shipped 27 May 2026. Two editions, content parity verified.
+**Current state:** v0.7 shipped 29 May 2026. Two editions, content parity verified.
 
 - **Claude Code Edition** — `packages/claude-code/` · `CLAUDE.md` + `.claude/skills/` + `aidlc-rule-details/`
 - **Kiro Edition** — `packages/kiro/` · `AGENTS.md` + `.kiro/steering/` with YAML inclusion modes
 
-Both ship as zip files in `releases/v0.6/`. GitHub Actions auto-builds new zips on tag push.
+Both ship as zip files in `releases/v0.7/`. GitHub Actions auto-builds new zips on tag push.
+
+### v0.7 changes (shipped 2026-05-29)
+
+The "spec-driven, test-verified" upgrade. Conformance audit becomes a mechanical gate — not advisory.
+
+- **Added** · 6 new templates: `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `data-model.md` · `test-plan.md` · `test-cases.md` · `dod.md`. Templates total 12 → 19.
+- **Added** · QA role (planning + audit only, NO test code, NO execution).
+- **Added** · Stage 10b Unit Test Planning (QA) + Stage 14b Unit Test Code Generation (Dev) + Stage 14c Conformance Audit (QA · BLOCKING with 4 sub-checks).
+- **Changed** · Stage 14 → Stage 14a (Production Code only). FE fidelity gate from v0.6 moves into Stage 14c sub-check 3.
+- **Changed** · Stage 7 now produces 4 outputs: design-tokens → uiux-spec → mockups/<screen>.html → mockups/<screen>.view-model.md. Mockup CSS uses CSS custom properties referencing design-tokens.md (no hex literals).
+- **Changed** · Stage 8 adds `data-model.md` output. Stage 10 derives `domain-entities.md` from it.
+- **Changed** · Process overview cycle: step 5.5 spec conformance trace-back (mechanical). AI Review Checklist split into Hard (blocking) + Soft (warning).
+- **Changed** · Traceability chain extended: `… → PRD → REQ → ENT → … → Unit → TC → ADR`.
 
 ### v0.6 changes (shipped 2026-05-27)
 
@@ -61,7 +74,7 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 **1 · Parity rule.** Every change to one edition must apply to the other in the same PR. The Claude Code edition uses no front-matter; the Kiro edition uses YAML `inclusion: always|manual`. Content stays in sync. See `CONTRIBUTING.md`.
 
-**2 · Single version, both editions.** `v0.7` ships both zips. No `v0.7-claude-code` vs `v0.7-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
+**2 · Single version, both editions.** `v0.8` ships both zips. No `v0.8-claude-code` vs `v0.8-kiro` split. If a change applies to only one platform, that's a parity bug — open an issue first.
 
 **3 · KAFI design system v2.2 for any visual output.** Inter font · kafi-green `#00C694` sole accent · border-only cards 18px radius · max 3 text shades (`#101820` / `#585667` / `#9095A0`). HTML docs in `docs/` follow this strictly.
 
@@ -69,15 +82,15 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 ---
 
-## v0.7 backlog (prioritized)
+## v0.8 backlog (prioritized)
 
-From `CHANGELOG.md` `## [Unreleased]`. v0.6 shipped HTML mockups + FE fidelity gate; remaining items carry over.
+From `CHANGELOG.md` `## [Unreleased]`. v0.7 shipped conformance audit + QA role + 6 new templates; remaining items carry over.
 
-### Stream A · Carry-over (originally planned v0.4 → … → now v0.7)
+### Stream A · Carry-over (originally planned v0.4 → … → now v0.8)
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
-| A1 | **Test artifacts** | 1-2 weeks | New stage between Construction and Operations · template + role guide. Most-asked-for in KAFI feedback. |
+| A1 | **Test artifacts** | — | **Shipped v0.7 ✓** (templates test-plan + test-cases; stages 10b, 14b, 14c; QA role) |
 | A2 | **Compliance verification** | 1 week | Pre-deploy stage gating on extensions (audit-trail, PDPA, project-defined) |
 | A3 | **Operations expansion** | 2 weeks | Replace stage 16-17 placeholders with concrete deploy + monitor specs |
 | A4 | **Project extension YAML examples** | 1 week | Worked examples for `architecture-boundaries`, `naming-conventions`, `phase-discipline` |
@@ -172,7 +185,10 @@ git push --tags
 | Cross-platform installer added (`tools/install.sh` + `tools/install.ps1`) | Replaces manual `cp -r` + git-add steps. Auto-detects install vs upgrade, manages legacy files via `00-knowledge/references/`, downloads from GitHub Releases. Built in v0.4 cycle but only first tagged in v0.5. |
 | Onboarding skill expanded with prompt templates (Approach E) | 6 per-role starter prompts moved from Introduction/Handbook docs into `.claude/skills/kafi/onboarding/prompts/` (and Kiro equivalent). Skill becomes single entry point — `Run #kafi-aidlc-onboarding` → agent picks right template per detected stage. Docs trimmed ~228 + 175 lines per edition. Quality preserved: templates are verbatim from prior prompts, not agent-inferred. |
 | **PRD formalized as Stage 4 co-deliverable with Requirements (v0.5)** | PRD ≠ Requirements. PRD = product narrative (PRD-NN, *WHAT/FOR WHOM*). Requirements = technical decomposition (REQ-NN, *HOW BEHAVE*). Stage 4 produces both, each REQ cites parent PRD-NN. Adaptive depth allows skipping PRD at Minimal complexity. Closes the long-standing "Pending templates" gap on `prd.md`. |
-| **HTML mockups are FE source of truth; Stage 14 enforces screen-by-screen fidelity (v0.6)** | Stage 7 outputs self-contained HTML mockups (design-system skill) in `product-design/mockups/`. Stage 14 reproduces them in the target framework — visual + structural contract, framework-agnostic (NOT literal HTML reuse). Fidelity check is Request-Changes-blocking; UI with no mockup ⇒ STOP + open item back to Stage 7. Chosen over literal-scaffold mode (which is a deferred v0.7 opt-in, Stream D2). |
+| **HTML mockups are FE source of truth; Stage 14 enforces screen-by-screen fidelity (v0.6)** | Stage 7 outputs self-contained HTML mockups (design-system skill) in `product-design/mockups/`. Stage 14 reproduces them in the target framework — visual + structural contract, framework-agnostic (NOT literal HTML reuse). Fidelity check is Request-Changes-blocking; UI with no mockup ⇒ STOP + open item back to Stage 7. Chosen over literal-scaffold mode (which is a deferred v0.8 opt-in, Stream D2). |
+| **Spec-driven, test-verified · QA role + conformance audit (v0.7)** | Hybrid SDD direction locked: specs stay primary contract; tests + audit become executable verification. QA owns Stage 10b (test plan + test cases as documentation) + Stage 14c (4-sub-check blocking audit: code · token discipline · UI · test code coverage). Dev owns 14a (production) + 14b (unit test code). **Test execution explicitly out of AI-DLC scope** — project's CI/local choice. 6 new templates (design-tokens, uiux-spec, view-model, data-model, test-plan, test-cases, dod). Process cycle gains step 5.5 spec trace-back; AI Review Checklist split Hard/Soft. |
+| **Design tokens at project level (v0.7)** | `design-tokens.md` ships as a Stage 7 deliverable (FIRST output, before mockups). Inherits from KAFI design-system skill + declares overrides. Stage 14c audits FE code uses ONLY declared tokens — regex scan rejects ad-hoc hex/px/font literals. Closes the "look & feel adherence" gap separate from functional fidelity. |
+| **MVVM-style UI/UX spec triangle (v0.7)** | Each screen has 3 contracts: Model (data-model.md ENT-NN) · View (mockup HTML) · View-Model (view-model.md field bindings + format + validation + computed). System narrative `uiux-spec.md` ties everything (sitemap, menus, screen catalog, coverage matrix). |
 
 ---
 
@@ -228,4 +244,4 @@ Keep it under ~250 lines. If it grows, that's a signal to split into multiple se
 
 ---
 
-*Last updated: 27 May 2026 · v0.6 ship — HTML mockups as FE source of truth + Stage 14 fidelity gate*
+*Last updated: 29 May 2026 · v0.7 ship — spec-driven, test-verified · QA role + conformance audit + 6 new templates*

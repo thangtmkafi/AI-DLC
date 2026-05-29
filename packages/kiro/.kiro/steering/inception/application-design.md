@@ -28,7 +28,7 @@ Architectural design — components, methods, services, dependencies. Open ADRs 
 
 ## Steps
 
-1. **Domain modeling** — entities, value objects, aggregates.
+1. **Domain modeling + author `data-model.md`** — entities, value objects, aggregates. Use `.kiro/templates/data-model.md`. Each entity gets an ENT-NN ID. Stage 7 view-model.md and Stage 10 domain-entities.md derive from this — keep entity names + types stable once locked.
 2. **Component design** — clear boundaries per project's architecture-boundaries extension.
 3. **Method/service definitions** — signatures, contracts.
 4. **Dependency mapping** — internal + external.
@@ -42,6 +42,7 @@ To `aidlc-docs/inception/application-design/`:
 | File | Content |
 |---|---|
 | `application-design.md` | Consolidated design narrative |
+| **`data-model.md`** | **System-wide data model** (NEW v0.7) · entities ENT-NN · attributes · relationships · invariants · schemas · classifications (PII / audit) · use `.kiro/templates/data-model.md` |
 | `components.md` | Component definitions + ownership + layer |
 | `component-methods.md` | Method signatures, contracts |
 | `services.md` | Service definitions, APIs |

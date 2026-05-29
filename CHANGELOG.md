@@ -4,9 +4,10 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
-### Planned for v0.7
-Carry-over (deferred to keep v0.6 focused on HTML mockups + FE fidelity):
-- Test artifacts stage + template (`test-plan.md`) — Stream A1
+### Planned for v0.8
+Carry-over (deferred to keep v0.7 focused on conformance audit + QA + 6 new templates):
+- (Shipped v0.7 ✓) Test artifacts stage + templates (`test-plan.md`, `test-cases.md`) — Stream A1
+- Test execution integration (CI hooks / runner-aware) — out of v0.7 by design, project's choice
 - Compliance verification stage — Stream A2
 - Operations stages expanded from placeholder to concrete specs — Stream A3
 - Project extension YAML examples — Stream A4
@@ -28,6 +29,47 @@ Carry-over (deferred to keep v0.6 focused on HTML mockups + FE fidelity):
 - BRD template — Stream C3
 - Visual-diff tooling (screenshot mockup vs rendered FE) — automated FE fidelity check
 - Mockup → component scaffold mode (literal HTML reuse) as opt-in alternative to visual+structural contract
+
+## [0.7] · 2026-05-29
+
+### Added · Conformance audit + QA role + 6 new templates (the "spec-driven, test-verified" model)
+
+The central gap closed: AI-DLC now mechanically verifies that outputs conform to upstream specs at every gate. Hard checks at the AI Review Checklist + per-unit blocking audit at Stage 14c.
+
+**6 new templates** (templates count 12 → 19):
+- **`design-tokens.md`** — project-level look & feel catalog (colors, type, spacing, radius, shadow, motion). Inherits from KAFI design system skill + declares overrides. Stage 14c audits token discipline (no ad-hoc hex/px in FE code).
+- **`uiux-spec.md`** — master UI/UX narrative: sitemap + navigation chrome + screen catalog + cross-screen flows + accessibility posture + coverage matrix (stories → screens). Single canonical entry point for the whole UI.
+- **`view-model.md`** — per-screen MVVM data-binding contract. Field-binding table maps each on-screen field to source `entity.attribute` (ENT-NN), with type, format, validation, computed-field formula, state behavior.
+- **`data-model.md`** — system-wide entities (ENT-NN), attributes, relationships, invariants, schemas, classifications (PII/audit). Stage 10 `domain-entities.md` derives per-unit views from this.
+- **`test-plan.md`** — per-unit test strategy: scope, types, framework, coverage targets.
+- **`test-cases.md`** — per-unit TC-NN catalog with Given/When/Then. Status fields stay "Pending" through AI-DLC (project executes outside).
+- **`dod.md`** — generic Definition-of-Done rubric used at every stage approval gate.
+
+**3 new stage rules + 1 new role:**
+- **Stage 10b · Unit Test Planning** (NEW · QA) — per-unit, runs after Stage 10 functional-design. Outputs `test-plan.md` + `test-cases.md`.
+- **Stage 14a · Production Code Generation** (renamed from Stage 14 · Dev) — production code only in `src/`.
+- **Stage 14b · Unit Test Code Generation** (NEW · Dev) — translates `test-cases.md` into framework-specific test code (Jest/Vitest/Bun-test/pytest/etc. per `test-plan.md`).
+- **Stage 14c · Conformance Audit** (NEW · QA · BLOCKING) — 4 sub-checks: (1) Code audit (boundaries, signatures, view-model bindings, audit/privacy wiring); (2) Token discipline audit (no hex/px literals in FE — regex enforced); (3) UI audit (mockup fidelity screen-by-screen + states); (4) Test code coverage audit (every function has test file + every TC-NN has test in code).
+- **QA role** (NEW) — scoped narrowly: planning + audit only. Does NOT write test code (Dev does at 14b). Does NOT execute tests (project's CI/local).
+
+**Process upgrade:**
+- `process-overview.md` cycle gains **step 5.5: Spec conformance trace-back** — mechanical check that every output cites a parent ID from upstream stage.
+- `ai-review-checklist.md` restructured into **Hard (blocking)** + **Soft (warnings)** groups. Hard items prevent the 2-option gate from being presented. Soft items remain warnings (user decides).
+
+**Stage 7 expanded** to 4 deliverables: `design-tokens.md` first → `uiux-spec.md` master → `mockups/<screen>.html` per screen (CSS uses tokens, no hex literals) → `mockups/<screen>.view-model.md` per screen (data-binding contract).
+
+**Stage 8 expanded**: adds `data-model.md` output. Stage 10 derives `domain-entities.md` from it.
+
+**Stage 14 split into 14a/14b/14c** per above. The FE fidelity gate from v0.6 moves into Stage 14c sub-check #3.
+
+### Changed
+- Traceability chain extended: `Intent → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR`. IDs gain `ENT-NN` (entities) + `TC-NN` (test cases).
+- Pending templates list shrinks (dod + test-plan removed since shipped; still pending: epic, personas, risk-register, design-lite, story-map for v0.8+).
+- Construction phase count 6 → 8 stages (10 + 10b + 11 + 12 + 13 + 14a + 14b + 14c + 15). Mermaid in CLAUDE.md/AGENTS.md updated. Roles table adds QA row.
+- Designer role: now owns 3 contracts at Stage 7 — design-tokens (look & feel), uiux-spec (functionality narrative), view-model (data binding) — alongside HTML mockups.
+- Dev role: now owns both 14a (production) and 14b (tests). Stage 15 unchanged.
+- Onboarding skill: stage rubric updated for 7 new file signals (design-tokens, uiux-spec, view-model, data-model, test-plan, test-cases, conformance-report); Stage→Role→Prompt mapping adds 3 new rows.
+- Version banner v0.6 → v0.7 across CLAUDE.md, AGENTS.md, `.kiro/settings/config.json`, all HTML docs, `docs/index.html`.
 
 ## [0.6] · 2026-05-27
 

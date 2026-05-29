@@ -1074,7 +1074,7 @@ footer {
       <span class="logo-x"></span>
       <span class="logo-text">Kafi</span>
     </div>
-    <div class="doc-eyebrow">Transformation Office · v0.6 · Covers Claude Code + Kiro editions</div>
+    <div class="doc-eyebrow">Transformation Office · v0.7 · Covers Claude Code + Kiro editions</div>
     <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
     <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders. This unified doc covers both Claude Code and Kiro IDE editions — edition-specific paths and commands are called out inline.</p>
   </div>
@@ -1501,8 +1501,14 @@ footer {
     <div class="role-card">
       <h4>Developer</h4>
       <div class="role-name">Dev</div>
-      <p class="role-owns">Pairs with the AI agent on code generation. Reviews the plan, verifies the build, owns the build instructions.</p>
-      <div class="role-stages"><strong>Drives:</strong> Code Generation · Build</div>
+      <p class="role-owns">Pairs with the AI agent on production code (Stage 14a) AND unit test code (Stage 14b · v0.7). Reviews the plan, verifies the build, owns build instructions.</p>
+      <div class="role-stages"><strong>Drives:</strong> 14a Production Code · 14b Unit Test Code · Build</div>
+    </div>
+    <div class="role-card">
+      <h4>QA <span style="font-size: 10px; color: var(--kafi-green); font-weight: 700;">NEW v0.7</span></h4>
+      <div class="role-name">QA</div>
+      <p class="role-owns">Authors test plan + test cases as documentation (Stage 10b) and runs the 4-sub-check conformance audit (Stage 14c · BLOCKING). Does NOT write test code (Dev does at 14b) and does NOT execute tests (project's CI/local choice).</p>
+      <div class="role-stages"><strong>Drives:</strong> 10b Unit Test Planning · 14c Conformance Audit</div>
     </div>
     <div class="role-card">
       <h4>DevOps / SRE</h4>
@@ -2007,11 +2013,32 @@ footer {
         <td class="path"><code>aidlc-docs/construction/{unit}/infrastructure-design/</code> (2 files)</td>
       </tr>
       <tr class="phase-cn">
-        <td class="num">14</td>
-        <td class="stage"><strong>Code Generation</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--text-muted);">FE must match mockup (v0.6+)</span></td>
+        <td class="num">10b</td>
+        <td class="stage"><strong>Unit Test Planning</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7</span></td>
+        <td class="role">QA</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/functional-design/</code><br/><code>view-models</code> + <code>data-model.md</code></td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/test/test-plan.md</code><br/><code>aidlc-docs/construction/{unit}/test/test-cases.md</code></td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">14a</td>
+        <td class="stage"><strong>Production Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--text-muted);">FE must match mockup + tokens (v0.7)</span></td>
         <td class="role">Developer</td>
-        <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>aidlc-docs/inception/application-design/</code><br/><code>product-design/mockups/</code> (REQUIRED if UI)</td>
-        <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← actual code (FE matches mockup screen-by-screen)<br/><code>aidlc-docs/construction/{unit}/code/</code> ← summaries only</td>
+        <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>application-design/data-model.md</code><br/><code>product-design/design-tokens.md</code> + <code>mockups/</code> + view-models</td>
+        <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← production code<br/><code>aidlc-docs/construction/{unit}/code/code-summary.md</code></td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">14b</td>
+        <td class="stage"><strong>Unit Test Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7</span></td>
+        <td class="role">Developer</td>
+        <td class="path">Stage 14a code in <code>src/</code><br/><code>test-plan.md</code> (framework) + <code>test-cases.md</code></td>
+        <td class="path"><strong style="color:var(--color-success-text)">src/*.test.*</strong> ← test code<br/><code>aidlc-docs/construction/{unit}/code/tests-summary.md</code></td>
+      </tr>
+      <tr class="phase-cn">
+        <td class="num">14c</td>
+        <td class="stage"><strong>Conformance Audit</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7 · BLOCKING</span></td>
+        <td class="role">QA</td>
+        <td class="path">All Stage 14a + 14b outputs<br/>All upstream specs (design-tokens, view-model, data-model, mockup, test-cases)</td>
+        <td class="path"><code>aidlc-docs/construction/{unit}/audit/conformance-report.md</code><br/>4 sub-checks: code · token discipline · UI · test code coverage</td>
       </tr>
       <tr class="phase-cn">
         <td class="num">15</td>

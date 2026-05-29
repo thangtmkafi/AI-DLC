@@ -21,9 +21,10 @@ Detail business logic, rules, and domain entities for one unit. Bridges Applicat
 
 ## Inputs
 
-- `aidlc-docs/inception/application-design/`
+- `aidlc-docs/inception/application-design/` (incl. **`data-model.md`** — ENT-NN reference)
 - `aidlc-docs/inception/user-stories/stories.md` (filtered to this unit's stories)
 - `aidlc-docs/inception/product-design/mockups/` — HTML mockups for this unit's screens (if UI)
+- `aidlc-docs/inception/product-design/mockups/<screen>.view-model.md` — data binding contract per screen (if UI)
 - `aidlc-docs/inception/product-design/interaction-specs.md` (if UI)
 
 ## Outputs
@@ -34,7 +35,7 @@ To `aidlc-docs/construction/{unit}/functional-design/`:
 |---|---|
 | `business-logic-model.md` | Algorithms, flows, calculations |
 | `business-rules.md` | Validation rules, decision tables |
-| `domain-entities.md` | Entity definitions, relationships, invariants |
+| `domain-entities.md` | **Derived from `application-design/data-model.md`** · per-unit view citing ENT-NN it implements · entity definitions, relationships, invariants for this unit's scope. No new entities here unless approved as scope expansion. |
 | `frontend-components.md` | UI component hierarchy + props + state, **each component citing its source mockup (`mockups/<screen>.html`)** (if UI) |
 
 ## Steps

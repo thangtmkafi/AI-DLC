@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.6 · KAFI Transformation Office · Kiro IDE port**
+**v0.7 · KAFI Transformation Office · Kiro IDE port**
 
 > This file is the agent context for this KAFI project. It defines the AI-Driven Development Lifecycle. When the user requests development work, follow this workflow FIRST. Kiro reads this file alongside the `.kiro/steering/` library.
 
@@ -131,23 +131,26 @@ Each stage: load `.kiro/steering/inception/<stage>.md` via `#filename`, execute,
 
 ---
 
-## 🟢 CONSTRUCTION (6 stages — per-unit loop, then build)
+## 🟢 CONSTRUCTION (8 stages — per-unit loop, then build) · v0.7 split
 
 ```mermaid
 flowchart TB
     L[Per-unit loop] --> S10[10. Functional Design<br/>conditional · SA]
-    S10 --> S11[11. NFR Requirements<br/>conditional · SA]
+    S10 --> S10b[10b. Unit Test Planning<br/>conditional · QA · NEW v0.7]
+    S10b --> S11[11. NFR Requirements<br/>conditional · SA]
     S11 --> S12[12. NFR Design<br/>conditional · SA]
     S12 --> S13[13. Infrastructure Design<br/>conditional · DevOps]
-    S13 --> S14[14. Code Generation<br/>always · Dev]
-    S14 --> N{More units?}
+    S13 --> S14a[14a. Production Code<br/>always · Dev]
+    S14a --> S14b[14b. Unit Test Code<br/>always · Dev · NEW v0.7]
+    S14b --> S14c[14c. Conformance Audit<br/>always · QA · NEW v0.7 · BLOCKING]
+    S14c --> N{More units?}
     N -->|Yes| S10
     N -->|No| S15[15. Build<br/>always · Dev]
 ```
 
 **NFR = Non-Functional Requirements** (performance, scalability, availability, security, observability, accessibility).
 
-**No test artifacts in v0.4 either** — deferred to v0.5.
+**v0.7 conformance model:** Stage 14 split into 14a/14b/14c — Dev produces production code + test code; QA audits 4 sub-checks (code · token discipline · UI fidelity · test code coverage) as the **blocking** gate before the unit advances. Test execution remains the project's CI/local choice (outside AI-DLC).
 
 ---
 
@@ -171,7 +174,8 @@ Format TBD in v0.5. No compliance verification stage in v0.4.
 | BA (Business Analyst) | Stage 5 + Pre-Inception | `.kiro/steering/roles/ba.md` |
 | SA (Solution Architect) | Stages 3, 8, 9, 10, 11, 12 | `.kiro/steering/roles/sa.md` |
 | Designer (Product Designer) | Stage 7 | `.kiro/steering/roles/designer.md` + `.kiro/steering/kafi-design-system.md` |
-| Dev (Developer) | Stages 14, 15 | `.kiro/steering/roles/dev.md` |
+| Dev (Developer) | Stages 14a, 14b, 15 | `.kiro/steering/roles/dev.md` |
+| **QA (Quality Assurance)** | **Stages 10b, 14c (NEW v0.7)** | `.kiro/steering/roles/qa.md` |
 | DevOps / SRE | Stages 13, 16, 17 | `.kiro/steering/roles/devops.md` |
 | AI Agent | Every stage | — |
 
@@ -183,14 +187,16 @@ Manual role inclusion — load with `#pm`, `#ba`, etc. in Kiro chat when driving
 
 KAFI standard at `.kiro/templates/` · Project overrides at `00-knowledge/templates/`.
 
-Available templates (12):
-`vision.md` · `technical-environment.md` · `prd.md` · `requirements.md` · `user-story.md` · `application-design.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
+Available templates (19):
+`vision.md` · `technical-environment.md` · `prd.md` · `requirements.md` · `user-story.md` · `application-design.md` · `data-model.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`
 
-**Traceability:** `Intent → Vision → [BRD] → PRD → REQ → Epic → Story → Unit → ADR` · IDs: `PRD-NN · REQ-NN · EPIC-NN · US-NN · UNIT-NN · ADR-NN`
+**Traceability:** `Intent → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR` · IDs: `PRD-NN · REQ-NN · ENT-NN · EPIC-NN · US-NN · UNIT-NN · TC-NN · ADR-NN`
 
 > **PRD vs Requirements:** PRD answers *WHAT* and *FOR WHOM* (product narrative, feature-level, PM-owned). `requirements.md` answers *HOW THE SYSTEM MUST BEHAVE* (testable functional + NFR, derived from PRD-NN). Both produced at Stage 4. See `.kiro/templates/prd.md`.
 
-> **Pending templates (planned, no scaffold yet):** `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` · `dod.md` · `test-plan.md` (v0.6+). Until shipped, author these freehand using the traceability chain above.
+> **v0.7 templates (new):** `design-tokens.md` (project look & feel catalog), `uiux-spec.md` (master UI/UX narrative), `view-model.md` (per-screen MVVM data binding), `data-model.md` (system-wide entities ENT-NN), `test-plan.md` + `test-cases.md` (per-unit QA documentation), `dod.md` (Definition of Done rubric for every gate).
+
+> **Pending templates (planned, no scaffold yet):** `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md` (v0.8+). Until shipped, author these freehand using the traceability chain above.
 
 ---
 

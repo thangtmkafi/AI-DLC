@@ -198,13 +198,17 @@ Order matters — apply top-down, first match wins.
 | `requirements.md` exists in `aidlc-docs/inception/requirements/` (with or without `prd-*.md`) | Stage 4 complete | Stage 5 (User Stories · BA) if user-facing, else Stage 6 |
 | `stories.md` exists | Stage 5 complete | Stage 6 (Workflow Planning · PM) |
 | `execution-plan.md` exists | Stage 6 complete | Stage 7/8/9 per plan |
-| `product-design/mockups/*.html` exist (+ `mockups/index.md`) | Stage 7 complete — HTML mockups are FE source of truth for Stage 14 | Stage 8 (Application Design · SA) |
-| `application-design/` pack exists, no units | Stage 8 complete | Stage 9 (Units Generation · SA) |
+| `product-design/design-tokens.md` AND `product-design/uiux-spec.md` AND `mockups/*.html` AND `mockups/*.view-model.md` exist | Stage 7 complete (v0.7 · 4 deliverables) — FE source of truth ready | Stage 8 (Application Design · SA) |
+| `application-design/data-model.md` exists | Stage 8 in progress (v0.7 data-model added) | Continue Stage 8 components/services |
+| `application-design/` pack exists (incl. data-model.md), no units | Stage 8 complete | Stage 9 (Units Generation · SA) |
 | `unit-of-work*.md` files exist | Stage 9 complete | Construction begins |
-| `aidlc-docs/construction/UNIT-NN/functional-design/` exists for any unit | Stage 10 in progress (per unit · SA) | Stage 11 (NFR Requirements) for that unit |
-| Per-unit `nfr-requirements/` + `nfr-design/` exist, no code | Stages 11-12 complete for unit | Stage 13 (Infrastructure) or Stage 14 (Code Generation) |
-| `code/` summaries exist per unit | Stage 14 complete for unit | Next unit OR Stage 15 (Build) |
-| `aidlc-docs/construction/build/` exists | Stage 15 complete | Stage 16/17 (Operations — still placeholder in v0.5) |
+| `aidlc-docs/construction/UNIT-NN/functional-design/` exists for any unit | Stage 10 in progress (per unit · SA) | Stage 10b (Unit Test Planning · QA · NEW v0.7) |
+| `construction/UNIT-NN/test/test-plan.md` + `test-cases.md` exist | Stage 10b complete (per unit · QA) | Stage 11 (NFR Requirements) for that unit |
+| Per-unit `nfr-requirements/` + `nfr-design/` exist, no code | Stages 11-12 complete for unit | Stage 13 (Infrastructure) or Stage 14a (Production Code) |
+| `code/` summaries exist per unit, no `tests-summary.md` | Stage 14a complete (production code only) | Stage 14b (Unit Test Code · Dev · NEW v0.7) |
+| `code/tests-summary.md` exists + `src/*.test.*` files exist | Stage 14b complete (test code generated) | Stage 14c (Conformance Audit · QA · NEW v0.7 · BLOCKING) |
+| `audit/conformance-report.md` exists with PASS verdict | Stage 14c complete for unit | Next unit OR Stage 15 (Build) |
+| `aidlc-docs/construction/build/` exists | Stage 15 complete | Stage 16/17 (Operations — still placeholder in v0.7) |
 | Inconsistency: `aidlc-state.md` says Stage N, but Stage N+M artifacts exist | State drift detected | Reconcile state file first, then continue |
 
 ---
@@ -219,7 +223,10 @@ When Mode B detects a stage, load the corresponding prompt template from `kafi-a
 | Pre-Inception B/C (fill-gaps / map-existing), Stage 5 (User Stories) | `ba-stage-5-stories.md` |
 | Stage 3 (Reverse Engineering), Stage 8 (Application Design), Stage 9 (Units Generation), Stage 10 (Functional Design), Stage 11 (NFR Requirements), Stage 12 (NFR Design) | `sa-stage-8-app-design.md` |
 | Stage 7 (Product Design) | `designer-stage-7-product-design.md` |
-| Stage 14 (Code Generation), Stage 15 (Build) | `dev-stage-14-code-gen.md` |
+| **Stage 10b (Unit Test Planning · QA · NEW v0.7)** | `qa-stage-10b-test-plan.md` |
+| Stage 14a (Production Code Generation), Stage 15 (Build) | `dev-stage-14-code-gen.md` |
+| **Stage 14b (Unit Test Code Generation · Dev · NEW v0.7)** | `dev-stage-14b-unit-tests.md` |
+| **Stage 14c (Conformance Audit · QA · NEW v0.7 · BLOCKING)** | `qa-stage-14c-conformance-audit.md` |
 | Stage 13 (Infrastructure Design) | `devops-stage-13-infra-design.md` |
 
 ## Prompt template loading protocol

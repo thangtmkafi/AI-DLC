@@ -11,12 +11,19 @@ Your Role: You are an expert Product Designer at KAFI Securities, tasked with tr
 Your Task: I am the Product Designer on [PROJECT]. The active stage is Stage 7 Product Design. Inputs:
   · aidlc-docs/inception/user-stories/
   · aidlc-docs/inception/discovery/vision.md (personas)
+  · aidlc-docs/inception/application-design/data-model.md (ENT-NN reference for view-model)
 
 Load BOTH:
   · .kiro/steering/roles/designer.md
   · .kiro/steering/kafi-design-system.md
 
-Write to aidlc-docs/inception/product-design/. **Produce each key screen as a self-contained HTML mockup** (inline CSS, KAFI design tokens — opens standalone in a browser) in `mockups/`, one file per screen, showing every state (default/empty/error/loading). These HTML mockups are the **FE source of truth** — Stage 14 Code Generation reproduces them screen-by-screen. Write a `mockups/index.md` manifest mapping each file → stories (US-NN) → target unit. Reference the KAFI design system for every component; custom components require justification. WCAG 2.1 AA minimum. Spec interactions in interaction-specs.md. Only focus on Stage 7 deliverables and nothing else.
+Write to aidlc-docs/inception/product-design/. Produce FOUR outputs in order (v0.7):
+  1. **`design-tokens.md`** (use .kiro/templates/design-tokens.md) — project-level catalog: inherit from KAFI base + declare overrides + WCAG contrast notes. Tokens for colors, typography, spacing, radius, shadow, motion, z-index, breakpoints + component library decision (shadcn/ui · custom · …).
+  2. **`uiux-spec.md`** (use .kiro/templates/uiux-spec.md) — master narrative: sitemap, navigation chrome, screen catalog, cross-screen flows, key UX decisions, accessibility posture, story → screen coverage matrix.
+  3. **`mockups/<screen>.html`** per key screen (v0.6) — self-contained HTML with CSS using **CSS custom properties referencing `design-tokens.md`** (no hex/px literals). Show every state (default/empty/error/loading).
+  4. **`mockups/<screen>.view-model.md`** per key screen (v0.7) — cite ENT-NN from data-model.md for each field source. Declare formats explicitly (decimals, currency, date pattern). Include validation rules + computed-field formulas + state behavior.
+
+These deliverables are the **FE source of truth** — Stage 14a writes code, Stage 14c audits it screen-by-screen. Reference the KAFI design system for every component; custom components require justification. WCAG 2.1 AA minimum. Only focus on Stage 7 deliverables and nothing else.
 
 ---
 
@@ -28,4 +35,4 @@ Write to aidlc-docs/inception/product-design/. **Produce each key screen as a se
 
 ## Watch for
 
-Custom components when design system covers it, HTML mockups without negative states (empty/error/loading), screens referenced by a story but with no mockup (Stage 14 will block on these), designs that ignore IA, ungrounded UX assumptions.
+Ad-hoc CSS values in mockup HTML (hex literals, raw px — must be tokens); user-facing stories absent from coverage matrix in uiux-spec.md; navigation chrome (menus, breadcrumbs) not specified; HTML mockup without paired view-model.md; view-model fields not bound to ENT-NN from data-model.md; format strings not declared; computed fields without formula; custom components when design system covers it; mockups without negative states (empty/error/loading).

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC Handbook · v0.6 · Claude Code + Kiro</title>
+<title>KAFI AI-DLC Handbook · v0.7 · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -824,7 +824,7 @@ footer {
 
 <!-- ============ HEADER ============ -->
 <header class="doc-header">
-  <div class="doc-eyebrow">Transformation Office · v0.6 · Covers Claude Code + Kiro editions</div>
+  <div class="doc-eyebrow">Transformation Office · v0.7 · Covers Claude Code + Kiro editions</div>
   <h1 class="doc-title">KAFI AI-DLC Handbook</h1>
   <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code> for Claude Code; <code>AGENTS.md</code> for Kiro). This unified doc covers both editions — edition-specific paths and commands are called out inline.</p>
   <div class="doc-meta-row">
@@ -1908,7 +1908,11 @@ footer {
 <div class="phase phase-cn" id="construction">
   <div class="phase-label">Phase 3 · Both modes</div>
   <h2>Construction</h2>
-  <p class="phase-tagline">Per-unit loop (Stages 10–14), then Build (Stage 15) once for all units. No test artifacts in v0.3.</p>
+  <p class="phase-tagline">Per-unit loop: <strong>Stage 10 → 10b (QA test planning, v0.7) → 11 → 12 → 13 → 14a (production code) → 14b (unit test code, v0.7) → 14c (QA conformance audit, v0.7 · BLOCKING)</strong> → next unit. Then Build (Stage 15) once for all units.</p>
+  <div class="callout callout-watch" style="margin-top: var(--sp4);">
+    <div class="callout-label">v0.7 · Spec-driven, test-verified</div>
+    Construction split into 3 sub-stages (14a/14b/14c) + adds Stage 10b (Unit Test Planning). QA owns planning (10b) + audit (14c); Dev owns code (14a) + tests (14b). Stage 14c has 4 blocking sub-checks: code · token discipline · UI fidelity · test code coverage. Test execution remains the project's CI/local choice (outside AI-DLC).
+  </div>
 </div>
 
 <!-- Stage 10 -->
@@ -2526,7 +2530,8 @@ footer {
     <tr><td>BA role guide</td><td><code>.claude/skills/kafi/roles/ba.md</code></td><td><code>.kiro/steering/roles/ba.md</code></td><td>Manual · when driving Stage 5 or Pre-Inception</td></tr>
     <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
     <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
-    <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14 or 15</td></tr>
+    <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14a, 14b, or 15</td></tr>
+    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.7</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
     <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13</td></tr>
   </tbody>
 </table>
@@ -3017,7 +3022,7 @@ build/
 </section>
 
 <footer>
-  <span>KAFI Transformation Office · v0.6 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>KAFI Transformation Office · v0.7 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
   <span>Companion: KAFI-AIDLC-Introduction.html · CLAUDE.md (workflow spec) · injection package zip</span>
 </footer>
 
