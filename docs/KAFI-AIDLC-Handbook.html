@@ -754,7 +754,7 @@ footer {
   <ul>
     <li><a href="#what-is">What is KAFI AI-DLC</a></li>
     <li><a href="#modes">Two modes</a></li>
-    <li><a href="#roles">Six roles</a></li>
+    <li><a href="#roles">Seven roles</a></li>
     <li><a href="#first-session">Your first session</a></li>
     <li><a href="#starter-prompts">Starter prompts</a></li>
   </ul>
@@ -830,7 +830,7 @@ footer {
   <div class="doc-meta-row">
     <span><strong>17</strong> stages</span>
     <span><strong>4</strong> Pre-Inception sub-flows</span>
-    <span><strong>6</strong> roles</span>
+    <span><strong>7</strong> roles</span>
     <span><strong>2</strong> modes</span>
     <span><strong>0</strong> YAML files</span>
   </div>
@@ -902,18 +902,19 @@ footer {
 </section>
 
 <section id="roles">
-<h2>Six roles</h2>
-<p class="section-intro">Plus the AI agent. No QA, Security, or Compliance role in v0.3 — compliance is enforced via always-on extensions.</p>
+<h2>Seven roles</h2>
+<p class="section-intro">Plus the AI agent. QA joined in v0.7 (test planning + conformance audit). No Security or Compliance role — compliance is enforced via always-on extensions.</p>
 
 <table>
   <thead><tr><th>Role</th><th>Owns</th><th>Stages driven</th></tr></thead>
   <tbody>
-    <tr><td><strong>PM / PO</strong></td><td>Intent, scope, prioritization. The Vision Document.</td><td>4, 6 + Pre-Inception D</td></tr>
-    <tr><td><strong>BA</strong></td><td>Intent → requirements → stories → functional design</td><td>4, 5, 10 + Pre-Inception B/C/D</td></tr>
-    <tr><td><strong>SA</strong></td><td>Architecture · NFRs · ADRs · KB guardian</td><td>3, 8, 9, 11, 12</td></tr>
-    <tr><td><strong>Designer</strong></td><td>User flows, screens, interactions. References KAFI design system.</td><td>7</td></tr>
-    <tr><td><strong>Dev</strong></td><td>Pairs with the AI agent on code and build</td><td>14, 15</td></tr>
-    <tr><td><strong>DevOps</strong></td><td>Infrastructure, deployment, monitoring</td><td>13, 16, 17</td></tr>
+    <tr><td><strong>PM / PO</strong></td><td>Intent, scope, prioritization. Vision · PRD · Requirements (sole).</td><td>4, 6 + Pre-Inception D</td></tr>
+    <tr><td><strong>BA</strong></td><td>Requirements → stories → functional design</td><td>5, 10 + Pre-Inception B/C/D</td></tr>
+    <tr><td><strong>SA</strong></td><td>Architecture · NFRs · ADRs · data-model · code-flow · KB guardian</td><td>3, 8, 9, 10, 11, 12</td></tr>
+    <tr><td><strong>Designer</strong></td><td>Mockups · design-tokens · uiux-spec · view-model · user-flows. References KAFI design system.</td><td>7</td></tr>
+    <tr><td><strong>Dev</strong></td><td>Pairs with the AI agent on production code (14a) + unit test code (14b) + build</td><td>14a, 14b, 15</td></tr>
+    <tr><td><strong>QA</strong> <span style="font-size: 10px; color: var(--kafi-green); font-weight: 700;">v0.7</span></td><td>Authors test-plan + test-cases (documentation); runs the BLOCKING 5-sub-check conformance audit. Does not write or execute test code.</td><td>10b, 14c</td></tr>
+    <tr><td><strong>DevOps</strong></td><td>Infrastructure, deployment + monitoring (runbooks, v0.8)</td><td>13, 16, 17</td></tr>
   </tbody>
 </table>
 </section>
@@ -1044,7 +1045,7 @@ footer {
 
       <!-- Agent welcome bubble -->
       <rect x="260" y="74" width="520" height="200" rx="12" fill="#FAFCFB" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-      <text x="276" y="98" font-size="11.5" font-weight="700" fill="#101820">KAFI AI-DLC v0.3 · Kiro Edition</text>
+      <text x="276" y="98" font-size="11.5" font-weight="700" fill="#101820">KAFI AI-DLC v0.8 · Kiro Edition</text>
 
       <text x="276" y="120" font-size="11" fill="#585667">📖 Loaded <tspan font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#101820">AGENTS.md</tspan></text>
       <text x="276" y="140" font-size="11" fill="#585667">📖 Loaded 8 always-included steering files:</text>
@@ -1999,7 +2000,7 @@ footer {
   </div>
   <div class="callout callout-watch">
     <div class="callout-label">Watch for</div>
-    Vague thresholds slipping in. No "should be fast" — require p95/p99 latency, throughput, load profile. SA owns this pushback (no QA in v0.3).
+    Vague thresholds slipping in. No "should be fast" — require p95/p99 latency, throughput, load profile. SA owns this pushback.
   </div>
 </article>
 
@@ -2174,8 +2175,8 @@ footer {
     </ol>
   </div>
   <div class="callout callout-note">
-    <div class="callout-label">No tests in v0.3</div>
-    Renamed from "Build and Test". Test artifacts deferred to v0.4+. This stage produces only build documentation in this version.
+    <div class="callout-label">Test workflow is separate (v0.7+)</div>
+    Testing is no longer folded into Build. QA authors the test plan + cases at Stage 10b, Dev generates unit test code at Stage 14b, and QA audits coverage at Stage 14c. Stage 15 (Build) produces build documentation only.
   </div>
 </article>
 
@@ -2222,7 +2223,7 @@ footer {
 
 <section id="templates">
 <h2>Document types</h2>
-<p class="section-intro">The workflow produces 19 canonical document types across four phases. Each entry below names the stage that produces it, who owns it, what it contains, and whether a pre-built template exists in <code>aidlc-rule-details/templates/</code>. Templates marked <strong>★</strong> are starting scaffolds the agent uses; the team's project knowledge fills in the specifics.</p>
+<p class="section-intro">The workflow produces 32 canonical document types across the four lifecycle phases plus cross-cutting artifacts. Each entry below names the stage that produces it, who owns it, what it contains, and whether a pre-built template exists in <code>aidlc-rule-details/templates/</code>. Templates marked <strong>★</strong> are starting scaffolds the agent uses; the team's project knowledge fills in the specifics.</p>
 
 <p style="font-size: 12.5px; margin-bottom: var(--sp4);"><strong>Project overrides:</strong> drop a same-named file in <code>00-knowledge/templates/</code> and it wins over the KAFI standard. Project taxonomy or stricter formats can be enforced this way without modifying the injection package. <strong>Traceability IDs:</strong> <code>REQ-NN</code> · <code>US-NN</code> · <code>UNIT-NN</code> · <code>ADR-NN</code> · <code>NFR-*-NN</code>.</p>
 
@@ -2466,7 +2467,7 @@ footer {
     </div>
   </div>
   <div class="doc-path"><code>aidlc-docs/construction/build/</code> (2 files)</div>
-  <p class="doc-purpose">How to build the system. Per-unit build order, dependencies, environment, output artifacts. v0.3 deliberately excludes test artifacts — that lands in v0.4.</p>
+  <p class="doc-purpose">How to build the system. Per-unit build order, dependencies, environment, output artifacts. Test artifacts are authored separately — test plan/cases at Stage 10b, unit test code at Stage 14b (v0.7+).</p>
   <p class="doc-contains"><strong>Contains:</strong> <code>build-instructions.md</code> (prereqs · commands · order) · <code>build-summary.md</code> (output artifacts · common failures · fixes).</p>
 </div>
 
@@ -2546,7 +2547,7 @@ footer {
     <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
     <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
     <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14a, 14b, or 15</td></tr>
-    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.8</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
+    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.7</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
     <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13, 16, 17</td></tr>
   </tbody>
 </table>
@@ -2606,7 +2607,7 @@ footer {
 
 <section id="git">
 <h2>Git workflow</h2>
-<p class="section-intro">The git model that keeps six roles plus the AI agent working in one repo without collisions. Three rules: <strong>stage = branch</strong>, <strong>gate = pull request</strong>, <strong>merge = approval</strong>. The diagram below shows the typical pattern; tables specify branch names, commit format, and file ownership; the troubleshooting section covers conflict resolution.</p>
+<p class="section-intro">The git model that keeps seven roles plus the AI agent working in one repo without collisions. Three rules: <strong>stage = branch</strong>, <strong>gate = pull request</strong>, <strong>merge = approval</strong>. The diagram below shows the typical pattern; tables specify branch names, commit format, and file ownership; the troubleshooting section covers conflict resolution.</p>
 
 <div style="background: var(--card-bg); border: var(--border-card); border-radius: var(--radius-card); padding: var(--sp5); margin-bottom: var(--sp5);">
   <svg viewBox="0 0 660 470" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; display: block;">
@@ -2925,7 +2926,7 @@ build/
 │   ├── <span class="folder">inception/</span>                          <span class="comment">discovery · requirements · user-stories · plans · product-design · application-design · reverse-engineering</span><br/>
 │   ├── <span class="folder">ba-authoring/</span>                       <span class="comment">Route D workspace</span><br/>
 │   ├── <span class="folder">construction/</span>                       <span class="comment">{unit-name}/ + build/</span><br/>
-│   └── <span class="folder">operations/</span>                         <span class="comment">Placeholder in v0.3</span><br/>
+│   └── <span class="folder">operations/</span>                         <span class="comment">deployment + monitoring runbooks (v0.8)</span><br/>
 │<br/>
 ├── <span class="folder">adrs/</span>                                  <span class="comment">Architecture Decision Records</span><br/>
 │<br/>
@@ -3038,7 +3039,7 @@ build/
     <tr><td><strong>KB · Knowledge Base</strong></td><td>Project's canonical source-of-truth in <code>00-knowledge/</code>. PO/PM/BA copy context files here.</td></tr>
     <tr><td><strong>Lite mode</strong></td><td>Fast workflow for greenfield + clean inputs. Skips Pre-Inception and Reverse Engineering.</td></tr>
     <tr><td><strong>NFR</strong></td><td>Non-Functional Requirements — performance, scalability, availability, security, observability, accessibility, maintainability, compliance. <em>How well</em> the system behaves, not <em>what</em> it does.</td></tr>
-    <tr><td><strong>Operations</strong></td><td>Phase 4 of AI-DLC — deploy and monitor (placeholder in v0.3).</td></tr>
+    <tr><td><strong>Operations</strong></td><td>Phase 4 of AI-DLC — deploy and monitor. Formalized in v0.8 (deployment + monitoring runbooks).</td></tr>
     <tr><td><strong>Pre-Inception</strong></td><td>Phase 1 of AI-DLC for Standard mode — produces Vision + Tech Env docs via sub-flows A/B/C/D.</td></tr>
     <tr><td><strong>Reverse Engineering</strong></td><td>Stage 3 — documents existing system before extending it. KB-first.</td></tr>
     <tr><td><strong>Standard mode</strong></td><td>Full workflow for brownfield or projects needing input preparation.</td></tr>

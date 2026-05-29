@@ -129,7 +129,7 @@ Each stage: load `inception/<stage>.md`, execute, append `audit.md`, present com
 
 ---
 
-## 🟢 CONSTRUCTION (8 stages — per-unit loop, then build) · v0.7 split
+## 🟢 CONSTRUCTION (6 stages 10–15 — per-unit loop, then build · Stage 14 splits into 14a/14b/14c, plus conditional 10b) · v0.7+v0.8
 
 ```mermaid
 flowchart TB
@@ -243,7 +243,7 @@ project-root/
 ├── .claude/
 │   ├── skills/kafi/
 │   │   ├── design-system/          # KAFI brand-level design system (SKILL.md)
-│   │   └── roles/                  # 6 role guides
+│   │   └── roles/                  # 7 role guides
 │   ├── hooks/                      # optional
 │   └── settings.json
 ├── 00-knowledge/                   # project KB + conventions
@@ -279,4 +279,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.4 · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8 · Transformation Office, Kafi Securities*

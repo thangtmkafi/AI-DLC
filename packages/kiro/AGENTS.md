@@ -131,7 +131,7 @@ Each stage: load `.kiro/steering/inception/<stage>.md` via `#filename`, execute,
 
 ---
 
-## 🟢 CONSTRUCTION (8 stages — per-unit loop, then build) · v0.7 split
+## 🟢 CONSTRUCTION (6 stages 10–15 — per-unit loop, then build · Stage 14 splits into 14a/14b/14c, plus conditional 10b) · v0.7+v0.8
 
 ```mermaid
 flowchart TB
@@ -263,7 +263,7 @@ project-root/
 │   ├── steering/                      # AI rules (auto-loaded per inclusion mode)
 │   │   ├── kafi-design-system.md      # always
 │   │   ├── common/                    # always (6 files)
-│   │   ├── roles/                     # manual (6 roles)
+│   │   ├── roles/                     # manual (7 roles)
 │   │   ├── pre-inception/             # manual (sub-flows A/B/C/D)
 │   │   ├── inception/                 # manual (9 stages)
 │   │   ├── construction/              # manual (6 stages)
@@ -271,7 +271,7 @@ project-root/
 │   │   └── extensions/                # mix (audit-trail always; PDPA manual)
 │   ├── specs/                         # Kiro native specs (per-feature)
 │   │   └── _template/                 # blank spec template
-│   └── templates/                     # AI-DLC artifact templates (11 files)
+│   └── templates/                     # AI-DLC artifact templates (32 files)
 ├── 00-knowledge/                      # project KB + conventions
 ├── aidlc-docs/                        # generated artifacts
 ├── adrs/                              # Architecture Decision Records
@@ -305,4 +305,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.4 Kiro Port · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8 Kiro Port · Transformation Office, Kafi Securities*
