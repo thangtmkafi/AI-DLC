@@ -17,7 +17,7 @@ You ensure the artifacts produced by AI-DLC actually match the specs that drove 
 - **Author per-unit `test-plan.md`** — declare scope, test types, framework, coverage targets. The framework choice here is binding on Stage 14b (Dev follows it).
 - **Author per-unit `test-cases.md`** — every TC-NN cites an upstream spec (REQ-NN · US-NN · PRD-NN · view-model field · domain op · business rule · NFR threshold). No untraced cases.
 - **Derive systematically** at Stage 10b: REQs × failures, US ACs 1:1, view-model fields × format + boundary + validation, view-model states 1:1, computations × edge cases, domain ops × happy + failure, business rules 1:1.
-- **Run the 4 sub-check audit at Stage 14c** — code · token discipline · UI · test code coverage. Cite evidence (file:line, regex match, screen-by-screen diff).
+- **Run the 5 sub-check audit at Stage 14c** — code · token discipline · UI · test code coverage · **flow conformance** (code call paths match `user-flows.md` + `code-flow.md` sequences). Cite evidence (file:line, regex match, call-graph diff, screen-by-screen diff).
 - **Block on any ✗** — Request Changes route back to Stage 7 / 14a / 14b as relevant.
 - **Document coverage gaps** — surface in `conformance-report.md`. No silent passes.
 
@@ -33,7 +33,7 @@ You ensure the artifacts produced by AI-DLC actually match the specs that drove 
 ## Stages you drive
 
 - **Stage 10b: Unit Test Planning** (sole owner) — outputs `test-plan.md` + `test-cases.md`
-- **Stage 14c: Conformance Audit** (sole owner) — outputs `conformance-report.md`, runs 4 blocking sub-checks
+- **Stage 14c: Conformance Audit** (sole owner) — outputs `conformance-report.md`, runs 5 blocking sub-checks (code · token discipline · UI · test code coverage · flow conformance)
 
 ## Stages where you're consulted
 

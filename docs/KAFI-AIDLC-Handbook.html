@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KAFI AI-DLC Handbook · v0.7 · Claude Code + Kiro</title>
+<title>KAFI AI-DLC Handbook · v0.8 · Claude Code + Kiro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -824,7 +824,7 @@ footer {
 
 <!-- ============ HEADER ============ -->
 <header class="doc-header">
-  <div class="doc-eyebrow">Transformation Office · v0.7 · Covers Claude Code + Kiro editions</div>
+  <div class="doc-eyebrow">Transformation Office · v0.8 · Covers Claude Code + Kiro editions</div>
   <h1 class="doc-title">KAFI AI-DLC Handbook</h1>
   <p class="doc-subtitle">Per-stage reference for the KAFI AI-Driven Development Lifecycle. Companion to the Introduction document and the operational workflow spec (<code>CLAUDE.md</code> for Claude Code; <code>AGENTS.md</code> for Kiro). This unified doc covers both editions — edition-specific paths and commands are called out inline.</p>
   <div class="doc-meta-row">
@@ -1774,32 +1774,31 @@ footer {
     </div>
     <div class="io-arrow">→</div>
     <div class="io-col">
-      <h4>Outputs · inception/product-design/</h4>
+      <h4>Outputs · inception/product-design/ (v0.7+v0.8)</h4>
       <ul class="io-list">
-        <li><strong>mockups/ — self-contained HTML, one per screen</strong> (design-system styled · FE source of truth · new v0.6)</li>
-        <li>mockups/index.md (screen → file → US-NN → unit)</li>
-        <li>user-flows.md</li>
-        <li>information-architecture.md</li>
-        <li>interaction-specs.md</li>
-        <li>accessibility-notes.md</li>
-        <li>wireframes/ · screen-designs/ (optional)</li>
+        <li><strong>design-tokens.md</strong> — project look &amp; feel catalog (colors · type · spacing · radius · shadow · motion · component lib) · FIRST output · new v0.7</li>
+        <li><strong>uiux-spec.md</strong> — master narrative (sitemap · nav chrome · screen catalog · coverage matrix) · new v0.7</li>
+        <li><strong>mockups/&lt;screen&gt;.html</strong> — self-contained HTML, CSS uses tokens (no hex literals) · FE source of truth</li>
+        <li><strong>mockups/&lt;screen&gt;.view-model.md</strong> — MVVM data binding (field → ENT-NN · format · validation · computed · states · §6 layout sketch) · new v0.7</li>
+        <li><strong>user-flows.md</strong> — Mermaid sequenceDiagram per cross-screen flow · new v0.8</li>
+        <li>mockups/index.md · interaction-specs.md · accessibility-notes.md · wireframes/ (optional)</li>
       </ul>
     </div>
   </div>
   <div class="stage-steps">
     <h4>What happens</h4>
     <ol>
-      <li><strong>Load the KAFI design system</strong> (Claude Code: <code>.claude/skills/kafi/design-system/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-design-system.md</code>). Apply tokens, typography, components, patterns.</li>
-      <li>Define user flows and journey maps from stories.</li>
-      <li>Produce information architecture.</li>
-      <li><strong>Render each key screen as a self-contained HTML mockup</strong> (inline CSS, KAFI tokens) in <code>mockups/</code> using the design-system skill. One file per screen, every state shown. These HTML mockups are the FE source of truth Stage 14 must reproduce.</li>
-      <li>Define interaction specs (states, transitions, edge cases) in <code>interaction-specs.md</code>.</li>
-      <li>Write <code>mockups/index.md</code> mapping each file → stories → target unit. Cover empty / error / loading states. WCAG 2.1 AA minimum.</li>
+      <li><strong>Author design-tokens.md FIRST</strong> — inherit from KAFI design system + declare project overrides (WCAG notes). Locked tokens are Stage 14c's token-discipline source of truth (no ad-hoc hex/px in code).</li>
+      <li>Define user flows as <strong>Mermaid sequenceDiagram</strong> in <code>user-flows.md</code> (User → Screen → Handler → Service → Repo → DB · alt blocks). Journey maps from stories.</li>
+      <li>Author <strong>uiux-spec.md</strong> — sitemap, navigation chrome, screen catalog, cross-screen flows, coverage matrix (every user-facing US-NN has a covering screen).</li>
+      <li><strong>Render each key screen as a self-contained HTML mockup</strong> (CSS custom properties referencing design-tokens.md) in <code>mockups/</code>. One file per screen, every state shown.</li>
+      <li><strong>For each mockup, author paired view-model.md</strong> — field bindings to ENT-NN (from data-model.md), formats, validations, computed formulas, state behavior, + §6 layout sketch (Mermaid flowchart + ASCII).</li>
+      <li>Define interaction specs; write mockups/index.md mapping screen → file → view-model → stories → unit. WCAG 2.1 AA minimum.</li>
     </ol>
   </div>
   <div class="callout callout-watch">
     <div class="callout-label">Watch for</div>
-    Custom components when design system covers it · HTML mockups missing negative states · screens referenced by a story but with no mockup (Stage 14 blocks on these) · designs ignoring IA · ungrounded UX assumptions.
+    Ad-hoc CSS values not in design-tokens.md · HTML mockups missing negative states · mockup without paired view-model · view-model fields not bound to ENT-NN · user-facing stories absent from coverage matrix · custom components when design system covers it.
   </div>
 </article>
 
@@ -1831,10 +1830,9 @@ footer {
       <h4>Outputs · inception/application-design/</h4>
       <ul class="io-list">
         <li>application-design.md (consolidated)</li>
-        <li>components.md</li>
-        <li>component-methods.md</li>
-        <li>services.md</li>
-        <li>component-dependency.md</li>
+        <li><strong>data-model.md</strong> — system-wide entities (ENT-NN) · attributes · relationships · invariants · schemas · new v0.7</li>
+        <li>api-spec.md — REST/GraphQL contracts (external-facing units) · new v0.8</li>
+        <li>components.md · component-methods.md · services.md · component-dependency.md</li>
         <li>+ ADRs to adrs/</li>
       </ul>
     </div>
@@ -1842,7 +1840,7 @@ footer {
   <div class="stage-steps">
     <h4>What happens</h4>
     <ol>
-      <li>Domain modeling — entities, value objects, aggregates.</li>
+      <li><strong>Domain modeling + author data-model.md</strong> — entities (ENT-NN), value objects, aggregates, invariants, schemas. Stage 7 view-model.md + Stage 10 domain-entities.md derive from this; keep names/types stable once locked.</li>
       <li>Component design with clear boundaries per project's architecture-boundaries extension.</li>
       <li>Define method signatures and service contracts.</li>
       <li>Map dependencies (internal + external).</li>
@@ -1908,9 +1906,9 @@ footer {
 <div class="phase phase-cn" id="construction">
   <div class="phase-label">Phase 3 · Both modes</div>
   <h2>Construction</h2>
-  <p class="phase-tagline">Per-unit loop: <strong>Stage 10 → 10b (QA test planning, v0.7) → 11 → 12 → 13 → 14a (production code) → 14b (unit test code, v0.7) → 14c (QA conformance audit, v0.7 · BLOCKING)</strong> → next unit. Then Build (Stage 15) once for all units.</p>
+  <p class="phase-tagline">Per-unit loop: <strong>Stage 10 → 10b (QA test planning, v0.8) → 11 → 12 → 13 → 14a (production code) → 14b (unit test code, v0.8) → 14c (QA conformance audit, v0.8 · BLOCKING)</strong> → next unit. Then Build (Stage 15) once for all units.</p>
   <div class="callout callout-watch" style="margin-top: var(--sp4);">
-    <div class="callout-label">v0.7 · Spec-driven, test-verified</div>
+    <div class="callout-label">v0.8 · Spec-driven, test-verified</div>
     Construction split into 3 sub-stages (14a/14b/14c) + adds Stage 10b (Unit Test Planning). QA owns planning (10b) + audit (14c); Dev owns code (14a) + tests (14b). Stage 14c has 4 blocking sub-checks: code · token discipline · UI fidelity · test code coverage. Test execution remains the project's CI/local choice (outside AI-DLC).
   </div>
 </div>
@@ -2183,9 +2181,9 @@ footer {
 
 <!-- OPERATIONS -->
 <div class="phase phase-op" id="operations">
-  <div class="phase-label">Phase 4 · Placeholder in v0.3</div>
+  <div class="phase-label">Phase 4 · Formalized in v0.8</div>
   <h2>Operations</h2>
-  <p class="phase-tagline">Deploy and monitor. Full workflow scope defined in v0.4 once first project goes live.</p>
+  <p class="phase-tagline">Deploy and monitor — runbook-driven, no longer placeholders. Stage 16 produces a deployment runbook; Stage 17 a monitoring runbook with SLOs derived from NFR thresholds.</p>
 </div>
 
 <article class="stage">
@@ -2195,11 +2193,11 @@ footer {
       <h3 class="stage-title">Deployment</h3>
     </div>
     <div class="stage-badges">
-      <span class="badge badge-place">Placeholder</span>
+      <span class="badge badge-always">Formalized v0.8</span>
       <span class="badge badge-owner">DevOps</span>
     </div>
   </div>
-  <p>v0.3 ships this as a placeholder. Deployment workflow will be defined in v0.4 based on the first project's needs. For now, document your deployment approach in <code>aidlc-docs/operations/deployment-notes.md</code>.</p>
+  <p>Author <code>aidlc-docs/operations/deployment-runbook.md</code> (template <code>deployment-runbook.md</code>): prerequisites · pre-deploy checks · ordered deploy steps · DB migrations (forward-compatible; destructive splits across releases) · smoke verification · rollback procedure · post-deploy (release notes + tag + monitor window). Dry-run on staging before production. Updates <code>release-notes.md</code>.</p>
 </article>
 
 <article class="stage">
@@ -2209,11 +2207,11 @@ footer {
       <h3 class="stage-title">Monitoring</h3>
     </div>
     <div class="stage-badges">
-      <span class="badge badge-place">Placeholder</span>
+      <span class="badge badge-always">Formalized v0.8</span>
       <span class="badge badge-owner">DevOps + SRE</span>
     </div>
   </div>
-  <p>v0.3 ships this as a placeholder. Monitoring config, dashboards, alerts will be specified in v0.4. For now, document your monitoring approach in <code>aidlc-docs/operations/monitoring-notes.md</code>.</p>
+  <p>Author <code>aidlc-docs/operations/monitoring-runbook.md</code> (template <code>monitoring-runbook.md</code>): SLIs/SLOs (each tied to a source NFR threshold) · dashboards · alerts (condition · severity · routing) · logging (PII masked · audit append-only · correlation id) · oncall playbooks per alert · escalation ladder. Incidents produce a <code>postmortem.md</code>; lessons feed <code>kafi-memory</code>.</p>
 </article>
 
 <!-- ============ PART 3 REFERENCE ============ -->
@@ -2504,6 +2502,23 @@ footer {
 
 <div class="doc-type">
   <div class="doc-head">
+    <h3 class="doc-name">Spec-driven &amp; verification artifacts (v0.7 + v0.8)</h3>
+    <div class="doc-badges">
+      <span class="doc-badge doc-badge--tmpl">★ templates</span>
+      <span class="doc-badge">new</span>
+    </div>
+  </div>
+  <div class="doc-path"><code>aidlc-rule-details/templates/</code> (32 templates total)</div>
+  <p class="doc-purpose">The artifacts that make AI-DLC spec-driven and verifiable end-to-end. Each is a template authored at its owning stage and audited downstream at Stage 14c.</p>
+  <p class="doc-contains"><strong>Design / FE (Stage 7):</strong> <code>design-tokens.md</code> (look &amp; feel catalog) · <code>uiux-spec.md</code> (master UI narrative + sitemap + coverage matrix) · <code>view-model.md</code> (per-screen MVVM data binding + §6 layout sketch) · <code>user-flows.md</code> (Mermaid sequence diagrams) · <code>design-lite.md</code> (trivial-UI shortcut).</p>
+  <p class="doc-contains"><strong>Model / BE (Stage 8 + 10):</strong> <code>data-model.md</code> (system entities ENT-NN) · <code>api-spec.md</code> (REST/GraphQL contracts) · <code>code-flow.md</code> (per-unit Mermaid call sequences).</p>
+  <p class="doc-contains"><strong>Verification (Stage 10b + 14c · QA):</strong> <code>test-plan.md</code> (strategy) · <code>test-cases.md</code> (TC-NN catalog) · <code>dod.md</code> (Definition of Done rubric). Stage 14c runs 5 blocking sub-checks: code · token discipline · UI fidelity · test coverage · flow conformance.</p>
+  <p class="doc-contains"><strong>Product framing:</strong> <code>brief.md</code> · <code>personas.md</code> · <code>risk-register.md</code> · <code>epic.md</code> · <code>story-map.md</code> · <code>glossary.md</code> (bilingual).</p>
+  <p class="doc-contains"><strong>Operations (Stage 16 + 17 · DevOps):</strong> <code>deployment-runbook.md</code> · <code>monitoring-runbook.md</code> · <code>release-notes.md</code> · <code>postmortem.md</code>.</p>
+</div>
+
+<div class="doc-type">
+  <div class="doc-head">
     <h3 class="doc-name">State File</h3>
     <div class="doc-badges">
       <span class="doc-badge">Every stage</span>
@@ -2531,8 +2546,21 @@ footer {
     <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
     <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
     <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14a, 14b, or 15</td></tr>
-    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.7</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
-    <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13</td></tr>
+    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.8</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
+    <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13, 16, 17</td></tr>
+  </tbody>
+</table>
+
+<h3 style="margin-top: var(--sp5);">Helper skills <span style="font-size: 12px; color: var(--kafi-green); font-weight: 600;">new v0.8</span></h3>
+<p class="section-intro">Construction-phase helpers. Manual inclusion in both editions (Claude: <code>.claude/skills/kafi/&lt;name&gt;/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-&lt;name&gt;.md</code>).</p>
+<table>
+  <thead><tr><th>Skill</th><th>What it does</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td><strong>kafi-doc-sync</strong></td><td>Regenerate <code>aidlc-docs/</code> code summaries to match current <code>src/</code></td><td>Before Stage 14c (so the audit checks current docs)</td></tr>
+    <tr><td><strong>kafi-verification-loop</strong></td><td>One-pass build · typecheck · lint · tests · security</td><td>Dev runs before Stage 14c handoff</td></tr>
+    <tr><td><strong>kafi-code-review</strong> (router)</td><td>Detects language per file → dispatches to a language reviewer</td><td>Powers Stage 14c sub-check 1 (Code audit)</td></tr>
+    <tr><td>kafi-code-review-{typescript · python · go · java · kotlin · cpp · rust · csharp · database · shell}</td><td>Per-language lint · type · idiom · security review</td><td>Invoked by the router per file group</td></tr>
+    <tr><td><strong>kafi-memory</strong></td><td>Mine git history + postmortems for recurring patterns → candidate skills/ADRs/checklist items (human-curated, read-only)</td><td>Periodically / after postmortems</td></tr>
   </tbody>
 </table>
 </section>
@@ -3022,7 +3050,7 @@ build/
 </section>
 
 <footer>
-  <span>KAFI Transformation Office · v0.7 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>KAFI Transformation Office · v0.8 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
   <span>Companion: KAFI-AIDLC-Introduction.html · CLAUDE.md (workflow spec) · injection package zip</span>
 </footer>
 

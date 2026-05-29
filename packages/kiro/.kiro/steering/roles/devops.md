@@ -7,7 +7,7 @@ description: "Role: DevOps / SRE"
 
 ## Why this role exists
 
-Bridge between code and running system. Own infrastructure design, deployment, monitoring. With Operations stages still placeholders in v0.4, your full involvement comes in v0.5+.
+Bridge between code and running system. Own infrastructure design, deployment, monitoring. As of v0.8 the Operations stages are **formalized** — Stage 16 produces a `deployment-runbook.md`, Stage 17 produces a `monitoring-runbook.md` (no longer placeholders).
 
 ## Do
 
@@ -27,14 +27,14 @@ Bridge between code and running system. Own infrastructure design, deployment, m
 ## Stages you drive
 
 - **Stage 13: Infrastructure Design** (per-unit, with SA review)
-- **Stage 16: Deployment** (placeholder through v0.4; full role planned v0.5)
-- **Stage 17: Monitoring** (placeholder through v0.4; full role planned v0.5)
+- **Stage 16: Deployment** (v0.8 formalized) — author `deployment-runbook.md` (prereqs · ordered steps · migrations · smoke verify · rollback). Use `.kiro/templates/deployment-runbook.md`.
+- **Stage 17: Monitoring** (v0.8 formalized) — author `monitoring-runbook.md` (SLIs/SLOs from NFR thresholds · dashboards · alerts · oncall playbooks · escalation). Use `.kiro/templates/monitoring-runbook.md`. Write a `postmortem.md` after incidents.
 
 ## Stages where you're consulted
 
-- Stage 11 (NFR Requirements) — feasibility of thresholds in target infrastructure
+- Stage 11 (NFR Requirements) — feasibility of thresholds in target infrastructure; thresholds become SLOs at Stage 17
 - Stage 12 (NFR Design) — pattern selection that affects infrastructure
-- Stage 14 (Code Generation) — deployability constraints
+- Stage 14a (Production Code) — deployability constraints
 
 ## Key questions DevOps should always ask
 
@@ -55,4 +55,6 @@ Bridge between code and running system. Own infrastructure design, deployment, m
 
 - Stage: `.kiro/steering/construction/infrastructure-design.md`
 - Stage: `.kiro/steering/operations/deployment.md`
-- Stage: `.kiro/steering/operations/monitoring.md`
+- Stage: `.kiro/steering/operations/monitoring.md` · Template: `.kiro/templates/monitoring-runbook.md`
+- Stage: `.kiro/steering/operations/deployment.md` · Template: `.kiro/templates/deployment-runbook.md`
+- Template: `.kiro/templates/postmortem.md` (incident response)

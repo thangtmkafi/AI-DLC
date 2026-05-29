@@ -1,7 +1,7 @@
 # Session Handoff · KAFI AI-DLC
 
 > **Drop this file at repo root.** When opening this repo in Claude Code, your first prompt should be:
-> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.8 backlog."*
+> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.9 backlog."*
 
 ---
 
@@ -16,12 +16,21 @@ This is the **KAFI AI-DLC methodology repo** — it contains the workflow rules,
 
 Don't conflate the two. Editing the root one shapes how this repo is developed; editing the package one ships to every KAFI project using AI-DLC.
 
-**Current state:** v0.7 shipped 29 May 2026. Two editions, content parity verified.
+**Current state:** v0.8 shipped 29 May 2026. Two editions, content parity verified.
 
 - **Claude Code Edition** — `packages/claude-code/` · `CLAUDE.md` + `.claude/skills/` + `aidlc-rule-details/`
 - **Kiro Edition** — `packages/kiro/` · `AGENTS.md` + `.kiro/steering/` with YAML inclusion modes
 
-Both ship as zip files in `releases/v0.7/`. GitHub Actions auto-builds new zips on tag push.
+Both ship as zip files in `releases/v0.8/`. GitHub Actions auto-builds new zips on tag push.
+
+### v0.8 changes (shipped 2026-05-29) — mega release
+
+- **Added** · view-model §6 Layout sketch (Mermaid flowchart + ASCII); `user-flows.md` as Mermaid sequenceDiagram; NEW per-unit `code-flow.md` (Stage 10); Stage 14c 5th sub-check **flow conformance**.
+- **Added** · 14 skills: `kafi-doc-sync`, `kafi-verification-loop`, `kafi-memory`, `kafi-code-review` router + 10 per-language reviewers (TS/Python/Go/Java/Kotlin/Cpp/Rust/Csharp/Database/Shell).
+- **Added** · 13 templates (19 → 32): code-flow · glossary · api-spec · deployment-runbook · monitoring-runbook · brief · release-notes · postmortem · epic · personas · risk-register · design-lite · story-map. No pending templates remain.
+- **Changed** · Operations (Stage 16/17) formalized from placeholders → runbook-driven. DevOps/Dev/QA/Designer roles updated.
+- **Changed** · HTML docs deep-synced (~935 lines drift closed); Introduction adds Methodology/4-pillars + trims brainstorm to "Next coming · KAI Atlas".
+- **Added** · NEW `docs/KAFI-AIDLC-Whats-New.html` (v0.3→v0.8 migration page, indexed on Pages landing).
 
 ### v0.7 changes (shipped 2026-05-29)
 
@@ -82,17 +91,17 @@ Driven by `docs/ai-dlc-pain-points-2026-05.md` triage — focused on workflow co
 
 ---
 
-## v0.8 backlog (prioritized)
+## v0.9 backlog (prioritized)
 
-From `CHANGELOG.md` `## [Unreleased]`. v0.7 shipped conformance audit + QA role + 6 new templates; remaining items carry over.
+From `CHANGELOG.md` `## [Unreleased]`. v0.8 shipped the mega release (layouts + code-flow + flow conformance + 14 skills + 13 templates + Operations). Remaining items carry over.
 
-### Stream A · Carry-over (originally planned v0.4 → … → now v0.8)
+### Stream A · Carry-over (originally planned v0.4 → … → now v0.9)
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
 | A1 | **Test artifacts** | — | **Shipped v0.7 ✓** (templates test-plan + test-cases; stages 10b, 14b, 14c; QA role) |
 | A2 | **Compliance verification** | 1 week | Pre-deploy stage gating on extensions (audit-trail, PDPA, project-defined) |
-| A3 | **Operations expansion** | 2 weeks | Replace stage 16-17 placeholders with concrete deploy + monitor specs |
+| A3 | **Operations expansion** | — | **Shipped v0.8 ✓** (Stage 16/17 formalized · deployment-runbook + monitoring-runbook + postmortem) |
 | A4 | **Project extension YAML examples** | 1 week | Worked examples for `architecture-boundaries`, `naming-conventions`, `phase-discipline` |
 | A5 | **CI parity check upgrade** | 3 days | Semantic diff (currently word-count drift only) |
 
@@ -117,7 +126,7 @@ From `CHANGELOG.md` `## [Unreleased]`. v0.7 shipped conformance audit + QA role 
 
 | # | Item | Rough size | Notes |
 |---|---|---|---|
-| C1 | Standalone `epic.md` template + Epic stage | 1 week | Split Epic from PRD-NN decomposition. PRD groups Epics; each Epic groups User Stories. |
+| C1 | Standalone `epic.md` template | — | **Template shipped v0.8 ✓** (`epic.md`). Dedicated Epic *stage* still optional/deferred. |
 | C2 | PRD-NN → REQ-NN traceability checker | 2 days | CI lint catching REQs without parent PRD-NN |
 | C3 | BRD template | 1 week | Sibling to PRD when stakeholder approval needs business case detail |
 
@@ -128,7 +137,7 @@ From `CHANGELOG.md` `## [Unreleased]`. v0.7 shipped conformance audit + QA role 
 | D1 | Visual-diff tooling (screenshot mockup vs rendered FE) | 3-5 days | Automate the screen-by-screen fidelity check now done manually |
 | D2 | Mockup → component scaffold mode (literal HTML reuse) | 2 days | Opt-in alternative to visual+structural contract for web stacks |
 
-Pick one to start. Recommended order: A1 (test artifacts is sales-blocker), B6 (1-hour safety win), then triage rest with BTS.
+Pick one to start. Recommended order: B6 (1-hour safety win), A2 (compliance verification), then triage rest with BTS. Note: many v0.9 candidates also include per-language reviewers beyond the v0.8 ten, `kafi-memory` auto-skill-creation, and the parked Change-Request (CR) protocol.
 
 ---
 
@@ -244,4 +253,4 @@ Keep it under ~250 lines. If it grows, that's a signal to split into multiple se
 
 ---
 
-*Last updated: 29 May 2026 · v0.7 ship — spec-driven, test-verified · QA role + conformance audit + 6 new templates*
+*Last updated: 29 May 2026 · v0.8 ship — mega release · ASCII+Mermaid layouts · code-flow + flow conformance · 14 skills · 13 templates · Operations formalized · HTML deep-sync + What's-New page*

@@ -4,12 +4,9 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
-### Planned for v0.8
-Carry-over (deferred to keep v0.7 focused on conformance audit + QA + 6 new templates):
-- (Shipped v0.7 ✓) Test artifacts stage + templates (`test-plan.md`, `test-cases.md`) — Stream A1
-- Test execution integration (CI hooks / runner-aware) — out of v0.7 by design, project's choice
+### Planned for v0.9
+- Test execution integration (CI hooks / runner-aware) — out of scope by design, project's choice
 - Compliance verification stage — Stream A2
-- Operations stages expanded from placeholder to concrete specs — Stream A3
 - Project extension YAML examples — Stream A4
 - CI parity check (semantic diff, not just word count) — Stream A5
 - `phase-delivery` extension (Stream B1)
@@ -18,17 +15,42 @@ Carry-over (deferred to keep v0.7 focused on conformance audit + QA + 6 new temp
 - Loop-back protocol S17 → S4 (B4)
 - `kafi-git-stage-flow` skill (B5)
 - Sentinel + CI hook for CLAUDE.md/AGENTS.md (B6)
-- Audit log rotation (B7)
-- Open-items aggregator skill (B8)
-- AI review hard-gate (B9)
-- Designer-BA review pattern (B10)
-- 2-part stage decision rule (B11)
-- Retrospective stage (B12)
-- Standalone `epic.md` template + Epic stage (split from PRD-NN decomposition) — Stream C1
+- Audit log rotation (B7) · Open-items aggregator skill (B8) · AI review hard-gate (B9) · Designer-BA review pattern (B10) · 2-part stage decision rule (B11) · Retrospective stage (B12)
 - Automated PRD-NN → REQ-NN traceability checker — Stream C2
 - BRD template — Stream C3
-- Visual-diff tooling (screenshot mockup vs rendered FE) — automated FE fidelity check
-- Mockup → component scaffold mode (literal HTML reuse) as opt-in alternative to visual+structural contract
+- Visual-diff tooling (screenshot mockup vs rendered FE) — Stream D1
+- Mockup → component scaffold mode (literal HTML reuse) — Stream D2
+- Per-language code reviewers beyond the v0.8 ten (e.g. Swift, PHP, Ruby) as projects need them
+- Change-request (CR) protocol — parked brainstorm thread
+- `kafi-memory` auto-skill-creation (currently suggestion-only)
+
+## [0.8] · 2026-05-29
+
+### Added · ASCII+Mermaid layouts · code-flow · flow conformance · 14 skills · 13 templates · Operations formalized
+
+The largest release to date. Closes HTML drift debt and adds the full per-language review, long-term-memory, and operations layers.
+
+**Layout + flow specs:**
+- `view-model.md` gains **§6 Layout sketch** — a Mermaid `flowchart TB` (agent-facing, structural) + ASCII box-drawing (human-facing, spatial), so agents grasp screen layout without parsing HTML.
+- Stage 7 `user-flows.md` formalized as **Mermaid `sequenceDiagram`** per cross-screen flow (User → Screen → Handler → Service → Repo → DB · alt blocks).
+- NEW per-unit **`code-flow.md`** (Stage 10, SA) — Mermaid sequence of the code call path per user action.
+- Stage 14c gains a **5th blocking sub-check: Flow conformance** — code's actual call graph must match the `user-flows.md` + `code-flow.md` sequences.
+
+**14 new skills:**
+- `kafi-doc-sync` (keep `aidlc-docs/` current with `src/`) · `kafi-verification-loop` (build·typecheck·lint·tests·security one-pass) · `kafi-memory` (mine git history + postmortems for patterns → candidate skills/ADRs, human-curated)
+- `kafi-code-review` router + 10 per-language reviewers: **typescript · python · go · java · kotlin · cpp · rust · csharp · database · shell** (powers Stage 14c sub-check 1).
+
+**13 new templates** (19 → 32 total):
+- `code-flow.md` · `glossary.md` (bilingual) · `api-spec.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `brief.md` · `release-notes.md` · `postmortem.md` · `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md`. No templates remain pending.
+
+**Operations formalized:** Stage 16 (Deployment) + Stage 17 (Monitoring) lifted from placeholders — produce `deployment-runbook.md` + `monitoring-runbook.md` (SLOs derived from NFR thresholds) + `postmortem.md`.
+
+### Changed
+- Traceability chain: `Intent → Brief → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR`.
+- DevOps role: Operations stages no longer placeholders. Dev role: runs `kafi-verification-loop` before Stage 14c, follows `code-flow.md`. QA role: 5 sub-checks (added flow conformance). Designer role: authors layout sketch + Mermaid user-flows.
+- **HTML docs deep-synced** (~935 lines of drift from v0.5/v0.6/v0.7 light passes): Handbook Stage 7/8 outputs, Operations de-placeholdered, doc-types catalog + skills section updated; Introduction adds a **Methodology & 4-pillars** section, trims the brainstorm section to a focused **"Next coming · KAI Atlas"** roadmap teaser.
+- **NEW `docs/KAFI-AIDLC-Whats-New.html`** — v0.3 → v0.8 migration highlights page (indexed on the Pages landing) since most users are still on v0.3.
+- Version banner v0.7 → v0.8 across CLAUDE.md, AGENTS.md, config.json, all HTML docs, docs/index.html.
 
 ## [0.7] · 2026-05-29
 

@@ -16,7 +16,8 @@ Stage 14c does NOT execute tests — it audits whether code, tokens, UI, and tes
 ## Inputs
 
 - `src/` — production code (Stage 14a) + test code (Stage 14b) for this unit
-- `aidlc-docs/construction/{unit}/functional-design/` — function signatures, business rules, domain entities, frontend-components
+- `aidlc-docs/construction/{unit}/functional-design/` — function signatures, business rules, domain entities, frontend-components, **`code-flow.md`** (declared call sequences)
+- `aidlc-docs/inception/product-design/user-flows.md` — Mermaid sequence diagrams (flow-conformance source)
 - `aidlc-docs/construction/{unit}/nfr-design/`
 - `aidlc-docs/construction/{unit}/test/test-plan.md` + `test-cases.md`
 - `aidlc-docs/construction/{unit}/code/code-summary.md` + `tests-summary.md`
@@ -24,9 +25,9 @@ Stage 14c does NOT execute tests — it audits whether code, tokens, UI, and tes
 - `aidlc-docs/inception/product-design/uiux-spec.md` + `design-tokens.md` + `mockups/<screen>.html` + `mockups/<screen>.view-model.md` + `interaction-specs.md`
 - `00-knowledge/conventions/`
 
-## The 4 blocking sub-checks
+## The 5 blocking sub-checks
 
-Any ✗ blocks — Request Changes back to the appropriate stage (14a / 14b / 7 as relevant).
+Any ✗ blocks — Request Changes back to the appropriate stage (14a / 14b / 10 / 7 as relevant).
 
 ### 1. Code audit
 
@@ -71,7 +72,7 @@ Verify rendered output matches the Stage 7 mockup screen-by-screen.
 - [ ] Empty/error/loading visuals match mockup variants
 - [ ] Action handlers invoke the declared domain operation per view-model §5
 
-**Method:** Manual screen-by-screen review against mockup HTML side-by-side; future v0.8 visual-diff tooling will automate (Stream D1).
+**Method:** Manual screen-by-screen review against mockup HTML side-by-side; future visual-diff tooling will automate (Stream D1, v0.9+).
 
 ### 4. Test code coverage audit
 
@@ -86,6 +87,18 @@ Verify Stage 14b produced complete test code.
 
 **Tooling:** AST/glob scan of `src/*.{ts,tsx,js,py,go,…}` vs corresponding `<file>.test.<ext>` or `__tests__/`; grep test code for TC-NN identifiers; diff against `test-cases.md`.
 
+### 5. Flow conformance audit
+
+Verify the generated code's actual call paths match the declared sequence diagrams.
+
+- [ ] For each Mermaid `sequenceDiagram` in `user-flows.md` (Stage 7) and `code-flow.md` (Stage 10), the production code under `src/` implements the declared call chain (View → Handler → Service → Repo → DB / external).
+- [ ] Function/method names in code match (or alias-map to) the participants + calls declared in the sequences.
+- [ ] Error/edge paths declared as `alt` blocks have corresponding catch / error branches in code.
+- [ ] No cross-boundary call in code that isn't declared in `code-flow.md` §cross-boundary (+ backed by an ADR).
+- [ ] Call ORDER matches the sequence (not just presence) for state-changing flows.
+
+**Tooling:** grep / AST scan — build the call graph from entry points (handlers / controllers), diff against the declared sequences. Missing call → ✗. Extra undeclared cross-boundary call → ✗. Wrong order → ✗ (with diff).
+
 ## Steps
 
 1. Load all inputs.
@@ -93,10 +106,11 @@ Verify Stage 14b produced complete test code.
 3. Run sub-check 2 (Token discipline) — record regex match findings.
 4. Run sub-check 3 (UI audit) — manual review of each screen vs mockup.
 5. Run sub-check 4 (Test code coverage) — AST/glob + grep.
-6. Author `aidlc-docs/construction/{unit}/audit/conformance-report.md`:
+6. Run sub-check 5 (Flow conformance) — call-graph diff vs user-flows + code-flow sequences.
+7. Author `aidlc-docs/construction/{unit}/audit/conformance-report.md`:
    - One section per sub-check with ✓ / ✗ per item and evidence (file:line for failures)
    - Overall gate verdict (Pass / Request Changes with which sub-check)
-7. Update `aidlc-docs/aidlc-state.md` per process-overview state-file maintenance rules.
+8. Update `aidlc-docs/aidlc-state.md` per process-overview state-file maintenance rules.
 
 ## Outputs
 
@@ -115,6 +129,7 @@ Sub-check 1 · Code audit:               [✓ / ✗ with diffs]
 Sub-check 2 · Token discipline (UI):    [✓ / ✗ with violations]
 Sub-check 3 · UI audit (UI):            [✓ / ✗ per screen]
 Sub-check 4 · Test code coverage:       [✓ / ✗ with gaps]
+Sub-check 5 · Flow conformance:         [✓ / ✗ with call-graph diff]
 
 Overall: PASS / REQUEST CHANGES
 

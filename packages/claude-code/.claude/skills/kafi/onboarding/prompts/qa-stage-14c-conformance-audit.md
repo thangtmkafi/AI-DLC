@@ -15,11 +15,12 @@ Your Task: I am the QA Lead on UNIT-[N] of [PROJECT]. Stages 14a (production cod
   · aidlc-docs/inception/product-design/uiux-spec.md + design-tokens.md + mockups/<screen>.html + mockups/<screen>.view-model.md + interaction-specs.md
   · 00-knowledge/conventions/
 
-Load .claude/skills/kafi/roles/qa.md. Run **4 blocking sub-checks** and write `aidlc-docs/construction/[unit-name]/audit/conformance-report.md`:
-  1. **Code audit** — boundaries · component-methods signatures · data-model conformance · view-model field bindings/formats/validations/computed-formulas · audit-trail wired · privacy wired · no secrets · spec citations present.
+Load .claude/skills/kafi/roles/qa.md. Run **5 blocking sub-checks** and write `aidlc-docs/construction/[unit-name]/audit/conformance-report.md`:
+  1. **Code audit** — boundaries · component-methods signatures · data-model conformance · view-model field bindings/formats/validations/computed-formulas · audit-trail wired · privacy wired · no secrets · spec citations present. (Delegate per-file to `kafi-code-review` router for language-specific checks.)
   2. **Token discipline audit** (UI only) — regex scan FE code for `#[0-9a-fA-F]{3,6}` and `\b\d+(?:\.\d+)?(?:px|rem|em|ms)\b` outside CSS variable definitions. Each match = candidate ✗. Font stacks match. Component library matches declared choice.
-  3. **UI audit** (UI only) — manual screen-by-screen review against mockup HTML. All states from view-model §4 rendered (default/empty/loading/error/disabled).
+  3. **UI audit** (UI only) — manual screen-by-screen review against mockup HTML + view-model §6 layout sketch. All states from view-model §4 rendered (default/empty/loading/error/disabled).
   4. **Test code coverage audit** — every exported function has ≥1 test file (AST/glob scan); every TC-NN has corresponding test in code (grep TC-NN IDs); framework matches test-plan.md; no placeholder tests; tests-summary.md matches reality.
+  5. **Flow conformance audit** — code's actual call graph matches the Mermaid sequences in `user-flows.md` (Stage 7) + `code-flow.md` (Stage 10). Missing call → ✗. Undeclared cross-boundary call → ✗. Wrong order → ✗ (with call-graph diff).
 
 For each sub-check item: ✓ or ✗ with **file:line / regex output / screenshot evidence**. Any ✗ ⇒ Request Changes is mandatory (route to Stage 7 / 14a / 14b as relevant — name which one). **Do NOT execute the tests** — that's project's CI/local outside AI-DLC.
 

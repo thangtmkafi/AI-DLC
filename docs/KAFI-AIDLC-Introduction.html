@@ -1074,7 +1074,7 @@ footer {
       <span class="logo-x"></span>
       <span class="logo-text">Kafi</span>
     </div>
-    <div class="doc-eyebrow">Transformation Office · v0.7 · Covers Claude Code + Kiro editions</div>
+    <div class="doc-eyebrow">Transformation Office · v0.8 · Covers Claude Code + Kiro editions</div>
     <h1 class="doc-title">The KAFI <em>AI-DLC</em> Workflow</h1>
     <p class="doc-subtitle">An introduction for project leads and teams. How we ship software with AI as the drafter and humans as the deciders. This unified doc covers both Claude Code and Kiro IDE editions — edition-specific paths and commands are called out inline.</p>
   </div>
@@ -1109,6 +1109,32 @@ footer {
       </div>
     </div>
   </div>
+</section>
+
+<!-- ============ METHODOLOGY · 4 PILLARS ============ -->
+<section>
+  <h2>Methodology &amp; approach <span style="font-size: 13px; color: var(--kafi-green); font-weight: 600;">v0.8</span></h2>
+  <p class="section-intro">Since v0.3, AI-DLC matured from a linear spec-writer into a <strong>spec-driven, test-verified, audited lifecycle</strong>. Four pillars define how KAFI ships software with AI now.</p>
+
+  <div class="edition-split" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:24px;">
+    <div style="border:1.5px solid rgba(0,0,0,0.10); border-radius:18px; padding:20px;">
+      <h3 style="margin:0 0 8px;">1 · Spec-driven for FE <em>and</em> BE</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin:0;">Every artifact derives from an upstream spec. BE from <code>data-model.md</code> (ENT-NN) + functional-design; FE from <code>design-tokens.md</code> + <code>uiux-spec.md</code> + <code>view-model.md</code> (MVVM). Traceability: PRD → REQ → ENT → US → UNIT → TC → ADR.</p>
+    </div>
+    <div style="border:1.5px solid rgba(0,0,0,0.10); border-radius:18px; padding:20px;">
+      <h3 style="margin:0 0 8px;">2 · Documents kept up-to-date</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin:0;">The <code>kafi-doc-sync</code> skill keeps <code>aidlc-docs/</code> current with <code>src/</code>; Stage 14c audits doc-currency. Docs are the live contract, not write-once artifacts.</p>
+    </div>
+    <div style="border:1.5px solid rgba(0,0,0,0.10); border-radius:18px; padding:20px;">
+      <h3 style="margin:0 0 8px;">3 · Audit &amp; verifiable at each gate</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin:0;">Process step 5.5 spec-conformance trace-back (mechanical); AI Review Checklist Hard/Soft split; Stage 14c <strong>5 blocking sub-checks</strong> (code · token discipline · UI fidelity · test coverage · flow conformance). Every gate is a verification point, not a rubber stamp.</p>
+    </div>
+    <div style="border:1.5px solid rgba(0,0,0,0.10); border-radius:18px; padding:20px;">
+      <h3 style="margin:0 0 8px;">4 · Spec-driven, test-verified</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin:0;">QA authors <code>test-plan.md</code> + <code>test-cases.md</code> (Stage 10b) from specs; Dev generates unit test code (Stage 14b); audit checks coverage (Stage 14c). Tests are the executable form of the spec. (Execution itself is the project's CI/local choice.)</p>
+    </div>
+  </div>
+  <p style="font-size:12px; color:var(--text-muted); margin-top:16px;">New since v0.3? See <strong>KAFI-AIDLC-Whats-New.html</strong> for the v0.4 → v0.8 highlights + how to upgrade.</p>
 </section>
 
 <!-- ============ QUICK INSTALL ============ -->
@@ -1501,11 +1527,11 @@ footer {
     <div class="role-card">
       <h4>Developer</h4>
       <div class="role-name">Dev</div>
-      <p class="role-owns">Pairs with the AI agent on production code (Stage 14a) AND unit test code (Stage 14b · v0.7). Reviews the plan, verifies the build, owns build instructions.</p>
+      <p class="role-owns">Pairs with the AI agent on production code (Stage 14a) AND unit test code (Stage 14b · v0.8). Reviews the plan, verifies the build, owns build instructions.</p>
       <div class="role-stages"><strong>Drives:</strong> 14a Production Code · 14b Unit Test Code · Build</div>
     </div>
     <div class="role-card">
-      <h4>QA <span style="font-size: 10px; color: var(--kafi-green); font-weight: 700;">NEW v0.7</span></h4>
+      <h4>QA <span style="font-size: 10px; color: var(--kafi-green); font-weight: 700;">NEW v0.8</span></h4>
       <div class="role-name">QA</div>
       <p class="role-owns">Authors test plan + test cases as documentation (Stage 10b) and runs the 4-sub-check conformance audit (Stage 14c · BLOCKING). Does NOT write test code (Dev does at 14b) and does NOT execute tests (project's CI/local choice).</p>
       <div class="role-stages"><strong>Drives:</strong> 10b Unit Test Planning · 14c Conformance Audit</div>
@@ -2014,28 +2040,28 @@ footer {
       </tr>
       <tr class="phase-cn">
         <td class="num">10b</td>
-        <td class="stage"><strong>Unit Test Planning</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7</span></td>
+        <td class="stage"><strong>Unit Test Planning</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.8</span></td>
         <td class="role">QA</td>
         <td class="path"><code>aidlc-docs/construction/{unit}/functional-design/</code><br/><code>view-models</code> + <code>data-model.md</code></td>
         <td class="path"><code>aidlc-docs/construction/{unit}/test/test-plan.md</code><br/><code>aidlc-docs/construction/{unit}/test/test-cases.md</code></td>
       </tr>
       <tr class="phase-cn">
         <td class="num">14a</td>
-        <td class="stage"><strong>Production Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--text-muted);">FE must match mockup + tokens (v0.7)</span></td>
+        <td class="stage"><strong>Production Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--text-muted);">FE must match mockup + tokens (v0.8)</span></td>
         <td class="role">Developer</td>
         <td class="path">All <code>aidlc-docs/construction/{unit}/*</code><br/><code>application-design/data-model.md</code><br/><code>product-design/design-tokens.md</code> + <code>mockups/</code> + view-models</td>
         <td class="path"><strong style="color:var(--color-success-text)">src/</strong> ← production code<br/><code>aidlc-docs/construction/{unit}/code/code-summary.md</code></td>
       </tr>
       <tr class="phase-cn">
         <td class="num">14b</td>
-        <td class="stage"><strong>Unit Test Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7</span></td>
+        <td class="stage"><strong>Unit Test Code</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.8</span></td>
         <td class="role">Developer</td>
         <td class="path">Stage 14a code in <code>src/</code><br/><code>test-plan.md</code> (framework) + <code>test-cases.md</code></td>
         <td class="path"><strong style="color:var(--color-success-text)">src/*.test.*</strong> ← test code<br/><code>aidlc-docs/construction/{unit}/code/tests-summary.md</code></td>
       </tr>
       <tr class="phase-cn">
         <td class="num">14c</td>
-        <td class="stage"><strong>Conformance Audit</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.7 · BLOCKING</span></td>
+        <td class="stage"><strong>Conformance Audit</strong> · per-unit<br/><span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">NEW v0.8 · BLOCKING</span></td>
         <td class="role">QA</td>
         <td class="path">All Stage 14a + 14b outputs<br/>All upstream specs (design-tokens, view-model, data-model, mockup, test-cases)</td>
         <td class="path"><code>aidlc-docs/construction/{unit}/audit/conformance-report.md</code><br/>4 sub-checks: code · token discipline · UI · test code coverage</td>
@@ -2225,457 +2251,28 @@ footer {
   </div>
 </section>
 
-<!-- ============ BRAINSTORM · v0.4+ ============ -->
-<section class="brainstorm-section" id="brainstorm">
-  <h2>Beyond v0.3 · brainstorm</h2>
+<!-- ============ NEXT COMING · KAI ATLAS ============ -->
+<section class="brainstorm-section" id="next-coming">
+  <h2>Next coming · KAI Atlas</h2>
 
   <div class="brainstorm-banner">
-    <strong>Status: BRAINSTORM.</strong> Nothing in this section is committed. v0.3 pilots first. After learning from Q2 2026, the team will refine, prioritize, and decide together. Captured here so the thinking does not get lost.
+    <strong>On the roadmap.</strong> The methodology (v0.4–v0.8) is shipping. The next platform layer is <strong>KAI Atlas</strong> — a shared System Knowledge Base every AI-DLC project queries at Pre-Inception.
   </div>
 
-  <p class="section-intro">Three threads. The first is a platform-level idea that would change how every AI-DLC project starts. The second extends the v0.3 skill system into a pull-on-demand catalog. The third lists candidate skills to add to the catalog.</p>
-
-  <!-- ============ IDEA 1: SKB ============ -->
   <article class="brainstorm-idea brainstorm-idea--hero">
-    <div class="brainstorm-tag">Idea 1 · v0.4+ · platform layer</div>
-    <h3>System Knowledge Base · a shared brain for every KAFI project</h3>
-
+    <div class="brainstorm-tag">Platform layer · planned</div>
+    <h3>KAI Atlas · a shared brain for every KAFI project</h3>
     <p class="idea-pitch">
-      Every KAFI project today re-discovers the same context: how KOS-MO is laid out, what the BO Cores do, where TT 96/2020 applies, why a given ADR was made, which open items are still pending. The <strong>SKB</strong> would be a centralized, always-current knowledge layer that any AI-DLC project queries at Pre-Inception to pull the relevant context — no more manually copying BRDs and architecture docs into <code>00-knowledge/</code> by hand.
+      Every KAFI project today re-discovers the same context: how KOS-MO is laid out, what the BO Cores do, where TT 96/2020 applies, why a given ADR was made, which open items are still pending. <strong>KAI Atlas</strong> would be a centralized, always-current knowledge layer that any AI-DLC project queries at Pre-Inception to pull the relevant context — no more manually copying BRDs and architecture docs into <code>00-knowledge/</code> by hand.
     </p>
-
-    <h4>Name candidates</h4>
-    <p style="font-size: 12.5px; color: var(--text-secondary); margin: 0 0 var(--sp3) 0;">Five options. Each plays differently with the existing KAFI naming family (KOS-MO, KAI Foundry, KAI Atlas would be a clean sibling).</p>
-
-    <div class="name-grid">
-      <div class="name-card name-card--recommended">
-        <div class="name">KAI Atlas <span class="rec-pill">recommended</span></div>
-        <div class="rationale">Atlas of all KAFI systems. Sits naturally next to KAI Foundry under the Intelligent Foundation. Function reads from the name: a map you consult.</div>
-      </div>
-      <div class="name-card">
-        <div class="name">KORE</div>
-        <div class="rationale">KAFI Operations &amp; Reference Engine. Short, acronymic, fits the CAPS family (KOS-MO, RME, BO). Carries the "core of truth" suggestion.</div>
-      </div>
-      <div class="name-card">
-        <div class="name">KAFI Cortex</div>
-        <div class="rationale">Brain / neural-system metaphor. Memorable. Suggests the centralized intelligence layer of the firm. Slightly futuristic register.</div>
-      </div>
-      <div class="name-card">
-        <div class="name">K-Lens</div>
-        <div class="rationale">A looking-glass into the system landscape. Lighter, more product-y. Less formal than the others — could feel right for a self-serve UI.</div>
-      </div>
-      <div class="name-card">
-        <div class="name">K-Compass</div>
-        <div class="rationale">Guides agents and humans to the right knowledge. Friendly, evocative. Less explicit about "knowledge" than Atlas.</div>
-      </div>
-    </div>
-
-    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: var(--sp2);">For the rest of this section we use "SKB" as a generic placeholder.</p>
-
-    <h4>How it would work</h4>
-
-    <p class="idea-pitch">
-      The SKB pulls knowledge in from three streams and exposes it through a single MCP server. AI-DLC projects use the MCP both ways — they query at Pre-Inception to inject context, and they push at every stage merge to keep the SKB current.
-    </p>
-
-    <div class="skb-diagram-wrap">
-      <svg viewBox="0 0 920 780" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
-        <defs>
-          <marker id="skb-arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,8 L8,4 z" fill="#9095A0"/>
-          </marker>
-        </defs>
-
-        <!-- ZONE LABELS (left vertical) -->
-        <text x="20" y="68" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">SOURCES</text>
-        <text x="20" y="230" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">PROCESSING</text>
-        <text x="20" y="372" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">STORAGE</text>
-        <text x="20" y="568" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">INTERFACE</text>
-        <text x="20" y="678" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">CONSUMERS</text>
-
-        <!-- ROW 1: SOURCES (3 boxes) -->
-        <rect x="140" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="250" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">KAFI System Repos</text>
-        <text x="250" y="99" text-anchor="middle" font-size="11" fill="#585667">KOS-MO · TRS · RME ·</text>
-        <text x="250" y="114" text-anchor="middle" font-size="11" fill="#585667">Margin · Bravo · Cores</text>
-
-        <rect x="380" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="490" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">AI-DLC Stage Merges</text>
-        <text x="490" y="99" text-anchor="middle" font-size="11" fill="#585667">Vision · REQs · ADRs ·</text>
-        <text x="490" y="114" text-anchor="middle" font-size="11" fill="#585667">architecture · code</text>
-
-        <rect x="620" y="50" width="220" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="730" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">External Docs</text>
-        <text x="730" y="99" text-anchor="middle" font-size="11" fill="#585667">Confluence · Wiki ·</text>
-        <text x="730" y="114" text-anchor="middle" font-size="11" fill="#585667">Notion · drives</text>
-
-        <!-- ARROWS down to LLM -->
-        <line x1="250" y1="126" x2="430" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <line x1="490" y1="126" x2="490" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <line x1="730" y1="126" x2="550" y2="208" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-
-        <text x="320" y="156" font-size="10" fill="#9095A0">daily scan</text>
-        <text x="500" y="156" font-size="10" fill="#9095A0">on merge hook</text>
-        <text x="600" y="156" font-size="10" fill="#9095A0">periodic sync</text>
-
-        <!-- ROW 2: LOCAL LLM -->
-        <rect x="240" y="210" width="500" height="100" rx="14" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="490" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="#101820">Local LLM · on-prem</text>
-        <text x="490" y="268" text-anchor="middle" font-size="11.5" fill="#585667">extracts · structures · embeds · summarizes</text>
-        <text x="490" y="290" text-anchor="middle" font-size="10.5" fill="#9095A0">Hosted under KAI Foundry · Intelligent Foundation</text>
-
-        <!-- ARROW down to SKB -->
-        <line x1="490" y1="310" x2="490" y2="350" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <text x="500" y="334" font-size="10" fill="#9095A0">write structured knowledge</text>
-
-        <!-- ROW 3: SKB CORE (HERO — green border) -->
-        <rect x="100" y="358" width="780" height="170" rx="18" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
-        <text x="490" y="394" text-anchor="middle" font-size="17" font-weight="700" fill="#101820">SKB Core</text>
-        <text x="490" y="416" text-anchor="middle" font-size="12" fill="#585667">single source-of-truth for all KAFI system knowledge</text>
-
-        <!-- 3 sub-elements -->
-        <rect x="140" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-        <text x="250" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Vector store</text>
-        <text x="250" y="486" text-anchor="middle" font-size="10.5" fill="#585667">semantic search · embeddings</text>
-
-        <rect x="380" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-        <text x="490" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Knowledge graph</text>
-        <text x="490" y="486" text-anchor="middle" font-size="10.5" fill="#585667">entities · relationships · ADRs</text>
-
-        <rect x="620" y="440" width="220" height="70" rx="10" fill="#FFFFFF" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-        <text x="730" y="466" text-anchor="middle" font-size="12" font-weight="700" fill="#101820">Structured docs</text>
-        <text x="730" y="486" text-anchor="middle" font-size="10.5" fill="#585667">BRDs · PRDs · specs · diagrams</text>
-
-        <!-- ARROW down to MCP -->
-        <line x1="490" y1="528" x2="490" y2="560" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <text x="500" y="548" font-size="10" fill="#9095A0">exposed via</text>
-
-        <!-- ROW 4: MCP SERVER (green border, hero-ish) -->
-        <rect x="280" y="568" width="420" height="68" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
-        <text x="490" y="594" text-anchor="middle" font-size="13.5" font-weight="700" fill="#101820">MCP Server</text>
-        <text x="490" y="616" text-anchor="middle" font-size="11" fill="#585667">query · write · authenticated · audited</text>
-
-        <!-- ARROWS to 3 consumers -->
-        <line x1="340" y1="636" x2="200" y2="690" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <line x1="490" y1="690" x2="490" y2="642" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-        <line x1="640" y1="636" x2="780" y2="690" stroke="#9095A0" stroke-width="1.5" marker-end="url(#skb-arrow)"/>
-
-        <text x="240" y="664" font-size="10" fill="#9095A0">pull context</text>
-        <text x="510" y="664" font-size="10" fill="#9095A0">push update</text>
-        <text x="700" y="664" font-size="10" fill="#9095A0">read</text>
-
-        <!-- ROW 5: CONSUMERS -->
-        <rect x="80" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="200" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Pre-Inception query</text>
-        <text x="200" y="742" text-anchor="middle" font-size="10.5" fill="#585667">project agent injects relevant</text>
-        <text x="200" y="758" text-anchor="middle" font-size="10.5" fill="#585667">context into 00-knowledge/</text>
-
-        <rect x="370" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="490" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Post-merge push</text>
-        <text x="490" y="742" text-anchor="middle" font-size="10.5" fill="#585667">AI-DLC stage hook fires on</text>
-        <text x="490" y="758" text-anchor="middle" font-size="10.5" fill="#585667">approval · SKB updated</text>
-
-        <rect x="660" y="696" width="240" height="76" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="780" y="722" text-anchor="middle" font-size="12.5" font-weight="700" fill="#101820">Human browse</text>
-        <text x="780" y="742" text-anchor="middle" font-size="10.5" fill="#585667">chat panel · web UI ·</text>
-        <text x="780" y="758" text-anchor="middle" font-size="10.5" fill="#585667">IDE plugin · discovery</text>
-      </svg>
-    </div>
-
-    <h4>What the SKB would contain</h4>
-    <p class="idea-pitch" style="margin-top: var(--sp2);">Anything a future project would need to ground its work, organized by domain and system. Examples — not exhaustive:</p>
-
-    <div class="req-list">
-      <div class="req-item">
-        <div class="req-title">System architecture</div>
-        <div class="req-body">Per-system layer diagrams, component inventories, integration maps, domain boundaries</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">API specs</div>
-        <div class="req-body">OpenAPI definitions, gRPC contracts, event schemas, versioning history</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">BRDs &amp; PRDs</div>
-        <div class="req-body">Latest business and product requirement docs across systems</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Sequence &amp; flow diagrams</div>
-        <div class="req-body">Per-capability sequence diagrams · user flows · process diagrams</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">UI / UX designs</div>
-        <div class="req-body">Figma references · screen specs · design tokens · component library state</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">ADRs</div>
-        <div class="req-body">Every architectural decision ever made, with context · rationale · alternatives</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Data models</div>
-        <div class="req-body">ERDs · table schemas · field dictionaries · PII tags</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Open items register</div>
-        <div class="req-body">Cross-system pending decisions, owners, status, expected resolution</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Compliance mappings</div>
-        <div class="req-body">TT 96/2020 · Decree 13/2023 · SSC rules → where they apply, who owns them</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Glossary &amp; conventions</div>
-        <div class="req-body">KAFI-wide naming, role taxonomy, ID formats, prohibited terms</div>
-      </div>
-    </div>
-
-    <h4>Integration with AI-DLC</h4>
-
-    <p class="idea-pitch">
-      Three concrete additions to the v0.3 workflow:
-    </p>
-
-    <div class="req-list">
-      <div class="req-item">
-        <div class="req-title">New skill · <code>kafi-skb</code></div>
-        <div class="req-body">Auto-discoverable like the design-system skill. Tells the agent the SKB exists, what shape it has, and how to query it via MCP.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">New rule · <code>pre-inception/0-skb-query.md</code></div>
-        <div class="req-body">Before drafting Vision, the agent queries the SKB MCP for related systems, prior ADRs, and existing capabilities. Surfaces these as starting context — the team decides which apply.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">New hook · post-merge update</div>
-        <div class="req-body">When a stage PR is merged, a git hook posts the new artifacts to the SKB MCP. Local LLM processes, structures, and embeds. SKB stays current automatically.</div>
-      </div>
-    </div>
-
-    <h4>Browser chatbot · Local LLM dual purpose</h4>
-
-    <p class="idea-pitch">
-      The same Local LLM that ingests artifacts can also answer human questions through a <strong>chat panel in the SKB web UI</strong>. Same model, two modes: <strong>ingestion</strong> writes to SKB (existing), <strong>inference</strong> reads from SKB using RAG — Retrieval-Augmented Generation. Means anyone in KAFI — not just AI-DLC agents — can query the system knowledge directly in the browser.
-    </p>
-
-    <h4 style="margin-top: var(--sp4);">What people would ask</h4>
-
-    <div class="req-list">
-      <div class="req-item">
-        <div class="req-title">Query</div>
-        <div class="req-body">"Where does TT 96/2020 apply in KOS-MO?" · "What's the current state of the Bond settlement flow?"</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Search</div>
-        <div class="req-body">"Find all ADRs about real-time balance ownership" · "Show requirements that mention VSD"</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Brainstorm</div>
-        <div class="req-body">"What's the typical KAFI approach for cross-border data flows?" · "Compare how TRS and Margin handle limit checks"</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Discovery</div>
-        <div class="req-body">"Which systems integrate with VSD?" · "Who owns the open items for Customer Mgt?"</div>
-      </div>
-    </div>
-
-    <h4 style="margin-top: var(--sp5);">How the chat flow works</h4>
-
-    <p class="idea-pitch" style="margin-top: var(--sp2);">
-      The chat panel does <strong>RAG</strong>: when a user asks a question, the MCP Server retrieves the most relevant chunks from SKB Core, then prompts the Local LLM with question + retrieved context. The LLM generates a grounded answer with clickable citations back to source artifacts. <strong>No hallucination beyond what's in KAFI's actual knowledge</strong> — every answer is traceable to a real document in the SKB.
-    </p>
-
-    <div class="skb-diagram-wrap">
-      <svg viewBox="0 0 920 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
-        <defs>
-          <marker id="chat-arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,8 L8,4 z" fill="#9095A0"/>
-          </marker>
-        </defs>
-
-        <!-- ZONE LABELS LEFT -->
-        <text x="20" y="78" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">USER</text>
-        <text x="20" y="170" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">WEB UI</text>
-        <text x="20" y="272" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">ORCHESTRATOR</text>
-        <text x="20" y="392" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#9095A0">RAG ENGINES</text>
-
-        <!-- ROW 1: USER -->
-        <rect x="340" y="50" width="240" height="56" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="460" y="76" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">User · browser</text>
-        <text x="460" y="94" text-anchor="middle" font-size="10.5" fill="#585667">asks question · reads answer with citations</text>
-
-        <!-- Bidirectional arrows USER ↔ WEB UI -->
-        <line x1="450" y1="106" x2="450" y2="138" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <line x1="470" y1="138" x2="470" y2="106" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <text x="488" y="125" font-size="10" fill="#9095A0">question / answer</text>
-
-        <!-- ROW 2: WEB UI -->
-        <rect x="320" y="146" width="280" height="60" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="460" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">SKB Web UI · chat panel</text>
-        <text x="460" y="190" text-anchor="middle" font-size="10.5" fill="#585667">renders Q&amp;A · clickable source citations</text>
-
-        <!-- Bidirectional arrows WEB UI ↔ MCP -->
-        <line x1="450" y1="206" x2="450" y2="238" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <line x1="470" y1="238" x2="470" y2="206" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <text x="488" y="225" font-size="10" fill="#9095A0">POST /chat</text>
-
-        <!-- ROW 3: MCP SERVER (hero) -->
-        <rect x="260" y="244" width="400" height="80" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
-        <text x="460" y="270" text-anchor="middle" font-size="13.5" font-weight="700" fill="#101820">MCP Server · chat orchestrator</text>
-        <text x="460" y="290" text-anchor="middle" font-size="11" fill="#585667">RAG: retrieve relevant chunks from SKB · prompt LLM with context</text>
-        <text x="460" y="308" text-anchor="middle" font-size="10.5" fill="#9095A0">authenticated · every chat call audited</text>
-
-        <!-- Diagonal arrows DOWN to SKB and LLM (one-way going out; return implied) -->
-        <line x1="350" y1="324" x2="240" y2="374" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <text x="218" y="354" font-size="11" font-weight="700" fill="#00C694">① retrieve</text>
-
-        <line x1="570" y1="324" x2="680" y2="374" stroke="#9095A0" stroke-width="1.5" marker-end="url(#chat-arrow)"/>
-        <text x="630" y="354" font-size="11" font-weight="700" fill="#00C694">② generate</text>
-
-        <!-- ROW 4: SKB Core + Local LLM -->
-        <rect x="100" y="380" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#00C694" stroke-width="1.5"/>
-        <text x="230" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">SKB Core</text>
-        <text x="230" y="424" text-anchor="middle" font-size="10.5" fill="#585667">vector search · returns top-k chunks</text>
-
-        <rect x="560" y="380" width="260" height="64" rx="12" fill="#FFFFFF" stroke="rgba(0,0,0,0.10)" stroke-width="1.5"/>
-        <text x="690" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#101820">Local LLM · inference mode</text>
-        <text x="690" y="424" text-anchor="middle" font-size="10.5" fill="#585667">prompt: question + chunks → answer</text>
-
-        <!-- Bottom note: return path -->
-        <text x="460" y="465" text-anchor="middle" font-size="10.5" fill="#9095A0">Answer + citations flow back: LLM → MCP → Web UI → User (return paths via bidirectional arrows above)</text>
-      </svg>
-    </div>
-
-    <p style="font-size: 12px; color: var(--text-muted); margin-top: var(--sp3); line-height: 1.55;">
-      <strong>Capacity note · open question.</strong> Local LLM serves both ingestion (batch, off-hours friendly) and chat (interactive, latency-sensitive). One DGX Spark unit handles ingestion; the second serves chat inference. To keep chat under ~3 seconds end-to-end, the chat side could run a smaller distilled model (e.g. 8B for retrieval-grounded Q&amp;A) while the heavier 70B model does structured ingestion. Open — pending Phase A benchmarks.
-    </p>
-
-    <h4>Required infrastructure</h4>
-
-    <div class="req-list">
-      <div class="req-item">
-        <div class="req-title">SKB storage</div>
-        <div class="req-body">Vector DB + graph DB + object/document store. Hosted on-prem under Intelligent Foundation.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">MCP Server</div>
-        <div class="req-body">Single API surface for query, write, and <code>/chat</code> RAG endpoint. Authenticated, audited every call.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Local LLM</div>
-        <div class="req-body">On-prem model serving two modes: structured-knowledge <strong>ingestion</strong> (heavier 70B for accuracy) and chat <strong>inference</strong> (smaller distilled model for latency). Sits under KAI Foundry.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Daily scanner</div>
-        <div class="req-body">Cron job that walks all KAFI system repos and queues changes for the Local LLM.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Webhook receiver</div>
-        <div class="req-body">Listens for AI-DLC merge events. Pulls the diff, hands it to the Local LLM.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Browse UI + chat panel</div>
-        <div class="req-body">Web app with chat panel for natural-language Q&amp;A · structured browse of artifacts · clickable citations · (optional) IDE plugin.</div>
-      </div>
-    </div>
-  </article>
-
-  <!-- ============ IDEA 2: SKILL INVENTORY ============ -->
-  <article class="brainstorm-idea">
-    <div class="brainstorm-tag">Idea 2 · v0.4 · workflow extension</div>
-    <h3>Skill Inventory · pull skills on demand</h3>
-
-    <p class="idea-pitch">
-      v0.3 ships a fixed set of skills in the injection package — design-system plus six role guides. Real projects will need more: data-modeling, API-design, accessibility-audit, performance-tuning, integration-testing patterns. A <strong>Skill Inventory</strong> with its own MCP server would let an AI-DLC project pull the skills it needs at session start, instead of bundling every skill into every project.
-    </p>
-
-    <h4>How it would work</h4>
-    <div class="req-list">
-      <div class="req-item">
-        <div class="req-title">Central Skill Inventory</div>
-        <div class="req-body">All KAFI-approved skills live in one repo. Versioned. Each has metadata: name, scope, prerequisites, supported stages.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Skill MCP server</div>
-        <div class="req-body">Lists available skills · fetches a skill on request · returns metadata for the agent to decide.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">New rule · skill discovery</div>
-        <div class="req-body">In Workspace Detection (or per-stage), the agent queries the Skill MCP for skills relevant to the active stage. Suggests them to the team.</div>
-      </div>
-      <div class="req-item">
-        <div class="req-title">Local cache</div>
-        <div class="req-body">Pulled skills land in <code>.claude/skills/</code> (Claude Code) or <code>.kiro/steering/</code> (Kiro) and stay for the project. Versions pinned per project for reproducibility.</div>
-      </div>
-    </div>
-
-    <h4>Open question · who curates</h4>
-    <p class="idea-pitch">
-      v0.3 hands all skills to the TO. With a Skill Inventory, the TO still owns "approved skill" status, but any team can propose. Needs a lightweight review process — see Idea 3 for candidate skills to seed.
-    </p>
-  </article>
-
-  <!-- ============ IDEA 3: NEW SKILLS ============ -->
-  <article class="brainstorm-idea">
-    <div class="brainstorm-tag">Idea 3 · v0.4+ · skill catalog</div>
-    <h3>Additional skills to consider</h3>
-
-    <p class="idea-pitch">
-      Skills the team has flagged as useful, plus a few derived from how teams actually work today. The Skill Inventory (Idea 2) would host all of these. None is committed; the list is a starting point for the v0.4 prioritization conversation.
-    </p>
-
-    <table class="skill-table">
-      <thead>
-        <tr>
-          <th>Skill</th>
-          <th>Triggers in</th>
-          <th>What it does</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>code-review</td>
-          <td>Stage 14 · post-codegen</td>
-          <td>Reads generated code · checks against house conventions · flags missing error handling, unclear naming, untyped boundaries. Output: structured review notes the Dev can address before Build.</td>
-        </tr>
-        <tr>
-          <td>automation-unit-test</td>
-          <td>Stage 14 · alongside code</td>
-          <td>Generates unit tests for the new code · runs coverage analysis · flags untested branches. Pairs with code-review on the same generated artifact.</td>
-        </tr>
-        <tr>
-          <td>security-audit</td>
-          <td>Per unit · before merge</td>
-          <td>OWASP top-10 scan · auth/authorization checks · PII handling verification · secret leakage detection. Surfaces findings for the SA to triage.</td>
-        </tr>
-        <tr>
-          <td>code-compliance-audit</td>
-          <td>Per unit · before merge</td>
-          <td>Verifies code against architecture-boundaries · checks naming conventions · validates folder structure · confirms ADR coverage on cross-boundary calls.</td>
-        </tr>
-        <tr>
-          <td>api-contract-check</td>
-          <td>Stage 8 · application-design</td>
-          <td>Compares new API specs against existing consumers · flags breaking changes · suggests versioning strategy. Reads SKB for consumer dependencies (synergy with Idea 1).</td>
-        </tr>
-        <tr>
-          <td>performance-regression</td>
-          <td>Stage 14 · alongside test</td>
-          <td>Detects performance delta vs main on critical paths · enforces NFR-PERF thresholds from Stage 11. Requires baseline numbers in NFR Requirements.</td>
-        </tr>
-        <tr>
-          <td>observability-coverage</td>
-          <td>Stage 13 · infrastructure</td>
-          <td>Validates that every NFR-OBS requirement has a corresponding log, metric, or trace emission point in the generated code. Pairs with NFR Design (Stage 12).</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p style="font-size: 12px; color: var(--text-muted); margin-top: var(--sp4);">Skills are not ordered — the v0.4 conversation will pick which two or three ship first based on pilot learnings.</p>
+    <p style="font-size: 12.5px; color: var(--text-secondary);">Name being finalized — <strong>KAI Atlas</strong> is the working name (sits naturally next to KAI Foundry under the Intelligent Foundation; reads as a map you consult). The <code>kafi-memory</code> skill (v0.8) is the first step toward this: it already mines per-project git history + postmortems for patterns worth promoting to org-level knowledge.</p>
   </article>
 </section>
 
 <!-- ============ FOOTER ============ -->
 <footer>
-  <span>KAFI Transformation Office · v0.3 Draft · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
-  <span>Companion: KAFI-AIDLC-Handbook.html · CLAUDE.md workflow spec</span>
+  <span>KAFI Transformation Office · v0.8 · Adapted from AWS Labs AI-DLC + Toan Huynh enterprise playbook</span>
+  <span>Companion: KAFI-AIDLC-Handbook.html · KAFI-AIDLC-Whats-New.html · CLAUDE.md workflow spec</span>
 </footer>
 
 </div>

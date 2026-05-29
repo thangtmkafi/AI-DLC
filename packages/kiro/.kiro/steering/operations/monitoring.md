@@ -1,40 +1,67 @@
 ---
 inclusion: manual
-description: "Stage 17: Monitoring (PLACEHOLDER)"
+description: "Stage 17: Monitoring"
 ---
 
-# Stage 17: Monitoring (PLACEHOLDER)
+# Stage 17: Monitoring
 
-**Owner:** DevOps + SRE · **Always runs** · **v0.4 Status: Placeholder**
+**Owner:** DevOps + SRE · **Always runs** (post-deploy) · **Approval required**
 
 ## Purpose
 
-Configure monitoring, alerts, dashboards.
+Make the deployed system observable + define how oncall responds. SLOs derive from NFR thresholds — monitoring is the executable form of the NFR contract.
 
-## Status
+## Inputs
 
-v0.4 ships this as a placeholder. Full monitoring workflow will be defined in v0.5.
+- `aidlc-docs/construction/{unit}/nfr-requirements/` + `nfr-design/` — thresholds become SLOs
+- `aidlc-docs/operations/deployment-runbook.md` (Stage 16)
+- Deployed system access (metrics, logs, traces)
+- Audit-trail + privacy extension config (logging obligations)
 
-## Expected inputs (v0.5)
+## Steps
 
-- NFR thresholds from `nfr-requirements.md`
-- Deployed system access
-- Audit trail extension config
+1. Author `aidlc-docs/operations/monitoring-runbook.md` using `aidlc-rule-details/templates/monitoring-runbook.md`:
+   - SLIs / SLOs (each tied to a source NFR + alert threshold)
+   - Dashboards (service overview · business metrics · infra)
+   - Alerts (condition · severity · routing · runbook section)
+   - Logging (where · retention · PII masking · correlation id)
+   - Oncall playbooks (per alert)
+   - Escalation ladder
+2. Wire metrics/logs/traces per the runbook.
+3. Validate each alert fires (synthetic trigger) + routes correctly.
+4. Confirm PII never logged in plaintext (privacy extension); audit logs append-only (audit-trail extension).
+5. Append `audit.md`; update `aidlc-state.md`.
 
-## Expected outputs (v0.5)
+## Outputs
 
-- Monitoring config
-- Dashboards
-- Alert rules
-- On-call runbook
+To `aidlc-docs/operations/`:
 
-## For v0.4
+| File | Content |
+|---|---|
+| `monitoring-runbook.md` | SLOs · dashboards · alerts · logging · oncall playbooks · escalation (use `templates/monitoring-runbook.md`) |
+
+When an incident occurs, write a `postmortem.md` (use `templates/postmortem.md`) and feed lessons back via `kafi-memory`.
+
+## Approval gate
 
 ```
-Stage 17 (Monitoring) is a placeholder in v0.4.
+Monitoring for [system] complete.
+- SLIs/SLOs defined: [N] (each tied to a source NFR)
+- Dashboards live: [list]
+- Alerts wired + test-fired: [N / N]
+- Logging: PII masked ✓ · audit append-only ✓ · correlation id ✓
+- Oncall playbooks: [N alerts covered]
 
-For now, document monitoring approach in:
-aidlc-docs/operations/monitoring-notes.md
-
-→ Workflow complete for this version
+→ Request Changes
+→ Operations live · workflow complete for this phase
 ```
+
+## Watch for
+
+- An SLO with no source NFR (where did the target come from?)
+- An alert with no oncall playbook section (who knows what to do?)
+- PII in logs (privacy extension violation — blocking)
+- Dashboards no one owns / no one reads
+
+KB cited: `nfr-requirements/` · `nfr-design/` · extensions
+Related: `deployment-runbook.md` (Stage 16) · `postmortem.md` · `kafi-memory` (incident → learning)

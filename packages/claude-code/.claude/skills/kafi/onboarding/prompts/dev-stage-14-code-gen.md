@@ -11,7 +11,8 @@ Your Role: You are an expert Developer at KAFI Securities, pairing with me to ge
 [Standard plan paragraph — write plan.md with checkboxes, [Question]/[Answer] tags, get approval, execute step-by-step. Surface open items as "Open — pending [owner]". Apply AI Review Checklist. End with 2-option gate.]
 
 Your Task: I am the Developer on UNIT-[N] of [PROJECT]. The active stage is Stage 14a Production Code Generation. Inputs:
-  · aidlc-docs/construction/[unit-name]/functional-design/ (incl. frontend-components.md)
+  · aidlc-docs/construction/[unit-name]/functional-design/ (incl. frontend-components.md + code-flow.md — declared call sequences)
+  · aidlc-docs/inception/product-design/user-flows.md — Mermaid sequence diagrams
   · aidlc-docs/construction/[unit-name]/nfr-design/
   · aidlc-docs/construction/[unit-name]/infrastructure-design/
   · aidlc-docs/inception/application-design/ (incl. data-model.md — ENT-NN reference)
@@ -20,7 +21,7 @@ Your Task: I am the Developer on UNIT-[N] of [PROJECT]. The active stage is Stag
   · aidlc-docs/inception/product-design/mockups/<screen>.view-model.md — data binding contract per screen (v0.7)
   · aidlc-docs/inception/product-design/interaction-specs.md
 
-Load .claude/skills/kafi/roles/dev.md. **Write PRODUCTION CODE ONLY** into src/ — NEVER inside aidlc-docs/. Test code is Stage 14b (next stage, Dev). **For UI units:** reproduce mockup layout/hierarchy + every state from view-model §4 (default/hover/empty/error/loading/disabled) + every field binding from view-model §2 (entity.attribute, type, format string, validation rules, computed-field formulas exactly as declared). **Use ONLY tokens declared in `design-tokens.md`** — no hex/px/font literals. Do NOT invent screens/components absent from the mockup; if a needed screen has no mockup, STOP and open an item back to Stage 7. Map each component to its source mockup in code-summary.md. No hardcoded secrets — env vars only. Auto-wire audit trail at state-change boundaries; privacy enforcement on PII. Show me the file plan first (with a Mockup mapping table for UI units); execute after my approval. Advances to Stage 14b (test code), then Stage 14c (QA audit · blocking). Only focus on UNIT-[N] production code and nothing else.
+Load .claude/skills/kafi/roles/dev.md. **Write PRODUCTION CODE ONLY** into src/ — NEVER inside aidlc-docs/. Test code is Stage 14b (next stage, Dev). **For UI units:** reproduce mockup layout/hierarchy + every state from view-model §4 (default/hover/empty/error/loading/disabled) + every field binding from view-model §2 (entity.attribute, type, format string, validation rules, computed-field formulas exactly as declared). **Use ONLY tokens declared in `design-tokens.md`** — no hex/px/font literals. Do NOT invent screens/components absent from the mockup; if a needed screen has no mockup, STOP and open an item back to Stage 7. Map each component to its source mockup in code-summary.md. **Implement the call paths declared in `code-flow.md`** (View → Handler → Service → Repo → DB); no cross-boundary call that isn't declared there + ADR. No hardcoded secrets — env vars only. Auto-wire audit trail at state-change boundaries; privacy enforcement on PII. Show me the file plan first (with a Mockup mapping table for UI units); execute after my approval. **Before handing off, run `kafi-verification-loop` (build · typecheck · lint · tests · security).** Advances to Stage 14b (test code), then Stage 14c (QA audit · blocking · 5 sub-checks incl. flow conformance). Only focus on UNIT-[N] production code and nothing else.
 
 ---
 

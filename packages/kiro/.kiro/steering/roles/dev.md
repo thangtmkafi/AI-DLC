@@ -12,11 +12,12 @@ You turn design into running code AND its unit tests. With AI-DLC, you pair with
 ## Do
 
 - **Match the mockup — strictly.** Generated FE MUST reproduce the Stage 7 HTML mockup: layout, component hierarchy, design tokens, and every state (default/hover/empty/error/loading/disabled). The mockup is the source of truth, not a suggestion. If a screen this unit needs has no mockup → **STOP, open item back to Stage 7, don't improvise UI.**
+- **Follow the declared code flow.** Implement the call paths in `code-flow.md` (Stage 10) — View → Handler → Service → Repo → DB. No cross-boundary call that isn't declared there (+ ADR). Stage 14c sub-check #5 audits this against the generated call graph.
 - **Review the code generation plan** before approving Part 2 execution. Catch architecture issues at plan time, not after files are written. For UI units, confirm the plan's Mockup mapping covers every screen.
-- **Verify the build runs locally** before approving Stage 14 completion.
+- **Run `kafi-verification-loop` before handing off to Stage 14c** — build · typecheck · lint · tests · security in one pass. Don't burn a conformance-audit cycle on code that doesn't compile.
 - **Document build instructions** in Stage 15 such that someone with zero context could rebuild from a fresh clone.
 - **Run the AI Review Checklist** mentally on every generated file. Critical fails should be addressed before merge.
-- **Cite designs.** Generated code should reference functional-design / nfr-design / interaction-specs / source mockup in comments where relevant.
+- **Cite designs.** Generated code should reference functional-design / nfr-design / interaction-specs / source mockup / code-flow in comments where relevant.
 
 ## Don't
 

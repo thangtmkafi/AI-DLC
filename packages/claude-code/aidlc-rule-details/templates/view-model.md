@@ -91,7 +91,61 @@ Buttons + form events that change state. Each cites the domain operation it trig
 | Cancel | "Cancel" button | `Deal.cancel(reason)` (ENT-01) | Prompt user for reason | status: any → cancelled |
 | Change settlement_date | Field blur | Re-compute Tenor + Coupon dates + Deal price | Valid date | Computed fields refreshed |
 
-## 6. Accessibility notes (per screen)
+## 6. Layout sketch
+
+Two complementary representations of the screen's structure so an agent (and a human) can
+grasp the layout WITHOUT parsing the HTML mockup. The HTML mockup remains the visual source
+of truth; these are scannable proxies kept in sync when the mockup changes meaningfully.
+
+### 6a · Mermaid layout graph (agent-facing · primary)
+
+A `flowchart TB` describing component hierarchy + nesting + ordering. Agents parse this
+structurally (containment, order, grouping) far more efficiently than box-drawing.
+
+```mermaid
+flowchart TB
+  subgraph Screen[Deal Capture Screen]
+    TopNav[Top Nav: Logo · Breadcrumb · User Menu]
+    subgraph Body[Body]
+      SideNav[Side Nav: Deals · Portfolio · Reports]
+      subgraph Form[Deal Capture Form Card]
+        F1[Field: Bond face value]
+        F2[Field: Yield]
+        F3[Field: Settlement date]
+        Computed[Computed: tenor · price]
+        Actions[Submit · Cancel]
+      end
+    end
+  end
+  TopNav --> Body
+  Body --> SideNav
+  Body --> Form
+  Form --> F1 --> F2 --> F3 --> Computed --> Actions
+```
+
+### 6b · ASCII layout sketch (human-facing · secondary)
+
+A box-drawing rendering for quick spatial glance — shows relative placement (side-by-side,
+stacked, grid) that a flowchart abstracts away.
+
+```
+┌─────────────────────────────────────────┐
+│ [Logo]  Dashboard / Deals   [User Menu] │  ← top nav
+├──────────┬──────────────────────────────┤
+│ Side nav │ Deal Capture Form            │
+│ • Deals  │ ┌──────────────────────────┐ │
+│ • Port.  │ │ Bond face value [______] │ │
+│          │ │ Yield           [______] │ │
+│          │ │ Settlement      [_____]  │ │
+│          │ │ Computed: tenor, price   │ │
+│          │ └──────────────────────────┘ │
+│          │            [Submit] [Cancel] │
+└──────────┴──────────────────────────────┘
+```
+
+Keep both in sync with each other AND with the HTML mockup. If they diverge, the HTML mockup wins.
+
+## 7. Accessibility notes (per screen)
 
 - All form fields have accessible labels (`<label for>` or `aria-label`)
 - Required fields announced via `aria-required`
@@ -99,7 +153,7 @@ Buttons + form events that change state. Each cites the domain operation it trig
 - Logical tab order matches visual order
 - Color is NOT the only signal for error/success (also icon + text)
 
-## 7. Open items
+## 8. Open items
 
 - Open — pending [owner]: [decision needed re: this screen] · See `00-knowledge/open-items.md#[id]`
 
@@ -114,6 +168,7 @@ Stage 14c audit verifies:
 - Every computation in §3 is implemented with the declared formula
 - Every state in §4 is rendered (default · empty · loading · error · disabled · …)
 - Action handlers in §5 invoke the declared domain operation
+- Rendered layout matches the §6 layout sketch (component hierarchy + order)
 - Color tokens used match `design-tokens.md` (NOT hex literals)
 
 Any divergence ⇒ Request Changes (blocking).

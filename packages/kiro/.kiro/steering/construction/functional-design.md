@@ -37,6 +37,7 @@ To `aidlc-docs/construction/{unit}/functional-design/`:
 | `business-rules.md` | Validation rules, decision tables |
 | `domain-entities.md` | **Derived from `application-design/data-model.md`** · per-unit view citing ENT-NN it implements · entity definitions, relationships, invariants for this unit's scope. No new entities here unless approved as scope expansion. |
 | `frontend-components.md` | UI component hierarchy + props + state, **each component citing its source mockup (`mockups/<screen>.html`)** (if UI) |
+| `code-flow.md` | **Mermaid `sequenceDiagram` of the function-call path for each user action in this unit** (use `.kiro/templates/code-flow.md`). Derives from `user-flows.md` (Stage 7) + business-logic-model + `components.md`. Declares cross-boundary calls (each backed by an ADR). Stage 14c sub-check #5 audits code's actual call paths against this. |
 
 ## Steps
 
@@ -45,8 +46,9 @@ To `aidlc-docs/construction/{unit}/functional-design/`:
    - Capture rules in `business-rules.md` as decision tables.
    - Refine domain entities from Application Design.
 2. If UI: detail frontend component hierarchy with props, local state, events — **each component mapped to its source mockup file** so Stage 14 can reproduce it faithfully.
-3. Run extension compliance summary.
-4. Log open items.
+3. **Author `code-flow.md`** — for each user action this unit implements, draw the Mermaid `sequenceDiagram` of the code call path (View → Handler → Service → Repo → DB / external). One sequence per happy path + one per error/edge path. List every cross-boundary call + its ADR. This is the contract Stage 14c flow-conformance audit checks the generated code against.
+4. Run extension compliance summary.
+5. Log open items.
 
 ## Approval gate
 
