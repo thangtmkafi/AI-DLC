@@ -45,7 +45,7 @@ Trigger this skill when:
 
 ```
 Q1 · Is the AI-DLC structure intact?
-  Check: CLAUDE.md, aidlc-rule-details/, .claude/skills/kafi/ all present?
+  Check: CLAUDE.md, aidlc-rule-details/, .claude/skills/ all present?
   NO  → Tell user to re-unzip the AI-DLC package. Exit skill.
   YES → Q2
 
@@ -68,7 +68,7 @@ For users who just unzipped AI-DLC into a project root and have **nothing** in `
 
 Run:
 ```bash
-ls CLAUDE.md aidlc-rule-details/ .claude/skills/kafi/
+ls CLAUDE.md aidlc-rule-details/ .claude/skills/
 ```
 
 Expected: all three exist. If any missing, ask user to re-extract the package.
@@ -234,7 +234,7 @@ When Mode B detects a stage, load the corresponding prompt template from `prompt
 After Mode B detects current stage:
 
 1. Look up the matching template file from the mapping table above
-2. Read the template file: `Read packages/claude-code/.claude/skills/kafi/onboarding/prompts/<file>.md` (or use the relative path from current project: `.claude/skills/kafi/onboarding/prompts/<file>.md`)
+2. Read the template file: `Read packages/claude-code/.claude/skills/kafi-aidlc-onboarding/prompts/<file>.md` (or use the relative path from current project: `.claude/skills/kafi-aidlc-onboarding/prompts/<file>.md`)
 3. Extract the prompt body (everything between `---` markers, excluding placeholder docs section)
 4. Substitute placeholders from detected context:
    - `[PROJECT]` ← from `ai-dlc/project.md` Name field

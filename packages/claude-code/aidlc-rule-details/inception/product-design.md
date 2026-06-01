@@ -25,12 +25,12 @@ These three contracts together make Stage 14c conformance audit mechanically ver
 
 - `aidlc-docs/inception/user-stories/stories.md` + `personas.md`
 - `aidlc-docs/inception/application-design/data-model.md` (REQUIRED for view-model authoring — ENT-NN reference)
-- `.claude/skills/kafi/design-system/SKILL.md` (KAFI brand-level design system — always load for UI work)
+- `.claude/skills/kafi-design-system/SKILL.md` (KAFI brand-level design system — always load for UI work)
 - `00-knowledge/design-system/` if project has overrides on top of KAFI standard
 
 ## Steps
 
-1. Load the KAFI design system skill (`.claude/skills/kafi/design-system/SKILL.md`). Apply its tokens, typography, components, and patterns.
+1. Load the KAFI design system skill (`.claude/skills/kafi-design-system/SKILL.md`). Apply its tokens, typography, components, and patterns.
 2. **Step A · Author `design-tokens.md` FIRST** (use `templates/design-tokens.md`):
    - Inherit from KAFI base; declare project-specific overrides with rationale
    - Catalog every token code will use: colors (semantic + raw with WCAG contrast notes), typography (font stacks + scale), spacing (4pt grid), radius, shadow elevation, motion (easing + duration), z-index, breakpoints

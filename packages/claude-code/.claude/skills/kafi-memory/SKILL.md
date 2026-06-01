@@ -24,7 +24,7 @@ KAFI runs many AI-DLC projects. The same idioms, the same mistakes, the same fix
 
 | Candidate type | Signal | Where it would go (if a human promotes it) |
 |---|---|---|
-| New skill | same manual pattern done ≥3 times | `.claude/skills/kafi/<name>/` (human authors) |
+| New skill | same manual pattern done ≥3 times | `.claude/skills/kafi-<name>/` (human authors) |
 | New ADR | same trade-off decided repeatedly | `adrs/ADR-NN` |
 | Review-checklist item | same Stage 14c ✗ recurring | `common/ai-review-checklist.md` Hard/Soft |
 | Glossary term | same term defined ad-hoc in multiple docs | `glossary.md` |

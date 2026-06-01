@@ -14,8 +14,8 @@ Your Task: I am the Product Designer on [PROJECT]. The active stage is Stage 7 P
   · aidlc-docs/inception/application-design/data-model.md (ENT-NN reference for view-model)
 
 Load BOTH:
-  · .claude/skills/kafi/roles/designer.md
-  · .claude/skills/kafi/design-system/SKILL.md
+  · .claude/kafi-roles/designer.md
+  · .claude/skills/kafi-design-system/SKILL.md
 
 Write to aidlc-docs/inception/product-design/. Produce FIVE outputs in order (v0.7 + v0.8):
   1. **`design-tokens.md`** (use templates/design-tokens.md) — project-level catalog: inherit from KAFI base + declare overrides + WCAG contrast notes. Tokens for colors, typography, spacing, radius, shadow, motion, z-index, breakpoints + component library decision (shadcn/ui · custom · …).

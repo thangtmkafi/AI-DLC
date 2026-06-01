@@ -7,7 +7,7 @@
 **Status:** Draft | Locked
 **Owner:** [Designer name]
 **Last updated:** [Date]
-**Inherits from:** `.claude/skills/kafi/design-system/SKILL.md` (KAFI brand base)
+**Inherits from:** `.claude/skills/kafi-design-system/SKILL.md` (KAFI brand base)
 **Version:** [v0.X]
 
 ---

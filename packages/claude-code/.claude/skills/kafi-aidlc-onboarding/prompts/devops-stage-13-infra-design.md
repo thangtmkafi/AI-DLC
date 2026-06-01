@@ -13,7 +13,7 @@ Your Task: I am the DevOps/SRE on UNIT-[N] of [PROJECT]. The active stage is Sta
   · aidlc-docs/inception/discovery/technical-environment.md
   · 00-knowledge/architecture/[integration map if exists]
 
-Load .claude/skills/kafi/roles/devops.md. Write to aidlc-docs/construction/[unit-name]/infrastructure-design/. If cloud target is undecided, use logical components only — surface "Open — pending [owner]". Plan-before-apply for any IaC; flag destructive ops. Document where secrets live + rotate. Identify observability hooks for declared NFR thresholds. Only focus on Stage 13 deliverables and nothing else.
+Load .claude/kafi-roles/devops.md. Write to aidlc-docs/construction/[unit-name]/infrastructure-design/. If cloud target is undecided, use logical components only — surface "Open — pending [owner]". Plan-before-apply for any IaC; flag destructive ops. Document where secrets live + rotate. Identify observability hooks for declared NFR thresholds. Only focus on Stage 13 deliverables and nothing else.
 
 ---
 

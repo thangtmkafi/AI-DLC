@@ -24,6 +24,18 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 - Change-request (CR) protocol — parked brainstorm thread
 - `kafi-memory` auto-skill-creation (currently suggestion-only)
 
+## [0.8.1] · 2026-05-31
+
+### Fixed · Skill discovery — flatten the `kafi/` skill group so skills appear on `/`
+
+A packaging bug present since v0.4: Claude Code does **not** discover skills nested two levels deep, so the entire `kafi/` skill library laid out as `.claude/skills/kafi/<name>/SKILL.md` was never discovered — skills did not appear when typing `/` and did not auto-load by description. The IDE flagged "skill name should match the folder name" because the command name derives from the leaf folder, not the `name:` field.
+
+- **Flattened** all 16 skills out of the `.claude/skills/kafi/` group to `.claude/skills/<name>/`, where the folder name now equals the `name:` field (`kafi-design-system`, `kafi-aidlc-onboarding`, `kafi-doc-sync`, `kafi-verification-loop`, `kafi-memory`, `kafi-code-review` + 10 per-language reviewers). The `kafi-` prefix is retained to avoid collisions with generically-named skills from other packages (onboarding, memory, code-review, design-system).
+- **Moved role guides** from `.claude/skills/kafi/roles/` to `.claude/kafi-roles/` (they are reference docs loaded by path when driving a stage — not skills, so they no longer live under `skills/`).
+- `kafi-aidlc-onboarding/prompts/` rides inside the onboarding skill folder (subfolders within a skill are fine).
+- Updated ~55 path references across `CLAUDE.md`, `README.md`, rule files, onboarding prompts, and the HTML docs (Handbook/Introduction folder trees + skills tables + Installer Guide). Kiro edition is unaffected — its steering files are already flat (`.kiro/steering/kafi-*.md`).
+- Version banner v0.8 → v0.8.1 in `CLAUDE.md`, `AGENTS.md`, `config.json`, `settings.json`. Methodology unchanged — docs HTML methodology banners remain v0.8; this is a packaging/layout patch.
+
 ## [0.8] · 2026-05-29
 
 ### Added · ASCII+Mermaid layouts · code-flow · flow conformance · 14 skills · 13 templates · Operations formalized

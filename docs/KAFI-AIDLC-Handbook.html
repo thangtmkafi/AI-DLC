@@ -1129,7 +1129,7 @@ footer {
   <div class="edition-card">
     <div class="edition-card-label">Claude Code</div>
     <p style="font-size: 12.5px; margin: 0 0 6px;">In chat, type: <code>Run #kafi-aidlc-onboarding</code></p>
-    <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Skill auto-discovers when you mention onboarding, "where am I", "what stage", or <code>/init</code>. Template files at <code>.claude/skills/kafi/onboarding/prompts/</code>.</p>
+    <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Skill auto-discovers when you mention onboarding, "where am I", "what stage", or <code>/init</code>. Template files at <code>.claude/skills/kafi-aidlc-onboarding/prompts/</code>.</p>
   </div>
   <div class="edition-card">
     <div class="edition-card-label">Kiro IDE</div>
@@ -1769,7 +1769,7 @@ footer {
       <h4>Inputs</h4>
       <ul class="io-list">
         <li>aidlc-docs/inception/user-stories/</li>
-        <li>.claude/skills/kafi/design-system/SKILL.md · .kiro/steering/kafi-design-system.md</li>
+        <li>.claude/skills/kafi-design-system/SKILL.md · .kiro/steering/kafi-design-system.md</li>
         <li>00-knowledge/design-system/ (if project has overrides)</li>
       </ul>
     </div>
@@ -2535,25 +2535,25 @@ footer {
 
 <section id="skills">
 <h2>Skills</h2>
-<p class="section-intro">Skills live at <code>.claude/skills/kafi/</code> in Claude Code edition, or as steering files in <code>.kiro/steering/</code> + <code>.kiro/steering/roles/</code> in Kiro edition. The design system loads on every session in both editions; role guides load manually when driving a stage.</p>
+<p class="section-intro">Skills live at <code>.claude/skills/</code> in Claude Code edition, or as steering files in <code>.kiro/steering/</code> + <code>.kiro/steering/roles/</code> in Kiro edition. The design system loads on every session in both editions; role guides load manually when driving a stage.</p>
 
 <table>
   <thead><tr><th>Skill / steering file</th><th>Claude Code path</th><th>Kiro path</th><th>Loaded</th></tr></thead>
   <tbody>
-    <tr><td><strong>kafi-design-system</strong></td><td><code>.claude/skills/kafi/design-system/SKILL.md</code></td><td><code>.kiro/steering/kafi-design-system.md</code></td><td>Auto · always for UI work</td></tr>
-    <tr><td><strong>kafi-aidlc-onboarding</strong></td><td><code>.claude/skills/kafi/onboarding/SKILL.md</code></td><td><code>.kiro/steering/kafi-aidlc-onboarding.md</code></td><td>Auto · on first session or <code>/init</code></td></tr>
-    <tr><td>PM role guide</td><td><code>.claude/skills/kafi/roles/pm.md</code></td><td><code>.kiro/steering/roles/pm.md</code></td><td>Manual · when driving Stage 4 or 6</td></tr>
-    <tr><td>BA role guide</td><td><code>.claude/skills/kafi/roles/ba.md</code></td><td><code>.kiro/steering/roles/ba.md</code></td><td>Manual · when driving Stage 5 or Pre-Inception</td></tr>
-    <tr><td>SA role guide</td><td><code>.claude/skills/kafi/roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
-    <tr><td>Designer role guide</td><td><code>.claude/skills/kafi/roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
-    <tr><td>Dev role guide</td><td><code>.claude/skills/kafi/roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14a, 14b, or 15</td></tr>
-    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.7</span></td><td><code>.claude/skills/kafi/roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
-    <tr><td>DevOps role guide</td><td><code>.claude/skills/kafi/roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13, 16, 17</td></tr>
+    <tr><td><strong>kafi-design-system</strong></td><td><code>.claude/skills/kafi-design-system/SKILL.md</code></td><td><code>.kiro/steering/kafi-design-system.md</code></td><td>Auto · always for UI work</td></tr>
+    <tr><td><strong>kafi-aidlc-onboarding</strong></td><td><code>.claude/skills/kafi-aidlc-onboarding/SKILL.md</code></td><td><code>.kiro/steering/kafi-aidlc-onboarding.md</code></td><td>Auto · on first session or <code>/init</code></td></tr>
+    <tr><td>PM role guide</td><td><code>.claude/kafi-roles/pm.md</code></td><td><code>.kiro/steering/roles/pm.md</code></td><td>Manual · when driving Stage 4 or 6</td></tr>
+    <tr><td>BA role guide</td><td><code>.claude/kafi-roles/ba.md</code></td><td><code>.kiro/steering/roles/ba.md</code></td><td>Manual · when driving Stage 5 or Pre-Inception</td></tr>
+    <tr><td>SA role guide</td><td><code>.claude/kafi-roles/sa.md</code></td><td><code>.kiro/steering/roles/sa.md</code></td><td>Manual · when driving Stages 3, 8, 9, 10, 11, 12</td></tr>
+    <tr><td>Designer role guide</td><td><code>.claude/kafi-roles/designer.md</code></td><td><code>.kiro/steering/roles/designer.md</code></td><td>Manual · pair with design-system at Stage 7</td></tr>
+    <tr><td>Dev role guide</td><td><code>.claude/kafi-roles/dev.md</code></td><td><code>.kiro/steering/roles/dev.md</code></td><td>Manual · when driving Stage 14a, 14b, or 15</td></tr>
+    <tr><td><strong>QA role guide</strong> <span style="font-size: 10.5px; color: var(--kafi-green); font-weight: 600;">new v0.7</span></td><td><code>.claude/kafi-roles/qa.md</code></td><td><code>.kiro/steering/roles/qa.md</code></td><td>Manual · when driving Stage 10b (test planning) or 14c (conformance audit)</td></tr>
+    <tr><td>DevOps role guide</td><td><code>.claude/kafi-roles/devops.md</code></td><td><code>.kiro/steering/roles/devops.md</code></td><td>Manual · when driving Stage 13, 16, 17</td></tr>
   </tbody>
 </table>
 
 <h3 style="margin-top: var(--sp5);">Helper skills <span style="font-size: 12px; color: var(--kafi-green); font-weight: 600;">new v0.8</span></h3>
-<p class="section-intro">Construction-phase helpers. Manual inclusion in both editions (Claude: <code>.claude/skills/kafi/&lt;name&gt;/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-&lt;name&gt;.md</code>).</p>
+<p class="section-intro">Construction-phase helpers. Manual inclusion in both editions (Claude: <code>.claude/skills/kafi-&lt;name&gt;/SKILL.md</code>; Kiro: <code>.kiro/steering/kafi-&lt;name&gt;.md</code>).</p>
 <table>
   <thead><tr><th>Skill</th><th>What it does</th><th>When</th></tr></thead>
   <tbody>
@@ -2909,9 +2909,10 @@ build/
 │<br/>
 ├── <span class="folder">.claude/</span>                              <span class="comment">Claude Code config (hidden on macOS)</span><br/>
 │   ├── <span class="file">settings.json</span><br/>
-│   └── <span class="folder">skills/kafi/</span><br/>
-│       ├── <span class="folder">design-system/SKILL.md</span>          <span class="comment">KAFI brand (v2.2)</span><br/>
-│       └── <span class="folder">roles/</span>                          <span class="comment">pm · ba · sa · designer · dev · devops</span><br/>
+│   ├── <span class="folder">kafi-roles/</span>                       <span class="comment">pm · ba · sa · designer · dev · qa · devops (NOT skills)</span><br/>
+│   └── <span class="folder">skills/</span>                            <span class="comment">16 kafi-* skills, flat (folder == skill name)</span><br/>
+│       ├── <span class="folder">kafi-design-system/SKILL.md</span>     <span class="comment">KAFI brand (v2.2)</span><br/>
+│       └── <span class="folder">kafi-aidlc-onboarding/</span> · <span class="folder">kafi-doc-sync/</span> · <span class="folder">kafi-code-review/</span> · …<br/>
 │<br/>
 ├── <span class="folder">00-knowledge/</span>                         <span class="comment">Team-managed source-of-truth (PO/PM/BA copy here)</span><br/>
 │   ├── <span class="folder">architecture/</span>                       <span class="comment">Architecture docs, system maps</span><br/>
@@ -3035,7 +3036,7 @@ build/
     <tr><td><strong>Extension</strong></td><td>A rule pack the workflow loads conditionally. KAFI-wide or project-defined.</td></tr>
     <tr><td><strong>Greenfield</strong></td><td>Brand-new project with no existing code.</td></tr>
     <tr><td><strong>Inception</strong></td><td>Phase 2 of AI-DLC — determines WHAT and WHY (9 stages).</td></tr>
-    <tr><td><strong>KAFI design system</strong></td><td>Brand-level skill at <code>.claude/skills/kafi/design-system/SKILL.md</code>. Tokens, typography, components, patterns. v2.2.</td></tr>
+    <tr><td><strong>KAFI design system</strong></td><td>Brand-level skill at <code>.claude/skills/kafi-design-system/SKILL.md</code>. Tokens, typography, components, patterns. v2.2.</td></tr>
     <tr><td><strong>KB · Knowledge Base</strong></td><td>Project's canonical source-of-truth in <code>00-knowledge/</code>. PO/PM/BA copy context files here.</td></tr>
     <tr><td><strong>Lite mode</strong></td><td>Fast workflow for greenfield + clean inputs. Skips Pre-Inception and Reverse Engineering.</td></tr>
     <tr><td><strong>NFR</strong></td><td>Non-Functional Requirements — performance, scalability, availability, security, observability, accessibility, maintainability, compliance. <em>How well</em> the system behaves, not <em>what</em> it does.</td></tr>

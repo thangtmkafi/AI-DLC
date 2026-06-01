@@ -1640,7 +1640,7 @@ footer {
       </tbody>
     </table>
 
-    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files live in <code>.claude/skills/kafi/onboarding/prompts/</code> (Claude Code) or <code>.kiro/steering/kafi-aidlc-onboarding-prompts/</code> (Kiro). Each contains the full prompt body (Your Role · Plan · Your Task) with placeholders that the onboarding substitutes from detected context. Edit them to customize agent behavior at your KAFI project level.</p>
+    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 16px;">Template files live in <code>.claude/skills/kafi-aidlc-onboarding/prompts/</code> (Claude Code) or <code>.kiro/steering/kafi-aidlc-onboarding-prompts/</code> (Kiro). Each contains the full prompt body (Your Role · Plan · Your Task) with placeholders that the onboarding substitutes from detected context. Edit them to customize agent behavior at your KAFI project level.</p>
   </div>
 
 </section>
@@ -2099,7 +2099,7 @@ footer {
         <td class="num">7</td>
         <td class="stage"><strong>Product Design</strong><br/><span style="font-size: 10.5px; color: var(--text-muted);">HTML mockups (v0.6+)</span></td>
         <td class="role">Designer</td>
-        <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi/design-system/SKILL.md</code> · <code>.kiro/steering/kafi-design-system.md</code></td>
+        <td class="path"><code>aidlc-docs/inception/user-stories/</code><br/><code>.claude/skills/kafi-design-system/SKILL.md</code> · <code>.kiro/steering/kafi-design-system.md</code></td>
         <td class="path"><code>aidlc-docs/inception/product-design/mockups/*.html</code> (FE source of truth)<br/><code>mockups/index.md</code> · interactions · IA · accessibility</td>
       </tr>
       <tr class="phase-in">
@@ -2205,7 +2205,7 @@ footer {
   <div class="edition-split" style="margin-bottom: 16px;">
     <div class="edition-card">
       <div class="edition-card-label">Claude Code edition · paths shown</div>
-      <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">Workflow file: <code>CLAUDE.md</code> · Rules: <code>aidlc-rule-details/</code> · Skills: <code>.claude/skills/kafi/</code> · Settings: <code>.claude/settings.json</code></p>
+      <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">Workflow file: <code>CLAUDE.md</code> · Rules: <code>aidlc-rule-details/</code> · Skills: <code>.claude/skills/</code> · Settings: <code>.claude/settings.json</code></p>
     </div>
     <div class="edition-card">
       <div class="edition-card-label">Kiro edition · path equivalents</div>
@@ -2229,10 +2229,10 @@ footer {
 │<br/>
 ├── <span class="folder">.claude/</span><br/>
 │   ├── <span class="file">settings.json</span><br/>
-│   └── <span class="folder">skills/kafi/</span><br/>
-│       ├── <span class="folder">design-system/</span><br/>
-│       │   └── <span class="file">SKILL.md</span>                       <span class="comment">KAFI brand · tokens, typography, components, patterns</span><br/>
-│       └── <span class="folder">roles/</span>                          <span class="comment">pm · ba · sa · designer · dev · devops</span><br/>
+│   ├── <span class="folder">kafi-roles/</span>                       <span class="comment">pm · ba · sa · designer · dev · qa · devops (NOT skills)</span><br/>
+│   └── <span class="folder">skills/</span>                            <span class="comment">16 kafi-* skills, flat (folder name == skill name)</span><br/>
+│       ├── <span class="folder">kafi-design-system/</span>              <span class="comment">KAFI brand · tokens, typography, components</span><br/>
+│       └── <span class="folder">kafi-aidlc-onboarding/</span> · <span class="folder">kafi-doc-sync/</span> · <span class="folder">kafi-code-review/</span> · …<br/>
 │<br/>
 ├── <span class="folder">00-knowledge/</span>                         <span class="comment">Team-managed source-of-truth <span class="tag team">PO/PM/BA copy here</span></span><br/>
 │   ├── <span class="folder">architecture/</span>                       <span class="comment">Architecture docs, system maps</span><br/>

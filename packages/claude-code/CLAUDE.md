@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.8 · KAFI Transformation Office**
+**v0.8.1 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 
@@ -168,13 +168,13 @@ Stage 16 produces `deployment-runbook.md` (prereqs · ordered steps · migration
 
 | Role | Drives | Skill |
 |---|---|---|
-| PM (Product Owner) | Stages 4, 6 | `skills/kafi/roles/pm.md` |
-| BA (Business Analyst) | Stage 5 + Pre-Inception | `skills/kafi/roles/ba.md` |
-| SA (Solution Architect) | Stages 3, 8, 9, 10, 11, 12 | `skills/kafi/roles/sa.md` |
-| Designer (Product Designer) | Stage 7 | `skills/kafi/roles/designer.md` + `skills/kafi/design-system/SKILL.md` |
-| Dev (Developer) | Stages 14a, 14b, 15 | `skills/kafi/roles/dev.md` |
-| **QA (Quality Assurance)** | **Stages 10b, 14c (NEW v0.7)** | `skills/kafi/roles/qa.md` |
-| DevOps / SRE | Stages 13, 16, 17 | `skills/kafi/roles/devops.md` |
+| PM (Product Owner) | Stages 4, 6 | `kafi-roles/pm.md` |
+| BA (Business Analyst) | Stage 5 + Pre-Inception | `kafi-roles/ba.md` |
+| SA (Solution Architect) | Stages 3, 8, 9, 10, 11, 12 | `kafi-roles/sa.md` |
+| Designer (Product Designer) | Stage 7 | `kafi-roles/designer.md` + `skills/kafi-design-system/SKILL.md` |
+| Dev (Developer) | Stages 14a, 14b, 15 | `kafi-roles/dev.md` |
+| **QA (Quality Assurance)** | **Stages 10b, 14c (NEW v0.7)** | `kafi-roles/qa.md` |
+| DevOps / SRE | Stages 13, 16, 17 | `kafi-roles/devops.md` |
 | AI Agent | Every stage | — |
 
 Manual skill inclusion — load when driving a stage. Two skills are auto-discoverable (proper SKILL.md format) and load automatically when their description matches the user's intent:
@@ -241,9 +241,11 @@ project-root/
 ├── CLAUDE.md                       # this file
 ├── aidlc-rule-details/            # rule files
 ├── .claude/
-│   ├── skills/kafi/
-│   │   ├── design-system/          # KAFI brand-level design system (SKILL.md)
-│   │   └── roles/                  # 7 role guides
+│   ├── kafi-roles/                 # 7 role guides (pm·ba·sa·designer·dev·qa·devops) — NOT skills
+│   ├── skills/                     # 16 kafi-* skills (flat — folder name == skill name)
+│   │   ├── kafi-design-system/     # KAFI brand-level design system (SKILL.md)
+│   │   ├── kafi-aidlc-onboarding/  # onboarding (+ prompts/)
+│   │   └── kafi-*/                 # doc-sync·verification-loop·memory·code-review (+10 langs)
 │   ├── hooks/                      # optional
 │   └── settings.json
 ├── 00-knowledge/                   # project KB + conventions
@@ -279,4 +281,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8 · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.1 · Transformation Office, Kafi Securities*

@@ -14,7 +14,7 @@ Your Task: I am the PM on [PROJECT]. We are in [Lite | Standard] mode. The activ
   · 00-knowledge/architecture/[sections]
   · 00-knowledge/open-items.md
 
-Load .claude/skills/kafi/roles/pm.md. Write to aidlc-docs/inception/[stage]/.
+Load .claude/kafi-roles/pm.md. Write to aidlc-docs/inception/[stage]/.
 
 **If Stage 4:** produce TWO deliverables in order:
   1. `prd-<feature>.md` per major feature (use `aidlc-rule-details/templates/prd.md`) — PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.

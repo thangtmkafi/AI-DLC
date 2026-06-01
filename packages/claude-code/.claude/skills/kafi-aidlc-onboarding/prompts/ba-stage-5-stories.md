@@ -13,7 +13,7 @@ Your Task: I am the BA on [PROJECT]. We are in [Lite | Standard] mode. The activ
   · aidlc-docs/inception/discovery/
   · [stage-specific prior outputs]
 
-Load .claude/skills/kafi/roles/ba.md. Write to aidlc-docs/inception/[stage]/. Use Given/When/Then for every AC. INVEST for every story. Neutral role names until BTS confirms taxonomy. Cite KB sections in every requirement. Only focus on [stage scope] and nothing else.
+Load .claude/kafi-roles/ba.md. Write to aidlc-docs/inception/[stage]/. Use Given/When/Then for every AC. INVEST for every story. Neutral role names until BTS confirms taxonomy. Cite KB sections in every requirement. Only focus on [stage scope] and nothing else.
 
 ---
 

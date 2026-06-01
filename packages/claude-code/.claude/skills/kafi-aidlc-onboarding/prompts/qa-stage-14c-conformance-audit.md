@@ -15,7 +15,7 @@ Your Task: I am the QA Lead on UNIT-[N] of [PROJECT]. Stages 14a (production cod
   · aidlc-docs/inception/product-design/uiux-spec.md + design-tokens.md + mockups/<screen>.html + mockups/<screen>.view-model.md + interaction-specs.md
   · 00-knowledge/conventions/
 
-Load .claude/skills/kafi/roles/qa.md. Run **5 blocking sub-checks** and write `aidlc-docs/construction/[unit-name]/audit/conformance-report.md`:
+Load .claude/kafi-roles/qa.md. Run **5 blocking sub-checks** and write `aidlc-docs/construction/[unit-name]/audit/conformance-report.md`:
   1. **Code audit** — boundaries · component-methods signatures · data-model conformance · view-model field bindings/formats/validations/computed-formulas · audit-trail wired · privacy wired · no secrets · spec citations present. (Delegate per-file to `kafi-code-review` router for language-specific checks.)
   2. **Token discipline audit** (UI only) — regex scan FE code for `#[0-9a-fA-F]{3,6}` and `\b\d+(?:\.\d+)?(?:px|rem|em|ms)\b` outside CSS variable definitions. Each match = candidate ✗. Font stacks match. Component library matches declared choice.
   3. **UI audit** (UI only) — manual screen-by-screen review against mockup HTML + view-model §6 layout sketch. All states from view-model §4 rendered (default/empty/loading/error/disabled).

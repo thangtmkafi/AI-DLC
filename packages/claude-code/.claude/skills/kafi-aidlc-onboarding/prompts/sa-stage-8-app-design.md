@@ -14,7 +14,7 @@ Your Task: I am the SA on [PROJECT]. We are in [Lite | Standard] mode, [greenfie
   · aidlc-docs/inception/
   · [unit context if Stage 10/11/12: aidlc-docs/construction/UNIT-NN-name/]
 
-Load .claude/skills/kafi/roles/sa.md. For Stage 10, also load .claude/skills/kafi/roles/ba.md as consultation reference (BA contributes advisory on business rule wording). Write to aidlc-docs/[path]/. Open an ADR in adrs/ for every trade-off (sync vs async, tech pick, data shape, build vs buy, cross-boundary). Measurable NFR thresholds — ms, percentile, load profile. No "should be fast" without numbers. Only focus on [stage scope] and nothing else.
+Load .claude/kafi-roles/sa.md. For Stage 10, also load .claude/kafi-roles/ba.md as consultation reference (BA contributes advisory on business rule wording). Write to aidlc-docs/[path]/. Open an ADR in adrs/ for every trade-off (sync vs async, tech pick, data shape, build vs buy, cross-boundary). Measurable NFR thresholds — ms, percentile, load profile. No "should be fast" without numbers. Only focus on [stage scope] and nothing else.
 
 ---
 

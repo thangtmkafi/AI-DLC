@@ -20,9 +20,11 @@
 │
 └── .claude/
     ├── settings.json               ← Team settings (commit this)
-    ├── skills/kafi/
-    │   ├── design-system/SKILL.md  ← KAFI brand-level design system (v2.2)
-    │   └── roles/                  ← 6 role-specific guides
+    ├── kafi-roles/                 ← 7 role-specific guides (NOT skills)
+    ├── skills/                     ← 16 kafi-* skills (flat; folder name == skill name)
+    │   ├── kafi-design-system/SKILL.md   ← KAFI brand-level design system (v2.2)
+    │   ├── kafi-aidlc-onboarding/  ← onboarding (+ prompts/)
+    │   └── kafi-*/                 ← doc-sync · verification-loop · memory · code-review (+10 langs)
     └── hooks/                      ← Optional hooks
 ```
 
@@ -120,7 +122,7 @@ relevant project context lives in:
 - 00-knowledge/architecture/[relevant sections]
 - 00-knowledge/open-items.md
 
-Load .claude/skills/kafi/roles/pm.md to apply my role's persistent
+Load .claude/kafi-roles/pm.md to apply my role's persistent
 behaviors. Write outputs to aidlc-docs/inception/[stage folder]/. Push
 for measurable success metrics — numbers, not adjectives. Honor scope
 OUT as much as scope IN. Flag anything outside the active phase. Only
@@ -144,7 +146,7 @@ Stage 10]. Relevant inputs:
 - aidlc-docs/inception/discovery/ (Vision + Tech Env)
 - [stage-specific prior outputs from aidlc-docs/]
 
-Load .claude/skills/kafi/roles/ba.md. Write outputs to
+Load .claude/kafi-roles/ba.md. Write outputs to
 aidlc-docs/inception/[stage]/. Use Given/When/Then format for every
 acceptance criterion. Apply INVEST principles to every story. Use
 neutral role names (user, operator) until BTS confirms taxonomy. Cite
@@ -170,7 +172,7 @@ Stage 8 / Stage 9 / Stage 11 / Stage 12]. Relevant inputs:
 - 00-knowledge/conventions/architecture-boundaries.md
 - aidlc-docs/inception/ (relevant prior outputs)
 
-Load .claude/skills/kafi/roles/sa.md. Write outputs to
+Load .claude/kafi-roles/sa.md. Write outputs to
 aidlc-docs/[path]/. Open an ADR in adrs/ for every architectural
 trade-off (sync vs async, tech stack pick, data model shape,
 consistency model, build vs buy, cross-boundary calls). Push for
@@ -196,8 +198,8 @@ stage is Stage 7 Product Design. Relevant inputs:
 - aidlc-docs/inception/discovery/vision.md (personas + scope)
 
 Load BOTH:
-- .claude/skills/kafi/roles/designer.md (role behaviors)
-- .claude/skills/kafi/design-system/SKILL.md (KAFI brand tokens,
+- .claude/kafi-roles/designer.md (role behaviors)
+- .claude/skills/kafi-design-system/SKILL.md (KAFI brand tokens,
   typography, components, patterns)
 
 Write outputs to aidlc-docs/inception/product-design/. Reference the
@@ -225,7 +227,7 @@ active stage is Stage 14 Code Generation. Relevant inputs:
 - aidlc-docs/construction/[unit-name]/infrastructure-design/
 - aidlc-docs/inception/application-design/
 
-Load .claude/skills/kafi/roles/dev.md. Write code into src/ — NEVER
+Load .claude/kafi-roles/dev.md. Write code into src/ — NEVER
 inside aidlc-docs/. Write file inventory and notes to
 aidlc-docs/construction/[unit-name]/code/. No hardcoded secrets — env
 vars only. Auto-wire audit trail at every state-change boundary (per
@@ -252,7 +254,7 @@ active stage is Stage 13 Infrastructure Design. Relevant inputs:
 - aidlc-docs/inception/discovery/technical-environment.md
 - 00-knowledge/architecture/[integration map if exists]
 
-Load .claude/skills/kafi/roles/devops.md. Write outputs to
+Load .claude/kafi-roles/devops.md. Write outputs to
 aidlc-docs/construction/[unit-name]/infrastructure-design/. If the
 cloud target is undecided, use logical components only and surface
 "Open — pending [owner]". Plan-before-apply for any IaC; flag
@@ -364,7 +366,7 @@ Workflow versions evolve. To upgrade:
 
 1. Replace `CLAUDE.md` with new version.
 2. Replace `aidlc-rule-details/` (preserve any project-specific extensions you added).
-3. Replace role guides under `.claude/skills/kafi/roles/` and the design system at `.claude/skills/kafi/design-system/SKILL.md`.
+3. Replace role guides under `.claude/kafi-roles/` and the design system at `.claude/skills/kafi-design-system/SKILL.md`.
 
 Project-specific content (`00-knowledge/`, `aidlc-docs/`, `src/`) is preserved across updates.
 

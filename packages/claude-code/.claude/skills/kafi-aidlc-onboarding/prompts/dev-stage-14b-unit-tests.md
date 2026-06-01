@@ -16,7 +16,7 @@ Your Task: I am the Developer on UNIT-[N] of [PROJECT]. Stage 14a (production co
   · aidlc-docs/inception/product-design/mockups/<screen>.view-model.md — field formats, validations, computed formulas (for UI test boundaries)
   · aidlc-docs/inception/product-design/interaction-specs.md — state transitions
 
-Load .claude/skills/kafi/roles/dev.md. Test code lives in src/ alongside production code (per test-plan.md file pattern — `<module>.test.ts` sibling, `__tests__/<module>`, etc.). **Use the framework + assertion style from test-plan.md exactly — no mixing.** For each TC-NN, generate a test with a comment citing the TC-NN ID for traceability. For UI units, derive boundary cases from view-model fields (min/max validation, format rendering, state per state). For every exported function in src/, ensure ≥1 test file (smoke happy path at minimum).
+Load .claude/kafi-roles/dev.md. Test code lives in src/ alongside production code (per test-plan.md file pattern — `<module>.test.ts` sibling, `__tests__/<module>`, etc.). **Use the framework + assertion style from test-plan.md exactly — no mixing.** For each TC-NN, generate a test with a comment citing the TC-NN ID for traceability. For UI units, derive boundary cases from view-model fields (min/max validation, format rendering, state per state). For every exported function in src/, ensure ≥1 test file (smoke happy path at minimum).
 
 Write `aidlc-docs/construction/[unit-name]/code/tests-summary.md` listing: functions covered (file:line), TC-NN → test function mapping, skipped cases with rationale, framework + config file path. **Do NOT execute the tests** — that's the project's CI/local choice, outside AI-DLC. **Do NOT change test-cases.md status fields** — they stay "Pending".
 

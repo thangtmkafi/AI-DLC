@@ -335,13 +335,13 @@ Theo priority impact:
 
 **Cost:** 1.5 days (incl. parity + Kiro equivalent + tests + Handbook update)
 
-**Decision needed:** implement in `packages/claude-code/.claude/skills/kafi/` (project skill, ships in v0.4 zip) hoặc tách ra `kafi-ai-skills/` repo riêng (per Architecture B đã brainstorm 2026-05-21).
+**Decision needed:** implement in `packages/claude-code/.claude/skills/` (project skill, ships in v0.4 zip) hoặc tách ra `kafi-ai-skills/` repo riêng (per Architecture B đã brainstorm 2026-05-21).
 
 ### Files would need to change
 
 | File | Change |
 |---|---|
-| `packages/claude-code/.claude/skills/kafi/git-stage-flow/SKILL.md` | **CREATE** |
+| `packages/claude-code/.claude/skills/kafi-git-stage-flow/SKILL.md` | **CREATE** |
 | `packages/kiro/.kiro/steering/git-stage-flow.md` | **CREATE** (Kiro parity) |
 | `packages/claude-code/README.md` | Update §"Daily commands" → "If you have `kafi-git-stage-flow` skill, use `[Stage: Start]` instead" |
 | `docs/KAFI-Git-Guide-NonDev.html` | Update with new skill instructions |
@@ -641,7 +641,7 @@ Trước khi triage, BTS cần chốt:
    - Option B: tạo Stage 14.5 "Phase Ship Decision" riêng
 
 3. **Git skills implementation location** — project skill hay separate repo?
-   - In-repo: `packages/claude-code/.claude/skills/kafi/git-stage-flow/`, ship trong v0.4 zip
+   - In-repo: `packages/claude-code/.claude/skills/kafi-git-stage-flow/`, ship trong v0.4 zip
    - Separate: `kafi-ai-skills/` repo riêng (per Architecture B brainstormed 2026-05-21), install via `kafi-skills install kafi-git-stage-flow`
 
 4. **Role coordination protocol** — common rule hay extension?
@@ -677,7 +677,7 @@ Trước khi triage, BTS cần chốt:
 - `personal-data-privacy/` ✓ exists
 - `phase-discipline/` ✗ **missing** (manifest claims it exists)
 
-### Roles (`packages/claude-code/.claude/skills/kafi/roles/`)
+### Roles (`packages/claude-code/.claude/kafi-roles/`)
 - `pm.md`, `ba.md`, `sa.md`, `designer.md`, `dev.md`, `devops.md` (6 files, ✓)
 
 ### Templates (`packages/claude-code/aidlc-rule-details/templates/`)

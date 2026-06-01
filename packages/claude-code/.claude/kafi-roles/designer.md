@@ -69,4 +69,4 @@ Translate stories into experience specifications. Inform Application Design (com
 - Template: `aidlc-rule-details/templates/design-tokens.md` (look & feel catalog · v0.7)
 - Template: `aidlc-rule-details/templates/uiux-spec.md` (master narrative · v0.7)
 - Template: `aidlc-rule-details/templates/view-model.md` (per-screen MVVM contract · v0.7)
-- KAFI design system skill: `.claude/skills/kafi/design-system/SKILL.md` — **always load this skill alongside this role when driving Stage 7**. The design system defines tokens, components, typography, and patterns. Custom components require justification against the system.
+- KAFI design system skill: `.claude/skills/kafi-design-system/SKILL.md` — **always load this skill alongside this role when driving Stage 7**. The design system defines tokens, components, typography, and patterns. Custom components require justification against the system.

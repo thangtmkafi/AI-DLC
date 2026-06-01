@@ -114,7 +114,7 @@ To load a stage: `#requirements-analysis` → loads `.kiro/steering/inception/re
 | | Claude Code v0.4 | Kiro v0.4 |
 |---|---|---|
 | Root rules file | `CLAUDE.md` | `AGENTS.md` (universal agents.md spec) |
-| Skills folder | `.claude/skills/kafi/` | `.kiro/steering/` |
+| Skills folder | `.claude/skills/` | `.kiro/steering/` |
 | Loading mechanism | Plugin / SKILL.md discovery | YAML front-matter `inclusion` mode |
 | Manual skill load | Slash-command or explicit prompt | `#filename` in chat |
 | Settings | `.claude/settings.json` | `.kiro/settings/config.json` |
