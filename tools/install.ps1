@@ -203,8 +203,8 @@ if ($Version -eq 'latest') {
   }
 }
 
-if ($Version -notmatch '^v\d+\.\d+$') {
-  Err "Invalid version format: $Version (expected vX.Y)"
+if ($Version -notmatch '^v\d+\.\d+(\.\d+)?$') {
+  Err "Invalid version format: $Version (expected vX.Y or vX.Y.Z)"
   exit 64
 }
 
@@ -215,7 +215,7 @@ function Parse-CurrentVersion {
   $content = Get-Content -LiteralPath $File -TotalCount 5 -ErrorAction SilentlyContinue
   if ($null -eq $content) { return '' }
   $joined = $content -join "`n"
-  if ($joined -match 'v\d+\.\d+') {
+  if ($joined -match 'v\d+\.\d+(\.\d+)?') {
     return $Matches[0]
   }
   return ''

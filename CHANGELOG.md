@@ -36,6 +36,10 @@ A packaging bug present since v0.4: Claude Code does **not** discover skills nes
 - Updated ~55 path references across `CLAUDE.md`, `README.md`, rule files, onboarding prompts, and the HTML docs (Handbook/Introduction folder trees + skills tables + Installer Guide). Kiro edition is unaffected — its steering files are already flat (`.kiro/steering/kafi-*.md`).
 - Version banner v0.8 → v0.8.1 in `CLAUDE.md`, `AGENTS.md`, `config.json`, `settings.json`. Methodology unchanged — docs HTML methodology banners remain v0.8; this is a packaging/layout patch.
 
+### Fixed · Installer rejected 3-part versions (`vX.Y.Z`)
+
+The bootstrap installers validated only `vX.Y`, so installing/upgrading to the **v0.8.1** patch failed with `Invalid version format: v0.8.1 (expected vX.Y)`, and the upstream version parser silently truncated `v0.8.1` → `v0.8` (breaking upgrade detection). Fixed in `tools/install.sh` + `tools/install.ps1`: the validation regex, the GitHub latest-tag extraction, and the current-version parser now all accept an optional `.Z` patch segment (`vX.Y` or `vX.Y.Z`). Installers are served live from `main` (raw), so the fix applies without a re-tag.
+
 ## [0.8] · 2026-05-29
 
 ### Added · ASCII+Mermaid layouts · code-flow · flow conformance · 14 skills · 13 templates · Operations formalized

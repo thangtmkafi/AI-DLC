@@ -206,11 +206,11 @@ resolve_latest_version() {
   local resp
   resp=$(curl -fsSL "$api_url" 2>/dev/null || true)
   if [[ -z "$resp" ]]; then
-    err "Failed to query GitHub Releases. Check network or pass --version=vX.Y explicitly."
+    err "Failed to query GitHub Releases. Check network or pass --version=vX.Y[.Z] explicitly."
     exit 71
   fi
-  # Parse "tag_name": "v0.4"
-  printf "%s\n" "$resp" | grep -oE '"tag_name":\s*"v[0-9]+\.[0-9]+"' | head -1 | grep -oE 'v[0-9]+\.[0-9]+'
+  # Parse "tag_name": "v0.8" or "v0.8.1"
+  printf "%s\n" "$resp" | grep -oE '"tag_name":\s*"v[0-9]+\.[0-9]+(\.[0-9]+)?"' | head -1 | grep -oE 'v[0-9]+\.[0-9]+(\.[0-9]+)?'
 }
 
 if [[ "$VERSION" == "latest" ]]; then
@@ -222,9 +222,9 @@ if [[ "$VERSION" == "latest" ]]; then
   fi
 fi
 
-# Validate version format
-if ! [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+$ ]]; then
-  err "Invalid version format: $VERSION (expected vX.Y)"
+# Validate version format (vX.Y or vX.Y.Z)
+if ! [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+  err "Invalid version format: $VERSION (expected vX.Y or vX.Y.Z)"
   exit 64
 fi
 
@@ -232,8 +232,8 @@ fi
 parse_current_version() {
   local file="$1"
   [[ ! -f "$file" ]] && { echo ""; return; }
-  # Look at first 5 lines for v0.X pattern
-  head -5 "$file" 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+' | head -1
+  # Look at first 5 lines for vX.Y or vX.Y.Z pattern
+  head -5 "$file" 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+(\.[0-9]+)?' | head -1
 }
 
 CURRENT_VERSION=""
