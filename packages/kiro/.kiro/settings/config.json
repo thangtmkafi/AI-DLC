@@ -1,6 +1,6 @@
 {
   "_comment": "KAFI AI-DLC v0.8 — Kiro workspace settings (committed to repo)",
-  "version": "0.8.1-kiro",
+  "version": "0.8.2-kiro",
   "steering": {
     "_comment": "Steering files in .kiro/steering/ are auto-discovered. Inclusion mode is per-file via front-matter.",
     "autoLoad": true

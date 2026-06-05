@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.8.1 · KAFI Transformation Office**
+**v0.8.2 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 
@@ -198,8 +198,8 @@ Construction-phase helper skills (load when relevant):
 
 KAFI standard at `aidlc-rule-details/templates/` · Project overrides at `00-knowledge/templates/`.
 
-Available templates (32):
-`brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md` · `prd.md` · `epic.md` · `requirements.md` · `user-story.md` · `story-map.md` · `application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `code-flow.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `design-lite.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
+Available templates (34):
+`brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md` · `prd.md` · `epic.md` · `requirements.md` · `user-story.md` · `story-map.md` · `application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `code-flow.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `user-flows.md` · `mockup-index.md` · `design-lite.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
 
 **Traceability:** `Intent → Brief → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR` · IDs: `PRD-NN · REQ-NN · ENT-NN · EPIC-NN · US-NN · UNIT-NN · TC-NN · ADR-NN`
 
@@ -281,4 +281,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.1 · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.2 · Transformation Office, Kafi Securities*

@@ -37,7 +37,7 @@ These three contracts together make Stage 14c conformance audit mechanically ver
    - Decide component library (shadcn/ui · custom · Radix · …) with rationale
    - Locked tokens become the FE source of truth for Stage 14c audit — no ad-hoc hex/px allowed in code
 3. For each user-facing story, define:
-   - **User flow** — happy path + edge cases, authored in `user-flows.md` as **Mermaid `sequenceDiagram`** (one per cross-screen flow). Actor lanes: `User` · `<Screen>` · `<Handler>` · `<Service>` · `<Repo>` · `<DB>`. Each step labeled (`click Submit`, `POST /deals`, `createDeal()`, …); error/edge paths as `alt` blocks. Every flow in uiux-spec §5 has ≥1 sequenceDiagram here. This is the upstream contract Stage 10 `code-flow.md` + Stage 14c flow-conformance audit trace against.
+   - **User flow** — happy path + edge cases, authored in `user-flows.md` (use `templates/user-flows.md`) as **Mermaid `sequenceDiagram`** (one per cross-screen flow). Actor lanes: `User` · `<Screen>` · `<Handler>` · `<Service>` · `<Repo>` · `<DB>`. Each step labeled (`click Submit`, `POST /deals`, `createDeal()`, …); error/edge paths as `alt` blocks. Every flow in uiux-spec §5 has ≥1 sequenceDiagram here. This is the upstream contract Stage 10 `code-flow.md` + Stage 14c flow-conformance audit trace against.
    - **Journey map** — emotional/contextual states
 4. Define **information architecture** — content hierarchy, navigation chrome (top nav · side nav · breadcrumbs · footer).
 5. **Step B · Generate HTML mockups** under `mockups/`. Use the design-system skill to render each key screen as a **self-contained HTML file** (inline CSS using CSS custom properties referencing `design-tokens.md`, NOT hex literals). One file per key screen. Each mockup must show every state: default, empty, error, loading (and hover/disabled where relevant).
@@ -58,7 +58,7 @@ These three contracts together make Stage 14c conformance audit mechanically ver
 8. Define interaction patterns (micro-interactions, transitions, state changes) in `interaction-specs.md` (system-wide behavior that static HTML can't fully express).
 9. Optionally produce lo-fi `wireframes/` for divergent exploration before committing to HTML.
 10. Reference design system components everywhere — do not invent new components without justification.
-11. Write `mockups/index.md` machine-readable manifest mapping each HTML file → view-model file → stories → target unit → states.
+11. Write `mockups/index.md` machine-readable manifest mapping each HTML file → view-model file → stories → target unit → states (use `templates/mockup-index.md`).
 
 ## Outputs
 
@@ -70,7 +70,7 @@ To `aidlc-docs/inception/product-design/`:
 | `uiux-spec.md` | **Master narrative** (NEW v0.7) · single canonical entry point: sitemap + nav chrome + screen catalog + flows + coverage matrix |
 | `mockups/<screen>.html` | Per screen, self-contained HTML using CSS variables from `design-tokens.md` (v0.6) |
 | `mockups/<screen>.view-model.md` | **Per screen, MVVM data-binding contract** (NEW v0.7) · sibling to HTML mockup |
-| `mockups/index.md` | Machine-readable manifest (screen → file → view-model → stories → unit) |
+| `mockups/index.md` | Machine-readable manifest (screen → file → view-model → stories → unit) · template `mockup-index.md` |
 | `user-flows.md` | **Mermaid `sequenceDiagram` per cross-screen flow** (actor → screen → handler → service → repo → DB · alt blocks for errors). Upstream contract for Stage 10 code-flow + Stage 14c flow-conformance audit. |
 | `information-architecture.md` | Sitemap detail (may be subsumed by uiux-spec.md §2-3) |
 | `interaction-specs.md` | System-wide component interactions, states, transitions |

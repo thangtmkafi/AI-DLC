@@ -24,6 +24,21 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 - Change-request (CR) protocol — parked brainstorm thread
 - `kafi-memory` auto-skill-creation (currently suggestion-only)
 
+## [0.8.2] · 2026-06-05
+
+### Added · Two missing FE-design templates (32 → 34)
+
+A template audit found the FE-design set incomplete: `user-flows.md` and the mockups manifest had **no template**, yet both are Stage-7 Designer outputs referenced by downstream rules (and `user-flows` was even marked `★` in the doc-types table).
+
+- **`user-flows.md`** (Stage 7 · Designer) — Mermaid `sequenceDiagram` per cross-screen flow with standard actor lanes (User · Screen · Handler · Service · Repo · DB) + `alt` error paths + a coverage table (flow ↔ story ↔ screen). It is the upstream contract that Stage 10 `code-flow.md` and the Stage 14c flow-conformance sub-check trace against — the Stage-7 twin of `code-flow.md`.
+- **`mockup-index.md`** (Stage 7 · Designer) — machine-readable manifest authored to `mockups/index.md`: screen → HTML mockup → paired view-model → stories (US-NN) → target unit → states, plus a sitemap and coverage self-check.
+- Both shipped to **both editions** (byte-identical), wired into the Stage-7 `product-design` rule, and added to the doc-types catalog (Introduction + Handbook). Template count **32 → 34** updated across CLAUDE.md / AGENTS.md / docs.
+- Mockups themselves remain bespoke HTML via the `kafi-design-system` skill (correctly no template). Parity verified: 34 == 34 identical names; `design-tokens.md`'s single edition-specific line (skill path) is intentional.
+
+### Fixed · Installer rejected 3-part versions (`vX.Y.Z`)
+
+Carried from the v0.8.1 follow-up: `tools/install.sh` + `tools/install.ps1` validated only `vX.Y`, so installing/upgrading to a patch (`v0.8.1`, `v0.8.2`) failed and the version parser truncated `v0.8.1` → `v0.8`. The validation regex, GitHub latest-tag extraction, and current-version parser now accept an optional `.Z` segment.
+
 ## [0.8.1] · 2026-05-31
 
 ### Fixed · Skill discovery — flatten the `kafi/` skill group so skills appear on `/`

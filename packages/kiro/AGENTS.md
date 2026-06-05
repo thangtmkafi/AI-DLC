@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.8.1 · KAFI Transformation Office · Kiro IDE port**
+**v0.8.2 · KAFI Transformation Office · Kiro IDE port**
 
 > This file is the agent context for this KAFI project. It defines the AI-Driven Development Lifecycle. When the user requests development work, follow this workflow FIRST. Kiro reads this file alongside the `.kiro/steering/` library.
 
@@ -197,8 +197,8 @@ Construction-phase helper steering files (`inclusion: manual` — load with `#<n
 
 KAFI standard at `.kiro/templates/` · Project overrides at `00-knowledge/templates/`.
 
-Available templates (32):
-`brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md` · `prd.md` · `epic.md` · `requirements.md` · `user-story.md` · `story-map.md` · `application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `code-flow.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `design-lite.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
+Available templates (34):
+`brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md` · `prd.md` · `epic.md` · `requirements.md` · `user-story.md` · `story-map.md` · `application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `code-flow.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `user-flows.md` · `mockup-index.md` · `design-lite.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
 
 **Traceability:** `Intent → Brief → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR` · IDs: `PRD-NN · REQ-NN · ENT-NN · EPIC-NN · US-NN · UNIT-NN · TC-NN · ADR-NN`
 
@@ -271,7 +271,7 @@ project-root/
 │   │   └── extensions/                # mix (audit-trail always; PDPA manual)
 │   ├── specs/                         # Kiro native specs (per-feature)
 │   │   └── _template/                 # blank spec template
-│   └── templates/                     # AI-DLC artifact templates (32 files)
+│   └── templates/                     # AI-DLC artifact templates (34 files)
 ├── 00-knowledge/                      # project KB + conventions
 ├── aidlc-docs/                        # generated artifacts
 ├── adrs/                              # Architecture Decision Records
@@ -305,4 +305,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.1 Kiro Port · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.2 Kiro Port · Transformation Office, Kafi Securities*
