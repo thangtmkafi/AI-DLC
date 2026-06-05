@@ -62,7 +62,7 @@ You ensure the artifacts produced by AI-DLC actually match the specs that drove 
 
 - Stage: `aidlc-rule-details/construction/unit-test-planning.md` (10b)
 - Stage: `aidlc-rule-details/construction/conformance-audit.md` (14c)
-- Template: `aidlc-rule-details/templates/test-plan.md`
-- Template: `aidlc-rule-details/templates/test-cases.md`
-- Template: `aidlc-rule-details/templates/dod.md` (Definition of Done used at every gate)
+- Template: `aidlc-rule-details/templates/03-construction/test/test-plan.md`
+- Template: `aidlc-rule-details/templates/03-construction/test/test-cases.md`
+- Template: `aidlc-rule-details/templates/03-construction/test/dod.md` (Definition of Done used at every gate)
 - Common: `aidlc-rule-details/common/ai-review-checklist.md` (Hard + Soft items)

@@ -1344,8 +1344,8 @@ footer {
       <h4>Inputs</h4>
       <ul class="io-list">
         <li>Whichever file exists</li>
-        <li>aidlc-rule-details/templates/vision.md</li>
-        <li>aidlc-rule-details/templates/technical-environment.md</li>
+        <li>aidlc-rule-details/templates/00-pre-inception/vision.md</li>
+        <li>aidlc-rule-details/templates/00-pre-inception/technical-environment.md</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
@@ -1386,7 +1386,7 @@ footer {
       <h4>Inputs</h4>
       <ul class="io-list">
         <li>Legacy BRD / PRD source file</li>
-        <li>aidlc-rule-details/templates/vision.md</li>
+        <li>aidlc-rule-details/templates/00-pre-inception/vision.md</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
@@ -1431,7 +1431,7 @@ footer {
       <h4>Inputs</h4>
       <ul class="io-list">
         <li>User's brief or intent message</li>
-        <li>aidlc-rule-details/templates/vision.md</li>
+        <li>aidlc-rule-details/templates/00-pre-inception/vision.md</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
@@ -1650,7 +1650,7 @@ footer {
       <li>Read Vision + Tech Env + KB sections. Identify distinct features (each gets its own PRD file).</li>
       <li>Run intent analysis — what's actually being asked for?</li>
       <li>Determine depth: Minimal (PRD inlined as preamble) / Standard (1 PRD + REQs) / Comprehensive (PRD per feature + full PRD-NN→REQ-NN traceability).</li>
-      <li><strong>Step 6a · PRD generation</strong> — per feature, produce <code>prd-&lt;feature&gt;.md</code> using <code>templates/prd.md</code>. PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.</li>
+      <li><strong>Step 6a · PRD generation</strong> — per feature, produce <code>prd-&lt;feature&gt;.md</code> using <code>templates/01-inception-requirements/pm/prd.md</code>. PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.</li>
       <li><strong>Step 6b · Requirements generation</strong> — produce <code>requirements.md</code> with REQ-NN entries. Each REQ cites parent PRD-NN: <code>**Parent PRD:** prd-&lt;feature&gt;.md#PRD-NN</code>.</li>
       <li>Backfill PRD traceability footers — each PRD-NN lists the REQ-NN it decomposes into.</li>
       <li>For PRDs/REQs touching open items, emit canonical line: <code>Open — pending [owner]</code>. Never fabricate.</li>
@@ -1681,7 +1681,7 @@ footer {
       <ul class="io-list">
         <li>aidlc-docs/inception/requirements/requirements.md</li>
         <li>aidlc-docs/inception/discovery/vision.md (personas)</li>
-        <li>aidlc-rule-details/templates/user-story.md</li>
+        <li>aidlc-rule-details/templates/01-inception-requirements/ba/user-story.md</li>
       </ul>
     </div>
     <div class="io-arrow">→</div>
@@ -2509,7 +2509,7 @@ footer {
       <span class="doc-badge">new</span>
     </div>
   </div>
-  <div class="doc-path"><code>aidlc-rule-details/templates/</code> (34 templates total)</div>
+  <div class="doc-path"><code>aidlc-rule-details/templates/</code> (34 templates total · grouped into 5 phase subfolders)</div>
   <p class="doc-purpose">The artifacts that make AI-DLC spec-driven and verifiable end-to-end. Each is a template authored at its owning stage and audited downstream at Stage 14c.</p>
   <p class="doc-contains"><strong>Design / FE (Stage 7):</strong> <code>design-tokens.md</code> (look &amp; feel catalog) · <code>uiux-spec.md</code> (master UI narrative + sitemap + coverage matrix) · <code>view-model.md</code> (per-screen MVVM data binding + §6 layout sketch) · <code>user-flows.md</code> (Mermaid sequence diagrams) · <code>mockup-index.md</code> (screen manifest) · <code>design-lite.md</code> (trivial-UI shortcut).</p>
   <p class="doc-contains"><strong>Model / BE (Stage 8 + 10):</strong> <code>data-model.md</code> (system entities ENT-NN) · <code>api-spec.md</code> (REST/GraphQL contracts) · <code>code-flow.md</code> (per-unit Mermaid call sequences).</p>

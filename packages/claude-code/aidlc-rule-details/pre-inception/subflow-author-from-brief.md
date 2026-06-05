@@ -16,7 +16,7 @@ flowchart TB
 
 ## Step 1: Template Resolution
 
-Use `templates/vision.md` unless user references their own.
+Use `templates/00-pre-inception/vision.md` unless user references their own.
 
 ## Step 2: Requirement Parsing
 
@@ -36,7 +36,7 @@ Ask depth question:
 ## Question: Drafting depth
 A) Minimal — Vision + Tech Env, lean, MVP-focused
 B) Standard — Vision + Tech Env + risk register + personas
-C) Comprehensive — Vision + Tech Env + draft PRD(s) per feature (using `templates/prd.md`) + risk register + personas. Draft PRD becomes input to Stage 4 PM finalization.
+C) Comprehensive — Vision + Tech Env + draft PRD(s) per feature (using `templates/01-inception-requirements/pm/prd.md`) + risk register + personas. Draft PRD becomes input to Stage 4 PM finalization.
 D) Other (describe below)
 
 [Answer]: 

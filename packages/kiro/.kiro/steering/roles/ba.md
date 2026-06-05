@@ -51,5 +51,5 @@ Translate intent into requirements. Translate requirements into stories. Transla
 
 ## References
 
-- Template: `.kiro/templates/user-story.md`
+- Template: `.kiro/templates/01-inception-requirements/ba/user-story.md`
 - Stage: `.kiro/steering/inception/user-stories.md`

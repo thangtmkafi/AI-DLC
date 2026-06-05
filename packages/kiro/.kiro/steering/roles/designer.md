@@ -65,7 +65,7 @@ Translate stories into experience specifications. Inform Application Design (com
 ## References
 
 - Stage: `.kiro/steering/inception/product-design.md`
-- Template: `.kiro/templates/design-tokens.md` (look & feel catalog · v0.7)
-- Template: `.kiro/templates/uiux-spec.md` (master narrative · v0.7)
-- Template: `.kiro/templates/view-model.md` (per-screen MVVM contract · v0.7)
+- Template: `.kiro/templates/02-inception-design/ui-ux/design-tokens.md` (look & feel catalog · v0.7)
+- Template: `.kiro/templates/02-inception-design/ui-ux/uiux-spec.md` (master narrative · v0.7)
+- Template: `.kiro/templates/02-inception-design/ui-ux/view-model.md` (per-screen MVVM contract · v0.7)
 - KAFI design system skill: `.kiro/steering/kafi-design-system.md` — **always load this skill alongside this role when driving Stage 7**. The design system defines tokens, components, typography, and patterns. Custom components require justification against the system.

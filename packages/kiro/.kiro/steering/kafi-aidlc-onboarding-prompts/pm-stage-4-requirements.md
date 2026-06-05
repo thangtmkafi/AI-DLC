@@ -17,7 +17,7 @@ Your Task: I am the PM on [PROJECT]. We are in [Lite | Standard] mode. The activ
 Load .kiro/steering/roles/pm.md. Write to aidlc-docs/inception/[stage]/.
 
 **If Stage 4:** produce TWO deliverables in order:
-  1. `prd-<feature>.md` per major feature (use `.kiro/templates/prd.md`) — PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.
+  1. `prd-<feature>.md` per major feature (use `.kiro/templates/01-inception-requirements/pm/prd.md`) — PRD-NN entries with Must/Should/Could priority, measurable success criteria, scope IN/OUT, dependencies, risks.
   2. `requirements.md` — REQ-NN catalog where each REQ cites parent PRD-NN via `**Parent PRD:** prd-<feature>.md#PRD-NN`.
   At Minimal depth, PRD may be inlined as preamble in requirements.md.
 

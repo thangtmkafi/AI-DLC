@@ -22,7 +22,7 @@ flowchart LR
 
 ## For missing Vision Document
 
-1. Load `templates/vision.md`.
+1. Load `templates/00-pre-inception/vision.md`.
 2. Read the existing `technical-environment.md` for stack hints.
 3. Walk sections in order. For each section:
    - If user input is needed → write questions to `aidlc-docs/inception/discovery/vision-draft-questions.md` with `[Answer]:` tags.
@@ -38,7 +38,7 @@ flowchart LR
 
 ## For missing Technical Environment Document
 
-1. Load `templates/technical-environment.md`.
+1. Load `templates/00-pre-inception/technical-environment.md`.
 2. Read existing `vision.md` for application context.
 3. Walk sections, focusing on:
    - **Stack** (language, runtime, framework) — ask if unclear

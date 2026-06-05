@@ -48,8 +48,8 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 
 ## References
 
-- Template: `.kiro/templates/vision.md`
-- Template: `.kiro/templates/prd.md`
-- Template: `.kiro/templates/requirements.md`
+- Template: `.kiro/templates/00-pre-inception/vision.md`
+- Template: `.kiro/templates/01-inception-requirements/pm/prd.md`
+- Template: `.kiro/templates/01-inception-requirements/pm/requirements.md`
 - Stage: `.kiro/steering/inception/requirements-analysis.md`
 - Stage: `.kiro/steering/inception/workflow-planning.md`

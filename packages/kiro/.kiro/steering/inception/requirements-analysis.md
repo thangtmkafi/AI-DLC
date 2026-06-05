@@ -54,7 +54,7 @@ flowchart LR
 6. After user answers, generate outputs in two sub-steps:
 
    **Step 6a · PRD generation** (skip only at Minimal depth)
-   For each major feature, produce `aidlc-docs/inception/requirements/prd-<feature>.md` using `.kiro/templates/prd.md`:
+   For each major feature, produce `aidlc-docs/inception/requirements/prd-<feature>.md` using `.kiro/templates/01-inception-requirements/pm/prd.md`:
    - Feature overview, problem statement, personas, scenarios
    - PRD-NN entries (Must/Should/Could priority) with success criteria
    - Scope IN/OUT, dependencies, risks, constraints
@@ -74,7 +74,7 @@ flowchart LR
 
 ## PRD format
 
-See `.kiro/templates/prd.md`. Key structural rule:
+See `.kiro/templates/01-inception-requirements/pm/prd.md`. Key structural rule:
 
 ```markdown
 ## 5. Features

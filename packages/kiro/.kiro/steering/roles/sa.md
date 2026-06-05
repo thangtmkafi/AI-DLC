@@ -50,8 +50,8 @@ Architectural decisions are durable and expensive to undo. You're the guardian o
 
 ## References
 
-- Template: `.kiro/templates/adr.md`
-- Template: `.kiro/templates/functional-design.md`
+- Template: `.kiro/templates/03-construction/design/adr.md`
+- Template: `.kiro/templates/03-construction/design/functional-design.md`
 - Stage: `.kiro/steering/inception/application-design.md`
 - Stage: `.kiro/steering/construction/functional-design.md`
 - Stage: `.kiro/steering/construction/nfr-requirements.md`

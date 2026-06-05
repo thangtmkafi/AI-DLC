@@ -18,8 +18,8 @@ Load BOTH:
   · .kiro/steering/kafi-design-system.md
 
 Write to aidlc-docs/inception/product-design/. Produce FIVE outputs in order (v0.7 + v0.8):
-  1. **`design-tokens.md`** (use .kiro/templates/design-tokens.md) — project-level catalog: inherit from KAFI base + declare overrides + WCAG contrast notes. Tokens for colors, typography, spacing, radius, shadow, motion, z-index, breakpoints + component library decision (shadcn/ui · custom · …).
-  2. **`uiux-spec.md`** (use .kiro/templates/uiux-spec.md) — master narrative: sitemap, navigation chrome, screen catalog, cross-screen flows, key UX decisions, accessibility posture, story → screen coverage matrix.
+  1. **`design-tokens.md`** (use .kiro/templates/02-inception-design/ui-ux/design-tokens.md) — project-level catalog: inherit from KAFI base + declare overrides + WCAG contrast notes. Tokens for colors, typography, spacing, radius, shadow, motion, z-index, breakpoints + component library decision (shadcn/ui · custom · …).
+  2. **`uiux-spec.md`** (use .kiro/templates/02-inception-design/ui-ux/uiux-spec.md) — master narrative: sitemap, navigation chrome, screen catalog, cross-screen flows, key UX decisions, accessibility posture, story → screen coverage matrix.
   3. **`mockups/<screen>.html`** per key screen (v0.6) — self-contained HTML with CSS using **CSS custom properties referencing `design-tokens.md`** (no hex/px literals). Show every state (default/empty/error/loading).
   4. **`mockups/<screen>.view-model.md`** per key screen (v0.7) — cite ENT-NN from data-model.md for each field source. Declare formats explicitly (decimals, currency, date pattern). Include validation rules + computed-field formulas + state behavior + **§6 Layout sketch (Mermaid `flowchart TB` for the agent + ASCII box-drawing for humans)**.
   5. **`user-flows.md`** (v0.8) — one Mermaid `sequenceDiagram` per cross-screen flow (User → Screen → Handler → Service → Repo → DB · `alt` blocks for errors). Upstream contract for Stage 10 code-flow + Stage 14c flow-conformance audit.

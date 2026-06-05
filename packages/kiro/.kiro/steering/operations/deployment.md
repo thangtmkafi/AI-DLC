@@ -21,7 +21,7 @@ Deploy built artifacts to a target environment with a repeatable, rollback-safe 
 
 ## Steps
 
-1. Author `aidlc-docs/operations/deployment-runbook.md` using `aidlc-rule-details/templates/deployment-runbook.md`:
+1. Author `aidlc-docs/operations/deployment-runbook.md` using `aidlc-rule-details/templates/04-operations/deployment-runbook.md`:
    - Prerequisites (access, tools+versions, secrets present, build artifact, approvals)
    - Pre-deploy checks
    - Ordered deploy steps (commands)
@@ -41,7 +41,7 @@ To `aidlc-docs/operations/`:
 
 | File | Content |
 |---|---|
-| `deployment-runbook.md` | The executable deploy + rollback procedure (use `templates/deployment-runbook.md`) |
+| `deployment-runbook.md` | The executable deploy + rollback procedure (use `templates/04-operations/deployment-runbook.md`) |
 | `deployment-log.md` | Per-deploy record: version, env, timestamp, smoke result, who ran it |
 
 Plus `release-notes.md` (user-facing changelog) at repo root or `aidlc-docs/operations/`.

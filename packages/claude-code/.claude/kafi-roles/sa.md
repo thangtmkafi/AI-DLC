@@ -51,8 +51,8 @@ Architectural decisions are durable and expensive to undo. You're the guardian o
 
 ## References
 
-- Template: `aidlc-rule-details/templates/adr.md`
-- Template: `aidlc-rule-details/templates/functional-design.md`
+- Template: `aidlc-rule-details/templates/03-construction/design/adr.md`
+- Template: `aidlc-rule-details/templates/03-construction/design/functional-design.md`
 - Stage: `aidlc-rule-details/inception/application-design.md`
 - Stage: `aidlc-rule-details/construction/functional-design.md`
 - Stage: `aidlc-rule-details/construction/nfr-requirements.md`

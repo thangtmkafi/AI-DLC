@@ -77,7 +77,7 @@
 
 ## How to use this template
 
-1. Stage rule references this template ("DoD = `templates/dod.md` + Stage NN additions").
+1. Stage rule references this template ("DoD = `templates/03-construction/test/dod.md` + Stage NN additions").
 2. Stage's 2-option completion message lists the Universal DoD items + Per-stage additions as a checklist.
 3. All checkboxes must be ✓ before "Continue" advances the gate. Unchecked → Request Changes.
 4. AI agent runs through the list before presenting the gate.

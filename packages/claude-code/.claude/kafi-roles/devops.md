@@ -28,8 +28,8 @@ Bridge between code and running system. Own infrastructure design, deployment, m
 ## Stages you drive
 
 - **Stage 13: Infrastructure Design** (per-unit, with SA review)
-- **Stage 16: Deployment** (v0.8 formalized) — author `deployment-runbook.md` (prereqs · ordered steps · migrations · smoke verify · rollback). Use `templates/deployment-runbook.md`.
-- **Stage 17: Monitoring** (v0.8 formalized) — author `monitoring-runbook.md` (SLIs/SLOs from NFR thresholds · dashboards · alerts · oncall playbooks · escalation). Use `templates/monitoring-runbook.md`. Write a `postmortem.md` after incidents.
+- **Stage 16: Deployment** (v0.8 formalized) — author `deployment-runbook.md` (prereqs · ordered steps · migrations · smoke verify · rollback). Use `templates/04-operations/deployment-runbook.md`.
+- **Stage 17: Monitoring** (v0.8 formalized) — author `monitoring-runbook.md` (SLIs/SLOs from NFR thresholds · dashboards · alerts · oncall playbooks · escalation). Use `templates/04-operations/monitoring-runbook.md`. Write a `postmortem.md` after incidents.
 
 ## Stages where you're consulted
 
@@ -55,6 +55,6 @@ Bridge between code and running system. Own infrastructure design, deployment, m
 ## References
 
 - Stage: `aidlc-rule-details/construction/infrastructure-design.md`
-- Stage: `aidlc-rule-details/operations/deployment.md` · Template: `templates/deployment-runbook.md`
-- Stage: `aidlc-rule-details/operations/monitoring.md` · Template: `templates/monitoring-runbook.md`
-- Template: `templates/postmortem.md` (incident response)
+- Stage: `aidlc-rule-details/operations/deployment.md` · Template: `templates/04-operations/deployment-runbook.md`
+- Stage: `aidlc-rule-details/operations/monitoring.md` · Template: `templates/04-operations/monitoring-runbook.md`
+- Template: `templates/04-operations/postmortem.md` (incident response)

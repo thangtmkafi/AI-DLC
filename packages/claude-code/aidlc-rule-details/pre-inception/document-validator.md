@@ -59,7 +59,7 @@ Each class has a rubric. Score each item Pass / Partial / Missing.
 12. Stakeholders identified
 13. Decision-makers identified
 
-**PRD rubric (13 items)** — for product-level feature spec, mirrors `templates/prd.md` structure:
+**PRD rubric (13 items)** — for product-level feature spec, mirrors `templates/01-inception-requirements/pm/prd.md` structure:
 1. Feature overview (1-sentence summary)
 2. Problem statement (user pain articulated)
 3. Target users / personas

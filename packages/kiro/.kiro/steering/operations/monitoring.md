@@ -20,7 +20,7 @@ Make the deployed system observable + define how oncall responds. SLOs derive fr
 
 ## Steps
 
-1. Author `aidlc-docs/operations/monitoring-runbook.md` using `aidlc-rule-details/templates/monitoring-runbook.md`:
+1. Author `aidlc-docs/operations/monitoring-runbook.md` using `aidlc-rule-details/templates/04-operations/monitoring-runbook.md`:
    - SLIs / SLOs (each tied to a source NFR + alert threshold)
    - Dashboards (service overview · business metrics · infra)
    - Alerts (condition · severity · routing · runbook section)
@@ -38,9 +38,9 @@ To `aidlc-docs/operations/`:
 
 | File | Content |
 |---|---|
-| `monitoring-runbook.md` | SLOs · dashboards · alerts · logging · oncall playbooks · escalation (use `templates/monitoring-runbook.md`) |
+| `monitoring-runbook.md` | SLOs · dashboards · alerts · logging · oncall playbooks · escalation (use `templates/04-operations/monitoring-runbook.md`) |
 
-When an incident occurs, write a `postmortem.md` (use `templates/postmortem.md`) and feed lessons back via `kafi-memory`.
+When an incident occurs, write a `postmortem.md` (use `templates/04-operations/postmortem.md`) and feed lessons back via `kafi-memory`.
 
 ## Approval gate
 

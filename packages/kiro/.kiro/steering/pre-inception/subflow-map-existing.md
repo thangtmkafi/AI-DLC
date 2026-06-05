@@ -34,7 +34,7 @@ Document the fit-check in `aidlc-docs/inception/discovery/fit-check.md`.
 
 ## Step 3: Map source to Vision Document
 
-1. Load `templates/vision.md`.
+1. Load `templates/00-pre-inception/vision.md`.
 2. For each Vision section:
    - If rubric says Present → map content from source
    - If rubric says Partial → seed with source + question for enrichment

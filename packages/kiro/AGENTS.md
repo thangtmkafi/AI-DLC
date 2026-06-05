@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.8.2 · KAFI Transformation Office · Kiro IDE port**
+**v0.8.3 · KAFI Transformation Office · Kiro IDE port**
 
 > This file is the agent context for this KAFI project. It defines the AI-Driven Development Lifecycle. When the user requests development work, follow this workflow FIRST. Kiro reads this file alongside the `.kiro/steering/` library.
 
@@ -195,14 +195,18 @@ Construction-phase helper steering files (`inclusion: manual` — load with `#<n
 
 ## Templates
 
-KAFI standard at `.kiro/templates/` · Project overrides at `00-knowledge/templates/`.
+KAFI standard at `.kiro/templates/` · **grouped into 5 phase subfolders** · Project overrides at `00-knowledge/templates/`. Reference a template by its full path, e.g. `templates/01-inception-requirements/pm/prd.md`.
 
-Available templates (34):
-`brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md` · `prd.md` · `epic.md` · `requirements.md` · `user-story.md` · `story-map.md` · `application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md` · `functional-design.md` · `code-flow.md` · `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `user-flows.md` · `mockup-index.md` · `design-lite.md` · `test-plan.md` · `test-cases.md` · `dod.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md` · `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
+Available templates (34), by phase folder:
+- **`00-pre-inception/`** — `brief.md` · `vision.md` · `technical-environment.md` · `glossary.md` · `personas.md` · `risk-register.md`
+- **`01-inception-requirements/`** — `pm/` (`prd.md` · `requirements.md`) · `ba/` (`epic.md` · `user-story.md` · `story-map.md`)
+- **`02-inception-design/`** — `ui-ux/` (`design-tokens.md` · `uiux-spec.md` · `view-model.md` · `user-flows.md` · `mockup-index.md` · `design-lite.md`) · `architecture/` (`application-design.md` · `data-model.md` · `api-spec.md` · `components.md` · `unit-of-work.md`)
+- **`03-construction/`** — `design/` (`functional-design.md` · `code-flow.md` · `nfr-requirements.md` · `nfr-design.md` · `adr.md`) · `test/` (`test-plan.md` · `test-cases.md` · `dod.md`)
+- **`04-operations/`** — `deployment-runbook.md` · `monitoring-runbook.md` · `release-notes.md` · `postmortem.md`
 
 **Traceability:** `Intent → Brief → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR` · IDs: `PRD-NN · REQ-NN · ENT-NN · EPIC-NN · US-NN · UNIT-NN · TC-NN · ADR-NN`
 
-> **PRD vs Requirements:** PRD answers *WHAT* and *FOR WHOM* (product narrative, feature-level, PM-owned). `requirements.md` answers *HOW THE SYSTEM MUST BEHAVE* (testable functional + NFR, derived from PRD-NN). Both produced at Stage 4. See `.kiro/templates/prd.md`.
+> **PRD vs Requirements:** PRD answers *WHAT* and *FOR WHOM* (product narrative, feature-level, PM-owned). `requirements.md` answers *HOW THE SYSTEM MUST BEHAVE* (testable functional + NFR, derived from PRD-NN). Both produced at Stage 4. See `.kiro/templates/01-inception-requirements/pm/prd.md`.
 
 > **v0.7 templates:** `design-tokens.md` · `uiux-spec.md` · `view-model.md` · `data-model.md` · `test-plan.md` · `test-cases.md` · `dod.md`.
 > **v0.8 templates (new):** `code-flow.md` (per-unit Mermaid call sequences) · `glossary.md` (bilingual terms) · `api-spec.md` (REST/GraphQL contracts) · `deployment-runbook.md` (Stage 16) · `monitoring-runbook.md` (Stage 17) · `brief.md` (pre-Vision) · `release-notes.md` · `postmortem.md` · `epic.md` · `personas.md` · `risk-register.md` · `design-lite.md` · `story-map.md`.
@@ -271,7 +275,7 @@ project-root/
 │   │   └── extensions/                # mix (audit-trail always; PDPA manual)
 │   ├── specs/                         # Kiro native specs (per-feature)
 │   │   └── _template/                 # blank spec template
-│   └── templates/                     # AI-DLC artifact templates (34 files)
+│   └── templates/                     # AI-DLC artifact templates (34 files · 5 phase subfolders)
 ├── 00-knowledge/                      # project KB + conventions
 ├── aidlc-docs/                        # generated artifacts
 ├── adrs/                              # Architecture Decision Records
@@ -305,4 +309,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.2 Kiro Port · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.3 Kiro Port · Transformation Office, Kafi Securities*

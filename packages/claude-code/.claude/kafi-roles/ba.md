@@ -52,5 +52,5 @@ Translate intent into requirements. Translate requirements into stories. Transla
 
 ## References
 
-- Template: `aidlc-rule-details/templates/user-story.md`
+- Template: `aidlc-rule-details/templates/01-inception-requirements/ba/user-story.md`
 - Stage: `aidlc-rule-details/inception/user-stories.md`

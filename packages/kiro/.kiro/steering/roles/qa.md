@@ -61,7 +61,7 @@ You ensure the artifacts produced by AI-DLC actually match the specs that drove 
 
 - Stage: `.kiro/steering/construction/unit-test-planning.md` (10b)
 - Stage: `.kiro/steering/construction/conformance-audit.md` (14c)
-- Template: `.kiro/templates/test-plan.md`
-- Template: `.kiro/templates/test-cases.md`
-- Template: `.kiro/templates/dod.md` (Definition of Done used at every gate)
+- Template: `.kiro/templates/03-construction/test/test-plan.md`
+- Template: `.kiro/templates/03-construction/test/test-cases.md`
+- Template: `.kiro/templates/03-construction/test/dod.md` (Definition of Done used at every gate)
 - Common: `.kiro/steering/common/ai-review-checklist.md` (Hard + Soft items)

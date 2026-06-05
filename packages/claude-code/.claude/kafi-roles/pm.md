@@ -49,8 +49,8 @@ You own scope and intent. The Vision Document is your responsibility. When AI-DL
 
 ## References
 
-- Template: `aidlc-rule-details/templates/vision.md`
-- Template: `aidlc-rule-details/templates/prd.md`
-- Template: `aidlc-rule-details/templates/requirements.md`
+- Template: `aidlc-rule-details/templates/00-pre-inception/vision.md`
+- Template: `aidlc-rule-details/templates/01-inception-requirements/pm/prd.md`
+- Template: `aidlc-rule-details/templates/01-inception-requirements/pm/requirements.md`
 - Stage: `aidlc-rule-details/inception/requirements-analysis.md`
 - Stage: `aidlc-rule-details/inception/workflow-planning.md`

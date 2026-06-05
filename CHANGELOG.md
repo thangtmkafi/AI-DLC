@@ -24,6 +24,25 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 - Change-request (CR) protocol — parked brainstorm thread
 - `kafi-memory` auto-skill-creation (currently suggestion-only)
 
+## [0.8.3] · 2026-06-05
+
+### Changed · Templates reorganized into phase + owner subfolders
+
+The flat `templates/` directory (34 files) is now grouped by lifecycle phase, and the two phases with dual ownership are further split by owner — so a role finds its scaffolds in one place.
+
+```
+templates/
+├── 00-pre-inception/            brief · vision · technical-environment · glossary · personas · risk-register
+├── 01-inception-requirements/   pm/ (prd · requirements) · ba/ (epic · user-story · story-map)
+├── 02-inception-design/         ui-ux/ (design-tokens · uiux-spec · view-model · user-flows · mockup-index · design-lite) · architecture/ (application-design · data-model · api-spec · components · unit-of-work)
+├── 03-construction/             design/ (functional-design · code-flow · nfr-requirements · nfr-design · adr) · test/ (test-plan · test-cases · dod)
+└── 04-operations/               deployment-runbook · monitoring-runbook · release-notes · postmortem
+```
+
+- All ~45 `templates/<name>.md` references across rule files, onboarding prompts, role guides, CLAUDE.md / AGENTS.md, and the HTML docs were remapped to the new phase/owner paths (e.g. `templates/01-inception-requirements/pm/prd.md`).
+- Both editions identical (Claude `aidlc-rule-details/templates/`, Kiro `.kiro/templates/`); 34 files; `design-tokens.md`'s single edition-specific line (skill path) is the only intentional difference. No template content changed — pure reorganization.
+- Version v0.8.2 → v0.8.3.
+
 ## [0.8.2] · 2026-06-05
 
 ### Added · Two missing FE-design templates (32 → 34)

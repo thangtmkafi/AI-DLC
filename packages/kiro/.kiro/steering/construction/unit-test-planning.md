@@ -36,14 +36,14 @@ Author the per-unit **test strategy** (`test-plan.md`) and **test case catalog**
 ## Steps
 
 1. Identify this unit's scope from Stage 9 `unit-of-work*.md`. List which REQ-NN / US-NN / view-models / screens are in scope.
-2. Author **`test-plan.md`** (use `.kiro/templates/test-plan.md`):
+2. Author **`test-plan.md`** (use `.kiro/templates/03-construction/test/test-plan.md`):
    - Scope (in / out)
    - Test types (unit · integration · UI · NFR · contract)
    - Framework choice (Jest · Vitest · Bun-test · pytest · …) — declared explicitly so Stage 14b respects it
    - Coverage targets — every REQ + US AC + view-model field + state + domain op + business rule must have ≥1 TC-NN
    - Risk-based prioritization
    - Test data + environment assumptions
-3. Author **`test-cases.md`** (use `.kiro/templates/test-cases.md`):
+3. Author **`test-cases.md`** (use `.kiro/templates/03-construction/test/test-cases.md`):
    - Walk through derivation rules in template §case-derivation-rules
    - For each REQ-NN: ≥1 happy + 1-2 failure cases
    - For each US-NN AC: 1:1 mapping

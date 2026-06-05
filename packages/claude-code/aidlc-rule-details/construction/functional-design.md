@@ -32,7 +32,7 @@ To `aidlc-docs/construction/{unit}/functional-design/`:
 | `business-rules.md` | Validation rules, decision tables |
 | `domain-entities.md` | **Derived from `application-design/data-model.md`** · per-unit view citing ENT-NN it implements · entity definitions, relationships, invariants for this unit's scope. No new entities here unless approved as scope expansion. |
 | `frontend-components.md` | UI component hierarchy + props + state, **each component citing its source mockup (`mockups/<screen>.html`)** (if UI) |
-| `code-flow.md` | **Mermaid `sequenceDiagram` of the function-call path for each user action in this unit** (use `templates/code-flow.md`). Derives from `user-flows.md` (Stage 7) + business-logic-model + `components.md`. Declares cross-boundary calls (each backed by an ADR). Stage 14c sub-check #5 audits code's actual call paths against this. |
+| `code-flow.md` | **Mermaid `sequenceDiagram` of the function-call path for each user action in this unit** (use `templates/03-construction/design/code-flow.md`). Derives from `user-flows.md` (Stage 7) + business-logic-model + `components.md`. Declares cross-boundary calls (each backed by an ADR). Stage 14c sub-check #5 audits code's actual call paths against this. |
 
 ## Steps
 

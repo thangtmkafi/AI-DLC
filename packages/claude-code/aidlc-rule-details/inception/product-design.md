@@ -31,23 +31,23 @@ These three contracts together make Stage 14c conformance audit mechanically ver
 ## Steps
 
 1. Load the KAFI design system skill (`.claude/skills/kafi-design-system/SKILL.md`). Apply its tokens, typography, components, and patterns.
-2. **Step A · Author `design-tokens.md` FIRST** (use `templates/design-tokens.md`):
+2. **Step A · Author `design-tokens.md` FIRST** (use `templates/02-inception-design/ui-ux/design-tokens.md`):
    - Inherit from KAFI base; declare project-specific overrides with rationale
    - Catalog every token code will use: colors (semantic + raw with WCAG contrast notes), typography (font stacks + scale), spacing (4pt grid), radius, shadow elevation, motion (easing + duration), z-index, breakpoints
    - Decide component library (shadcn/ui · custom · Radix · …) with rationale
    - Locked tokens become the FE source of truth for Stage 14c audit — no ad-hoc hex/px allowed in code
 3. For each user-facing story, define:
-   - **User flow** — happy path + edge cases, authored in `user-flows.md` (use `templates/user-flows.md`) as **Mermaid `sequenceDiagram`** (one per cross-screen flow). Actor lanes: `User` · `<Screen>` · `<Handler>` · `<Service>` · `<Repo>` · `<DB>`. Each step labeled (`click Submit`, `POST /deals`, `createDeal()`, …); error/edge paths as `alt` blocks. Every flow in uiux-spec §5 has ≥1 sequenceDiagram here. This is the upstream contract Stage 10 `code-flow.md` + Stage 14c flow-conformance audit trace against.
+   - **User flow** — happy path + edge cases, authored in `user-flows.md` (use `templates/02-inception-design/ui-ux/user-flows.md`) as **Mermaid `sequenceDiagram`** (one per cross-screen flow). Actor lanes: `User` · `<Screen>` · `<Handler>` · `<Service>` · `<Repo>` · `<DB>`. Each step labeled (`click Submit`, `POST /deals`, `createDeal()`, …); error/edge paths as `alt` blocks. Every flow in uiux-spec §5 has ≥1 sequenceDiagram here. This is the upstream contract Stage 10 `code-flow.md` + Stage 14c flow-conformance audit trace against.
    - **Journey map** — emotional/contextual states
 4. Define **information architecture** — content hierarchy, navigation chrome (top nav · side nav · breadcrumbs · footer).
 5. **Step B · Generate HTML mockups** under `mockups/`. Use the design-system skill to render each key screen as a **self-contained HTML file** (inline CSS using CSS custom properties referencing `design-tokens.md`, NOT hex literals). One file per key screen. Each mockup must show every state: default, empty, error, loading (and hover/disabled where relevant).
-6. **Step C · For each mockup, author paired `<screen>.view-model.md`** (use `templates/view-model.md`):
+6. **Step C · For each mockup, author paired `<screen>.view-model.md`** (use `templates/02-inception-design/ui-ux/view-model.md`):
    - Field bindings table: every on-screen field → source `entity.attribute` (cite ENT-NN from data-model.md) → type → format → validation → state behavior
    - Computations: formulas for derived fields
    - State bindings: default · empty · loading · error · disabled · (others)
    - Actions / events: button → domain operation mapping
    - **§6 Layout sketch (both forms):** a Mermaid `flowchart TB` of the component hierarchy (agent-facing, structural) AND an ASCII box-drawing (human-facing, spatial). Lets agents grasp layout without parsing HTML.
-7. **Step D · Author `uiux-spec.md`** (master narrative, use `templates/uiux-spec.md`):
+7. **Step D · Author `uiux-spec.md`** (master narrative, use `templates/02-inception-design/ui-ux/uiux-spec.md`):
    - Sitemap (top-level page tree)
    - Navigation chrome (top nav · side nav · breadcrumbs · footer)
    - Screen catalog (table: ID, route, mockup link, view-model link, stories, target unit, states)
@@ -58,7 +58,7 @@ These three contracts together make Stage 14c conformance audit mechanically ver
 8. Define interaction patterns (micro-interactions, transitions, state changes) in `interaction-specs.md` (system-wide behavior that static HTML can't fully express).
 9. Optionally produce lo-fi `wireframes/` for divergent exploration before committing to HTML.
 10. Reference design system components everywhere — do not invent new components without justification.
-11. Write `mockups/index.md` machine-readable manifest mapping each HTML file → view-model file → stories → target unit → states (use `templates/mockup-index.md`).
+11. Write `mockups/index.md` machine-readable manifest mapping each HTML file → view-model file → stories → target unit → states (use `templates/02-inception-design/ui-ux/mockup-index.md`).
 
 ## Outputs
 
