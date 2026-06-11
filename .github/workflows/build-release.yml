@@ -93,21 +93,47 @@ jobs:
                       "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
                       "type": "AdaptiveCard",
                       "version": "1.4",
+                      "msTeams": {"width": "Full"},
                       "body": [
+                          # ── Header: logo + title ─────────────────────────────
                           {
-                              "type": "TextBlock",
-                              "text": f"KAFI AI-DLC {version} Released",
-                              "size": "Large",
-                              "weight": "Bolder",
-                              "color": "Good",
-                              "wrap": True
-                          },
-                          {
-                              "type": "TextBlock",
-                              "text": f"Released · {release_date}",
-                              "size": "Small",
-                              "color": "Accent",
-                              "spacing": "None"
+                              "type": "ColumnSet",
+                              "columns": [
+                                  {
+                                      "type": "Column",
+                                      "width": "auto",
+                                      "verticalContentAlignment": "Center",
+                                      "items": [{
+                                          "type": "Image",
+                                          "url": "https://github.githubassets.com/images/modules/logos_page/Octocat.png",
+                                          "size": "Small",
+                                          "style": "Default"
+                                      }]
+                                  },
+                                  {
+                                      "type": "Column",
+                                      "width": "stretch",
+                                      "verticalContentAlignment": "Center",
+                                      "items": [
+                                          {
+                                              "type": "TextBlock",
+                                              "text": f"KAFI AI-DLC {version} Released",
+                                              "size": "Large",
+                                              "weight": "Bolder",
+                                              "color": "Good",
+                                              "wrap": True,
+                                              "spacing": "None"
+                                          },
+                                          {
+                                              "type": "TextBlock",
+                                              "text": f"Released · {release_date}",
+                                              "size": "Small",
+                                              "color": "Accent",
+                                              "spacing": "None"
+                                          }
+                                      ]
+                                  }
+                              ]
                           },
                           {
                               "type": "TextBlock",
