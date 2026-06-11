@@ -105,7 +105,7 @@ jobs:
                                       "verticalContentAlignment": "Center",
                                       "items": [{
                                           "type": "Image",
-                                          "url": "https://github.githubassets.com/images/modules/logos_page/Octocat.png",
+                                          "url": "https://logo.svgcdn.com/logos/github-icon.png",
                                           "size": "Small",
                                           "style": "Default"
                                       }]
