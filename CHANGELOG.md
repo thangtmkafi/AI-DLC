@@ -2,6 +2,11 @@
 
 All notable changes to KAFI AI-DLC will be documented in this file. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.3.4] · 2026-06-12
+
+### Changes . Change Notification Channel
+- From Team Channel to Group Chat
+
 ## [0.8.3.3] · 2026-06-12
 
 ### Added · Teams notification job for GitHub Actions release workflow
