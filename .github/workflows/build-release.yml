@@ -75,9 +75,10 @@ jobs:
           import json, os
           import urllib.request
 
-          version = os.environ['VERSION']
-          repo    = os.environ['REPO']
-          webhook = os.environ['TEAMS_WEBHOOK_URL']
+          version  = os.environ['VERSION']
+          repo     = os.environ['REPO']
+          webhook  = os.environ['TEAMS_WEBHOOK_URL']
+          docs_url = "https://kai-foundry.kafisc.vn/kora/"
           release_url = f"https://github.com/{repo}/releases/tag/{version}"
 
           with open('/tmp/release_date.txt') as f:
@@ -126,33 +127,62 @@ jobs:
                                           },
                                           {
                                               "type": "TextBlock",
-                                              "text": f"Released · {release_date}",
+                                              "text": "New release published",
                                               "size": "Small",
-                                              "color": "Accent",
+                                              "color": "Light",
                                               "spacing": "None"
                                           }
                                       ]
                                   }
                               ]
                           },
+                          # ── Release metadata ─────────────────────────────────
+                          {
+                              "type": "FactSet",
+                              "spacing": "Small",
+                              "facts": [
+                                  {"title": "Version",  "value": version},
+                                  {"title": "Released", "value": release_date},
+                                  {"title": "Editions", "value": "Claude Code · Kiro"},
+                              ]
+                          },
+                          # ── Changelog ────────────────────────────────────────
                           {
                               "type": "TextBlock",
                               "separator": True,
                               "text": "What's changed",
                               "weight": "Bolder",
+                              "size": "Medium",
+                              "color": "Default",
                               "spacing": "Medium"
                           },
                           {
                               "type": "TextBlock",
                               "text": changelog,
                               "wrap": True,
-                              "spacing": "Small"
+                              "spacing": "Small",
+                              "color": "Default"
+                          },
+                          # ── Docs link ────────────────────────────────────────
+                          {
+                              "type": "TextBlock",
+                              "separator": True,
+                              "text": f"Documentation — [{docs_url}]({docs_url})",
+                              "size": "Small",
+                              "color": "Accent",
+                              "spacing": "Medium"
                           }
                       ],
                       "actions": [
                           {
                               "type": "Action.OpenUrl",
-                              "title": "View Release on GitHub",
+                              "title": "Browse Docs",
+                              "url": docs_url,
+                              "style": "positive"
+                          },
+                          {
+                              "type": "Action.OpenUrl",
+                              "title": "View Release",
                               "url": release_url
                           }
                       ]
