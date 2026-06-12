@@ -1,267 +1,157 @@
 # KAFI AI-DLC
 
-> **AI-Driven Development Lifecycle for KAFI Securities** · Adaptive 17-stage workflow with two human modes and six role playbooks. Ships as a drop-in package for Claude Code or Kiro IDE.
+> **AI-Driven Development Lifecycle for KAFI Securities.** A drop-in methodology package that turns Claude Code or Kiro IDE into a discipline-enforcing engineering partner. **The AI plans and executes; humans drive and approve.** You mostly just talk to the agent — it already knows the AI-DLC rules for the version you installed, and guides you stage by stage.
 
-[![Version](https://img.shields.io/badge/version-0.3-00C694)](CHANGELOG.md)
-[![Claude Code](https://img.shields.io/badge/edition-Claude_Code-orange)](releases/v0.3/)
-[![Kiro IDE](https://img.shields.io/badge/edition-Kiro-00C694)](releases/v0.3/)
+[![Version](https://img.shields.io/badge/version-0.8.3-00C694)](CHANGELOG.md)
+[![Editions](https://img.shields.io/badge/editions-Claude_Code_·_Kiro-101820)](#install-first)
+[![License](https://img.shields.io/badge/license-Apache_2.0-585667)](LICENSE)
 
-
----
-
-## What this is
-
-A drop-in workflow package that turns an AI coding agent into a discipline-enforcing partner for engineering work. Two AI IDEs supported with 100% content parity:
-
-- **Claude Code Edition** — for teams using [Claude Code](https://claude.com/product/claude-code)
-- **Kiro Edition** — for teams using [Kiro IDE](https://kiro.dev)
-
-Built around:
-
-- **17-stage adaptive workflow** across Pre-Inception → Inception → Construction → Operations
-- **Two human modes:** Lite (greenfield + clean inputs) and Standard (brownfield or needs prep)
-- **Six role playbooks:** PM · BA · SA · Designer · Dev · DevOps
-- **Source-of-truth precedence:** Project KB > Vision > BRDs/PRDs > derived views
-- **Compliance by default:** append-only audit trail (always); PDPA/PII enforcement (opt-in)
-- **Standardized completion gates:** every stage closes with a 2-option message — *Request Changes* or *Continue*
+**Docs:** [Introduction](https://thangtmkafi.github.io/AI-DLC/KAFI-AIDLC-Introduction.html) · [Handbook](https://thangtmkafi.github.io/AI-DLC/KAFI-AIDLC-Handbook.html) · [What's New](https://thangtmkafi.github.io/AI-DLC/KAFI-AIDLC-Whats-New.html) · [Installer Guide](https://thangtmkafi.github.io/AI-DLC/KAFI-Installer-Guide.html) · [Git Guide (non-dev)](https://thangtmkafi.github.io/AI-DLC/KAFI-Git-Guide-NonDev.html)
 
 ---
 
-## Pick your edition
+## What AI-DLC is
 
-| | Claude Code | Kiro IDE |
+A **methodology layer** — workflow rules + role guides + templates — that an AI agent follows. It is **not** product code; it's the discipline the agent applies while doing the work. Adapted from AWS AI-DLC, hardened for KAFI (compliance, bilingual VN/EN, append-only audit trail).
+
+**Four pillars**
+1. **Spec-driven, FE + BE** — every artifact derives from an upstream spec. BE from `data-model` (ENT-NN); FE from `design-tokens` + `uiux-spec` + `view-model` (MVVM).
+2. **Docs kept current** — specs live as `.md` next to code; a doc-sync discipline keeps them in step; an audit gate checks doc-currency.
+3. **Audit & verifiable at each gate** — spec-conformance trace-back + Hard/Soft review checklist + a blocking conformance audit per unit (Stage 14c).
+4. **Spec-driven, test-verified** — QA writes test plan + cases; Dev generates test code; the audit checks coverage. Tests are the executable spec.
+
+**Shape:** 17-stage adaptive lifecycle across **Pre-Inception → Inception → Construction → Operations** · **2 modes** (Lite for greenfield+clean vision, Standard for brownfield/needs-prep) · **2 editions** in parity (Claude Code, Kiro) · **7 roles** + the AI agent.
+
+---
+
+## Install first
+
+One command in your project folder. The installer auto-detects fresh install vs upgrade, downloads the latest release, and (on a non-empty folder) tucks existing files into `00-knowledge/references/`. Your work dirs (`00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/`) are never touched on upgrade.
+
+**macOS / Linux**
+```bash
+curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash
+```
+
+**Windows (PowerShell)**
+```powershell
+iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.ps1 -OutFile install.ps1; .\install.ps1
+```
+
+Pick your edition when prompted (or `--edition=claude-code|kiro`). What lands in your project:
+
+| Edition | Root file | Rules & skills the agent loads |
 |---|---|---|
-| **Target IDE** | Claude Code (Anthropic) | Kiro IDE (AWS) |
-| **Root file** | `CLAUDE.md` | `AGENTS.md` |
-| **Rule library** | `.claude/skills/` + `aidlc-rule-details/` | `.kiro/steering/` with YAML `inclusion` modes |
-| **Skill loading** | Slash-command or prompt | `#filename` reference in chat |
-| **Native spec mode** | — | `.kiro/specs/<feature>/` (requirements + design + tasks) |
-| **Latest package** | [`v0.3-claude-code.zip`](releases/v0.3/) | [`v0.3-kiro.zip`](releases/v0.3/) |
-| **Introduction** | [HTML](docs/KAFI-AIDLC-Introduction.html) | [HTML](docs/KAFI-AIDLC-Introduction.html) |
-| **Handbook** | [HTML](docs/KAFI-AIDLC-Handbook.html) | [HTML](docs/KAFI-AIDLC-Handbook.html) |
+| **Claude Code** | `CLAUDE.md` (auto-read every session) | `.claude/skills/` + `aidlc-rule-details/` |
+| **Kiro IDE** | `AGENTS.md` (auto-loaded) | `.kiro/steering/` (+ native specs) |
 
-Both editions ship the **same rules, same roles, same templates** — only the loading mechanism and folder syntax differ. A team can switch editions without losing institutional knowledge.
+> **Don't run `/init`.** The workflow spec is already in `CLAUDE.md` / `AGENTS.md` and auto-loads on every session — the agent knows AI-DLC the moment you open the project. Pin to a version with `--version=v0.8.3` (the installer accepts `vX.Y` and `vX.Y.Z`).
 
 ---
 
-## Quick start
+## Then just talk to the agent
 
-### Claude Code
+After install you work **by prompt**. Open the project in your IDE and run the onboarding skill — the agent scaffolds the project, figures out where you are, loads the right role, and walks you through.
 
-```bash
-# Download the latest release
-wget https://github.com/kafi-securities/kafi-ai-dlc/releases/download/v0.3/kafi-aidlc-v0.3-claude-code.zip
-unzip kafi-aidlc-v0.3-claude-code.zip -d my-project/
+**Claude Code:** `Run #kafi-aidlc-onboarding`  **·  Kiro:** `#kafi-aidlc-onboarding`  (or just describe what you want to build.)
 
-# Open in Claude Code
-cd my-project
-claude
-```
+The onboarding skill (3 modes — auto-detected):
+- **Setup** — fresh project: creates the skeleton below + `ai-dlc/project.md`, orients `00-knowledge/`.
+- **Detect** — legacy files in `00-knowledge/`: classifies your position across the 17 stages, loads the matching role + prompt.
+- **Resume** — `aidlc-docs/aidlc-state.md` exists: reconciles state and continues.
 
-Claude Code auto-reads `CLAUDE.md` on first prompt. Type `Help me kick off a new project` to begin the AI-DLC workflow.
-
-### Kiro IDE
-
-```bash
-# Download the latest release
-wget https://github.com/kafi-securities/kafi-ai-dlc/releases/download/v0.3/kafi-aidlc-v0.3-kiro.zip
-unzip kafi-aidlc-v0.3-kiro.zip -d my-project/
-
-# Open in Kiro
-kiro my-project
-```
-
-Kiro auto-loads `AGENTS.md` plus the 8 always-included steering files. Type `#pm` (or `#ba`, `#sa`, etc.) to engage a role guide, or just describe what you want to build.
-
----
-
-## Repository structure
+### The project skeleton (the agent creates this — you don't)
 
 ```
-kafi-ai-dlc/
-├── README.md                         ← you are here
-├── CHANGELOG.md                      ← version history
-├── LICENSE                           ← Apache 2.0
-├── CONTRIBUTING.md                   ← how to propose changes
-│
-├── docs/                             ← rendered HTML reference docs
-│   ├── KAFI-AIDLC-Introduction.html    (high-level overview)
-│   ├── KAFI-AIDLC-Introduction.html
-│   ├── KAFI-AIDLC-Handbook.html        (per-stage reference)
-│   └── KAFI-AIDLC-Handbook.html
-│
-├── packages/                         ← editable source for each platform
-│   ├── claude-code/                  ← Claude Code edition source
-│   │   ├── README.md                 ← Claude-specific setup
-│   │   ├── CLAUDE.md                 ← root context file
-│   │   ├── .claude/
-│   │   │   ├── settings.json
-│   │   │   └── skills/kafi/
-│   │   │       ├── design-system/SKILL.md
-│   │   │       └── roles/ (6 files)
-│   │   └── aidlc-rule-details/       ← workflow rule library
-│   │       ├── common/ · pre-inception/ · inception/
-│   │       ├── construction/ · operations/ · extensions/
-│   │       └── templates/ (11 artifact templates)
-│   │
-│   └── kiro/                         ← Kiro edition source
-│       ├── README.md                 ← Kiro-specific setup
-│       ├── AGENTS.md                 ← root agent context (universal agents.md spec)
-│       └── .kiro/
-│           ├── settings/config.json
-│           ├── steering/             ← rule library with YAML inclusion modes
-│           │   ├── kafi-design-system.md      (inclusion: always)
-│           │   ├── common/ (6)                (inclusion: always)
-│           │   ├── roles/ (6)                 (inclusion: manual)
-│           │   ├── pre-inception/ (6)         (inclusion: manual)
-│           │   ├── inception/ (9)             (inclusion: manual)
-│           │   ├── construction/ (6)          (inclusion: manual)
-│           │   ├── operations/ (2)            (inclusion: manual)
-│           │   └── extensions/                (mixed)
-│           ├── specs/_template/      ← spec-driven blank template
-│           └── templates/            ← same 11 templates as Claude edition
-│
-├── releases/                         ← distributable zips per version
-│   └── v0.3/
-│       ├── kafi-aidlc-v0.3-claude-code.zip   (120 KB)
-│       └── kafi-aidlc-v0.3-kiro.zip          (120 KB)
-│
-├── tools/                            ← build automation
-│   └── build-releases.sh             ← zips packages/ into releases/
-│
-└── .github/
-    ├── ISSUE_TEMPLATE/
-    ├── PULL_REQUEST_TEMPLATE.md
-    └── workflows/
-        └── build-release.yml         ← auto-build zips on tag push
+your-project/
+├── CLAUDE.md / AGENTS.md     ← installed · the AI-DLC rules the agent obeys
+├── ai-dlc/project.md         ← project metadata (created at setup)
+├── 00-knowledge/             ← your inputs: BRDs, PRDs, architecture, conventions, glossary
+├── aidlc-docs/               ← artifacts the agent produces (specs, audit, state)
+├── adrs/                     ← Architecture Decision Records
+└── src/                      ← application code
+```
+
+You feed `00-knowledge/`; the agent writes `aidlc-docs/` and `src/`. Every stage closes with a standardized **2-option gate**: *Request Changes* or *Continue*.
+
+---
+
+## Cheatsheet
+
+### The 17 stages
+
+| Phase | # | Stage | Owner | Key output |
+|---|---|---|---|---|
+| 🟣 Inception | 1–2 | Workspace Detection · KB Loading | AI | `aidlc-state.md` · context |
+| | 3 | Reverse Engineering *(brownfield)* | SA | `reverse-engineering/` |
+| | 4 | Requirements Analysis | PM | `prd.md` · `requirements.md` |
+| | 5 | User Stories *(+ conceptual design, opt)* | BA | `stories.md` · `personas.md` |
+| | 6 | Workflow Planning | PM | `execution-plan.md` |
+| | 7 | Product Design | Designer | mockups · `design-tokens` · `uiux-spec` · `view-model` · `user-flows` |
+| | 8 | Application Design | SA | `application-design` · `data-model` (ENT) · `api-spec` · ADRs |
+| | 9 | Units Generation | SA | `unit-of-work` + dependency matrix |
+| 🟢 Construction *(per unit)* | 10 / 10b | Functional Design / Unit Test Planning | SA / QA | `functional-design` · `code-flow` / `test-plan` · `test-cases` |
+| | 11–12 | NFR Requirements / Design | SA | `nfr-requirements` · `nfr-design` |
+| | 13 | Infrastructure Design | DevOps | `infrastructure-design/` |
+| | 14a / 14b | Production Code / Unit Test Code | Dev | `src/` · `src/*.test.*` |
+| | 14c | **Conformance Audit (BLOCKING)** | QA | `conformance-report.md` · 5 sub-checks |
+| | 15 | Build | Dev | `build/` |
+| 🟠 Operations | 16 / 17 | Deployment / Monitoring | DevOps | `deployment-runbook` / `monitoring-runbook` · `postmortem` |
+
+**Stage 14c — 5 blocking sub-checks:** code audit · token discipline · UI fidelity (vs mockup) · test coverage · flow conformance.
+
+### 7 roles → stages
+
+`PM` 4·6 · `BA` 5 · `SA` 3·8·9·10·11·12 · `Designer` 7 · `Dev` 14a·14b·15 · `QA` 10b·14c · `DevOps` 13·16·17. Plus the **AI agent** at every stage. The onboarding skill loads the right role guide automatically for the stage you're in.
+
+### Document templates (34 · grouped by phase, then owner)
+
+```
+templates/
+├── 00-pre-inception/            brief · vision · technical-environment · glossary · personas · risk-register
+├── 01-inception-requirements/   pm/ (prd · requirements)   ba/ (epic · user-story · story-map)
+├── 02-inception-design/         ui-ux/ (design-tokens · uiux-spec · view-model · user-flows · mockup-index · design-lite)
+│                                architecture/ (application-design · data-model · api-spec · components · unit-of-work)
+├── 03-construction/             design/ (functional-design · code-flow · nfr-requirements · nfr-design · adr)
+│                                test/ (test-plan · test-cases · dod)
+└── 04-operations/               deployment-runbook · monitoring-runbook · release-notes · postmortem
+```
+
+### Helper skills (load automatically when relevant)
+
+`kafi-design-system` (UI) · `kafi-doc-sync` · `kafi-verification-loop` (build·typecheck·lint·test·security) · `kafi-memory` (mine git history for patterns) · `kafi-code-review` router **+ 10 language reviewers** (TS · Python · Go · Java · Kotlin · C++ · Rust · C# · SQL · Shell).
+
+### Traceability
+
+`Intent → Brief → Vision → [BRD] → PRD → REQ → ENT → Epic → Story → Unit → TC → ADR` · IDs `PRD-NN · REQ-NN · ENT-NN · EPIC-NN · US-NN · UNIT-NN · TC-NN · ADR-NN`. A REQ with no parent PRD = scope creep → blocked at the gate.
+
+### Gate model
+
+**stage = branch · gate = PR · merge = approval.** Non-developers review on the PR web UI (see the [Git Guide for non-devs](https://thangtmkafi.github.io/AI-DLC/KAFI-Git-Guide-NonDev.html)).
+
+---
+
+## Upgrading from an older version
+
+You **don't migrate documents** — re-run the installer; it backs up the package files, pulls the latest release, and preserves your `00-knowledge/` + `aidlc-docs/`. New stages, templates, and skills apply going forward. See [What's New](https://thangtmkafi.github.io/AI-DLC/KAFI-AIDLC-Whats-New.html).
+
+---
+
+## For maintainers (this repo)
+
+This repo (codename **KORA**) authors AI-DLC itself — it ships two editions in **parity**: every change touches both `packages/claude-code/` and `packages/kiro/` in the same PR. See [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md), and [SESSION_HANDOFF.md](SESSION_HANDOFF.md). Releases auto-build both zips on tag push (`.github/workflows/build-release.yml`); `tools/build-releases.sh` builds locally + runs the parity check.
+
+```
+packages/claude-code/   CLAUDE.md + .claude/skills/ + aidlc-rule-details/
+packages/kiro/          AGENTS.md + .kiro/steering/ + .kiro/templates/
+docs/                   5 rendered HTML docs (served via GitHub Pages)
+tools/                  install.sh · install.ps1 · build-releases.sh
 ```
 
 ---
 
-## Versioning strategy
+## License & acknowledgments
 
-### Single version, multiple editions
+Apache 2.0 — see [LICENSE](LICENSE). Adapted from [AWS Labs · sample-ai-driven-development-lifecycle](https://github.com/aws-samples/sample-ai-driven-development-lifecycle) and the **Toan Huynh** enterprise AI engineering playbook; Kiro edition follows the [agents.md](https://agents.md) spec. Methodology, role taxonomy, design system, and compliance extensions by the **Kafi Securities Transformation Office**.
 
-One version number covers both platforms. `v0.3` ships **both** the Claude Code package and the Kiro package — they're always released together with content parity.
-
-```
-v0.3
-├── kafi-aidlc-v0.3-claude-code.zip
-└── kafi-aidlc-v0.3-kiro.zip
-```
-
-No `v0.3-claude` vs `v0.3-kiro` split. If a rule change applies to one platform but not the other, that's a parity bug — file an issue.
-
-### Branches
-
-| Branch | Purpose |
-|---|---|
-| `main` | Stable. Only release-tagged commits. Protected. |
-| `develop` | Active work. PRs merge here first. |
-| `feature/<name>` | Short-lived feature branches; merge into `develop`. |
-
-**No platform-specific branches.** Every change touches both `packages/claude-code/` and `packages/kiro/` in the same PR.
-
-### Tags + Releases
-
-- Tag from `main` after merging `develop`: `git tag v0.4 && git push --tags`
-- GitHub Actions workflow `.github/workflows/build-release.yml` triggers on tag push, builds both zips, attaches to a new GitHub Release.
-- `CHANGELOG.md` updated as part of the release PR.
-
-### Parity check (CI gate)
-
-A simple CI script verifies parity on every PR:
-
-```bash
-# tools/check-parity.sh (sketch)
-diff <(find packages/claude-code -name '*.md' | xargs cat | wc -w) \
-     <(find packages/kiro -name '*.md'        | xargs cat | wc -w)
-```
-
-Threshold tuneable — small word-count drift is normal (front-matter syntax differs); large drift means content forked accidentally.
-
----
-
-## How to update the package
-
-### Adding a new rule
-
-1. Decide which folder it belongs to (common / role / stage / extension)
-2. Drop the `.md` file into **both** platforms:
-   - `packages/claude-code/aidlc-rule-details/<folder>/new-rule.md`
-   - `packages/kiro/.kiro/steering/<folder>/new-rule.md` (with YAML front-matter declaring `inclusion: always|manual`)
-3. Reference it from `CLAUDE.md` AND `AGENTS.md` if it's a top-level rule
-4. Update relevant section in `docs/KAFI-AIDLC-Handbook-*.html`
-5. Open PR — CI runs parity check
-
-### Adding a new role
-
-1. Create role guide in **both** locations:
-   - `packages/claude-code/.claude/skills/kafi/roles/<role>.md`
-   - `packages/kiro/.kiro/steering/roles/<role>.md` (with `inclusion: manual`)
-2. Add starter prompt in `docs/KAFI-AIDLC-Introduction-*.html`
-3. Add row to Roles table in both `Introduction` files
-4. Add row to Skills table in both `Handbook` files
-
-### Changing a template
-
-1. Edit in `packages/claude-code/aidlc-rule-details/templates/<name>.md`
-2. Mirror to `packages/kiro/.kiro/templates/<name>.md` (templates have no front-matter — clean copy is fine)
-3. Document the change in `CHANGELOG.md`
-
----
-
-## Roadmap
-
-### v0.4 · Planned
-
-- **Test artifacts** — first-class test stage with template
-- **Compliance verification** — pre-deploy stage
-- **Operations expanded** — replace placeholder with concrete deploy + monitor specs
-- **Project extension YAMLs** — examples for `architecture-boundaries`, `naming-conventions`, `phase-discipline`
-- **CI parity check** — Phase 2 of the parity gate (semantic diff, not just word count)
-
-### v0.5 · Speculative
-
-- **Shared core architecture** — `core/` + `adapters/<platform>/` to fully eliminate platform duplication
-- **Additional IDE editions** — Cursor, Continue.dev, Windsurf if there's team demand
-- **Vietnamese translations** of docs/
-
-### Out of scope
-
-- This repo does **not** contain product code or KOS-MO architecture — those live in separate KAFI repos. AI-DLC is the methodology layer only.
-- This repo does **not** distribute the AI models themselves — bring your own Claude / Kiro / local LLM. See companion docs for local LLM deployment guidance.
-
----
-
-## Contributing
-
-KAFI engineers and partners can propose changes via PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full process. Quick summary:
-
-1. Fork or branch from `develop`
-2. Make changes **in both** `packages/claude-code/` and `packages/kiro/`
-3. Update relevant `docs/*.html` reference docs
-4. Add a CHANGELOG entry under `## Unreleased`
-5. Open PR — Transformation Office reviews
-6. CODEOWNERS approval required for changes in `packages/` or `docs/`
-
-**Out-of-scope contributions:** product-specific rules, project-specific KB content, IDE-specific tooling. These belong in your project repo, not in the platform repo.
-
----
-
-## License
-
-Apache 2.0 — see [LICENSE](LICENSE). Free to fork, adapt, redistribute. If you adapt for your organization, please credit Kafi Securities and AWS Labs AI-DLC.
-
----
-
-## Acknowledgments
-
-- [AWS Labs · sample-ai-driven-development-lifecycle](https://github.com/aws-samples/sample-ai-driven-development-lifecycle) — foundational workflow pattern
-- **Toan Huynh** — enterprise AI engineering playbook
-- [agents.md](https://agents.md) — universal agent context spec adopted in Kiro Edition
-- Kafi Securities Transformation Office — KAFI design system, role taxonomy, compliance extensions
-
----
-
-*Maintained by Kafi Securities Transformation Office · Issues: [github.com/kafi-securities/kafi-ai-dlc/issues](https://github.com/kafi-securities/kafi-ai-dlc/issues)*
+*This repo is the methodology layer only — no product code or KOS-MO architecture, and no AI models (bring your own Claude / Kiro / local LLM).*
