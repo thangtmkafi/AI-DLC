@@ -2,6 +2,22 @@
 
 All notable changes to KAFI AI-DLC will be documented in this file. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.3.4] · 2026-06-12
+
+### Changes . Change Notification Channel
+- From Team Channel to Group Chat
+
+## [0.8.3.3] · 2026-06-12
+
+### Added · Teams notification job for GitHub Actions release workflow
+
+- New `notify` job in `.github/workflows/build-release.yml` — runs after `build` succeeds and posts an Adaptive Card to the configured Power Automate webhook.
+- Card extracts only the current version's changelog section from `CHANGELOG.md` (skips code blocks, caps at 35 lines).
+- Release date parsed from the changelog header; falls back to the run date if absent.
+- Card design aligned with KAFI design system: kafi-green title, muted metadata row (Version · Released · Editions), changelog body, inline docs link, and two action buttons — "Browse Docs" (positive/filled) and "View Release".
+- `msTeams: {width: "Full"}` ensures the card fills the full post width.
+- Docs URL `https://kai-foundry.kafisc.vn/kora/` wired into both the inline link and the primary action button.
+
 ## [Unreleased]
 
 ### Planned for v0.9

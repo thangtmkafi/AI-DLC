@@ -548,6 +548,23 @@ footer a:hover { color: var(--kafi-green); }
 
 <script>
 (function () {
+  var path = window.location.pathname;
+  var base = /\.[a-z]{2,5}$/i.test(path)
+    ? path.replace(/\/[^/]+$/, '')
+    : path.replace(/\/$/, '');
+  if (base && base !== '/') {
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (h && !/^(https?:\/\/|\/\/|\/|#|mailto:)/.test(h)) {
+        a.setAttribute('href', base + '/' + h);
+      }
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
   var root = document.documentElement;
   var STORAGE = { lang: 'kafi-aidlc-lang', theme: 'kafi-aidlc-theme' };
 
