@@ -172,6 +172,16 @@ if [[ "$MODE" == "convert" ]]; then
   step "Converting: ${C_BOLD}${EXISTING}${C_OFF} → ${C_BOLD}${CONVERT_TO}${C_OFF}"
 fi
 
+# ---- interactive input ----
+# Read from the controlling terminal, NOT stdin. Under `curl … | bash` the
+# script itself is on stdin, so a plain `read` consumes the script (or hits
+# EOF) instead of prompting — that's why the edition prompt was skipped.
+# Returns non-zero when no terminal is attached (true non-interactive run).
+read_tty() {
+  [[ -r /dev/tty ]] || return 1
+  read "$@" </dev/tty
+}
+
 # ---- edition selection ----
 prompt_edition() {
   echo ""
@@ -179,7 +189,11 @@ prompt_edition() {
   echo "  [1] Claude Code edition (CLAUDE.md + .claude/)"
   echo "  [2] Kiro IDE edition    (AGENTS.md + .kiro/)"
   local choice
-  read -rp "Enter 1 or 2: " choice
+  if ! read_tty -rp "Enter 1 or 2: " choice; then
+    err "No terminal to prompt for edition (piped install?)."
+    err "Re-run with --edition, e.g.:  curl -fsSL <url>/tools/install.sh | bash -s -- --edition=claude-code"
+    exit 64
+  fi
   case "$choice" in
     1) EDITION="claude-code" ;;
     2) EDITION="kiro" ;;
@@ -338,7 +352,10 @@ from_package_paths() {
 confirm() {
   if $ASSUME_YES || $DRY_RUN; then return 0; fi
   local reply
-  read -rp "Proceed? [Y/n] " reply
+  if ! read_tty -rp "Proceed? [Y/n] " reply; then
+    err "No terminal to confirm (piped install?). Pass --yes to proceed non-interactively."
+    exit 1
+  fi
   case "${reply:-Y}" in
     Y|y|"") return 0 ;;
     *) err "Aborted by user."; exit 1 ;;
