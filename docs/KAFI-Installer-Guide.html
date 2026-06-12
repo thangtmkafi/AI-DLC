@@ -204,7 +204,7 @@ footer a { color: var(--kafi-green); text-decoration: none; }
 <div class="container">
 
 <header>
-  <div class="eyebrow">KAFI AI-DLC v0.8</div>
+  <div class="eyebrow">KAFI AI-DLC v0.9</div>
   <h1>Installer Guide</h1>
   <p class="subtitle">Cross-platform installer (bash + PowerShell) for setting up or upgrading AI-DLC in your project folder. Auto-detects mode, moves legacy files into <code>00-knowledge/references/</code>, and downloads the latest release from GitHub.</p>
 </header>
@@ -268,18 +268,18 @@ footer a { color: var(--kafi-green); text-decoration: none; }
 <pre>=== Plan ===
   Mode:     install
   Edition:  claude-code
-  Version:  v0.8
+  Version:  v0.9
   Target:   /home/me/my-project
-  Asset:    kafi-aidlc-v0.8-claude-code.zip
+  Asset:    kafi-aidlc-v0.9-claude-code.zip
   Move:     12 existing item(s) → 00-knowledge/references/
 
 Proceed? [Y/n] Y
 
 → Moving 12 item(s) → 00-knowledge/references/
 ✓ Moved 12 item(s).
-→ Downloading https://github.com/thangtmkafi/AI-DLC/releases/download/v0.8/...
+→ Downloading https://github.com/thangtmkafi/AI-DLC/releases/download/v0.9/...
 → Extracting into /home/me/my-project…
-✓ Extracted AI-DLC v0.8 (claude-code).</pre>
+✓ Extracted AI-DLC v0.9 (claude-code).</pre>
 
 <h2 id="upgrade-mode">4 · Upgrade mode (existing AI-DLC)</h2>
 
@@ -315,11 +315,11 @@ Proceed? [Y/n] Y
   </tbody>
 </table>
 
-<h3>Example output (v0.3 → v0.8 upgrade)</h3>
+<h3>Example output (v0.3 → v0.9 upgrade)</h3>
 <pre>=== Plan ===
   Mode:     upgrade
   Edition:  claude-code
-  Version:  v0.8 (upgrading from v0.3)
+  Version:  v0.9 (upgrading from v0.3)
   Target:   /home/me/my-project
   Backup:   .aidlc-backup-20260529-180000/
   Replace:  CLAUDE.md README.md aidlc-rule-details/ .claude/
@@ -329,9 +329,9 @@ Proceed? [Y/n] Y
 
 → Creating backup at .aidlc-backup-20260529-180000/
 ✓ Backup created.
-→ Downloading kafi-aidlc-v0.8-claude-code.zip…
+→ Downloading kafi-aidlc-v0.9-claude-code.zip…
 → Extracting…
-✓ Extracted AI-DLC v0.8 (claude-code).</pre>
+✓ Extracted AI-DLC v0.9 (claude-code).</pre>
 
 <h2 id="convert-mode">5 · Convert mode (Claude ↔ Kiro)</h2>
 
@@ -434,15 +434,15 @@ Proceed? [Y/n] Y
 <h3>Example output (Claude → Kiro)</h3>
 <pre>→ Mode: convert
 → Converting: claude-code → kiro
-→ Source: claude-code v0.8
-→ Target: kiro v0.8
+→ Source: claude-code v0.9
+→ Target: kiro v0.9
 
 === Plan ===
   Mode:     convert
   Edition:  kiro
-  Version:  v0.8
+  Version:  v0.9
   Target:   /home/me/my-project
-  Asset:    kafi-aidlc-v0.8-kiro.zip
+  Asset:    kafi-aidlc-v0.9-kiro.zip
   Backup:   .aidlc-backup-20260529-220000-from-claude-code/
   Remove:   CLAUDE.md README.md aidlc-rule-details/ .claude/
   Install:  AGENTS.md README.md .kiro/
@@ -456,9 +456,9 @@ Proceed? [Y/n] Y
 
 → Backing up claude-code edition files to .aidlc-backup-20260529-220000-from-claude-code/
 ✓ Backup of claude-code edition created.
-→ Downloading kafi-aidlc-v0.8-kiro.zip…
+→ Downloading kafi-aidlc-v0.9-kiro.zip…
 → Extracting…
-✓ Extracted AI-DLC v0.8 (kiro).</pre>
+✓ Extracted AI-DLC v0.9 (kiro).</pre>
 
 <h2 id="flags">6 · Flags reference</h2>
 
@@ -486,8 +486,8 @@ Proceed? [Y/n] Y
       <td>Skip the edition prompt. Required for non-interactive (<code>--yes</code>).</td>
     </tr>
     <tr>
-      <td><code>--version=&lt;v0.8|latest&gt;</code></td>
-      <td><code>-Version &lt;v0.8|latest&gt;</code></td>
+      <td><code>--version=&lt;v0.9|latest&gt;</code></td>
+      <td><code>-Version &lt;v0.9|latest&gt;</code></td>
       <td><code>latest</code></td>
       <td>Pin to a specific version. Use to install older release.</td>
     </tr>
@@ -609,7 +609,7 @@ rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
 <div class="callout"><strong>If you placed legacy files in <code>00-knowledge/</code></strong> (BRDs, PRDs, mockups, architecture docs), the onboarding skill detects them in Mode B and routes you to the right Pre-Inception sub-flow automatically.</div>
 
 <footer>
-  <p>KAFI AI-DLC v0.8 · Transformation Office, Kafi Securities · 2026-05-29</p>
+  <p>KAFI AI-DLC v0.9 · Transformation Office, Kafi Securities · 2026-06-12</p>
   <p>Related docs: <a href="KAFI-AIDLC-Introduction.html">Introduction</a> · <a href="KAFI-AIDLC-Handbook.html">Handbook</a> · <a href="KAFI-AIDLC-Whats-New.html">What's New</a> · <a href="KAFI-Git-Guide-NonDev.html">Git Guide</a></p>
 </footer>
 

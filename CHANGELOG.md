@@ -2,6 +2,19 @@
 
 All notable changes to KAFI AI-DLC will be documented in this file. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.9] · 2026-06-12
+
+### Promoted to the v0.9 stable line — consolidation + packaging & docs polish
+
+v0.9 rolls up the v0.8.x patch line and hardens packaging, templates, and docs. **No methodology change** — the 17 stages, 7 roles, gate model, and 4 pillars are unchanged from v0.8.
+
+- **Skill discovery fixed** — the 16 skills are flat at `.claude/skills/kafi-*/` (folder name == skill name), so they appear on `/` and auto-load by description.
+- **FE templates completed** — added `user-flows.md` (Mermaid sequenceDiagram per cross-screen flow) and `mockup-index.md` (screen manifest); template count 32 → 34.
+- **Templates reorganized** — grouped into phase subfolders, with inception-requirements/inception-design/construction split by owner (pm·ba / ui-ux·architecture / design·test). All references remapped; both editions in parity.
+- **Installer** — accepts 3-part versions (vX.Y.Z); the edition + confirm prompts now read from /dev/tty, fixing the silently-skipped edition prompt under `curl | bash`.
+- **README** rewritten as the public entry point — install-first, prompt-driven ("install, then just talk to the agent — it scaffolds the project skeleton and guides you stage by stage"), with a full cheatsheet and a Claude ↔ Kiro edition-switching guide.
+- **Release automation** — GitHub Actions posts a Teams notification on release; docs container build added. Doc version banners updated to v0.9.
+
 ## [0.8.3.4] · 2026-06-12
 
 ### Changes . Change Notification Channel
@@ -20,7 +33,7 @@ All notable changes to KAFI AI-DLC will be documented in this file. Format based
 
 ## [Unreleased]
 
-### Planned for v0.9
+### Planned (post-0.9 backlog)
 - Test execution integration (CI hooks / runner-aware) — out of scope by design, project's choice
 - Compliance verification stage — Stream A2
 - Project extension YAML examples — Stream A4

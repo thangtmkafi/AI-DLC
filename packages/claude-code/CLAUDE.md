@@ -1,6 +1,6 @@
 # KAFI AI-DLC Workflow
 
-**v0.8.3 · KAFI Transformation Office**
+**v0.9 · KAFI Transformation Office**
 
 > This file is Claude Code's project memory. It defines the AI-Driven Development Lifecycle for this KAFI project. When the user requests development work, follow this workflow FIRST.
 
@@ -285,4 +285,4 @@ project-root/
 
 ---
 
-*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.8.3 · Transformation Office, Kafi Securities*
+*Companion handbook: `KAFI-AIDLC-Handbook.html` · v0.9 · Transformation Office, Kafi Securities*

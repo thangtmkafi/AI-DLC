@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "_comment": "KAFI AI-DLC v0.8.3 — team settings (committed to repo)",
+  "_comment": "KAFI AI-DLC v0.9 — team settings (committed to repo)",
   "skills": {
     "_comment": "Manual skills loaded only when explicitly requested by user",
     "inclusion": "manual"
