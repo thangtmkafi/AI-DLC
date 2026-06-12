@@ -137,6 +137,28 @@ You **don't migrate documents** — re-run the installer; it backs up the packag
 
 ---
 
+## Switching editions (Claude ↔ Kiro)
+
+Already on one edition and want the other? The installer's **convert mode** backs up your current edition's package files, installs the target edition at the latest version, and **preserves your work** — `00-knowledge/`, `aidlc-docs/`, `src/`, `adrs/`, `ai-dlc/` are edition-agnostic (both editions' rules reference the same paths).
+
+**macOS / Linux**
+```bash
+# Claude Code → Kiro
+curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash -s -- --convert-to=kiro
+# Kiro → Claude Code
+curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash -s -- --convert-to=claude-code
+```
+
+**Windows (PowerShell)**
+```powershell
+iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.ps1 -OutFile install.ps1
+.\install.ps1 -ConvertTo kiro            # or:  -ConvertTo claude-code
+```
+
+Add `--yes` (or `-Yes`) to skip the confirmation. The previous edition's files are backed up to `.aidlc-backup-*-from-<edition>/`. **Customizations are not auto-ported** — paths and front-matter differ (Claude rules carry none; Kiro steering files use YAML `inclusion`). If you edited any rule / role / skill files, diff them against the new edition's structure and port by hand. Your specs in `aidlc-docs/` and inputs in `00-knowledge/` carry over untouched, so the agent resumes from the same stage.
+
+---
+
 ## For maintainers (this repo)
 
 This repo (codename **KORA**) authors AI-DLC itself — it ships two editions in **parity**: every change touches both `packages/claude-code/` and `packages/kiro/` in the same PR. See [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md), and [SESSION_HANDOFF.md](SESSION_HANDOFF.md). Releases auto-build both zips on tag push (`.github/workflows/build-release.yml`); `tools/build-releases.sh` builds locally + runs the parity check.
@@ -147,11 +169,3 @@ packages/kiro/          AGENTS.md + .kiro/steering/ + .kiro/templates/
 docs/                   5 rendered HTML docs (served via GitHub Pages)
 tools/                  install.sh · install.ps1 · build-releases.sh
 ```
-
----
-
-## License & acknowledgments
-
-Apache 2.0 — see [LICENSE](LICENSE). Adapted from [AWS Labs · sample-ai-driven-development-lifecycle](https://github.com/aws-samples/sample-ai-driven-development-lifecycle) and the **Toan Huynh** enterprise AI engineering playbook; Kiro edition follows the [agents.md](https://agents.md) spec. Methodology, role taxonomy, design system, and compliance extensions by the **Kafi Securities Transformation Office**.
-
-*This repo is the methodology layer only — no product code or KOS-MO architecture, and no AI models (bring your own Claude / Kiro / local LLM).*
