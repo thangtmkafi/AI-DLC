@@ -2,7 +2,7 @@
 
 > **AI-Driven Development Lifecycle for KAFI Securities.** A drop-in methodology package that turns Claude Code or Kiro IDE into a discipline-enforcing engineering partner. **The AI plans and executes; humans drive and approve.** You mostly just talk to the agent — it already knows the AI-DLC rules for the version you installed, and guides you stage by stage.
 
-[![Version](https://img.shields.io/badge/version-0.9-00C694)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.9.1-00C694)](CHANGELOG.md)
 [![Editions](https://img.shields.io/badge/editions-Claude_Code_·_Kiro-101820)](#install-first)
 [![License](https://img.shields.io/badge/license-Apache_2.0-585667)](LICENSE)
 
@@ -45,7 +45,7 @@ Pick your edition when prompted (or `--edition=claude-code|kiro`). What lands in
 | **Claude Code** | `CLAUDE.md` (auto-read every session) | `.claude/skills/` + `aidlc-rule-details/` |
 | **Kiro IDE** | `AGENTS.md` (auto-loaded) | `.kiro/steering/` (+ native specs) |
 
-> **Don't run `/init`.** The workflow spec is already in `CLAUDE.md` / `AGENTS.md` and auto-loads on every session — the agent knows AI-DLC the moment you open the project. Pin to a version with `--version=v0.9` (the installer accepts `vX.Y` and `vX.Y.Z`).
+> **Don't run `/init`.** The workflow spec is already in `CLAUDE.md` / `AGENTS.md` and auto-loads on every session — the agent knows AI-DLC the moment you open the project. Pin to a version with `--version=v0.9.1` (the installer accepts `vX.Y` and `vX.Y.Z`).
 
 ---
 

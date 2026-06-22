@@ -246,18 +246,18 @@ $AssetUrl  = "https://github.com/$GhRepo/releases/download/$Version/$AssetName"
 # ---- helpers: package paths + exclusion check ----
 function Get-PackagePaths {
   if ($Edition -eq 'claude-code') {
-    return @('CLAUDE.md', 'README.md', 'aidlc-rule-details', '.claude')
+    return @('CLAUDE.md', 'aidlc-rule-details', '.claude')
   } else {
-    return @('AGENTS.md', 'README.md', '.kiro')
+    return @('AGENTS.md', '.kiro')
   }
 }
 
 # In convert mode, returns paths of the FROM edition (to be removed/backed up)
 function Get-FromPackagePaths {
   if ($Existing -eq 'claude-code') {
-    return @('CLAUDE.md', 'README.md', 'aidlc-rule-details', '.claude')
+    return @('CLAUDE.md', 'aidlc-rule-details', '.claude')
   } else {
-    return @('AGENTS.md', 'README.md', '.kiro')
+    return @('AGENTS.md', '.kiro')
   }
 }
 
@@ -448,8 +448,21 @@ function Show-NextStepsInstall {
 
 === Next steps ===
 
-1. Create ai-dlc\project.md with project metadata.
-   See template in README.md "How to use" step 4.
+1. Create ai-dlc\project.md with project metadata. Template:
+
+     # Project Metadata
+     **Name:** <project-name>
+     **Phase:** <e.g. Phase 0 - Foundation>
+     ## Source-of-Truth Precedence
+     1. 00-knowledge/architecture/ - canonical architecture
+     2. 00-knowledge/product/ - BRD / PRD / business requirements
+     ## Active Extensions
+     - audit-trail - always enforced
+     - personal-data-privacy - opt-in (auto on PII)
+     - architecture-boundaries / naming-conventions - project-defined
+
+   (Or let #kafi-aidlc-onboarding scaffold it for you in step 2.)
+   Full guide: docs/KAFI-Installer-Guide.html
 
 2. Start your first AI session.
    Open this folder in $ideName.

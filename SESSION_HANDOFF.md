@@ -1,7 +1,21 @@
 # Session Handoff · KAFI AI-DLC
 
 > **Drop this file at repo root.** When opening this repo in Claude Code, your first prompt should be:
-> *"Read `SESSION_HANDOFF.md` and propose what to tackle next from the v0.9 backlog."*
+> *"Read `SESSION_HANDOFF.md` and report current status / propose next step."*
+
+---
+
+## ⏳ Current status — 2026-06-22 (READ FIRST)
+
+**Released:** **v0.9.1** is shipped (tag `v0.9.1`; both remotes — `origin`=Kafivn/KORA and `thangtmkafi`/AI-DLC. Run `git show v0.9.1` for the commit). **Patch release, no methodology change** — 17 stages, 7 roles, gate model, 34 templates, 4 pillars all unchanged from v0.9. v0.9.1 shipped two things:
+- **Design-system logo fix.** The `kafi-design-system` skill §17 had an "SVG Fallback" that *drew* a fake logo (an X + `<text>` "Kafi"); agents auto-generated a wrong logo. Now the logo is a **fixed asset — official base64 PNG only, never recreate/draw, no SVG** (light bg → `KAFI_LOGO_DARK`; dark bg → `KAFI_LOGO_WHITE`). Applied to both `SKILL.md` (Claude) + `kafi-design-system.md` (Kiro) + `docs/index.html` (CSS `.logo-x` → real per-theme PNG; brand-text `KAFI AI-DLC` → `AI-DLC`).
+- **Package README removed.** Deleted `packages/claude-code/README.md` + `packages/kiro/README.md` so installing AI-DLC never drops/overwrites the consuming project's own README (root `README.md` unchanged). Installers dropped `README.md` from package-path lists + inlined the `ai-dlc/project.md` template; AGENTS.md tree, both onboarding skills, Installer Guide, and Handbook SVG all synced. Both editions in parity.
+
+**Predecessor:** v0.9 shipped 2026-06-12 (tag `v0.9`, commit `ac31d27`) — consolidation/relabel of the v0.8.x line (skill-discovery flatten, FE templates → 34, phase/owner template subfolders, installer `vX.Y.Z` + `/dev/tty` fix, README rewrite, Teams-notify infra).
+
+**Open follow-ups:** (a) **known issue** — the Teams `notify` job in `.github/workflows/build-release.yml` fails on `thangtmkafi/AI-DLC` (missing `TEAMS_WEBHOOK_URL` secret); the release build + asset upload itself is unaffected. (b) Optional: sweep remaining HTML docs (Introduction / Handbook / Git-Guide) for any other drawn/placeholder logos.
+
+**Never commit:** root `kafi-design-system.md` and `ai-dlc-context.md` stay untracked; `releases/*` zips are not committed (Actions builds them on tag — only `v0.3`/`v0.4` are historically tracked).
 
 ---
 
@@ -16,7 +30,7 @@ This is the **KAFI AI-DLC methodology repo** — it contains the workflow rules,
 
 Don't conflate the two. Editing the root one shapes how this repo is developed; editing the package one ships to every KAFI project using AI-DLC.
 
-**Current state:** v0.8 shipped 29 May 2026. Two editions, content parity verified.
+**Current state:** v0.9.1 shipped (2026-06-22). Two editions, content parity verified. (See "Current status — READ FIRST" at the top for the latest ship details.)
 
 - **Claude Code Edition** — `packages/claude-code/` · `CLAUDE.md` + `.claude/skills/` + `aidlc-rule-details/`
 - **Kiro Edition** — `packages/kiro/` · `AGENTS.md` + `.kiro/steering/` with YAML inclusion modes
@@ -253,4 +267,4 @@ Keep it under ~250 lines. If it grows, that's a signal to split into multiple se
 
 ---
 
-*Last updated: 29 May 2026 · v0.8 ship — mega release · ASCII+Mermaid layouts · code-flow + flow conformance · 14 skills · 13 templates · Operations formalized · HTML deep-sync + What's-New page*
+*Last updated: 22 Jun 2026 · v0.9.1 ship — patch · design-system logo fix (base64 PNG only, no SVG) · package README removed · version bump. No methodology change from v0.9.*

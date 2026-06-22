@@ -340,4 +340,4 @@ Your Role: You are an expert Business Analyst at KAFI Securities, tasked with ma
 - `aidlc-rule-details/pre-inception/entry-router.md` — sub-flow routing logic
 - `aidlc-rule-details/pre-inception/document-validator.md` — consent-first artifact classifier
 - `packages/claude-code/CLAUDE.md` — workflow spec (the file `/init` would overwrite — protect it)
-- `packages/claude-code/README.md` §"How to use" — setup steps
+- `docs/KAFI-Installer-Guide.html` — install + setup steps (project.md scaffold)

@@ -31,6 +31,26 @@ v0.9 rolls up the v0.8.x patch line and hardens packaging, templates, and docs. 
 - `msTeams: {width: "Full"}` ensures the card fills the full post width.
 - Docs URL `https://kai-foundry.kafisc.vn/kora/` wired into both the inline link and the primary action button.
 
+## [0.9.1] · 2026-06-22
+
+Patch release. **No methodology change** — the 17 stages, 7 roles, gate model, 34 templates, and 4 pillars are unchanged from v0.9. Fixes the design-system logo bug, removes the package-level README, and bumps version markers.
+
+### Fixed · Design-system logo no longer auto-generated
+
+- The `kafi-design-system` skill §17 carried an "SVG Fallback" that *drew* a placeholder logo (an X mark + a `<text>` "Kafi"), so agents rendered a fake logo instead of the brand asset. Removed the fallback and replaced it with a hard rule: the logo is a **fixed asset** — embed the official base64 PNG, never recreate or redraw it, no SVG. Added a light/dark variant table (light background → `KAFI_LOGO_DARK`; dark background → `KAFI_LOGO_WHITE`) and fixed the related "use SVG" pitfall-table line (`X mark` → `K mark`).
+- Applied in parity to `packages/claude-code/.claude/skills/kafi-design-system/SKILL.md` and `packages/kiro/.kiro/steering/kafi-design-system.md`.
+- `docs/index.html` — replaced the CSS-drawn `.logo-x` placeholder with the real per-theme base64 PNG (dark logo on the light theme, white logo on the dark theme); brand text `KAFI AI-DLC` → `AI-DLC`.
+
+### Removed · Package-level README
+
+- Deleted `packages/claude-code/README.md` and `packages/kiro/README.md`. The injection package no longer ships a README — installing AI-DLC into a project must not drop or overwrite the project's own `README.md`. The root `README.md` (public entry point) is unchanged.
+- Installers (`tools/install.sh` + `tools/install.ps1`) no longer list `README.md` as a package path, so upgrade/convert no longer backs up or replaces the consuming project's README. The `ai-dlc/project.md` metadata template (previously in the package README §"How to use" step 4) is now inlined in the installer's next-steps output.
+- Docs synced: Installer Guide file-set tables move `README.md` from "replaced" to "preserved"; the AGENTS.md folder tree and the Handbook injected-package diagram drop the README node; both onboarding skills repoint the README setup reference to `docs/KAFI-Installer-Guide.html`. Both editions in parity.
+
+### Changed
+
+- Version bumped v0.9 → v0.9.1 across `CLAUDE.md` / `AGENTS.md` banners + footers, `settings.json`, `config.json` (also corrected a stale v0.8 comment), the root `README.md` badge + install example, and the HTML doc banners (index · Introduction · Handbook · Installer Guide · Git Guide).
+
 ## [Unreleased]
 
 ### Planned (post-0.9 backlog)

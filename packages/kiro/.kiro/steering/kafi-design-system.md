@@ -1136,7 +1136,7 @@ The Ultimate Goal card in Strategy Map view uses the **white logo** variant and 
 | **Purplish muted text (`#7F7CA2`) in product surfaces** | **Use neutral gray `#9095A0` — purplish tones are dark-theme only** |
 | Dark sidebar in light theme | White sidebar with `--border-sidebar` |
 | Dark theme On Track in bright green | `--kafi-teal` (#07756D) for On Track text |
-| PNG logos with opaque black backgrounds | Use SVG or alpha-transparent PNG; strip BG via Pillow if needed |
+| PNG logos with opaque black backgrounds | Use the alpha-transparent base64 PNG from §17 (pre-stripped) — never a drawn SVG substitute |
 | **Detail panel meta with light bg on dark theme** | **Use `rgba(255,255,255,0.03)` or `transparent` — never `#FAFCFB`** |
 | **Close/hover button using light bg (`#F0F2F5`) on dark** | **Use `rgba(255,255,255,0.08)` for hover state on dark surfaces** |
 | **Parent nav item highlighted when child subview is active** | **Only the subview item gets green border + tint; parent stays muted** |
@@ -1348,32 +1348,22 @@ iVBORw0KGgoAAAANSUhEUgAAANgAAABCCAYAAAA13RjIAAAkr0lEQVR42u19eXhV1dX+u/Y+59wh8wQk
 - ✅ Minimum display height: 18px
 - ❌ Do not apply color filters, drop shadows, or opacity
 - ❌ Do not place on dark backgrounds (use a light-variant logo instead)
-- ❌ Do not crop or rearrange the X mark and wordmark
+- ❌ Do not crop or rearrange the K mark and wordmark
 
-### SVG Fallback (if PNG unavailable)
+### ⛔ The logo is a fixed asset — NEVER recreate it
 
-A simplified SVG approximation for environments that cannot embed PNG base64:
+The KAFI logo (the **K mark** + "Kafi" wordmark) is a fixed brand asset. **Do NOT generate, draw, trace, approximate, or recreate it** — no SVG `<line>`/`<path>`/`<text>` mark, no CSS shapes (rotated bars or pseudo-elements), no font-rendered or AI-drawn "Kafi". The mark is a stylized **K** (not an "X"); any recreated version is a brand violation.
 
-```jsx
-function KafiLogo({ height = 22 }) {
-  return (
-    <svg height={height} viewBox="0 0 92 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Teal diagonal — top-left to bottom-right */}
-      <line x1="2" y1="2" x2="19" y2="24" stroke="#07756D" strokeWidth="6.5" strokeLinecap="round"/>
-      {/* Green diagonal — top-right to bottom-left */}
-      <line x1="19" y1="2" x2="2" y2="24" stroke="#00C694" strokeWidth="6.5" strokeLinecap="round"/>
-      {/* Wordmark */}
-      <text x="28" y="20"
-        fontFamily="Inter, -apple-system, sans-serif"
-        fontWeight="700" fontSize="17" fill="#101820" letterSpacing="-0.3">
-        Kafi
-      </text>
-    </svg>
-  );
-}
-```
+**Always embed the official base64 PNG from this section** (brand-accurate, pixel-exact) and match the variant to the surface theme:
 
-*Note: SVG is an approximation. Use the PNG base64 above for brand-accurate rendering.*
+| Surface theme | Logo variant | Embed |
+|---|---|---|
+| **Light** — `#FFFFFF`, `#F2F4F7`, light cards / light-theme mockups | Dark logo | `KAFI_LOGO_DARK` |
+| **Dark** — `#0F1419`, `#080D12`, dark glass / sidebars / dark-theme mockups | White logo | `KAFI_LOGO_WHITE` |
+
+Match the variant to the theme **every time**: a light-theme mockup / prototype / design uses `KAFI_LOGO_DARK`; a dark-theme one uses `KAFI_LOGO_WHITE`. Never put the dark logo on a dark surface or the white logo on a light surface — it vanishes.
+
+**There is no SVG fallback and no "approximate" version.** If an environment cannot embed base64, reference the PNG by file path or stop and request the asset — never inline a hand-built substitute.
 
 ---
 

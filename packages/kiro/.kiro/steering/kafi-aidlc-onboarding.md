@@ -340,4 +340,4 @@ Your Role: You are an expert Business Analyst at KAFI Securities, tasked with ma
 - `.kiro/steering/pre-inception/entry-router.md` — sub-flow routing logic
 - `.kiro/steering/pre-inception/document-validator.md` — consent-first artifact classifier
 - `packages/kiro/AGENTS.md` — workflow spec (the file `/init` would overwrite — protect it)
-- `packages/kiro/README.md` §"How to use" — setup steps
+- `docs/KAFI-Installer-Guide.html` — install + setup steps (project.md scaffold)

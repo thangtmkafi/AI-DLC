@@ -204,7 +204,7 @@ footer a { color: var(--kafi-green); text-decoration: none; }
 <div class="container">
 
 <header>
-  <div class="eyebrow">KAFI AI-DLC v0.9</div>
+  <div class="eyebrow">KAFI AI-DLC v0.9.1</div>
   <h1>Installer Guide</h1>
   <p class="subtitle">Cross-platform installer (bash + PowerShell) for setting up or upgrading AI-DLC in your project folder. Auto-detects mode, moves legacy files into <code>00-knowledge/references/</code>, and downloads the latest release from GitHub.</p>
 </header>
@@ -268,18 +268,18 @@ footer a { color: var(--kafi-green); text-decoration: none; }
 <pre>=== Plan ===
   Mode:     install
   Edition:  claude-code
-  Version:  v0.9
+  Version:  v0.9.1
   Target:   /home/me/my-project
-  Asset:    kafi-aidlc-v0.9-claude-code.zip
+  Asset:    kafi-aidlc-v0.9.1-claude-code.zip
   Move:     12 existing item(s) → 00-knowledge/references/
 
 Proceed? [Y/n] Y
 
 → Moving 12 item(s) → 00-knowledge/references/
 ✓ Moved 12 item(s).
-→ Downloading https://github.com/thangtmkafi/AI-DLC/releases/download/v0.9/...
+→ Downloading https://github.com/thangtmkafi/AI-DLC/releases/download/v0.9.1/...
 → Extracting into /home/me/my-project…
-✓ Extracted AI-DLC v0.9 (claude-code).</pre>
+✓ Extracted AI-DLC v0.9.1 (claude-code).</pre>
 
 <h2 id="upgrade-mode">4 · Upgrade mode (existing AI-DLC)</h2>
 
@@ -304,34 +304,34 @@ Proceed? [Y/n] Y
   <tbody>
     <tr>
       <td>Claude Code</td>
-      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
-      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></td>
+      <td><code>CLAUDE.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>README.md</code>, <code>.git/</code></td>
     </tr>
     <tr>
       <td>Kiro</td>
-      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
-      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></td>
+      <td><code>AGENTS.md</code>, <code>.kiro/</code></td>
+      <td><code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>README.md</code>, <code>.git/</code></td>
     </tr>
   </tbody>
 </table>
 
-<h3>Example output (v0.3 → v0.9 upgrade)</h3>
+<h3>Example output (v0.3 → v0.9.1 upgrade)</h3>
 <pre>=== Plan ===
   Mode:     upgrade
   Edition:  claude-code
-  Version:  v0.9 (upgrading from v0.3)
+  Version:  v0.9.1 (upgrading from v0.3)
   Target:   /home/me/my-project
   Backup:   .aidlc-backup-20260529-180000/
-  Replace:  CLAUDE.md README.md aidlc-rule-details/ .claude/
-  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/
+  Replace:  CLAUDE.md aidlc-rule-details/ .claude/
+  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ README.md .git/
 
 Proceed? [Y/n] Y
 
 → Creating backup at .aidlc-backup-20260529-180000/
 ✓ Backup created.
-→ Downloading kafi-aidlc-v0.9-claude-code.zip…
+→ Downloading kafi-aidlc-v0.9.1-claude-code.zip…
 → Extracting…
-✓ Extracted AI-DLC v0.9 (claude-code).</pre>
+✓ Extracted AI-DLC v0.9.1 (claude-code).</pre>
 
 <h2 id="convert-mode">5 · Convert mode (Claude ↔ Kiro)</h2>
 
@@ -382,18 +382,18 @@ Proceed? [Y/n] Y
   <tbody>
     <tr>
       <td>Claude → Kiro</td>
-      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
-      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
+      <td><code>CLAUDE.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+      <td><code>AGENTS.md</code>, <code>.kiro/</code></td>
     </tr>
     <tr>
       <td>Kiro → Claude</td>
-      <td><code>AGENTS.md</code>, <code>README.md</code>, <code>.kiro/</code></td>
-      <td><code>CLAUDE.md</code>, <code>README.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
+      <td><code>AGENTS.md</code>, <code>.kiro/</code></td>
+      <td><code>CLAUDE.md</code>, <code>aidlc-rule-details/</code>, <code>.claude/</code></td>
     </tr>
   </tbody>
 </table>
 
-<p style="font-size: 13px; color: var(--text-secondary);"><strong>Preserved both directions:</strong> <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>.git/</code></p>
+<p style="font-size: 13px; color: var(--text-secondary);"><strong>Preserved both directions:</strong> <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code>, <code>README.md</code>, <code>.git/</code></p>
 
 <div class="callout"><strong>Convert always installs the latest target version.</strong> If you pass <code>--version=vX.Y</code> together with <code>--convert-to</code>, the version flag is ignored. To downgrade and convert in one step, do them separately: convert first (lands at latest target), then run upgrade with <code>--version=vX.Y</code> within the new edition.</div>
 
@@ -434,19 +434,19 @@ Proceed? [Y/n] Y
 <h3>Example output (Claude → Kiro)</h3>
 <pre>→ Mode: convert
 → Converting: claude-code → kiro
-→ Source: claude-code v0.9
-→ Target: kiro v0.9
+→ Source: claude-code v0.9.1
+→ Target: kiro v0.9.1
 
 === Plan ===
   Mode:     convert
   Edition:  kiro
-  Version:  v0.9
+  Version:  v0.9.1
   Target:   /home/me/my-project
-  Asset:    kafi-aidlc-v0.9-kiro.zip
+  Asset:    kafi-aidlc-v0.9.1-kiro.zip
   Backup:   .aidlc-backup-20260529-220000-from-claude-code/
-  Remove:   CLAUDE.md README.md aidlc-rule-details/ .claude/
-  Install:  AGENTS.md README.md .kiro/
-  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ .git/
+  Remove:   CLAUDE.md aidlc-rule-details/ .claude/
+  Install:  AGENTS.md .kiro/
+  Preserve: 00-knowledge/ aidlc-docs/ src/ adrs/ ai-dlc/ README.md .git/
 
   Note: Edition-specific customizations to roles/skills/rules will be
          preserved in the backup but NOT auto-ported to kiro.
@@ -456,9 +456,9 @@ Proceed? [Y/n] Y
 
 → Backing up claude-code edition files to .aidlc-backup-20260529-220000-from-claude-code/
 ✓ Backup of claude-code edition created.
-→ Downloading kafi-aidlc-v0.9-kiro.zip…
+→ Downloading kafi-aidlc-v0.9.1-kiro.zip…
 → Extracting…
-✓ Extracted AI-DLC v0.9 (kiro).</pre>
+✓ Extracted AI-DLC v0.9.1 (kiro).</pre>
 
 <h2 id="flags">6 · Flags reference</h2>
 
@@ -486,8 +486,8 @@ Proceed? [Y/n] Y
       <td>Skip the edition prompt. Required for non-interactive (<code>--yes</code>).</td>
     </tr>
     <tr>
-      <td><code>--version=&lt;v0.9|latest&gt;</code></td>
-      <td><code>-Version &lt;v0.9|latest&gt;</code></td>
+      <td><code>--version=&lt;v0.9.1|latest&gt;</code></td>
+      <td><code>-Version &lt;v0.9.1|latest&gt;</code></td>
       <td><code>latest</code></td>
       <td>Pin to a specific version. Use to install older release.</td>
     </tr>
@@ -581,7 +581,7 @@ rmdir .aidlc-backup-20260525-180000</pre>
 <h3>Convert replaced my Claude/Kiro setup — how to revert?</h3>
 <p>The installer backed up the FROM edition files to <code>.aidlc-backup-&lt;timestamp&gt;-from-&lt;edition&gt;/</code>. To revert the conversion:</p>
 <pre># Example: Claude → Kiro conversion needs reverting
-rm -rf AGENTS.md README.md .kiro/
+rm -rf AGENTS.md .kiro/
 mv .aidlc-backup-20260525-220000-from-claude-code/* .
 rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
 <p style="font-size: 12.5px; color: var(--text-muted);">User content in <code>00-knowledge/</code>, <code>aidlc-docs/</code>, <code>src/</code>, <code>adrs/</code>, <code>ai-dlc/</code> was never touched by the convert and is still intact.</p>
@@ -595,7 +595,7 @@ rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
 .\install.ps1</pre>
 
 <h3>I want a fully manual install</h3>
-<p>Download the zip directly from <a href="https://github.com/thangtmkafi/AI-DLC/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, and continue with the README steps. The installer is a convenience wrapper — not required.</p>
+<p>Download the zip directly from <a href="https://github.com/thangtmkafi/AI-DLC/releases/latest" style="color: var(--kafi-green);">GitHub Releases</a>, unzip into your project folder, then create <code>ai-dlc/project.md</code> and start your first session per <a href="#after-install" style="color: var(--kafi-green);">§9 · After install</a>. The installer is a convenience wrapper — not required.</p>
 
 <h2 id="after-install">9 · After install — first session</h2>
 
@@ -609,7 +609,7 @@ rmdir .aidlc-backup-20260525-220000-from-claude-code</pre>
 <div class="callout"><strong>If you placed legacy files in <code>00-knowledge/</code></strong> (BRDs, PRDs, mockups, architecture docs), the onboarding skill detects them in Mode B and routes you to the right Pre-Inception sub-flow automatically.</div>
 
 <footer>
-  <p>KAFI AI-DLC v0.9 · Transformation Office, Kafi Securities · 2026-06-12</p>
+  <p>KAFI AI-DLC v0.9.1 · Transformation Office, Kafi Securities · 2026-06-22</p>
   <p>Related docs: <a href="KAFI-AIDLC-Introduction.html">Introduction</a> · <a href="KAFI-AIDLC-Handbook.html">Handbook</a> · <a href="KAFI-AIDLC-Whats-New.html">What's New</a> · <a href="KAFI-Git-Guide-NonDev.html">Git Guide</a></p>
 </footer>
 

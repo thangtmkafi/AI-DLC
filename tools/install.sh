@@ -334,18 +334,18 @@ print_plan() {
 
 package_paths() {
   if [[ "$EDITION" == "claude-code" ]]; then
-    printf "CLAUDE.md\nREADME.md\naidlc-rule-details/\n.claude/\n"
+    printf "CLAUDE.md\naidlc-rule-details/\n.claude/\n"
   else
-    printf "AGENTS.md\nREADME.md\n.kiro/\n"
+    printf "AGENTS.md\n.kiro/\n"
   fi
 }
 
 # In convert mode, this returns the paths of the FROM edition (to be removed/backed up)
 from_package_paths() {
   if [[ "$EXISTING" == "claude-code" ]]; then
-    printf "CLAUDE.md\nREADME.md\naidlc-rule-details/\n.claude/\n"
+    printf "CLAUDE.md\naidlc-rule-details/\n.claude/\n"
   else
-    printf "AGENTS.md\nREADME.md\n.kiro/\n"
+    printf "AGENTS.md\n.kiro/\n"
   fi
 }
 
@@ -480,9 +480,21 @@ print_next_steps_install() {
 
 ${C_BOLD}=== Next steps ===${C_OFF}
 
-1. ${C_BOLD}Create ai-dlc/project.md${C_OFF} — project metadata.
+1. ${C_BOLD}Create ai-dlc/project.md${C_OFF} — project metadata. Template:
 
-   See template in README.md §"How to use" step 4.
+     # Project Metadata
+     **Name:** <project-name>
+     **Phase:** <e.g. Phase 0 — Foundation>
+     ## Source-of-Truth Precedence
+     1. 00-knowledge/architecture/ — canonical architecture
+     2. 00-knowledge/product/ — BRD / PRD / business requirements
+     ## Active Extensions
+     - audit-trail — always enforced
+     - personal-data-privacy — opt-in (auto on PII)
+     - architecture-boundaries / naming-conventions — project-defined
+
+   (Or let #kafi-aidlc-onboarding scaffold it for you in step 2.)
+   Full guide: docs/KAFI-Installer-Guide.html
 
 2. ${C_BOLD}Start your first AI session${C_OFF}.
 
