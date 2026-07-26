@@ -1063,8 +1063,32 @@ footer {
   .doc-title { font-size: 32px; }
 }
 </style>
+
+<style>
+.v1-banner{max-width:960px;margin:24px auto;padding:22px 24px;border:1.5px solid #00C694;border-radius:18px;
+  background:transparent;color:inherit;font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;line-height:1.62}
+.v1-banner .v1-eyebrow{font:700 11px 'JetBrains Mono',ui-monospace,Consolas,monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:#00C694;margin-bottom:8px}
+.v1-banner h2{font-size:22px;line-height:1.25;margin:0 0 10px}
+.v1-banner p{margin:0 0 10px}
+.v1-banner ul{margin:0 0 10px 20px;padding:0}
+.v1-banner a{color:#00C694}
+.v1-banner code,.v1-banner .v1-mono{font-family:'JetBrains Mono',ui-monospace,Consolas,monospace;font-size:13px}
+.v1-legacy-label{max-width:960px;margin:24px auto 0;padding:12px 18px;border:1.5px solid rgba(128,128,128,.35);
+  border-radius:18px;font:700 12px 'JetBrains Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;
+  text-transform:uppercase;opacity:.8;font-family:'JetBrains Mono',ui-monospace,Consolas,monospace}
+@media print{.v1-banner{border-color:#101820}}
+</style>
 </head>
 <body>
+<div class="v1-banner">
+<div class="v1-eyebrow">KAFI AI-DLC · v1.0 NOTICE</div>
+<h2>This page introduces the v0 line. v1.0 has its own introduction.</h2><p>AI-DLC v1.0 replaces the two editions with <strong>one universal release</strong> that serves <strong>Codex</strong>, <strong>Claude Code</strong>, and <strong>Kiro</strong>. It installs by prompt rather than by script, and every change to your project waits on an approved plan digest.</p><p><strong>Release status.</strong> The currently published release is <code>v0.9.1</code>. <strong>v1.0 is in preparation and is not published yet</strong> — no v1.0 download is offered anywhere.</p><p class="v1-mono"><a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-article-vi.html">Introduction (v1.0)</a> · <a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html">Install / Upgrade + User Guide (v1.0)</a> · <a href="index.html">Documentation index</a></p>
+</div>
+
+<!-- legacy:v0.x -->
+<div class="v1-legacy-label">Legacy v0.x — the v0 line, up to and including the currently published v0.9.1. Not the v1.0 path.</div>
+
 <div class="container">
 
 <!-- ============ HEADER ============ -->
@@ -2389,5 +2413,6 @@ footer {
 </footer>
 
 </div>
+<!-- /legacy -->
 </body>
 </html>

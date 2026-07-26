@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="vi" data-default-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Hướng dẫn cài đặt, nâng cấp và vận hành KAFI AI-DLC v1.0 bằng prompt cho Codex, Claude Code và Kiro.">
+<title>Cài đặt, nâng cấp và vận hành AI-DLC v1.0 · KAFI</title>
+<style>
+/* KAFI design system v2.2. Dark is the deliberate default; light is an explicit
+   reader choice or a hosting viewer stamping data-theme="light". */
+:root{
+  --accent:#00C694;
+  --bg:#080D11; --surface:#0F151B; --surface-2:#141C23;
+  --text:#F1F4F6; --muted:#AEB7BE; --faint:#767F87;
+  --border:#232D36; --border-strong:#2E3A45;
+  --read:#5B8DEF; --read-fill:rgba(91,141,239,.14);
+  --mutate:#F9CC4E; --mutate-fill:rgba(249,204,78,.13);
+  --max:1180px; --toc:262px;
+}
+:root[data-theme="dark"]{
+  --bg:#080D11; --surface:#0F151B; --surface-2:#141C23;
+  --text:#F1F4F6; --muted:#AEB7BE; --faint:#767F87;
+  --border:#232D36; --border-strong:#2E3A45;
+  --read:#5B8DEF; --read-fill:rgba(91,141,239,.14);
+  --mutate:#F9CC4E; --mutate-fill:rgba(249,204,78,.13);
+}
+:root[data-theme="light"]{
+  --bg:#FBFBFC; --surface:#FFFFFF; --surface-2:#F4F6F7;
+  --text:#101820; --muted:#585667; --faint:#9095A0;
+  --border:#E3E7EA; --border-strong:#D2D8DC;
+  --read:#2D5BFF; --read-fill:#EFF3FF;
+  --mutate:#D4770A; --mutate-fill:#FFF7E3;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:17px;line-height:1.72;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent)}
+code,pre{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.skip{position:fixed;left:16px;top:-90px;z-index:100;padding:10px 14px;background:var(--accent);color:#101820;border-radius:10px;text-decoration:none;font-weight:700}
+.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.topbar{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:var(--max);margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.brand img{height:22px;display:block}
+.logo-dark{display:none}
+:root[data-theme="dark"] .logo-dark{display:block}
+:root[data-theme="dark"] .logo-light{display:none}
+:root:not([data-theme="light"]) .logo-dark{display:block}
+:root:not([data-theme="light"]) .logo-light{display:none}
+.doc-tag{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.switch{display:flex;border:1px solid var(--border-strong);border-radius:999px;overflow:hidden}
+.switch button{background:transparent;border:0;color:var(--muted);padding:6px 14px;font:inherit;font-size:13.5px;cursor:pointer}
+.switch button[aria-pressed="true"]{background:var(--accent);color:#101820;font-weight:700}
+.reading-progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0;transition:width .1s linear}
+.layout{max-width:var(--max);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:var(--toc) 1fr;gap:44px;align-items:start}
+.toc{position:sticky;top:74px;padding:28px 0;max-height:calc(100vh - 90px);overflow-y:auto}
+.toc strong{display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.toc a{display:block;padding:5px 0;color:var(--muted);text-decoration:none;font-size:14px;line-height:1.45}
+.toc a.toc-part{color:var(--text);font-weight:700;margin-top:12px}
+.toc a:hover,.toc a.on{color:var(--accent)}
+main{padding:28px 0 80px;min-width:0}
+h1{font-size:clamp(30px,3.4vw,42px);line-height:1.16;letter-spacing:-.02em;margin:8px 0 18px}
+h2.part{margin:44px 0 8px;font-size:clamp(21px,2.2vw,26px);color:var(--accent);border-top:1px solid var(--border);padding-top:28px}
+section{padding:22px 0;border-top:1px solid var(--border)}
+section h2{font-size:clamp(19px,2vw,23px);line-height:1.3;margin:0 0 12px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:5px 0}
+.label{display:inline-block;border-radius:8px;padding:5px 11px;font-size:13.5px;font-weight:700;margin-bottom:8px}
+.label-read{background:var(--read-fill);color:var(--read);border:1px solid var(--read)}
+.label-mutate{background:var(--mutate-fill);color:var(--mutate);border:1px solid var(--mutate)}
+.prompt{position:relative;margin:0 0 18px;border:1px solid var(--border-strong);border-radius:18px;background:var(--surface);overflow:hidden}
+.prompt pre{margin:0;padding:18px 20px;overflow-x:auto;font-size:13.5px;line-height:1.62;white-space:pre;color:var(--text)}
+.copy{position:absolute;top:10px;right:10px;z-index:2;background:var(--surface-2);color:var(--muted);border:1px solid var(--border-strong);border-radius:9px;padding:5px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+.copy-status{position:absolute;bottom:10px;right:14px;font-size:12px;color:var(--accent)}
+.tbl{overflow-x:auto;margin:0 0 18px;border:1px solid var(--border);border-radius:18px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--faint);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+tr:last-child td{border-bottom:0}
+td code,p code,li code{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:13px}
+footer{border-top:1px solid var(--border);margin-top:40px}
+.foot-inner{max-width:var(--max);margin:0 auto;padding:26px 24px 60px;color:var(--muted);font-size:14px}
+@media(max-width:980px){
+  .layout{grid-template-columns:1fr;gap:0}
+  .toc{position:static;max-height:none;padding:18px 0 0;border-bottom:1px solid var(--border)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reading-progress{transition:none}
+}
+@media print{
+  .topbar,.toc,.skip,.copy,.copy-status{display:none}
+  .layout{grid-template-columns:1fr;padding:0}
+  body{font-size:11pt;background:#fff;color:#000}
+  section{break-inside:auto;padding:14px 0}
+  .prompt,.tbl{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Chuyển đến nội dung</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="KAFI">
+      <img class="logo-light" src="data:image/png;base64,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" alt="Kafi">
+      <img class="logo-dark" src="data:image/png;base64,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" alt="Kafi">
+      <span class="doc-tag">AI-DLC v1.0 · INSTALL · UPGRADE · RUN</span>
+    </a>
+    <div class="switch" aria-label="Giao diện">
+      <button type="button" data-theme-control="light" aria-pressed="false">Sáng</button>
+      <button type="button" data-theme-control="dark" aria-pressed="true">Tối</button>
+    </div>
+  </div>
+  <div class="reading-progress" id="progress"></div>
+</header>
+
+<div class="layout" id="top">
+  <nav class="toc" aria-label="Mục lục hướng dẫn">
+    <strong>Mục lục</strong>
+      <a href="#part-install" class="toc-part">Phần 1 — Install or upgrade AI-DLC v1.0</a>
+      <a href="#prerequisites">Điều kiện cần</a>
+      <a href="#canonical-prompt">Prompt chuẩn</a>
+      <a href="#fresh-install">Cài mới</a>
+      <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
+      <a href="#approve-plan">Phê duyệt digest</a>
+      <a href="#upgrade-v0">Nâng cấp trực tiếp từ v0.3–v0.9.x</a>
+      <a href="#verify-install">Xác minh sau khi cài</a>
+      <a href="#windows-no-admin">Windows không cần quyền admin</a>
+      <a href="#part-run" class="toc-part">Phần 2 — Run AI-DLC v1.0</a>
+      <a href="#run-aidlc">Vận hành AI-DLC v1.0</a>
+      <a href="#load-context">Nạp context đã cài</a>
+      <a href="#project-setup">Thiết lập dự án — Evidence or Ask</a>
+      <a href="#operating-model">Xác nhận Continuous hay Phase-Gated</a>
+      <a href="#start-work-item">Bắt đầu một work item</a>
+      <a href="#resume-work">Tiếp tục công việc đang dở</a>
+      <a href="#human-gates">Human gate</a>
+      <a href="#inspect-state">Kiểm tra Project Hub, evidence, claim, journal</a>
+      <a href="#cross-agent-handoff">Chuyển giao giữa Codex, Claude Code và Kiro</a>
+      <a href="#conformance">Conformance</a>
+      <a href="#complete-work">Hoàn tất work item và bàn giao UAT/SRE</a>
+      <a href="#blocked-cases">Các trường hợp bị chặn</a>
+      <a href="#recovery">Khôi phục khi thao tác bị gián đoạn</a>
+      <a href="#support">Hỗ trợ</a>
+  </nav>
+  <main id="content">
+  <h1>Cài đặt, nâng cấp và vận hành AI-DLC v1.0 bằng prompt</h1>
+    <p>Tài liệu này có hai phần trong cùng một bài:</p>
+    <ul>
+      <li><strong>Phần 1 — Install or upgrade AI-DLC v1.0</strong>: đưa AI-DLC v1.0 vào một dự án, dù là cài mới hay nâng cấp trực tiếp từ v0.3–v0.9.x.</li>
+      <li><strong>Phần 2 — Run AI-DLC v1.0</strong>: vận hành hằng ngày sau khi đã cài.</li>
+    </ul>
+    <p>Bạn không chạy script cài đặt. Bạn mở agent đang dùng (Codex, Claude Code hoặc Kiro), dán một prompt, đọc plan mà agent trình bày, rồi phê duyệt đúng digest của plan đó. Trước khi bạn phê duyệt, agent không được tạo, sửa, gộp, di chuyển, xoá, sao lưu hay migrate bất kỳ file nào của dự án.</p>
+    <p>Bản giới thiệu khái niệm nằm ở <a href="ai-dlc-v1.0-article-vi.html">AI-DLC v1.0 Introduction</a>. Bức tranh operating model nằm ở <a href="ai-dlc-v1.0-overview.html">AI-DLC v1.0 Overview</a>.</p>
+  <h2 class="part" id="part-install">Phần 1 — Install or upgrade AI-DLC v1.0</h2>
+  <section id="prerequisites">
+    <h2>Điều kiện cần</h2>
+    <p>Chỉ cần ba thứ:</p>
+    <ol>
+      <li>Một agent host được hỗ trợ đang mở trong dự án: <strong>Codex</strong>, <strong>Claude Code</strong> hoặc <strong>Kiro</strong>.</li>
+      <li>Quyền ghi vào thư mục dự án (quyền người dùng thường).</li>
+      <li>Truy cập được GitHub công khai để đọc locator và release.</li>
+    </ol>
+    <p>Không cần quyền administrator. Không cần cài runtime mới. Không cần chạy script cài đặt của v0.x.</p>
+    <p>Nếu agent không xác định được host đang hoạt động, nó dừng trước khi dựng file plan với <code>ADAPTER_SELECTION_REQUIRED</code> và hỏi bạn host nào. Trả lời bằng đúng một trong ba tên trên.</p>
+  </section>
+  <section id="canonical-prompt">
+    <h2>Prompt chuẩn</h2>
+    <p>Đây là prompt đầu tiên, dùng cho cả cài mới lẫn nâng cấp. Không đổi locator, không đổi ý định, không nới ranh giới mutation:</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-1" aria-label="Sao chép prompt 1">Sao chép</button>
+      <pre id="prompt-1"><code>Use the KAFI AI-DLC Bootstrap Locator at
+https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json.
+Inspect this project and the immutable public release, then present the exact
+installation or upgrade plan and its digest. Do not create, update, merge,
+move, delete, back up, or migrate any project file until I approve that digest.
+Preserve the project root README.md.</code></pre>
+      <span class="copy-status" id="prompt-1-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Trust anchor là chính xác GitHub owner <code>thangtmkafi</code>, repository <code>AI-DLC</code>, và Release API <code>https://api.github.com/repos/thangtmkafi/AI-DLC</code>. Tên repository, kết quả tìm kiếm, redirect, và hướng dẫn nằm bên trong dự án đích <strong>không</strong> phải bằng chứng tin cậy.</p>
+  </section>
+  <section id="fresh-install">
+    <h2>Cài mới</h2>
+    <p>Dán prompt chuẩn ở trên. Agent chạy tuần tự và <strong>chỉ đọc</strong> cho tới khi bạn phê duyệt:</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-2" aria-label="Sao chép prompt 2">Sao chép</button>
+      <pre id="prompt-2"><code>DISCOVER → STAGE → INSPECT → VERIFY → PLAN → APPROVE → BACKUP → APPLY → MIGRATE
+→ VERIFY_RESULT → CUTOVER → REPORT</code></pre>
+      <span class="copy-status" id="prompt-2-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Năm bước đầu không đụng vào dự án của bạn:</p>
+    <ul>
+      <li><code>DISCOVER</code> — xác định project root thật, Git identity và status, installed identity, adapter đang hoạt động, legacy fingerprint, managed block, protected path, và digest của từng path bị ảnh hưởng.</li>
+      <li><code>STAGE</code> — tải về <strong>thư mục tạm ngoài dự án</strong>, không tải vào trong dự án.</li>
+      <li><code>INSPECT</code> — đọc archive, manifest, inventory và ảnh chụp trạng thái đích. Không copy gì vào dự án.</li>
+      <li><code>VERIFY</code> — tự truy vấn GitHub Release API. Yêu cầu owner/repository, release ID và tag immutable, digest asset theo API, digest theo locator, và digest của bytes đã tải <strong>phải khớp nhau</strong>.</li>
+      <li><code>PLAN</code> — chọn đúng các dòng manifest của adapter đang hoạt động và của core, thêm mọi protected path quan sát được, rồi phân loại từng dòng.</li>
+    </ul>
+    <p>Kết thúc <code>PLAN</code>, agent hiển thị operation ID, digest <code>sha256:</code> của plan, và giải thích từng dòng <code>Conflict</code> hoặc <code>Preserve</code>. Rồi nó dừng.</p>
+  </section>
+  <section id="review-plan">
+    <h2>Đọc plan trước khi phê duyệt</h2>
+    <p>Plan được render thành bảng Markdown và JSON từ <strong>cùng một tập dòng đã chuẩn hoá</strong>. Đọc kỹ những điểm sau:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Cần kiểm tra</th><th>Vì sao</th></tr></thead>
+      <tbody>
+        <tr><td>Operation ID và plan digest</td><td>Phê duyệt gắn với đúng digest này, không dùng lại cho plan khác</td></tr>
+        <tr><td>Bảng file action</td><td><code>Create</code> / <code>Update</code> / <code>Preserve</code> / <code>Conflict</code> cho từng path</td></tr>
+        <tr><td><code>README.md</code> ở gốc dự án</td><td>Luôn phải là <code>Preserve</code></td></tr>
+        <tr><td>Dòng <code>Conflict</code></td><td><strong>Không phê duyệt được.</strong> Phải xử lý trước</td></tr>
+        <tr><td>Dòng <code>Move</code> / <code>Delete</code></td><td>Không bao giờ là mặc định; nếu xuất hiện, phải có lý do rõ ràng</td></tr>
+        <tr><td>Release identity và digest</td><td>Khớp với release immutable đã xác minh</td></tr>
+        <tr><td>Snapshot dự án</td><td>Cơ sở để phát hiện drift khi bạn phê duyệt</td></tr>
+      </tbody></table></div>
+    <p>Agent không được suy ra sự phê duyệt từ việc bạn yêu cầu cài đặt. Yêu cầu cài đặt không phải là phê duyệt.</p>
+  </section>
+  <section id="approve-plan">
+    <h2>Phê duyệt digest</h2>
+    <p>Phê duyệt bằng cách nêu <strong>chính xác digest</strong> mà agent vừa in ra, kèm operation ID:</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-3" aria-label="Sao chép prompt 3">Sao chép</button>
+      <pre id="prompt-3"><code>I approve plan digest sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+for operation OP-20260723-0001, provided the release and target snapshot are unchanged.</code></pre>
+      <span class="copy-status" id="prompt-3-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Đây là <strong>ví dụ minh hoạ</strong>. Digest và operation ID ở trên là giả; không sao chép nguyên văn dòng này để phê duyệt một plan khác. Mỗi phê duyệt chỉ có hiệu lực cho đúng plan đã sinh ra digest đó.</p>
+    <p>Sau khi bạn phê duyệt, agent <strong>revalidate lại</strong> release và snapshot dự án trước khi ghi bất cứ thứ gì. Nếu có drift, phê duyệt mất hiệu lực và agent quay lại <code>PLAN</code> với digest mới.</p>
+    <p>Từ đó agent mới vào <code>BACKUP</code>: sao lưu chỉ những path do AI-DLC sở hữu đã được duyệt và vùng managed block, áp dụng đúng các dòng có trong manifest, chạy migration đã được fixture chứng minh, xác minh kết quả, cutover và báo cáo bằng chứng. Nó <strong>không bao giờ dời nội dung dự án</strong> để giải quyết va chạm.</p>
+  </section>
+  <section id="upgrade-v0">
+    <h2>Nâng cấp trực tiếp từ v0.3–v0.9.x</h2>
+    <p>Dùng đúng prompt chuẩn — không có prompt riêng cho nâng cấp. Agent tự nhận diện bản đang cài qua legacy fingerprint và dựng plan nâng cấp.</p>
+    <p>Điểm khác so với cài mới:</p>
+    <ul>
+      <li>Plan có thêm <strong>migration mapping</strong>: cái gì chuyển sang cấu trúc v1, cái gì giữ nguyên.</li>
+      <li>Nội dung dự án của bạn không tự động được dời đi. Mọi thay đổi vị trí phải nằm trong plan đã duyệt, kèm đường lùi.</li>
+      <li>Managed block được gộp theo phạm vi; phần bytes bạn tự sửa ngoài vùng managed được giữ nguyên.</li>
+      <li>Nếu bản cũ đã bị chỉnh sửa nhiều, agent báo <code>LEGACY_PACKAGE_CUSTOMIZED</code> hoặc <code>CUSTOMIZED_TARGET_COLLISION</code> thay vì ghi đè.</li>
+    </ul>
+    <p>Không có prompt riêng cho nâng cấp. Prompt chuẩn ở trên đã bao gồm cả hai đường — nó yêu cầu "installation <strong>or upgrade</strong> plan" — nên bạn dùng đúng một prompt cho mọi trường hợp.</p>
+  </section>
+  <section id="verify-install">
+    <h2>Xác minh sau khi cài</h2>
+    <p>Cài đặt chỉ được coi là xong sau <code>VERIFY_RESULT</code>, <code>CUTOVER</code> và <code>REPORT</code>. Agent không được báo hoàn tất sớm hơn.</p>
+    <p>Từ thời điểm này AI-DLC đã được cài, nên bạn dùng command chứ không dùng prompt nữa.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-4" aria-label="Sao chép prompt 4">Sao chép</button>
+      <pre id="prompt-4"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-4-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-5" aria-label="Sao chép prompt 5">Sao chép</button>
+      <pre id="prompt-5"><code>/kafi-aidlc-check</code></pre>
+      <span class="copy-status" id="prompt-5-status" role="status" aria-live="polite"></span>
+    </div>
+    <p><code>status</code> cho biết installed identity, adapter đang bật, operating model và công việc đang mở. <code>check</code> đối chiếu tính đầy đủ của tài liệu, traceability, contract pin, baseline và khoảng trống evidence. Bạn cần thấy: installed identity, digest của release, danh sách adapter, bản ghi journal của lần cài này, kết quả conformance, và tham chiếu rollback.</p>
+  </section>
+  <section id="windows-no-admin">
+    <h2>Windows không cần quyền admin</h2>
+    <p>Agent ưu tiên dùng khả năng đọc file/HTTP sẵn có của chính nó. Khi cần, nó dùng built-in của Windows PowerShell 5.1 theo mẫu dưới đây — stage ra ngoài dự án và <strong>không đổi execution policy</strong>:</p>
+    <div class="prompt" data-language="powershell">
+      <button type="button" class="copy" data-copy-target="prompt-6" aria-label="Sao chép prompt 6">Sao chép</button>
+      <pre id="prompt-6"><code>$Stage = Join-Path ([System.IO.Path]::GetTempPath()) ("kafi-aidlc-" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path $Stage | Out-Null
+$LocatorPath = Join-Path $Stage "kafi-aidlc-bootstrap.json"
+Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json" -OutFile $LocatorPath</code></pre>
+      <span class="copy-status" id="prompt-6-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Sau khi tự phân giải URL asset từ Release API immutable, agent stage asset và đối chiếu SHA-256 với cả API lẫn locator:</p>
+    <div class="prompt" data-language="powershell">
+      <button type="button" class="copy" data-copy-target="prompt-7" aria-label="Sao chép prompt 7">Sao chép</button>
+      <pre id="prompt-7"><code>$BundlePath = Join-Path $Stage "ai-dlc-v1.0.0-universal.zip"
+Invoke-WebRequest -UseBasicParsing -Uri $VerifiedAssetUrl -OutFile $BundlePath
+$BundleHash = (Get-FileHash -Algorithm SHA256 -Path $BundlePath).Hash.ToLowerInvariant()
+$Extracted = Join-Path $Stage "expanded"
+Expand-Archive -LiteralPath $BundlePath -DestinationPath $Extracted</code></pre>
+      <span class="copy-status" id="prompt-7-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Agent <strong>không</strong> chạy file <code>.ps1</code>, <code>.bat</code>, <code>.cmd</code> hay <code>.exe</code> đã tải về, không gọi package manager, không yêu cầu nâng quyền, và không chạy bất kỳ installer nào. Mỗi thao tác file về sau đều do chính agent thực hiện từ bytes đã xác minh.</p>
+    <p>Đường dẫn có Unicode và khoảng trắng được hỗ trợ mà không cần quyền administrator.</p>
+  </section>
+  <h2 class="part" id="part-run">Phần 2 — Run AI-DLC v1.0</h2>
+  <section id="run-aidlc">
+    <h2>Vận hành AI-DLC v1.0</h2>
+    <p>Sau khi cài xong, bạn <strong>không dùng prompt tự do nữa</strong>. Toàn bộ trải nghiệm hằng ngày thu về bốn command:</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-8" aria-label="Sao chép prompt 8">Sao chép</button>
+      <pre id="prompt-8"><code>/kafi-aidlc-onboarding
+/kafi-aidlc-status
+/kafi-aidlc-next
+/kafi-aidlc-check</code></pre>
+      <span class="copy-status" id="prompt-8-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Ranh giới cần nhớ:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Giai đoạn</th><th>Giao diện</th><th>Vì sao</th></tr></thead>
+      <tbody>
+        <tr><td>Trước khi cài</td><td>prompt bootstrap ở Phần 1</td><td>Chưa có gì được cài, chưa command nào tồn tại</td></tr>
+        <tr><td>Sau khi cài</td><td>bốn command trên</td><td>Đây là bề mặt canonical của v1.0</td></tr>
+      </tbody></table></div>
+    <p>Lý do bỏ prompt tự do không phải vì nó không chạy — theo spec §8.5, một câu hỏi tự do vẫn route qua đúng intent engine đó và <strong>không tạo ra đường vòng</strong> nào. Lý do là chất lượng: khi mỗi người hỏi một kiểu, cùng một việc sẽ ra kết quả khác nhau, và methodology tụt xuống thành thứ agent có thể tuân theo hoặc không. Bốn command cho cùng một intent schema, cùng resolver, cùng state transition và cùng evidence rule — bất kể ai gõ, gõ trên host nào.</p>
+    <p>Mỗi command dưới đây được gắn nhãn:</p>
+    <ul>
+      <li><strong>Read-only</strong> — không ghi gì vào artifact của dự án.</li>
+      <li><strong>May produce a mutation plan requiring separate exact-digest approval</strong> — có thể dẫn tới thay đổi, và thay đổi đó vẫn đi qua gate và phê duyệt riêng.</li>
+    </ul>
+  </section>
+  <section id="load-context">
+    <h2>Nạp context đã cài</h2>
+    <p>Mở đầu mọi phiên làm việc bằng <code>status</code>. Nó dựng lại bức tranh từ trạng thái đã commit thay vì trí nhớ hội thoại.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-9" aria-label="Sao chép prompt 9">Sao chép</button>
+      <pre id="prompt-9"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-9-status" role="status" aria-live="polite"></span>
+    </div>
+    <p><code>status</code> là read-only với artifact, worktree, branch và remote history. Nó có thể fetch remote ref mà không checkout hay merge, để phản ánh trạng thái chung mới nhất; nếu không refresh được, nó báo đúng thời điểm snapshot cục bộ. Bạn nhận về: operating model, các track, công việc đang mở, phê duyệt đang chờ, blocker, artifact bị ảnh hưởng, mainstream baseline, trạng thái UAT, và các hành động được đề xuất.</p>
+    <p>Chọn một hành động trong danh sách đó sẽ chuyển quyền điều khiển sang <code>next</code>. Chỉ xem <code>status</code> không tạo ra bất kỳ canonical write nào.</p>
+  </section>
+  <section id="project-setup">
+    <h2>Thiết lập dự án — Evidence or Ask</h2>
+    <p><code>onboarding</code> là state-aware: nó tự nhận diện dự án mới, dự án legacy hay dự án đã ở v1; vai trò Hub hay component; migration đang mở; project profile; operating model; người dùng hiện tại; authority; công việc đang mở và gate đang chờ.</p>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-10" aria-label="Sao chép prompt 10">Sao chép</button>
+      <pre id="prompt-10"><code>/kafi-aidlc-onboarding</code></pre>
+      <span class="copy-status" id="prompt-10-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Với dự án mới hoặc chưa đủ thông tin, wizard chỉ hỏi những gì còn thiếu hoặc mâu thuẫn:</p>
+    <ul>
+      <li>identity và acting role;</li>
+      <li>greenfield hay brownfield;</li>
+      <li>scope: <code>full-product | backend | frontend | data | infrastructure | component-internal</code>;</li>
+      <li>delivery relationship <code>in-house | outsourced | mixed | hub-led</code> và engagement profile tương ứng;</li>
+      <li>loại công việc hiện tại, gồm cả <code>hotfix</code> khi có;</li>
+      <li>operating model Continuous hay Phase-Gated;</li>
+      <li>các contract type áp dụng;</li>
+      <li>các approver áp dụng, ví dụ UI/UX authority.</li>
+    </ul>
+    <p>Câu hỏi không liên quan tới profile đã resolve thì không bao giờ được hỏi. Đó là Evidence or Ask trong thực tế: có bằng chứng thì dùng bằng chứng, không có thì hỏi, không đoán.</p>
+  </section>
+  <section id="operating-model">
+    <h2>Xác nhận Continuous hay Phase-Gated</h2>
+    <p>Operating model do PO/PM xác nhận, không do agent tự chọn. Muốn xem hiện đang ở model nào, dùng <code>status</code>; muốn xác nhận hoặc đổi, đi qua <code>onboarding</code>.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-11" aria-label="Sao chép prompt 11">Sao chép</button>
+      <pre id="prompt-11"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-11-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-12" aria-label="Sao chép prompt 12">Sao chép</button>
+      <pre id="prompt-12"><code>/kafi-aidlc-onboarding</code></pre>
+      <span class="copy-status" id="prompt-12-status" role="status" aria-live="polite"></span>
+    </div>
+  </section>
+  <section id="start-work-item">
+    <h2>Bắt đầu một work item</h2>
+    <p><code>next</code> phân giải hành động đủ điều kiện có ưu tiên cao nhất, đồng thời cho bạn thấy các lựa chọn thay thế.</p>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-13" aria-label="Sao chép prompt 13">Sao chép</button>
+      <pre id="prompt-13"><code>/kafi-aidlc-next</code></pre>
+      <span class="copy-status" id="prompt-13-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Trong một lượt <code>next</code>, agent xác nhận identity và acting role, fetch và reconcile revision của Hub cùng các component bị ảnh hưởng, bảo vệ mọi thay đổi cục bộ không liên quan, hỏi các câu hỏi áp dụng được, ghi lại câu trả lời, thực thi công việc, verify, rồi trình ra human gate kế tiếp.</p>
+    <p>Bạn có thể yêu cầu một micro-DLC capability cụ thể, nhưng agent vẫn phải validate prerequisite và <strong>không thể bỏ qua</strong> artifact cha còn thiếu hoặc gate chưa qua.</p>
+  </section>
+  <section id="resume-work">
+    <h2>Tiếp tục công việc đang dở</h2>
+    <p>Luôn theo thứ tự: <code>status</code> để thấy toàn cảnh, rồi <code>next</code> để đi tiếp.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-14" aria-label="Sao chép prompt 14">Sao chép</button>
+      <pre id="prompt-14"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-14-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-15" aria-label="Sao chép prompt 15">Sao chép</button>
+      <pre id="prompt-15"><code>/kafi-aidlc-next</code></pre>
+      <span class="copy-status" id="prompt-15-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Không cần mô tả lại bối cảnh cho agent. Context được dựng lại từ Hub artifact, claim và operation journal đã commit — đó là lý do một work item bỏ dở hôm qua vẫn tiếp tục đúng chỗ hôm nay.</p>
+  </section>
+  <section id="human-gates">
+    <h2>Human gate</h2>
+    <p>Gate là quyết định của <strong>con người</strong>. <code>next</code> chuẩn bị hồ sơ, trình bày bằng chứng, rồi dừng lại ở gate kế tiếp. Agent không ghi nhận, không suy diễn và không thay mặt ai phê duyệt.</p>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-16" aria-label="Sao chép prompt 16">Sao chép</button>
+      <pre id="prompt-16"><code>/kafi-aidlc-next</code></pre>
+      <span class="copy-status" id="prompt-16-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Khi <code>next</code> dừng ở một gate, việc còn lại là của người có authority tương ứng. Quyết định được ghi nhận qua chính người đó, không qua agent.</p>
+  </section>
+  <section id="inspect-state">
+    <h2>Kiểm tra Project Hub, evidence, claim, journal</h2>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-17" aria-label="Sao chép prompt 17">Sao chép</button>
+      <pre id="prompt-17"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-17-status" role="status" aria-live="polite"></span>
+    </div>
+    <p><code>status</code> cho thấy component, claim đang giữ và ai giữ, evidence record, operation journal xuyên repository, blocker, và hành động hợp lệ kế tiếp — tất cả mà không ghi gì.</p>
+  </section>
+  <section id="cross-agent-handoff">
+    <h2>Chuyển giao giữa Codex, Claude Code và Kiro</h2>
+    <p>Ba agent dùng chung bốn intent và cùng đọc một methodology state đã commit. Chuyển máy hay chuyển agent không cần export gì thêm: mở host mới trong dự án và chạy <code>status</code>.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-18" aria-label="Sao chép prompt 18">Sao chép</button>
+      <pre id="prompt-18"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-18-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Một platform có thể expose bốn intent này dưới dạng slash command, skill hay affordance native khác, nhưng mọi alias đều map về cùng một intent schema, resolver, state transition và evidence rule.</p>
+    <p>Nếu bằng chứng adapter mâu thuẫn nhau, agent dừng với <code>ADAPTER_SELECTION_REQUIRED</code> hoặc <code>LEGACY_ADAPTER_MIXED</code> thay vì đoán.</p>
+  </section>
+  <section id="conformance">
+    <h2>Conformance</h2>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-19" aria-label="Sao chép prompt 19">Sao chép</button>
+      <pre id="prompt-19"><code>/kafi-aidlc-check</code></pre>
+      <span class="copy-status" id="prompt-19-status" role="status" aria-live="polite"></span>
+    </div>
+    <p><code>check</code> mặc định là read-only. Nó kiểm tra tính đầy đủ của tài liệu, mức áp dụng của profile, traceability, độ tươi của dữ liệu, link, contract pin, baseline, các interaction chưa được trả lời, khoảng trống evidence, và tính nhất quán của migration.</p>
+    <p>Sửa chữa <strong>không</strong> tự động xảy ra: mọi repair đều cần một repair plan đã được phê duyệt.</p>
+  </section>
+  <section id="complete-work">
+    <h2>Hoàn tất work item và bàn giao UAT/SRE</h2>
+    <p>Trước khi tuyên bố xong, chạy <code>check</code> để đối chiếu bằng chứng; rồi dùng <code>next</code> để đi qua gate hoàn tất và bàn giao.</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-20" aria-label="Sao chép prompt 20">Sao chép</button>
+      <pre id="prompt-20"><code>/kafi-aidlc-check</code></pre>
+      <span class="copy-status" id="prompt-20-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate exact-digest approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-21" aria-label="Sao chép prompt 21">Sao chép</button>
+      <pre id="prompt-21"><code>/kafi-aidlc-next</code></pre>
+      <span class="copy-status" id="prompt-21-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Hoàn tất được xác lập bằng bằng chứng và gate, không phải bằng việc hết việc để làm.</p>
+  </section>
+  <section id="blocked-cases">
+    <h2>Các trường hợp bị chặn</h2>
+    <p>Agent dừng trước khi phê duyệt và báo reason code ổn định kèm hành động an toàn tiếp theo. Những trường hợp gặp nhiều nhất:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Reason code</th><th>Ý nghĩa</th><th>Việc cần làm</th></tr></thead>
+      <tbody>
+        <tr><td><code>ADAPTER_SELECTION_REQUIRED</code></td><td>Không xác định được host đang hoạt động</td><td>Nêu rõ Codex, Claude Code hay Kiro</td></tr>
+        <tr><td><code>MANAGED_BLOCK_CONFLICT</code></td><td>Vùng managed block đã bị sửa thủ công</td><td>Xem lại vùng đó, quyết định giữ hay nhận bản mới</td></tr>
+        <tr><td><code>CUSTOMIZED_TARGET_COLLISION</code></td><td>File đích đã bị tuỳ biến, khác bytes chuẩn</td><td>Xử lý va chạm trước, không ghi đè</td></tr>
+        <tr><td><code>LEGACY_PROJECT_CONTENT_COLLISION</code></td><td>Nội dung dự án nằm ở vị trí v1 cần dùng</td><td>Quyết định vị trí, không để agent tự dời</td></tr>
+        <tr><td><code>LEGACY_VERSION_UNSUPPORTED</code></td><td>Bản cũ ngoài phạm vi v0.3–v0.9.x</td><td>Liên hệ release authority</td></tr>
+        <tr><td><code>INSTALLED_AIDLC_TARGET_DRIFT</code></td><td>Bản đã cài lệch so với bytes đã ghi nhận</td><td>Xem drift trước khi nâng cấp</td></tr>
+        <tr><td><code>GIT_INSPECTION_FAILED</code></td><td>Không đọc được trạng thái Git</td><td>Sửa trạng thái repository rồi chạy lại</td></tr>
+        <tr><td><code>LOCATOR_RECOMMENDED_REVOKED</code></td><td>Release được đề xuất đã bị thu hồi</td><td>Chờ locator trỏ sang bản thay thế</td></tr>
+        <tr><td><code>MIGRATION_PACKAGE_PHASE_UNAVAILABLE</code></td><td>Thiếu recipe migration có fixture chứng minh</td><td>Không tự chế biến; báo release authority</td></tr>
+      </tbody></table></div>
+    <p>Dòng <code>Conflict</code> trong plan là <strong>không phê duyệt được</strong>. Không có cách nào bỏ qua nó bằng prompt.</p>
+  </section>
+  <section id="recovery">
+    <h2>Khôi phục khi thao tác bị gián đoạn</h2>
+    <p>Nếu một thao tác bị gián đoạn giữa chừng — mất mạng, đóng máy, agent tắt — trạng thái không bị mất. Mỗi bước chuyển đã được ghi vào operation journal kèm operation ID, input, version nguồn và đích, project root, release identity, digest, trạng thái hiện tại và hành động an toàn kế tiếp.</p>
+    <p>Nếu AI-DLC đã cài xong trước khi gián đoạn, dùng <code>status</code> — nó đọc journal và báo blocker cùng hành động hợp lệ kế tiếp:</p>
+    <p class="label label-read"><strong>Read-only.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-22" aria-label="Sao chép prompt 22">Sao chép</button>
+      <pre id="prompt-22"><code>/kafi-aidlc-status</code></pre>
+      <span class="copy-status" id="prompt-22-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Nếu chính lần <strong>cài đặt</strong> bị gián đoạn giữa chừng thì command chưa tồn tại. Khi đó quay lại prompt chuẩn ở Phần 1: agent đọc lại journal, dựng lại trạng thái và trình plan mới kèm digest mới.</p>
+    <p>Trong cả hai trường hợp, việc tiếp tục hay hoàn tác đều đi qua đúng quy trình plan và phê duyệt digest như bình thường.</p>
+  </section>
+  <section id="support">
+    <h2>Hỗ trợ</h2>
+    <ul>
+      <li>Giới thiệu khái niệm: <a href="ai-dlc-v1.0-article-vi.html">AI-DLC v1.0 Introduction</a></li>
+      <li>Operating model đầy đủ: <a href="ai-dlc-v1.0-overview.html">AI-DLC v1.0 Overview</a></li>
+      <li>Release notes và asset digest: trang GitHub Release immutable của đúng version bạn đang dùng</li>
+      <li>Khi một release bị thu hồi, locator sẽ trỏ sang bản thay thế kèm đường khắc phục; không tự gỡ cài đặt thủ công</li>
+      <li>Vấn đề không nằm trong danh sách bị chặn ở trên: liên hệ KAFI AI-DLC release authority kèm operation ID và reason code</li>
+    </ul>
+  </section>
+  </main>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p><b>KAFI AI-DLC v1.0</b> · Hướng dẫn này dẫn xuất từ <code>packages/core/bootstrap/bootstrap.md</code>
+    (AI-DLC v1 Agent Bootstrap Protocol). Protocol là nguồn sự thật; tài liệu này là bản diễn giải để dùng.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var GUIDE_THEME_KEY="kafi-aidlc-guide-theme";
+  var root=document.documentElement;
+  function syncButtons(t){
+    document.querySelectorAll('[data-theme-control]').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-theme-control')===t ? 'true':'false');
+    });
+  }
+  function applyTheme(t){ root.setAttribute('data-theme',t); syncButtons(t); }
+  function setTheme(t){
+    applyTheme(t);
+    try{localStorage.setItem(GUIDE_THEME_KEY,t);}catch(e){}
+  }
+  var DEFAULT_THEME=root.getAttribute('data-default-theme')||'dark';
+  var preset=root.getAttribute('data-theme');
+  if(preset){ syncButtons(preset); }
+  else{
+    var saved=null;
+    try{saved=localStorage.getItem(GUIDE_THEME_KEY);}catch(e){}
+    applyTheme(saved==='light'||saved==='dark'?saved:DEFAULT_THEME);
+  }
+  document.querySelectorAll('[data-theme-control]').forEach(function(b){
+    b.addEventListener('click',function(){setTheme(b.getAttribute('data-theme-control'));});
+  });
+
+  // Copy controls. Feedback is announced through an aria-live status node so the
+  // result is available without sight.
+  document.querySelectorAll('[data-copy-target]').forEach(function(button){
+    button.addEventListener('click',function(){
+      var target=document.getElementById(button.getAttribute('data-copy-target'));
+      var status=document.getElementById(button.getAttribute('data-copy-target')+'-status');
+      if(!target)return;
+      var text=target.textContent;
+      function done(ok){
+        if(status)status.textContent=ok?'Đã sao chép':'Không sao chép được';
+        button.textContent=ok?'Đã sao chép':'Thử lại';
+        setTimeout(function(){
+          button.textContent='Sao chép';
+          if(status)status.textContent='';
+        },2200);
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){done(true);},function(){done(false);});
+      }else{
+        try{
+          var area=document.createElement('textarea');
+          area.value=text; document.body.appendChild(area); area.select();
+          document.execCommand('copy'); document.body.removeChild(area); done(true);
+        }catch(e){ done(false); }
+      }
+    });
+  });
+
+  // Active TOC entry + reading progress.
+  var bar=document.getElementById('progress');
+  var links=[].slice.call(document.querySelectorAll('.toc a')).map(function(a){
+    return {a:a, el:document.getElementById(a.getAttribute('href').slice(1))};
+  }).filter(function(l){return l.el;});
+  var ticking=false;
+  function update(){
+    ticking=false;
+    var y=window.scrollY||window.pageYOffset;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?Math.min(100,Math.max(0,y/h*100)):0)+'%';
+    var cur=null;
+    links.forEach(function(l){ if(l.el.getBoundingClientRect().top<=140)cur=l; });
+    links.forEach(function(l){ l.a.classList.toggle('on',l===cur); });
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; window.requestAnimationFrame(update); }
+  },{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

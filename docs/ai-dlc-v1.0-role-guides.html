@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" data-default-language="en" data-default-theme="dark" data-theme="dark" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-DLC v1.0 — Role Guides</title>
+<script>
+(function(){try{
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var t=localStorage.getItem(THEME_KEY);
+  var l=localStorage.getItem(LANGUAGE_KEY);
+  d.dataset.theme=(t==='light')?'light':'dark';
+  d.dataset.lang=(l==='vi')?'vi':'en';
+  d.lang=d.dataset.lang;
+}catch(e){}})();
+</script>
+<style>
+.skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;background:var(--green);color:#101820;border-radius:10px;text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+.logo-light{display:block;width:98px;height:auto}
+.logo-dark{display:none;width:98px;height:auto}
+[data-theme="dark"] .logo-light{display:none}
+[data-theme="dark"] .logo-dark{display:block}
+:root{
+  /* ===== dark (default) ===== */
+  color-scheme:dark;
+  --green:#00C694; --teal:#07756D; --teal-mid:#0C6070;
+  --page:#080D12; --card:#0C1219; --alt:rgba(255,255,255,0.035);
+  --t1:#F0F4F8; --t2:#A8B5C0; --t3:#546070;
+  --bordc:rgba(255,255,255,0.12); --line:rgba(255,255,255,0.08);
+  --shadow:0 1px 4px rgba(0,0,0,0.25);
+  --acc:#00C694; --accb:rgba(0,198,148,0.5);
+  --code-bg:rgba(0,198,148,0.10); --code-fg:#BEF6E9;
+  --off:rgba(255,255,255,0.18); --warn:#F9CC4E;
+  --navbg:rgba(8,13,18,0.86);
+  --tagbg:#26313D; --tagfg:#F0F4F8;
+  --glow:radial-gradient(ellipse 70% 38% at 50% -6%, rgba(0,198,148,0.08) 0%, transparent 58%);
+  /* role accents (dark) */
+  --pm:#F0A24C; --ba:#4FB8C9; --design:#F07DAE; --sa:#B78CF5; --tl:#5B8DEF;
+  --dev:#00C694; --qa:#FF6B6B; --ops:#D98A3E; --vendor:#2BC5B4;
+  --rcard:18px; --rsm:8px; --rmd:11px; --rbtn:32px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --page:#F2F4F7; --card:#FFFFFF; --alt:#FAFCFB;
+  --t1:#101820; --t2:#585667; --t3:#9095A0;
+  --bordc:rgba(0,0,0,0.08); --line:rgba(0,0,0,0.07);
+  --shadow:0 1px 4px rgba(0,0,0,0.04);
+  --acc:#07756D; --accb:rgba(7,117,109,0.4);
+  --code-bg:#E6FBF4; --code-fg:#0C6070;
+  --off:rgba(0,0,0,0.18); --warn:#D4770A;
+  --navbg:rgba(255,255,255,0.88);
+  --tagbg:#101820; --tagfg:#FFFFFF;
+  --glow:none;
+  --pm:#D4770A; --ba:#0C6070; --design:#C2497A; --sa:#6D4FC0; --tl:#2563C9;
+  --dev:#0E8F5E; --qa:#C0394B; --ops:#B7610E; --vendor:#07756D;
+}
+/* language switching */
+:root[data-lang="en"] [data-i18n][lang="vi"]{display:none;}
+:root[data-lang="vi"] [data-i18n][lang="en"]{display:none;}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--page);font-family:var(--font);color:var(--t2);-webkit-font-smoothing:antialiased;line-height:1.5;
+  background-image:var(--glow);background-repeat:no-repeat;transition:background-color .2s ease,color .2s ease;}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px 110px;}
+code{font-family:var(--mono);font-size:0.88em;background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:5px;}
+
+/* NAV */
+nav.toc{position:sticky;top:0;z-index:60;background:var(--navbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+.toc-in{max-width:1160px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:8px;margin-right:6px;}
+.brand svg{flex:none;}
+.brand span{font-weight:700;font-size:13px;color:var(--t1);letter-spacing:-0.01em;}
+nav.toc a{font-family:var(--mono);font-size:10px;color:var(--t2);border:1px solid var(--line);border-radius:var(--rbtn);padding:4px 9px;transition:.15s;white-space:nowrap;text-decoration:none;}
+nav.toc a:hover{color:var(--t1);border-color:var(--accb);}
+nav.toc a .rd{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--rc,var(--green));margin-right:5px;vertical-align:baseline;}
+.ctrls{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--rbtn);overflow:hidden;}
+.seg button{border:none;background:transparent;color:var(--t2);font-family:var(--mono);font-size:10px;font-weight:700;padding:4px 10px;cursor:pointer;transition:.15s;}
+.seg button+button{border-left:1px solid var(--line);}
+.seg button:hover{color:var(--t1);}
+.seg button[aria-pressed="true"]{background:var(--green);color:#06231c;}
+
+/* HERO */
+header{padding:48px 0 8px;}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--acc);margin-bottom:14px;}
+h1{font-size:clamp(28px,5vw,42px);font-weight:700;line-height:1.05;margin:0 0 8px;color:var(--t1);letter-spacing:-0.02em;}
+h1 .v{color:var(--green);}
+.subtitle{font-size:clamp(14px,2vw,18px);font-weight:600;color:var(--t2);margin:0 0 16px;}
+.lede{max-width:780px;font-size:13.5px;color:var(--t2);}
+.lede b{color:var(--t1);font-weight:600;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--t2);background:var(--card);border:1.5px solid var(--bordc);border-radius:20px;padding:5px 12px;}
+.chip b{color:var(--t1);font-weight:600;} .chip .d{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;}
+
+/* SECTION scaffolding */
+section{margin-top:64px;}
+.sh{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;}
+.snum{font-family:var(--mono);font-size:11.5px;color:var(--acc);border:1.5px solid var(--accb);border-radius:7px;padding:3px 8px;flex:none;background:var(--card);}
+.sh h2{font-size:clamp(19px,3vw,25px);font-weight:700;color:var(--t1);margin:0;letter-spacing:-0.01em;}
+.sdesc{font-size:13px;color:var(--t2);max-width:780px;margin:0 0 20px;}
+.sdesc b{color:var(--t1);}
+.label{font-size:9.5px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:10px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:820px){.g3{grid-template-columns:1fr;}}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:0;max-width:100%;}
+
+/* command cards */
+.cmds{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:880px){.cmds{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.cmds{grid-template-columns:1fr;}}
+.cmd{background:var(--card);border:1.5px solid var(--bordc);border-top:2.5px solid var(--green);border-radius:14px;padding:14px 15px;box-shadow:var(--shadow);}
+.cmd .cn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--acc);}
+.cmd h3{font-size:13px;font-weight:700;color:var(--t1);margin:6px 0 4px;}
+.cmd p{font-size:11.5px;color:var(--t2);margin:0;} .cmd b{color:var(--t1);}
+
+.prow{background:var(--card);border:1px solid var(--line);border-left:2.5px solid var(--green);border-radius:10px;padding:10px 13px;}
+.prow .k{font-family:var(--mono);font-size:10px;color:var(--acc);text-transform:uppercase;letter-spacing:0.04em;}
+.prow .val{font-size:12px;color:var(--t2);margin-top:3px;} .prow .val b{color:var(--t1);}
+
+/* MATRIX */
+table.matrix{border-collapse:collapse;width:100%;min-width:760px;background:var(--card);border-radius:14px;overflow:hidden;}
+.matrix th,.matrix td{border:1px solid var(--line);text-align:center;padding:8px 6px;font-size:11px;}
+.matrix thead th{background:var(--alt);font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.04em;}
+.matrix td.role{text-align:left;padding:8px 12px;white-space:nowrap;}
+.matrix td.role b{font-size:12px;color:var(--t1);}
+.matrix td .on{color:var(--green);font-weight:700;font-size:13px;}
+.matrix td .tr{color:var(--warn);font-weight:700;font-size:12px;}
+.matrix td .off{color:var(--off);font-weight:700;}
+.mkey{display:flex;gap:16px;flex-wrap:wrap;font-size:10.5px;color:var(--t2);margin-top:10px;align-items:center;}
+.mkey b{font-weight:700;}
+.mkey .on{color:var(--green);} .mkey .tr{color:var(--warn);} .mkey .off{color:var(--off);}
+.mkey a{color:var(--acc);}
+
+/* ROLE SECTIONS */
+.rolesec{background:var(--card);border:1.5px solid var(--bordc);border-top:3px solid var(--rc,var(--green));border-radius:var(--rcard);box-shadow:var(--shadow);padding:20px 22px;margin-top:26px;}
+.rhead{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:4px;}
+.rdot{width:13px;height:13px;border-radius:50%;background:var(--rc,var(--green));flex:none;}
+.rhead h3{font-size:18px;font-weight:700;color:var(--t1);margin:0;letter-spacing:-0.01em;}
+.rmiss{font-size:12px;color:var(--t2);}
+.gates{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 18px;}
+.gates .gl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--t3);align-self:center;margin-right:2px;}
+.gate{font-size:10px;font-weight:700;color:var(--rc,var(--acc));border:1.5px solid color-mix(in srgb,var(--rc,var(--acc)) 45%,transparent);border-radius:12px;padding:2px 9px;background:color-mix(in srgb,var(--rc,var(--acc)) 7%,var(--card));}
+
+.rgrid{display:grid;grid-template-columns:0.94fr 1.4fr;gap:18px;align-items:start;}
+@media(max-width:900px){.rgrid{grid-template-columns:minmax(0,1fr);}.rgrid>*{min-width:0;}.rgrid code,.rgrid .sd,.rgrid .sttl{overflow-wrap:anywhere;}}
+
+/* base flow steps */
+.steps{list-style:none;margin:0;padding:0;position:relative;counter-reset:s;}
+.steps::before{content:"";position:absolute;left:13px;top:6px;bottom:6px;width:2px;background:var(--line);}
+.steps>li{position:relative;padding:0 0 10px 40px;counter-increment:s;}
+.steps>li:last-child{padding-bottom:0;}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--rc,var(--green));color:var(--rc,var(--green));font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:1;}
+.sbox{background:var(--alt);border:1px solid var(--line);border-radius:var(--rmd);padding:8px 12px;}
+.sbox .sttl{font-size:12.5px;font-weight:700;color:var(--t1);}
+.sbox .sttl .tag{font-size:8px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--tagbg);color:var(--tagfg);border-radius:8px;padding:1.5px 6px;margin-left:6px;vertical-align:2px;}
+.sbox .sttl .tag.g{background:var(--rc,var(--teal-mid));color:#fff;}
+.sbox .sd{font-size:11px;color:var(--t2);margin-top:2px;line-height:1.45;}
+.sbox .sd b{color:var(--t1);}
+
+/* delta table */
+.delta{border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:520px;width:100%;}
+.delta .dr{display:grid;grid-template-columns:196px 1fr;border-bottom:1px solid var(--line);}
+.delta .dr:last-child{border-bottom:none;}
+.delta .dr>div{padding:8px 12px;font-size:11.5px;color:var(--t2);line-height:1.45;}
+.delta .dr>div:first-child{border-right:1px solid var(--line);}
+.delta .dr.grp{background:color-mix(in srgb,var(--rc,var(--acc)) 6%,var(--card));}
+.delta .dr.grp>div{grid-column:1 / -1;border-right:none;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rc,var(--acc));padding:5px 12px;}
+.delta .dk{font-weight:600;color:var(--t1);font-size:11.5px;}
+.delta .dk .en{font-family:var(--mono);font-size:10px;color:var(--acc);display:block;margin-top:1px;}
+.delta b{color:var(--t1);font-weight:600;}
+.subh{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--t3);margin:0 0 9px;}
+
+/* om compare */
+.om{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+@media(max-width:700px){.om{grid-template-columns:1fr;}}
+.omc{border:1px solid var(--line);border-radius:12px;padding:10px 13px;background:var(--alt);}
+.omc .ot{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--acc);margin-bottom:4px;}
+.omc p{font-size:11.5px;color:var(--t2);margin:0;line-height:1.5;} .omc b{color:var(--t1);}
+
+footer{margin-top:80px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--t3);}
+footer b{color:var(--t2);}
+footer a{color:var(--acc);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content / Chuyển đến nội dung</a>
+
+<nav class="toc" aria-label="Primary navigation / Điều hướng chính"><div class="toc-in">
+  <span class="brand">
+    <img class="logo-light" src="data:image/png;base64,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" alt="Kafi"><img class="logo-dark" src="data:image/png;base64,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" alt="Kafi">
+    <span>KAFI · AI-DLC</span>
+  </span>
+  <a href="#loop"><span data-i18n lang="en">Loop</span><span data-i18n lang="vi">Vòng lặp</span></a>
+  <a href="#matrix"><span data-i18n lang="en">Matrix</span><span data-i18n lang="vi">Ma trận</span></a>
+  <a href="#pm"><span class="rd" style="--rc:var(--pm)"></span>PM / PO</a>
+  <a href="#ba"><span class="rd" style="--rc:var(--ba)"></span>BA</a>
+  <a href="#design"><span class="rd" style="--rc:var(--design)"></span>Designer</a>
+  <a href="#sa"><span class="rd" style="--rc:var(--sa)"></span>SA</a>
+  <a href="#tl"><span class="rd" style="--rc:var(--tl)"></span>Tech Lead</a>
+  <a href="#dev"><span class="rd" style="--rc:var(--dev)"></span>Dev</a>
+  <a href="#qa"><span class="rd" style="--rc:var(--qa)"></span>QA</a>
+  <a href="#sre"><span class="rd" style="--rc:var(--ops)"></span>SRE</a>
+  <a href="#vendor"><span class="rd" style="--rc:var(--vendor)"></span>Vendor</a>
+  <div class="ctrls">
+    <div class="seg" role="group" aria-label="Language">
+      <button id="lang-en" type="button" data-language-control="en" aria-pressed="true">EN</button>
+      <button id="lang-vi" type="button" data-language-control="vi" aria-pressed="false">VI</button>
+    </div>
+    <div class="seg" role="group" aria-label="Theme">
+      <button id="th-dark" type="button" data-theme-control="dark" aria-pressed="true"><span data-i18n lang="en">Dark</span><span data-i18n lang="vi">Tối</span></button>
+      <button id="th-light" type="button" data-theme-control="light" aria-pressed="false"><span data-i18n lang="en">Light</span><span data-i18n lang="vi">Sáng</span></button>
+    </div>
+  </div>
+</div></nav>
+
+<main class="wrap" id="content">
+
+  <header>
+    <div class="kicker">KAFI Securities · Methodology Layer</div>
+    <h1 data-i18n lang="en">AI-DLC <span class="v">v1.0</span> · Role Guides</h1><h1 data-i18n lang="vi">AI-DLC <span class="v">v1.0</span> · Hướng dẫn theo vai trò</h1>
+    <p class="subtitle"><span data-i18n lang="en">How each role runs the system — and what changes per project profile</span><span data-i18n lang="vi">Cách mỗi role vận hành hệ thống — và điều gì thay đổi theo từng project profile</span></p>
+    <p class="lede"><span data-i18n lang="en">Every role uses the <b>same four commands</b>; the engine resolves what is applicable from the <b>Project Profile</b> (<code>Entry × Scope × Relationship × Work type</code>) and the operating model. So each guide below is written as a <b>base flow</b> — identical for every project — plus a <b>delta table</b>: what changes for <i>you</i> when the profile changes. You never manually skip a stage; capabilities that don't apply simply never reach you.</span><span data-i18n lang="vi">Mọi role dùng chung <b>bốn command</b>; engine tự resolve những gì applicable từ <b>Project Profile</b> (<code>Entry × Scope × Relationship × Work type</code>) và operating model. Vì vậy mỗi hướng dẫn dưới đây gồm một <b>base flow</b> — giống hệt nhau cho mọi dự án — cộng một <b>bảng delta</b>: điều gì thay đổi cho <i>bạn</i> khi profile thay đổi. Bạn không bao giờ phải tự tay bỏ qua một stage; capability nào không áp dụng thì đơn giản là không bao giờ đến tay bạn.</span></p>
+    <div class="chips">
+      <span class="chip"><span class="d"></span><span data-i18n lang="en"><b>4</b>&nbsp;commands · same for every role</span><span data-i18n lang="vi"><b>4</b>&nbsp;command · chung cho mọi role</span></span>
+      <span class="chip"><span class="d"></span><span data-i18n lang="en">roles = accountabilities, not headcount</span><span data-i18n lang="vi">role = accountability, không phải headcount</span></span>
+      <span class="chip"><span class="d"></span><span data-i18n lang="en">agent executes · you decide at gates</span><span data-i18n lang="vi">agent thực thi · bạn quyết định tại gate</span></span>
+      <span class="chip"><span class="d"></span>Rule 0 · evidence or ask</span>
+    </div>
+  </header>
+
+  <!-- UNIVERSAL LOOP -->
+  <section id="loop">
+    <div class="sh"><span class="snum">01</span><h2><span data-i18n lang="en">The universal loop — every role, every profile</span><span data-i18n lang="vi">Vòng lặp chung — mọi role, mọi profile</span></h2></div>
+    <p class="sdesc"><span data-i18n lang="en">You interact through four intents. Free-form conversation still works, but every governed action routes through these — no wording bypasses a gate or a missing parent artifact.</span><span data-i18n lang="vi">Bạn tương tác qua bốn intent. Trò chuyện tự do vẫn hoạt động, nhưng mọi hành động có governance đều đi qua bốn cổng này — không cách diễn đạt nào vượt được gate hay artifact cha còn thiếu.</span></p>
+
+    <div class="cmds">
+      <div class="cmd"><div class="cn">/kafi-aidlc-onboarding</div><h3><span data-i18n lang="en">"How do I start?"</span><span data-i18n lang="vi">"Bắt đầu thế nào?"</span></h3><p><span data-i18n lang="en">State-aware: detects fresh / legacy / v1, Hub or component, open migration. Asks <b>only missing or conflicting</b> info; a wizard resolves the Project Profile for new projects.</span><span data-i18n lang="vi">State-aware: nhận diện dự án mới / legacy / v1, Hub hay component, migration đang mở. <b>Chỉ hỏi thông tin còn thiếu hoặc mâu thuẫn</b>; wizard chốt Project Profile cho dự án mới.</span></p></div>
+      <div class="cmd"><div class="cn">/kafi-aidlc-status</div><h3><span data-i18n lang="en">"Where are we?"</span><span data-i18n lang="vi">"Dự án đang ở đâu?"</span></h3><p><span data-i18n lang="en">Read-only. Operating model, active work, pending gates, blockers, <code>Impacted</code> artifacts, mainstream baseline, UAT state + recommended actions.</span><span data-i18n lang="vi">Read-only. Operating model, work đang chạy, gate chờ duyệt, blocker, artifact <code>Impacted</code>, mainstream baseline, trạng thái UAT + hành động đề xuất.</span></p></div>
+      <div class="cmd"><div class="cn">/kafi-aidlc-next</div><h3><span data-i18n lang="en">"What do I do next?"</span><span data-i18n lang="vi">"Tôi nên làm gì tiếp?"</span></h3><p><span data-i18n lang="en">Resolves your highest-priority eligible action, confirms identity/acting role, reconciles exact revisions, asks &amp; records, executes, then presents the next human gate.</span><span data-i18n lang="vi">Resolve hành động hợp lệ ưu tiên cao nhất, xác nhận identity/acting role, reconcile đúng revision, hỏi &amp; record, thực thi, rồi trình human gate kế tiếp.</span></p></div>
+      <div class="cmd"><div class="cn">/kafi-aidlc-check</div><h3><span data-i18n lang="en">"Is anything wrong?"</span><span data-i18n lang="vi">"Có gì đang sai không?"</span></h3><p><span data-i18n lang="en">Read-only by default: completeness, traceability, freshness, contract pins, unanswered questions, evidence gaps. Repair needs an approved plan.</span><span data-i18n lang="vi">Read-only mặc định: completeness, traceability, freshness, contract pin, câu hỏi chưa trả lời, evidence gap. Muốn sửa phải có repair plan được duyệt.</span></p></div>
+    </div>
+
+    <div class="g3" style="margin-top:14px">
+      <div class="prow"><div class="k"><span data-i18n lang="en">At every gate</span><span data-i18n lang="vi">Tại mọi gate</span></div><div class="val"><span data-i18n lang="en">You choose <b>Request Changes</b> or <b>Approve</b>. The agent revises on the same dossier and returns until you approve. Approval binds the <b>exact content revision</b> — a changed artifact has no valid approval.</span><span data-i18n lang="vi">Bạn chọn <b>Request Changes</b> hoặc <b>Approve</b>. Agent sửa trên cùng dossier và trình lại cho đến khi bạn approve. Approval gắn với <b>exact content revision</b> — artifact đã đổi thì approval cũ không còn hiệu lực.</span></div></div>
+      <div class="prow"><div class="k"><span data-i18n lang="en">Your identity matters</span><span data-i18n lang="vi">Danh tính của bạn quan trọng</span></div><div class="val"><span data-i18n lang="en">A gated decision carries an authority result <b>and</b> identity assurance against the exact <code>team.md</code> revision. A chat message or display name is not evidence; the agent is never an approver.</span><span data-i18n lang="vi">Mỗi quyết định tại gate mang kết quả authority <b>và</b> identity assurance đối chiếu đúng revision <code>team.md</code>. Tin nhắn chat hay display name không phải bằng chứng; agent không bao giờ là người approve.</span></div></div>
+      <div class="prow"><div class="k"><span data-i18n lang="en">Answers become records</span><span data-i18n lang="vi">Câu trả lời thành record</span></div><div class="val"><span data-i18n lang="en">Every work-affecting question and your answer is recorded as an interaction. If evidence is missing, the agent <b>asks</b> — it never assumes a project fact on your behalf.</span><span data-i18n lang="vi">Mọi câu hỏi ảnh hưởng công việc và câu trả lời của bạn đều được ghi thành interaction record. Thiếu bằng chứng thì agent <b>hỏi</b> — không bao giờ tự assume một project fact thay bạn.</span></div></div>
+    </div>
+  </section>
+
+  <!-- MATRIX -->
+  <section id="matrix">
+    <div class="sh"><span class="snum">02</span><h2><span data-i18n lang="en">Who is activated, per scope</span><span data-i18n lang="vi">Ai được kích hoạt, theo scope</span></h2></div>
+    <p class="sdesc"><span data-i18n lang="en">The Scope dimension decides which roles the engine ever involves. A dash means the role is <b>never asked</b> on that scope — not "skipped", simply Not Applicable with a recorded reason.</span><span data-i18n lang="vi">Chiều Scope quyết định engine có bao giờ gọi đến role đó hay không. Dấu gạch nghĩa là role <b>không bao giờ bị hỏi</b> trên scope đó — không phải "bị bỏ qua", mà là Not Applicable có ghi lý do.</span></p>
+    <div class="scroll">
+      <table class="matrix">
+        <thead><tr><th style="text-align:left;padding-left:12px;">Role</th><th>full-product</th><th>backend</th><th>frontend</th><th>data</th><th>infrastructure</th><th>component-internal</th></tr></thead>
+        <tbody>
+          <tr><td class="role"><b>PM / PO</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
+          <tr><td class="role"><b>BA</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td></tr>
+          <tr><td class="role"><b>Designer</b></td><td><span class="on">●</span></td><td><span class="off">—</span></td><td><span class="on">●</span></td><td><span class="off">—</span></td><td><span class="off">—</span></td><td><span class="tr">◐</span></td></tr>
+          <tr><td class="role"><b>SA</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td></tr>
+          <tr><td class="role"><b>Tech Lead</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
+          <tr><td class="role"><b>Dev</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
+          <tr><td class="role"><b>QA (human)</b></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td></tr>
+          <tr><td class="role"><b>DevOps / SRE</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mkey">
+      <span><b class="on">●</b>&nbsp;<span data-i18n lang="en">activated when scope applies</span><span data-i18n lang="vi">kích hoạt khi scope áp dụng</span></span>
+      <span><b class="tr">◐</b>&nbsp;<span data-i18n lang="en">triggered — only on impact, risk or policy</span><span data-i18n lang="vi">triggered — chỉ khi có impact, risk hoặc policy</span></span>
+      <span><b class="off">—</b>&nbsp;<span data-i18n lang="en">never asked on this scope</span><span data-i18n lang="vi">không bao giờ bị hỏi trên scope này</span></span>
+      <span style="color:var(--t3)"><span data-i18n lang="en">· Vendor roles appear only when the Relationship dimension declares them (see <a href="#vendor">Vendor</a>).</span><span data-i18n lang="vi">· Vendor role chỉ xuất hiện khi chiều Relationship khai báo (xem <a href="#vendor">Vendor</a>).</span></span>
+    </div>
+  </section>
+
+  <!-- ============ PM / PO ============ -->
+  <section id="pm">
+    <div class="rolesec" style="--rc:var(--pm)">
+      <div class="rhead"><span class="rdot"></span><h3>PM / PO</h3><span class="rmiss"><span data-i18n lang="en">— owns the Discovery track: problem, scope, priority, acceptance, activation.</span><span data-i18n lang="vi">— sở hữu Discovery track: vấn đề, scope, độ ưu tiên, acceptance, activation.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">Project Configuration</span><span class="gate">Requirements</span><span class="gate">Delivery Scope / Ready</span><span class="gate">UAT Acceptance</span><span class="gate">Baseline Activation</span><span class="gate">Migration Plan / Cutover</span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Resolve the profile</span><span data-i18n lang="vi">Chốt profile</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">The wizard walks you through Entry, Scope, Relationship, Work type, operating model and approvers. You approve the <b>Project Configuration</b> gate. Irrelevant questions are never asked.</span><span data-i18n lang="vi">Wizard dẫn bạn qua Entry, Scope, Relationship, Work type, operating model và người approve. Bạn duyệt gate <b>Project Configuration</b>. Câu hỏi không liên quan không bao giờ được hỏi.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Frame work in plain language</span><span data-i18n lang="vi">Mô tả công việc bằng ngôn ngữ tự nhiên</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Describe the problem, outcome and acceptance intent. The agent drafts requirements, rules and acceptance criteria into the Hub — you review, not write.</span><span data-i18n lang="vi">Mô tả vấn đề, outcome và acceptance intent. Agent soạn requirements, rules và acceptance criteria vào Hub — bạn review, không phải viết.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Requirements → Ready</span><span data-i18n lang="vi">Duyệt Requirements → Ready</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Request Changes as often as needed, then Approve. The slice enters the <b>Ready pull queue</b> — approval does not force Delivery to start.</span><span data-i18n lang="vi">Request Changes bao nhiêu vòng tùy ý, rồi Approve. Slice vào <b>Ready pull queue</b> — approve không ép Delivery bắt đầu.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Watch delivery</span><span data-i18n lang="vi">Theo dõi delivery</span> <span class="tag">status</span></div><div class="sd"><span data-i18n lang="en">Read-only view of in-flight work, pending gates and blockers. If the top-priority item can't be pulled, the blocker is recorded and <b>you</b> decide whether to reprioritize.</span><span data-i18n lang="vi">Read-only: work đang chạy, gate chờ, blocker. Nếu item ưu tiên cao nhất không pull được, blocker được record và <b>bạn</b> quyết định reprioritize.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Accept UAT · activate</span><span data-i18n lang="vi">Accept UAT · activate</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Accept UAT behavior on the exact deployed candidate, then approve activation: seal baseline → activation event → <code>mainstream.md</code>.</span><span data-i18n lang="vi">Accept hành vi UAT trên đúng bản candidate đã deploy, rồi duyệt activation: seal baseline → activation event → <code>mainstream.md</code>.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Route feedback</span><span data-i18n lang="vi">Điều hướng feedback</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">A defect against approved scope → linked remediation slice. A new need → a fresh Discovery slice. Neither rewinds the project.</span><span data-i18n lang="vi">Defect với scope đã duyệt → remediation slice liên kết. Nhu cầu mới → slice Discovery mới. Không cái nào quay lui cả dự án.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You govern a <b>stream of slices</b>. Low-risk activation can run on an explicit policy you approve once; excluded scopes still come back to you.</span><span data-i18n lang="vi">Bạn quản trị một <b>dòng slice</b>. Activation rủi ro thấp có thể chạy theo policy bạn duyệt một lần; các scope bị loại trừ vẫn quay về bạn.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">You approve the <b>whole BASE/CR scope</b> at Ready (<b>Scope Locked</b>). After locking, new scope = new CR — unless you formally reopen, which marks every affected downstream approval <code>Impacted</code>. Only one CR enters the activation lane at a time.</span><span data-i18n lang="vi">Bạn duyệt <b>toàn bộ scope BASE/CR</b> tại Ready (<b>Scope Locked</b>). Sau khi khóa, scope mới = CR mới — trừ khi bạn chính thức reopen, khi đó mọi approval downstream bị tác động thành <code>Impacted</code>. Mỗi thời điểm chỉ một CR vào activation lane.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Entry</div></div>
+            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">SA owns the Current-State Baseline; you still approve scope and priority. Expect reverse-engineering work before estimates firm up.</span><span data-i18n lang="vi">SA sở hữu Current-State Baseline; bạn vẫn duyệt scope và độ ưu tiên. Sẽ có phần reverse engineering trước khi ước lượng chắc tay.</span></div></div>
+            <div class="dr"><div class="dk">Legacy AI-DLC<span class="en">v0.3–v0.9 project</span></div><div><span data-i18n lang="en">You approve the mandatory <b>migration plan</b> before any transformation, and the <b>cutover</b> after verification. In-flight work finishes under the old model.</span><span data-i18n lang="vi">Bạn duyệt <b>migration plan</b> bắt buộc trước mọi transformation, và duyệt <b>cutover</b> sau verification. Work đang chạy hoàn tất theo model cũ.</span></div></div>
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Backend / data / infra</div><div><span data-i18n lang="en">No UI/UX questions ever reach you. The Requirements and UAT gates are unchanged.</span><span data-i18n lang="vi">Không câu hỏi UI/UX nào đến tay bạn. Gate Requirements và UAT không đổi.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">UI without a Designer</span><span data-i18n lang="vi">Có UI nhưng không có Designer</span></div><div><span data-i18n lang="en">You are the configured <b>final UI/UX approver</b> for agent-produced UI/UX. This is declared at onboarding, never assumed.</span><span data-i18n lang="vi">Bạn là <b>final UI/UX approver</b> được cấu hình cho UI/UX do agent tạo. Khai báo tại onboarding, không bao giờ được suy diễn.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">Outsourced / mixed</div><div><span data-i18n lang="en">Non-negotiable: KAFI PO/PM keeps business requirements, UAT and activation in <b>every</b> vendor model. Vendor scope changes arrive as proposals for your gate.</span><span data-i18n lang="vi">Bất di bất dịch: KAFI PO/PM giữ business requirements, UAT và activation trong <b>mọi</b> vendor model. Thay đổi scope từ vendor đến dưới dạng proposal cho gate của bạn.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">You approve the business hotfix gate on an urgency lane. The fix starts from SRE-confirmed production lineage — not from mainstream.</span><span data-i18n lang="vi">Bạn duyệt business hotfix gate theo lane khẩn cấp. Fix bắt đầu từ production lineage do SRE xác nhận — không phải từ mainstream.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve business scope and activation timing; SA approves the technical plan; SRE owns production execution.</span><span data-i18n lang="vi">Bạn duyệt business scope và thời điểm activation; SA duyệt technical plan; SRE sở hữu thực thi production.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BA ============ -->
+  <section id="ba">
+    <div class="rolesec" style="--rc:var(--ba)">
+      <div class="rhead"><span class="rdot"></span><h3>BA</h3><span class="rmiss"><span data-i18n lang="en">— business analysis and review; your answers become project evidence.</span><span data-i18n lang="vi">— phân tích nghiệp vụ và review; câu trả lời của bạn trở thành bằng chứng dự án.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate"><span data-i18n lang="en">None mandatory — you review inside the Requirements gate owned by PO/PM</span><span data-i18n lang="vi">Không có gate bắt buộc riêng — bạn review bên trong gate Requirements do PO/PM sở hữu</span></span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the Hub</span><span data-i18n lang="vi">Onboard vào Hub</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">Confirm identity and acting role. You work in the Hub folder tree — no Git commands, no branches to know about.</span><span data-i18n lang="vi">Xác nhận identity và acting role. Bạn làm việc trên cây folder của Hub — không lệnh Git, không cần biết branch.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Answer the authorized questions</span><span data-i18n lang="vi">Trả lời các câu hỏi được ủy quyền</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent asks targeted business questions (Rule 0). Each answer is recorded as an <b>interaction record</b> — a rule confirmed in chat is not project truth until recorded.</span><span data-i18n lang="vi">Agent hỏi các câu nghiệp vụ có chủ đích (Rule 0). Mỗi câu trả lời được ghi thành <b>interaction record</b> — một rule chốt trong chat chưa phải project truth cho đến khi được record.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Review agent drafts</span><span data-i18n lang="vi">Review bản nháp của agent</span></div><div class="sd"><span data-i18n lang="en">Requirements, business rules, examples, stories and acceptance criteria are agent-drafted. You correct and refine at the source; the agent revises until it's right.</span><span data-i18n lang="vi">Requirements, business rules, ví dụ, story và acceptance criteria do agent soạn. Bạn sửa và tinh chỉnh tại nguồn; agent revise đến khi đúng.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Support the gate</span><span data-i18n lang="vi">Hỗ trợ gate</span></div><div class="sd"><span data-i18n lang="en">PO/PM holds final Requirements authority; your review is how the content gets there. There is no separate BA hard gate to wait on.</span><span data-i18n lang="vi">PO/PM giữ quyền duyệt Requirements cuối cùng; review của bạn là cách nội dung đến được đó. Không có BA hard gate riêng phải chờ.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You clarify the <b>next slice</b> while Delivery builds the current one — the two tracks run concurrently.</span><span data-i18n lang="vi">Bạn làm rõ <b>slice kế tiếp</b> trong khi Delivery đang build slice hiện tại — hai track chạy đồng thời.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Your analysis converges into the <b>full BASE/CR scope</b> before Scope Locked; afterwards clarifications refine locked scope, they don't extend it.</span><span data-i18n lang="vi">Phân tích của bạn hội tụ về <b>toàn bộ scope BASE/CR</b> trước Scope Locked; sau đó phần làm rõ chỉ tinh chỉnh scope đã khóa, không mở rộng.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Entry</div></div>
+            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">You confirm <b>as-is business behavior</b> during reverse engineering — which observed behavior is a rule vs. an accident. Unconfirmed areas stay <code>Not Assessed</code>.</span><span data-i18n lang="vi">Bạn xác nhận <b>as-is business behavior</b> trong reverse engineering — hành vi quan sát được nào là rule, cái nào là tình cờ. Vùng chưa xác nhận giữ <code>Not Assessed</code>.</span></div></div>
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Emphasis shifts to business rules, data dictionary meanings and validation invariants the pipeline must preserve.</span><span data-i18n lang="vi">Trọng tâm chuyển sang business rules, ngữ nghĩa data dictionary và validation invariant mà pipeline phải bảo toàn.</span></div></div>
+            <div class="dr"><div class="dk">Infrastructure / component-internal</div><div><span data-i18n lang="en">Usually little to no BA involvement — business truth is consumed from the Hub, not re-analyzed.</span><span data-i18n lang="vi">Thường ít hoặc không cần BA — business truth được consume từ Hub, không phân tích lại.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">Outsourced</div><div><span data-i18n lang="en">Vendor questions reach you only through recorded Hub interactions — never side-channel email or chat that leaves no evidence.</span><span data-i18n lang="vi">Câu hỏi từ vendor chỉ đến bạn qua Hub interaction có record — không bao giờ qua email/chat bên lề không để lại bằng chứng.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Change Request / hotfix</div><div><span data-i18n lang="en">You confirm the impacted rules only; the agent's impact analysis decides which requirements you're asked about.</span><span data-i18n lang="vi">Bạn chỉ xác nhận các rule bị tác động; impact analysis của agent quyết định bạn được hỏi về requirement nào.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESIGNER ============ -->
+  <section id="design">
+    <div class="rolesec" style="--rc:var(--design)">
+      <div class="rhead"><span class="rdot"></span><h3>Designer</h3><span class="rmiss"><span data-i18n lang="en">— final UI/UX authority when assigned; activated only when the profile has UI scope.</span><span data-i18n lang="vi">— quyền UI/UX cuối cùng khi được chỉ định; chỉ kích hoạt khi profile có UI scope.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">UI/UX Design</span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — when UI applies</span><span data-i18n lang="vi">Base flow — khi UI áp dụng</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Confirm you're the approver</span><span data-i18n lang="vi">Xác nhận bạn là người approve</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">The project configures exactly one final UI/UX approver: you when assigned, otherwise PO/PM. This is recorded — never inferred from a job title.</span><span data-i18n lang="vi">Dự án cấu hình đúng một final UI/UX approver: bạn khi được chỉ định, ngược lại là PO/PM. Điều này được record — không bao giờ suy từ chức danh.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Direct the agent's UI work</span><span data-i18n lang="vi">Định hướng phần UI agent làm</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent produces flows, mockups, design tokens, view models, interaction specs and accessibility notes as dossier drafts. You direct and iterate.</span><span data-i18n lang="vi">Agent tạo flow, mockup, design token, view model, interaction spec và accessibility note dưới dạng dossier draft. Bạn định hướng và iterate.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve UI/UX</span><span data-i18n lang="vi">Duyệt UI/UX</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Approve the exact revision; the promotion commit lands it at the canonical path. Tech Lead may confirm feasibility but is <b>not</b> the UI/UX approver.</span><span data-i18n lang="vi">Approve đúng revision; promotion commit đưa nó về vị trí canonical. Tech Lead có thể xác nhận feasibility nhưng <b>không phải</b> người approve UI/UX.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Stay in the loop on impact</span><span data-i18n lang="vi">Theo sát impact</span></div><div class="sd"><span data-i18n lang="en">A later change that touches UI reopens your gate — and only then. Verification includes UI-fidelity checks against your approved spec.</span><span data-i18n lang="vi">Thay đổi sau này chạm UI sẽ reopen gate của bạn — và chỉ khi đó. Verification gồm kiểm tra UI fidelity so với spec bạn đã duyệt.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">UI/UX runs <b>per slice</b> when that slice impacts UI — not as a one-time phase.</span><span data-i18n lang="vi">UI/UX chạy <b>theo từng slice</b> khi slice đó tác động UI — không phải một phase một lần.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">UI/UX is approved within the BASE/CR scope; a UI-affecting CR reopens the gate for the impacted screens only.</span><span data-i18n lang="vi">UI/UX được duyệt trong scope BASE/CR; CR chạm UI chỉ reopen gate cho các màn hình bị tác động.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Full product</div><div><span data-i18n lang="en">You own the FE source of truth; S7 runs whenever impact touches UI.</span><span data-i18n lang="vi">Bạn sở hữu FE source of truth; S7 chạy mỗi khi impact chạm UI.</span></div></div>
+            <div class="dr"><div class="dk">Frontend / mobile</div><div><span data-i18n lang="en">Same as full product, plus: the app <b>consumes</b> existing backend contracts — your view models bind to pinned contract revisions, never invent them.</span><span data-i18n lang="vi">Như full product, thêm: app <b>consume</b> backend contract có sẵn — view model của bạn bind vào contract revision đã pin, không bao giờ tự bịa.</span></div></div>
+            <div class="dr"><div class="dk">Backend / data / infrastructure</div><div><span data-i18n lang="en">You are never asked. The capability is <code>Not Applicable</code> with a recorded reason — no empty UI/UX stage exists.</span><span data-i18n lang="vi">Bạn không bao giờ bị hỏi. Capability ở trạng thái <code>Not Applicable</code> có ghi lý do — không tồn tại stage UI/UX rỗng.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Outsourced UI work</span><span data-i18n lang="vi">UI giao vendor làm</span></div><div><span data-i18n lang="en">The vendor implements against your approved spec and tokens; UI-fidelity verification is part of their evidence. Approval authority stays with you (or PO/PM).</span><span data-i18n lang="vi">Vendor implement theo spec và token bạn đã duyệt; UI-fidelity verification nằm trong evidence của họ. Quyền approve vẫn ở bạn (hoặc PO/PM).</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">CR / hotfix</div><div><span data-i18n lang="en">Your gate reopens only when impact analysis proves UI behavior changes. A backend-only CR with identical UI never involves you.</span><span data-i18n lang="vi">Gate của bạn chỉ reopen khi impact analysis chứng minh hành vi UI thay đổi. CR backend-only với UI giữ nguyên không bao giờ gọi đến bạn.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SA ============ -->
+  <section id="sa">
+    <div class="rolesec" style="--rc:var(--sa)">
+      <div class="rhead"><span class="rdot"></span><h3>SA</h3><span class="rmiss"><span data-i18n lang="en">— owns solution-level Delivery governance: architecture, shared contracts, topology, integration.</span><span data-i18n lang="vi">— sở hữu Delivery governance cấp solution: architecture, shared contract, topology, integration.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">Current-State Baseline</span><span class="gate">Architecture</span><span class="gate">Technical Design (by impact)</span><span class="gate">Integration (multi-Unit)</span><span class="gate">Cutover technical plan</span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Reconcile before deciding</span><span data-i18n lang="vi">Reconcile trước khi quyết</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent fetches exact Hub + component revisions and rebuilds context before presenting any architecture decision to you.</span><span data-i18n lang="vi">Agent fetch đúng revision Hub + component và rebuild context trước khi trình bất kỳ quyết định kiến trúc nào cho bạn.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Direct solution design</span><span data-i18n lang="vi">Định hướng solution design</span></div><div class="sd"><span data-i18n lang="en">The agent drafts application design, data model, shared contracts, ADRs — and <code>components.md</code>: which repos exist, their <code>kind</code> and tree path. Topology is <b>your</b> work product.</span><span data-i18n lang="vi">Agent soạn application design, data model, shared contract, ADR — và <code>components.md</code>: repo nào tồn tại, <code>kind</code> gì, tree path nào. Topology là work product <b>của bạn</b>.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Architecture</span><span data-i18n lang="vi">Duyệt Architecture</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Approval authorizes promotion to canonical paths and hands the repo list to SRE for provisioning. A shared-contract change later re-triggers this gate.</span><span data-i18n lang="vi">Approval ủy quyền promotion về canonical path và chuyển danh sách repo cho SRE cấp phát. Thay đổi shared contract sau này sẽ re-trigger gate này.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Guard integration</span><span data-i18n lang="vi">Canh giữ integration</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">As slices complete, the agent composes cross-component contract and end-to-end evidence. You approve Integration for multi-Unit work.</span><span data-i18n lang="vi">Khi các slice hoàn tất, agent compose bằng chứng contract xuyên component và end-to-end. Bạn approve Integration cho công việc multi-Unit.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Arbitrate escalated designs</span><span data-i18n lang="vi">Phân xử design được escalate</span></div><div class="sd"><span data-i18n lang="en">Technical Design escalates from Tech Lead to you when it touches architecture, shared contracts, cross-Unit behavior, important NFRs, infrastructure or topology.</span><span data-i18n lang="vi">Technical Design escalate từ Tech Lead lên bạn khi chạm architecture, shared contract, hành vi xuyên Unit, NFR quan trọng, hạ tầng hoặc topology.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">Impact-driven: a slice on current approved architecture never repeats your gates. You confirm feasibility at Ready <b>only when impact rules require it</b>.</span><span data-i18n lang="vi">Impact-driven: slice trên kiến trúc đã duyệt không lặp lại gate của bạn. Bạn xác nhận feasibility tại Ready <b>chỉ khi impact rule yêu cầu</b>.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Cross-Unit integration approval per BASE/CR; coordinated branch sets are verified against exact revisions before promotion to component <code>main</code>.</span><span data-i18n lang="vi">Duyệt cross-Unit integration theo từng BASE/CR; coordinated branch set được verify theo đúng revision trước khi promote về <code>main</code> của component.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Entry</div></div>
+            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">You approve the <b>Current-State Baseline</b>: declared scope, exact source revision, known risks, explicit unknowns. Reverse engineering is progressive — outside the boundary stays <code>Not Assessed</code>.</span><span data-i18n lang="vi">Bạn approve <b>Current-State Baseline</b>: scope khai báo, đúng source revision, rủi ro đã biết, unknown tường minh. Reverse engineering là tiến trình tăng dần — ngoài boundary giữ <code>Not Assessed</code>.</span></div></div>
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Backend</div><div><span data-i18n lang="en">Contract emitted by type — REST, async/message, RPC, GraphQL, FIX. No UI variants appear.</span><span data-i18n lang="vi">Contract phát ra theo type — REST, async/message, RPC, GraphQL, FIX. Không xuất hiện biến thể UI.</span></div></div>
+            <div class="dr"><div class="dk">Frontend / mobile</div><div><span data-i18n lang="en">FE architecture variant; you <b>bind</b> to existing backend contracts (exact pins) rather than authoring them.</span><span data-i18n lang="vi">Biến thể kiến trúc FE; bạn <b>bind</b> vào backend contract có sẵn (pin chính xác) thay vì tự viết.</span></div></div>
+            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Data-contract, pipeline, data-model and data-NFR variants replace app-service design.</span><span data-i18n lang="vi">Biến thể data-contract, pipeline, data-model và data-NFR thay cho thiết kế app-service.</span></div></div>
+            <div class="dr"><div class="dk">Infrastructure</div><div><span data-i18n lang="en">Infrastructure contracts, NFRs, deployment and operations design; product/UI capabilities never activate.</span><span data-i18n lang="vi">Contract hạ tầng, NFR, deployment và operations design; capability product/UI không bao giờ kích hoạt.</span></div></div>
+            <div class="dr"><div class="dk">Component-internal</div><div><span data-i18n lang="en">Your shared artifacts are <b>Consumed</b> by the component; delegation is limited to component-local design unless <code>team.md</code> grants more.</span><span data-i18n lang="vi">Artifact chung của bạn được component <b>Consume</b>; delegation giới hạn ở thiết kế cục bộ trừ khi <code>team.md</code> cấp thêm.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">KAFI Solution – Vendor Delivery</div><div><span data-i18n lang="en">You own solution, contracts and NFRs end-to-end; the vendor implements your approved solution.</span><span data-i18n lang="vi">Bạn sở hữu solution, contract và NFR từ đầu tới cuối; vendor implement solution bạn đã duyệt.</span></div></div>
+            <div class="dr"><div class="dk">Vendor Solution &amp; Delivery</div><div><span data-i18n lang="en">The <b>Vendor SA is Project SA</b> for the assigned scope. You run <b>Architecture Assurance</b> when a risk trigger fires — sensitive data, financial transactions, shared/public contracts, cross-project impact, topology/security, HA/DR, hard-to-reverse migration. Unclear risk = Assurance Required until resolved.</span><span data-i18n lang="vi"><b>Vendor SA là Project SA</b> cho scope được giao. Bạn chạy <b>Architecture Assurance</b> khi risk trigger kích hoạt — dữ liệu nhạy cảm, giao dịch tài chính, contract shared/public, impact xuyên dự án, topology/security, HA/DR, migration khó đảo ngược. Risk chưa rõ = Assurance Required cho đến khi làm rõ.</span></div></div>
+            <div class="dr"><div class="dk">Mixed</div><div><span data-i18n lang="en">Exactly <b>one</b> Project SA owns shared artifacts and cross-component integration; component SAs are scoped in <code>team.md</code>.</span><span data-i18n lang="vi">Đúng <b>một</b> Project SA sở hữu shared artifact và integration xuyên component; component SA được scope trong <code>team.md</code>.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Usually no architecture gate — unless the minimal fix trips a risk trigger or touches a shared contract.</span><span data-i18n lang="vi">Thường không có architecture gate — trừ khi bản fix tối thiểu chạm risk trigger hoặc shared contract.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span><span class="en">DATA-MIG-NN</span></div><div><span data-i18n lang="en">You approve the transformation/integrity design; Tech Lead owns scripts and evidence; SRE executes production.</span><span data-i18n lang="vi">Bạn duyệt thiết kế transformation/integrity; Tech Lead sở hữu script và evidence; SRE thực thi production.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve the technical plan: merge/deploy order, compatibility, rollback, rehearsal. Expand-and-contract and flags are attempted before hard cutover.</span><span data-i18n lang="vi">Bạn duyệt technical plan: thứ tự merge/deploy, compatibility, rollback, rehearsal. Expand-and-contract và flag được thử trước hard cutover.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECH LEAD ============ -->
+  <section id="tl">
+    <div class="rolesec" style="--rc:var(--tl)">
+      <div class="rhead"><span class="rdot"></span><h3>Tech Lead</h3><span class="rmiss"><span data-i18n lang="en">— pulls Ready work by capacity; owns Unit delivery through Done.</span><span data-i18n lang="vi">— pull công việc Ready theo capacity; sở hữu Unit delivery cho tới Done.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">Technical Design (local Unit)</span><span class="gate">Technical Done</span><span class="gate">Delivery pull acceptance</span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">See the Ready queue</span><span data-i18n lang="vi">Xem Ready queue</span> <span class="tag">status</span></div><div class="sd"><span data-i18n lang="en">Ready slices are visible dossier folders in the Hub. The agent recommends the next eligible item but <b>never silently starts Delivery</b>.</span><span data-i18n lang="vi">Slice Ready là các dossier folder nhìn thấy được trong Hub. Agent đề xuất item hợp lệ kế tiếp nhưng <b>không bao giờ tự ý bắt đầu Delivery</b>.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Pull — a decision, not a Git command</span><span data-i18n lang="vi">Pull — một quyết định, không phải lệnh Git</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Pulling = accepting Delivery accountability by capacity and technical readiness. The agent claims the work item, opens the dossier, creates <code>ai-dlc/slice/*</code> branches per affected repo, links them in <code>code.md</code>, and pins approved context.</span><span data-i18n lang="vi">Pull = nhận trách nhiệm Delivery theo capacity và technical readiness. Agent claim work item, mở dossier, tạo branch <code>ai-dlc/slice/*</code> trên từng repo bị tác động, nối trong <code>code.md</code>, và pin approved context.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Technical Design</span><span data-i18n lang="vi">Duyệt Technical Design</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Functional design, code flow, test plan, NFR delta — agent-drafted. Local Unit scope is yours; architecture / contract / cross-Unit / topology impact escalates to SA.</span><span data-i18n lang="vi">Functional design, code flow, test plan, NFR delta — agent soạn. Phạm vi Unit cục bộ là của bạn; impact về architecture / contract / xuyên Unit / topology escalate lên SA.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Supervise the build</span><span data-i18n lang="vi">Giám sát build</span></div><div class="sd"><span data-i18n lang="en">The agent implements, writes automated tests, runs verification and assembles evidence on the work branches. You review as needed; Devs collaborate.</span><span data-i18n lang="vi">Agent implement, viết automated test, chạy verification và tập hợp evidence trên work branch. Bạn review khi cần; Dev cùng tham gia.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Technical Done</span><span data-i18n lang="vi">Duyệt Technical Done</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Code, automated evidence and documentation sync for the Unit. An impacted required document must be updated <b>before</b> Done.</span><span data-i18n lang="vi">Code, automated evidence và đồng bộ tài liệu cho Unit. Tài liệu bắt buộc bị impact phải cập nhật <b>trước khi</b> Done.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">One slice = one dossier + one branch per affected repo. If the top item can't be pulled, the blocker is recorded and PO/PM reprioritizes — you don't force it.</span><span data-i18n lang="vi">Một slice = một dossier + một branch mỗi repo bị tác động. Item đầu queue không pull được thì blocker được record và PO/PM reprioritize — bạn không ép.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">You approve component/Unit completion inside the BASE/CR; the coordinated branch set is promoted only after all required approvals, preserving the exact UAT-tested SHA where possible.</span><span data-i18n lang="vi">Bạn duyệt hoàn tất component/Unit trong BASE/CR; coordinated branch set chỉ promote sau đủ approval, giữ đúng SHA đã test UAT khi có thể.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Entry</div></div>
+            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">A pre-existing failing check may be accepted only if reproduced at the entry commit, isolated outside the impact boundary, not worsened, and approved via quality exception. <b>A failure in your changed scope always blocks.</b></span><span data-i18n lang="vi">Check fail có sẵn chỉ được chấp nhận nếu tái hiện tại entry commit, nằm ngoài impact boundary, không tệ hơn, và được duyệt qua quality exception. <b>Fail trong scope bạn thay đổi luôn blocking.</b></span></div></div>
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Any scope</span><span data-i18n lang="vi">Mọi scope</span></div><div><span data-i18n lang="en">Your loop is identical — scope changes which capabilities feed your Technical Design gate (UI fidelity, data invariants, IaC checks…), not your accountability.</span><span data-i18n lang="vi">Vòng lặp của bạn không đổi — scope thay đổi capability nào đổ vào gate Technical Design (UI fidelity, data invariant, IaC check…), không đổi accountability.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">Outsourced<span class="en">executing vs accepting</span></div><div><span data-i18n lang="en">The roles split: the <b>Vendor Tech Lead</b> executes and declares Vendor Technical Complete; the <b>KAFI accepting Tech Lead</b> grants final Technical Acceptance. The executor is never the sole final acceptor.</span><span data-i18n lang="vi">Vai trò tách đôi: <b>Vendor Tech Lead</b> thực thi và declare Vendor Technical Complete; <b>KAFI accepting Tech Lead</b> cấp Technical Acceptance cuối cùng. Người thực thi không bao giờ là acceptor cuối duy nhất.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">The branch forks from the <b>SRE-confirmed production composition</b>, not from <code>main</code>. Minimal fix + automated regression; after PROD, the agent forward-ports into current <code>main</code> and every impacted in-flight item.</span><span data-i18n lang="vi">Branch fork từ <b>production composition do SRE xác nhận</b>, không phải từ <code>main</code>. Fix tối thiểu + automated regression; sau PROD, agent forward-port vào <code>main</code> hiện tại và mọi item đang mở bị tác động.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span></div><div><span data-i18n lang="en">You own migration scripts and rehearsal evidence — idempotency, validation invariants, abort checkpoints — against UAT-safe data only.</span><span data-i18n lang="vi">Bạn sở hữu migration script và rehearsal evidence — idempotency, validation invariant, abort checkpoint — chỉ trên dữ liệu UAT-safe.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEV ============ -->
+  <section id="dev">
+    <div class="rolesec" style="--rc:var(--dev)">
+      <div class="rhead"><span class="rdot"></span><h3>Dev</h3><span class="rmiss"><span data-i18n lang="en">— collaborates with and reviews the agent on owned components; no separate mandatory gate.</span><span data-i18n lang="vi">— cộng tác và review agent trên component mình sở hữu; không có gate bắt buộc riêng.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate"><span data-i18n lang="en">None mandatory — Tech Lead approves Technical Done</span><span data-i18n lang="vi">Không có gate bắt buộc — Tech Lead duyệt Technical Done</span></span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the component</span><span data-i18n lang="vi">Onboard component</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">Materialize your component at its declared tree path (<code>components/&lt;name&gt;/</code>). <code>.aidlc/link.md</code> already backlinks the Hub — you never type a Hub URL.</span><span data-i18n lang="vi">Materialize component tại đúng tree path (<code>components/&lt;name&gt;/</code>). <code>.aidlc/link.md</code> đã backlink Hub — bạn không bao giờ phải gõ Hub URL.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Build with the agent</span><span data-i18n lang="vi">Build cùng agent</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Code and tests grow on the claimed <code>ai-dlc/*</code> branch, against pinned contract revisions. You steer, pair and correct; the agent handles fetch/rebase/commit/push/PR.</span><span data-i18n lang="vi">Code và test lớn dần trên branch <code>ai-dlc/*</code> đã claim, theo contract revision đã pin. Bạn dẫn dắt, pair và sửa; agent lo fetch/rebase/commit/push/PR.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Self-check before handback</span><span data-i18n lang="vi">Tự check trước khi trả bài</span> <span class="tag">check</span></div><div class="sd"><span data-i18n lang="en">Traceability, freshness, contract pins, evidence gaps — read-only, catches drift before the Tech Lead sees it.</span><span data-i18n lang="vi">Traceability, freshness, contract pin, evidence gap — read-only, bắt drift trước khi Tech Lead nhìn thấy.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Review, don't rubber-stamp</span><span data-i18n lang="vi">Review, đừng đóng dấu cho có</span></div><div class="sd"><span data-i18n lang="en">Your review is collaboration quality, not a gate. A green PR is never a substitute for the human approvals the flow requires.</span><span data-i18n lang="vi">Review của bạn là chất lượng cộng tác, không phải gate. PR xanh không bao giờ thay thế các human approval mà flow yêu cầu.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You work slice-by-slice; a sibling slice touching the same repo shows up as a visible claim, not a surprise conflict.</span><span data-i18n lang="vi">Bạn làm việc theo từng slice; slice khác đụng cùng repo hiện ra như một claim nhìn thấy được, không phải conflict bất ngờ.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Your branches belong to a coordinated BASE/CR set; short-lived Unit branches are implementation mechanics under the same governance identity.</span><span data-i18n lang="vi">Branch của bạn thuộc coordinated BASE/CR set; Unit branch ngắn hạn là cơ chế thực thi dưới cùng governance identity.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Component-internal</div><div><span data-i18n lang="en">Hub context (requirements, contracts, decisions) is <b>Consumed</b> — you never recreate canonical artifacts locally; the component adds only its own detail.</span><span data-i18n lang="vi">Hub context (requirements, contract, decision) được <b>Consume</b> — bạn không bao giờ tái tạo artifact canonical cục bộ; component chỉ thêm detail của riêng nó.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">Vendor-side Dev</div><div><span data-i18n lang="en">Same loop inside a pruned materialization: read-only Hub subset + your assigned component. Proposals for shared changes route to the Hub.</span><span data-i18n lang="vi">Cùng vòng lặp trong bản materialize đã tỉa: Hub subset read-only + component được giao. Proposal cho thay đổi chung route về Hub.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Smallest possible change from confirmed production lineage, plus regression tests proving the incident path.</span><span data-i18n lang="vi">Thay đổi nhỏ nhất có thể từ production lineage đã xác nhận, kèm regression test chứng minh đường sự cố.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QA ============ -->
+  <section id="qa">
+    <div class="rolesec" style="--rc:var(--qa)">
+      <div class="rhead"><span class="rdot"></span><h3>QA</h3><span class="rmiss"><span data-i18n lang="en">— optional specialist. The agent plans, automates and runs tests; a human is triggered by policy or risk.</span><span data-i18n lang="vi">— chuyên gia tùy chọn. Agent lập kế hoạch, tự động hóa và chạy test; con người được trigger theo policy hoặc risk.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate"><span data-i18n lang="en">Independent assurance — when triggered</span><span data-i18n lang="vi">Independent assurance — khi được trigger</span></span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — mostly the agent's</span><span data-i18n lang="vi">Base flow — phần lớn là của agent</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Agent derives the test approach</span><span data-i18n lang="vi">Agent suy ra test approach</span></div><div class="sd"><span data-i18n lang="en">From requirements and acceptance criteria: unit, integration, contract, regression, security and E2E checks as applicable — recorded in the test plan at Technical Design.</span><span data-i18n lang="vi">Từ requirements và acceptance criteria: unit, integration, contract, regression, security và E2E khi áp dụng — ghi trong test plan tại Technical Design.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Agent automates and runs</span><span data-i18n lang="vi">Agent tự động hóa và chạy</span></div><div class="sd"><span data-i18n lang="en">Commands, results, gaps and residual risk land in <code>verification.md</code>. The agent <b>never claims evidence it did not observe</b>.</span><span data-i18n lang="vi">Lệnh, kết quả, gap và rủi ro tồn dư ghi vào <code>verification.md</code>. Agent <b>không bao giờ claim evidence nó không quan sát</b>.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Human QA joins when triggered</span><span data-i18n lang="vi">Human QA tham gia khi được trigger</span></div><div class="sd"><span data-i18n lang="en">Regulatory/financial criticality, acceptance that can't be automated, device/UX testing, large blast radius, or explicitly requested independent assurance.</span><span data-i18n lang="vi">Mức trọng yếu regulatory/tài chính, acceptance không tự động hóa được, test device/UX, blast radius lớn, hoặc yêu cầu assurance độc lập tường minh.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Exceptions are records, not shrugs</span><span data-i18n lang="vi">Exception là record, không phải cái nhún vai</span></div><div class="sd"><span data-i18n lang="en">A waivable failure needs a policy match plus an immutable exception record — evidence, impact, alternative verification, authority, expiry. There is no generic "continue anyway".</span><span data-i18n lang="vi">Fail có thể waive cần khớp policy cộng một exception record bất biến — evidence, impact, verification thay thế, authority, expiry. Không tồn tại nút "continue anyway" chung chung.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">Verification runs per slice; a UAT defect after merge becomes a linked <b>remediation slice</b>.</span><span data-i18n lang="vi">Verification chạy theo slice; defect UAT sau merge thành <b>remediation slice</b> liên kết.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">A defect against locked acceptance criteria stays on the open BASE/CR; new behavior needs a new CR.</span><span data-i18n lang="vi">Defect so với acceptance criteria đã khóa ở lại BASE/CR đang mở; hành vi mới cần CR mới.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Full product / frontend</div><div><span data-i18n lang="en">Verification includes UI-fidelity conformance against the approved UI/UX spec and tokens.</span><span data-i18n lang="vi">Verification gồm UI-fidelity conformance so với UI/UX spec và token đã duyệt.</span></div></div>
+            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Validation invariants, reconciliation checks and volume/rehearsal evidence for pipelines and migrations.</span><span data-i18n lang="vi">Validation invariant, reconciliation check và bằng chứng volume/rehearsal cho pipeline và migration.</span></div></div>
+            <div class="dr grp"><div>Relationship</div></div>
+            <div class="dr"><div class="dk">Outsourced</div><div><span data-i18n lang="en">Vendor delivery evidence feeds KAFI acceptance — the conformance evidence set is the trust boundary between executing and accepting sides.</span><span data-i18n lang="vi">Delivery evidence của vendor nuôi acceptance của KAFI — bộ conformance evidence là ranh giới niềm tin giữa bên thực thi và bên chấp nhận.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Focused regression on the incident path + UAT-safe verification; speed never waives mandatory safety, integrity or contract-compatibility checks.</span><span data-i18n lang="vi">Regression tập trung vào đường sự cố + UAT-safe verification; tốc độ không bao giờ waive các check bắt buộc về safety, integrity, contract compatibility.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SRE ============ -->
+  <section id="sre">
+    <div class="rolesec" style="--rc:var(--ops)">
+      <div class="rhead"><span class="rdot"></span><h3>DevOps / SRE</h3><span class="rmiss"><span data-i18n lang="en">— provisions the platform, deploys UAT, and exclusively owns production.</span><span data-i18n lang="vi">— cấp phát nền tảng, deploy UAT, và độc quyền sở hữu production.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">SRE Handoff Acceptance</span><span class="gate"><span data-i18n lang="en">Production execution — exclusive</span><span data-i18n lang="vi">Thực thi production — độc quyền</span></span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Provision from <code>components.md</code></span><span data-i18n lang="vi">Cấp phát từ <code>components.md</code></span></div><div class="sd"><span data-i18n lang="en">SA declares topology; you provision each remote — repo, branch protection, access grants. Authority stays yours even when the agent executes the platform mechanics. Your own repos live in the <code>ops/</code> plane of the same tree.</span><span data-i18n lang="vi">SA khai báo topology; bạn cấp phát từng remote — repo, branch protection, access grant. Quyền vẫn của bạn kể cả khi agent thực thi cơ chế platform. Repo của bạn sống trong plane <code>ops/</code> của cùng cây.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Constrain the design</span><span data-i18n lang="vi">Ràng buộc thiết kế</span></div><div class="sd"><span data-i18n lang="en">You supply platform and access constraints; infrastructure design (S13) is drafted by the agent and approved by SA through Technical Design.</span><span data-i18n lang="vi">Bạn cung cấp ràng buộc platform và access; infrastructure design (S13) do agent soạn và SA duyệt qua Technical Design.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Deploy the exact candidate</span><span data-i18n lang="vi">Deploy đúng bản candidate</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">UAT gets the exact baseline-candidate SHAs; the deployment record notes what is actually running where. Mainstream ≠ deployed — they're separate records.</span><span data-i18n lang="vi">UAT nhận đúng SHA của baseline candidate; deployment record ghi cái gì đang thật sự chạy ở đâu. Mainstream ≠ deployed — hai record tách biệt.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Accept the handoff</span><span data-i18n lang="vi">Chấp nhận handoff</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Operational package completeness — runbooks, monitoring, troubleshooting, recovery. Your Request Changes reopens only the affected verification, not the whole flow. No code/architecture approval implied.</span><span data-i18n lang="vi">Độ đầy đủ của operational package — runbook, monitoring, troubleshooting, recovery. Request Changes của bạn chỉ reopen phần verification bị ảnh hưởng, không cả flow. Không hàm ý duyệt code/kiến trúc.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Own production</span><span data-i18n lang="vi">Sở hữu production</span></div><div class="sd"><span data-i18n lang="en">PROD promotion, release/tag authority, rollback and production data migration are exclusively yours. Production state may be mirrored into the Hub only from your evidence.</span><span data-i18n lang="vi">PROD promotion, quyền release/tag, rollback và production data migration là độc quyền của bạn. Trạng thái production chỉ được mirror vào Hub từ evidence của bạn.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">The <b>first MVP</b> requires full handoff acceptance before sealing. Later baselines need only a delta review when operational behavior is impacted.</span><span data-i18n lang="vi"><b>MVP đầu tiên</b> cần full handoff acceptance trước khi seal. Baseline sau chỉ cần delta review khi hành vi vận hành bị impact.</span></p></div>
+            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">One activation lane: your handoff sits between UAT Acceptance and baseline sealing for each BASE/CR that reaches it.</span><span data-i18n lang="vi">Một activation lane: handoff của bạn nằm giữa UAT Acceptance và seal baseline cho từng BASE/CR đi tới đó.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div>Entry</div></div>
+            <div class="dr"><div class="dk">Brownfield / legacy migration</div><div><span data-i18n lang="en">You help inventory branch topology, protection rules, CI triggers and release lineage. Legacy Git Flow keeps serving its cohorts during the migration window; nothing is renamed before cutover approval.</span><span data-i18n lang="vi">Bạn giúp inventory branch topology, protection rule, CI trigger và release lineage. Git Flow cũ tiếp tục phục vụ cohort của nó trong migration window; không rename gì trước khi cutover được duyệt.</span></div></div>
+            <div class="dr grp"><div>Scope</div></div>
+            <div class="dr"><div class="dk">Infrastructure</div><div><span data-i18n lang="en">You're the primary delivery lane: infra contracts, NFRs, deployment and operations documents are the product.</span><span data-i18n lang="vi">Bạn là lane delivery chính: contract hạ tầng, NFR, deployment và tài liệu vận hành chính là sản phẩm.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">You supply the <b>exact production composition evidence</b> the fix must fork from, execute PROD promotion, and your activation evidence triggers the agent's forward-port.</span><span data-i18n lang="vi">Bạn cung cấp <b>exact production composition evidence</b> mà bản fix phải fork từ đó, thực thi PROD promotion, và evidence activation của bạn kích hoạt forward-port của agent.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span><span class="en">DATA-MIG-NN</span></div><div><span data-i18n lang="en">You exclusively authorize and execute production data migration, from the rehearsed runbook — backup/restore, abort checkpoints, rollback/roll-forward classification included.</span><span data-i18n lang="vi">Bạn độc quyền ủy quyền và thực thi production data migration, theo runbook đã rehearse — gồm backup/restore, abort checkpoint, phân loại rollback/roll-forward.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve production handoff and execute the sequenced cutover; a work item in a mandatory cutover group is not independently activatable.</span><span data-i18n lang="vi">Bạn duyệt production handoff và thực thi cutover theo trình tự; work item trong nhóm cutover bắt buộc không được activate độc lập.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VENDOR ============ -->
+  <section id="vendor">
+    <div class="rolesec" style="--rc:var(--vendor)">
+      <div class="rhead"><span class="rdot"></span><h3>Vendor — SA / Tech Lead / team</h3><span class="rmiss"><span data-i18n lang="en">— delivers assigned scope with scoped authority; shared project truth stays with KAFI.</span><span data-i18n lang="vi">— deliver scope được giao với authority có giới hạn; project truth chung ở lại với KAFI.</span></span></div>
+      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
+        <span class="gate">Vendor Technical Complete (declare)</span><span class="gate"><span data-i18n lang="en">Solution artifacts — Vendor SA, assigned scope only</span><span data-i18n lang="vi">Solution artifacts — Vendor SA, chỉ trong scope được giao</span></span>
+      </div>
+      <div class="rgrid">
+        <div>
+          <p class="subh"><span data-i18n lang="en">Base flow — any engagement</span><span data-i18n lang="vi">Base flow — mọi engagement</span></p>
+          <ol class="steps">
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the pruned tree</span><span data-i18n lang="vi">Onboard cây đã tỉa</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">You materialize a policy-pruned view: read-only Hub subset + only your assigned <code>components/&lt;name&gt;/</code>. Same commands, scoped authority.</span><span data-i18n lang="vi">Bạn materialize một view đã tỉa theo policy: Hub subset read-only + đúng <code>components/&lt;name&gt;/</code> được giao. Cùng command, authority có scope.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Deliver on <code>ai-dlc/*</code> branches</span><span data-i18n lang="vi">Deliver trên branch <code>ai-dlc/*</code></span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Code, automated tests and the delivery dossier for the assigned unit. Branch push rights never imply merge or approval rights on canonical <code>main</code>.</span><span data-i18n lang="vi">Code, automated test và delivery dossier cho unit được giao. Quyền push branch không bao giờ hàm ý quyền merge hay approve trên <code>main</code> canonical.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Route shared changes as proposals</span><span data-i18n lang="vi">Đưa thay đổi chung thành proposal</span></div><div class="sd"><span data-i18n lang="en">You cannot edit canonical requirements, shared contracts, <code>team.md</code>, governance or activation. A needed contract change is a recorded change proposal to the Hub, decided at the owning KAFI gate.</span><span data-i18n lang="vi">Bạn không thể sửa canonical requirements, shared contract, <code>team.md</code>, governance hay activation. Cần đổi contract thì tạo change proposal có record về Hub, quyết tại gate KAFI sở hữu.</span></div></div></li>
+            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Declare Complete → KAFI accepts</span><span data-i18n lang="vi">Declare Complete → KAFI accept</span></div><div class="sd"><span data-i18n lang="en">Vendor Tech Lead declares <b>Vendor Technical Complete</b>; the KAFI accepting Tech Lead grants <b>Technical Acceptance</b>. KAFI always keeps UAT and activation.</span><span data-i18n lang="vi">Vendor Tech Lead declare <b>Vendor Technical Complete</b>; KAFI accepting Tech Lead cấp <b>Technical Acceptance</b>. KAFI luôn giữ UAT và activation.</span></div></div></li>
+          </ol>
+        </div>
+        <div>
+          <div class="om">
+            <div class="omc"><div class="ot">KAFI Solution – Vendor Delivery</div><p><span data-i18n lang="en">KAFI PO/PM owns requirements; KAFI SA owns solution, contracts and NFRs. You implement the approved solution and submit questions through recorded Hub interactions.</span><span data-i18n lang="vi">KAFI PO/PM sở hữu requirements; KAFI SA sở hữu solution, contract và NFR. Bạn implement solution đã duyệt và gửi câu hỏi qua Hub interaction có record.</span></p></div>
+            <div class="omc"><div class="ot">Vendor Solution &amp; Delivery</div><p><span data-i18n lang="en">Your SA <b>is</b> the Project SA for the assigned scope — drafting architecture, contracts, NFR detail and ADRs as dossier drafts under claim. KAFI <b>Architecture Assurance</b> reviews when a risk trigger fires; unclear risk means Assurance Required until resolved.</span><span data-i18n lang="vi">SA của bạn <b>chính là</b> Project SA cho scope được giao — soạn architecture, contract, NFR detail và ADR dưới dạng dossier draft có claim. KAFI <b>Architecture Assurance</b> review khi risk trigger kích hoạt; risk chưa rõ nghĩa là Assurance Required cho đến khi làm rõ.</span></p></div>
+          </div>
+          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
+          <div class="scroll"><div class="delta">
+            <div class="dr grp"><div><span data-i18n lang="en">Relationship detail</span><span data-i18n lang="vi">Chi tiết relationship</span></div></div>
+            <div class="dr"><div class="dk">Mixed per component</div><div><span data-i18n lang="en">Engagement is declared per component in <code>components.md</code> — one component may be KAFI-built while yours runs Vendor Solution &amp; Delivery. Authority is never inferred from a company name.</span><span data-i18n lang="vi">Engagement khai báo theo từng component trong <code>components.md</code> — một component có thể do KAFI build trong khi component của bạn chạy Vendor Solution &amp; Delivery. Authority không bao giờ suy từ tên công ty.</span></div></div>
+            <div class="dr"><div class="dk">Hub-led<span class="en">not a vendor model</span></div><div><span data-i18n lang="en">A repo consuming an authoritative Hub is <code>hub-led</code> — that alone does not make it a vendor relationship or reduce its team's in-house authority.</span><span data-i18n lang="vi">Repo consume một Hub authoritative là <code>hub-led</code> — riêng điều đó không biến nó thành quan hệ vendor hay giảm authority in-house của team đó.</span></div></div>
+            <div class="dr grp"><div>Work type</div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">IDs &amp; intake</span><span data-i18n lang="vi">ID &amp; intake</span></div><div><span data-i18n lang="en">Without Hub allocation authority you use temporary references; KAFI intake assigns canonical IDs on acceptance.</span><span data-i18n lang="vi">Chưa có quyền cấp ID từ Hub thì bạn dùng tham chiếu tạm; KAFI intake gán ID canonical khi accept.</span></div></div>
+            <div class="dr"><div class="dk"><span data-i18n lang="en">Hotfix on your component</span><span data-i18n lang="vi">Hotfix trên component của bạn</span></div><div><span data-i18n lang="en">The same production-lineage rule applies; SRE evidence and KAFI acceptance gates are unchanged by the engagement model.</span><span data-i18n lang="vi">Cùng luật production-lineage; evidence của SRE và các gate acceptance của KAFI không đổi theo engagement model.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span data-i18n lang="en"><b>AI-DLC v1.0 · Role Guides</b> · KAFI Securities. Companion to
+    <a href="ai-dlc-v1.0-overview.html">Concept &amp; Operating Model</a> and
+    <a href="ai-dlc-v1.0-workflow.html">Dual-track Workflow</a>.
+    Content aligned to the AI-DLC v1.0 consolidated specification (§3–§6, §8, §13–§14).</span><span data-i18n lang="vi"><b>AI-DLC v1.0 · Role Guides</b> · KAFI Securities. Tài liệu đồng hành với
+    <a href="ai-dlc-v1.0-overview.html">Concept &amp; Operating Model</a> và
+    <a href="ai-dlc-v1.0-workflow.html">Dual-track Workflow</a>.
+    Nội dung bám theo AI-DLC v1.0 consolidated specification (§3–§6, §8, §13–§14).</span>
+    <span class="baseline">Content baseline: AI-DLC v1.0 Locked Spec</span>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var LK=LANGUAGE_KEY, TK=THEME_KEY;
+  var btns={
+    'lang-en':function(){set(LK,'lang','en');},
+    'lang-vi':function(){set(LK,'lang','vi');},
+    'th-dark':function(){set(TK,'theme','dark');},
+    'th-light':function(){set(TK,'theme','light');}
+  };
+  function set(key,attr,val){
+    d.dataset[attr]=val;
+    if(attr==='lang'){d.lang=val;}
+    try{localStorage.setItem(key,val);}catch(e){}
+    sync();
+  }
+  function sync(){
+    press('lang-en',d.dataset.lang==='en'); press('lang-vi',d.dataset.lang==='vi');
+    press('th-dark',d.dataset.theme==='dark'); press('th-light',d.dataset.theme==='light');
+  }
+  function press(id,on){var b=document.getElementById(id); if(b) b.setAttribute('aria-pressed',on?'true':'false');}
+  Object.keys(btns).forEach(function(id){
+    var b=document.getElementById(id); if(b) b.onclick=btns[id];
+  });
+  sync();
+})();
+</script>
+</body>
+</html>

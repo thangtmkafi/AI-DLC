@@ -42,8 +42,32 @@
   .cta a { color: var(--kafi-green); font-weight: 600; text-decoration: none; }
   footer { border-top: 1.5px solid var(--border); margin-top: 64px; padding-top: 24px; color: var(--text-muted); font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
 </style>
+
+<style>
+.v1-banner{max-width:960px;margin:24px auto;padding:22px 24px;border:1.5px solid #00C694;border-radius:18px;
+  background:transparent;color:inherit;font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;line-height:1.62}
+.v1-banner .v1-eyebrow{font:700 11px 'JetBrains Mono',ui-monospace,Consolas,monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:#00C694;margin-bottom:8px}
+.v1-banner h2{font-size:22px;line-height:1.25;margin:0 0 10px}
+.v1-banner p{margin:0 0 10px}
+.v1-banner ul{margin:0 0 10px 20px;padding:0}
+.v1-banner a{color:#00C694}
+.v1-banner code,.v1-banner .v1-mono{font-family:'JetBrains Mono',ui-monospace,Consolas,monospace;font-size:13px}
+.v1-legacy-label{max-width:960px;margin:24px auto 0;padding:12px 18px;border:1.5px solid rgba(128,128,128,.35);
+  border-radius:18px;font:700 12px 'JetBrains Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;
+  text-transform:uppercase;opacity:.8;font-family:'JetBrains Mono',ui-monospace,Consolas,monospace}
+@media print{.v1-banner{border-color:#101820}}
+</style>
 </head>
 <body>
+<div class="v1-banner">
+<div class="v1-eyebrow">KAFI AI-DLC · WHAT CHANGES IN v1.0</div>
+<h2>From <code>v0.3</code>-<code>v0.9.x</code> to v1.0 — what breaks.</h2><p>The v1 bootstrap migrates a <code>v0.3</code>-<code>v0.9.x</code> project directly; there are no staged hops. These are the changes that alter how you work:</p><ul><li><strong>Two editions become one universal release.</strong> There is no edition to choose and no per-host download. Codex, Claude Code, and Kiro read the same committed state.</li><li><strong>The installer script is gone.</strong> v1.0 installs by prompt. Nothing is created, moved, backed up, or deleted until you approve an exact plan digest.</li><li><strong>Nothing is relocated automatically.</strong> The v0 installer tucked existing files away on a non-empty folder. v1 lists every file it would touch in the plan you approve.</li><li><strong>The fixed 17-stage lifecycle goes internal.</strong> The seventeen capabilities still exist, but the agent resolves which run from the project profile and impact. Your surface is four commands: <code>/kafi-aidlc-onboarding</code>, <code>/kafi-aidlc-status</code>, <code>/kafi-aidlc-next</code>, <code>/kafi-aidlc-check</code>.</li><li><strong>Continuous becomes the default flow.</strong> Discovery and Delivery run as concurrent tracks with a Ready queue between them; Phase-Gated remains available where governance requires baselines.</li><li><strong>Your root <code>README.md</code> is explicitly protected.</strong> It is never an install target, in v1 or in any earlier version.</li></ul><p><strong>Release status.</strong> The currently published release is <code>v0.9.1</code>. <strong>v1.0 is in preparation and is not published yet</strong> — no v1.0 download is offered anywhere.</p><p class="v1-mono"><a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-article-vi.html">Introduction (v1.0)</a> · <a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html">Install / Upgrade + User Guide (v1.0)</a> · <a href="index.html">Documentation index</a></p>
+</div>
+
+<!-- legacy:v0.x -->
+<div class="v1-legacy-label">Legacy v0.x — the v0 line, up to and including the currently published v0.9.1. Not the v1.0 path.</div>
+
 <div class="wrap">
 
   <div class="eyebrow">KAFI Transformation Office · What's New</div>
@@ -115,5 +139,6 @@ iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/instal
   </footer>
 
 </div>
+<!-- /legacy -->
 </body>
 </html>

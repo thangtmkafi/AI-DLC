@@ -1,0 +1,1 @@
+{"fallback_release":null,"locator_revision":1,"minimum_bootstrap_protocol":"1.0.0","publisher":"KAFI Securities","recommended_release":null,"repository":{"api_url":"https://api.github.com/repos/thangtmkafi/AI-DLC","name":"AI-DLC","owner":"thangtmkafi"},"revoked_releases":[],"schema_version":1,"supported_agents":["codex","claude-code","kiro"],"updated_at":"2026-07-23T00:00:00Z"}
