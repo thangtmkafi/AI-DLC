@@ -39,6 +39,10 @@ body{margin:0;background:var(--bg);color:var(--text);
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:var(--accent)}
 code,pre{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+/* The project tree and the Hub layout are wider than a phone. Let the block
+   scroll inside itself rather than pushing the whole page sideways. */
+pre{overflow-x:auto;max-width:100%}
+section pre>code{display:block;min-width:0}
 .skip{position:fixed;left:16px;top:-90px;z-index:100;padding:10px 14px;background:var(--accent);color:#101820;border-radius:10px;text-decoration:none;font-weight:700}
 .skip:focus{top:12px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
@@ -127,7 +131,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <strong>Mục lục</strong>
       <a href="#part-install" class="toc-part">Phần 1 — Install or upgrade AI-DLC v1.0</a>
       <a href="#prerequisites">Điều kiện cần</a>
-      <a href="#canonical-prompt">Prompt chuẩn</a>
+      <a href="#project-shape">Dự án trông như thế nào</a><a href="#canonical-prompt">Prompt chuẩn</a>
       <a href="#fresh-install">Cài mới</a>
       <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
       <a href="#approve-plan">Phê duyệt digest</a>
@@ -170,6 +174,80 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     </ol>
     <p>Không cần quyền administrator. Không cần cài runtime mới. Không cần chạy script cài đặt của v0.x.</p>
     <p>Nếu agent không xác định được host đang hoạt động, nó dừng trước khi dựng file plan với <code>ADAPTER_SELECTION_REQUIRED</code> và hỏi bạn host nào. Trả lời bằng đúng một trong ba tên trên.</p>
+  </section>
+  <section id="project-shape">
+    <h2>Dự án của bạn trông như thế nào</h2>
+    <p>Đọc mục này trước khi dán prompt. Nó quyết định bạn mở agent ở thư mục nào.</p>
+    <h3>Một dự án là một thư mục chứa, không phải một repo</h3>
+    <pre><code>&lt;project&gt;/                          ← không có .git ở cấp này
+├── project-hub/                    ← docs plane · một git repo · lịch sử tuyến tính
+├── components/                     ← code plane · mỗi component một git repo
+│   ├── &lt;component-a&gt;/
+│   └── &lt;component-b&gt;/
+└── ops/                            ← ops plane · SRE sở hữu
+    ├── ci-cd/
+    └── infra/</code></pre>
+    <p>Thư mục <code>&lt;project&gt;/</code> <strong>không được version</strong>. Nó là scaffolding tái dựng được từ <code>components.md</code>: mất máy, mất ổ cứng, dựng lại từ Hub là đủ.</p>
+    <p>Hub và mọi repo code là <strong>git root ngang hàng</strong>. Repo lồng trong repo bị cấm — không phải vì thẩm mỹ, mà vì nó xoá được nguyên một lớp tai nạn <code>git clean</code>/gitlink, và cho mỗi thư mục cấp một ranh giới quyền truy cập và lưu trữ riêng.</p>
+    <p>Mọi tham chiếu chuẩn dùng <strong>đường dẫn tương đối gốc dự án</strong> — <code>components/&lt;name&gt;/...</code>, <code>ops/ci-cd/...</code> — một hệ địa chỉ chung cho docs, code và ops.</p>
+    <h3>Hai mặt phẳng, hai luật Git khác nhau</h3>
+    <table>
+      <thead><tr><th></th><th>Hub (<code>project-hub/</code>)</th><th>Component và ops</th></tr></thead>
+      <tbody>
+        <tr><td>Branch</td><td><strong>Không có work branch.</strong> Một <code>main</code> tuyến tính</td><td><code>main</code> được bảo vệ, work branch <code>ai-dlc/</code>, PR</td></tr>
+        <tr><td>Cô lập công việc</td><td>Theo <strong>vị trí</strong>: bản nháp nằm trong <code>drafts/</code> của dossier, dưới một claim</td><td>Theo branch</td></tr>
+        <tr><td>Vì sao</td><td>Branch sinh ra để điều phối nhiều người ghi. Hub chỉ có agent ghi, theo một phương pháp — cô lập theo vị trí cho cùng mức an toàn mà <strong>mọi việc đang làm đều nhìn thấy được</strong>, không phải checkout gì cả</td><td>Build, test, code review, CI đều gắn với branch</td></tr>
+      </tbody>
+    </table>
+    <p>Hub là nơi duy nhất nối hai mặt phẳng: dossier của work item trỏ sang component branch, PR và SHA chính xác. Không có trạng thái work item nào nằm ngoài Hub mà Hub không tham chiếu.</p>
+    <h3>Bên trong Hub</h3>
+    <pre><code>project-hub/
+├── .aidlc/
+│   ├── project.md          ← profile, operating model, governance
+│   ├── team.md             ← authority
+│   ├── components.md       ← manifest của cây: mỗi repo + kind + tree path + remote
+│   ├── registry.md
+│   ├── state.md
+│   ├── audit/              ← interactions · approvals · exceptions · events
+│   └── migrations/
+├── discovery/
+├── requirements/
+├── design/
+├── contracts/
+├── delivery/               ← slices · baselines · change-requests · hotfixes · cutovers
+├── activation/
+└── operations/</code></pre>
+    <p>Chỉ những thư mục thuộc operating model đang dùng mới được tạo. Work item nằm ở path cố định; đổi trạng thái là đổi field, không phải chuyển file sang thư mục khác.</p>
+    <h3>Bạn cần Hub trước khi onboarding hoàn tất</h3>
+    <p>Đây là điều kiện dễ vấp nhất, nên nói thẳng:</p>
+    <ol>
+      <li><strong>DevOps/SRE tạo Hub repository</strong>, kèm branch protection và cấp quyền.</li>
+      <li><strong>PO/PM xác nhận</strong> đó là Hub của dự án này.</li>
+      <li><strong>Agent clone</strong> vào <code>project-hub/</code> và kiểm <code>project-hub/.aidlc/project.md</code> đúng là dự án này.</li>
+    </ol>
+    <p>Agent <strong>không tự tạo</strong> Hub remote, và không tự nhận một repo làm Hub chỉ vì tên hay nội dung trông giống. Thư mục không có <code>project-hub/</code> và cũng không có Hub remote đã xác nhận là <strong>dự án dở dang</strong>, không phải dự án mới: <code>project.md</code>, <code>team.md</code>, <code>components.md</code> và mọi bản ghi phê duyệt đều là artifact của Hub, nên state chuẩn không có chỗ để nằm.</p>
+    <p><strong>Cài package là một giao dịch riêng.</strong> Bạn cài được AI-DLC vào thư mục chưa có Hub — nhưng onboarding sẽ không hoàn tất ở đó, và agent phải nói rõ cần provision cái gì.</p>
+    <h3>Thêm repo code: có thứ tự bắt buộc</h3>
+    <p>Không ai clone tay rồi thả vào cây.</p>
+    <ol>
+      <li><strong>SA quyết</strong> topology — repo nào tồn tại, <code>kind</code> là <code>service | ops | infra</code>, đặt ở path nào — và khai trong <code>components.md</code> như một work product Architecture.</li>
+      <li><strong>DevOps/SRE provision</strong> remote, branch protection, cấp quyền.</li>
+      <li><strong>Agent scaffold</strong> overlay của component (<code>.aidlc/link.md</code>, <code>state.md</code>, <code>artifact-index.md</code>), materialize repo đúng tree path <strong>trên từng máy</strong>, và kiểm link hai chiều Hub↔component.</li>
+    </ol>
+    <p>Thêm hay gỡ repo giữa chừng đi đúng đường đó: phân tích impact → cập nhật <code>components.md</code> dưới authority của SA → SRE provision hoặc decommission.</p>
+    <p>Component repo chỉ chứa code, config, test và tài liệu build của chính nó, cộng <code>.aidlc/</code> link. Nó <strong>không được</strong> dựng requirement, authority, approval hay work-item state song song với Hub.</p>
+    <h3>Nhiều người, nhiều máy</h3>
+    <p>Mỗi người dùng clone độc lập, hệ điều hành khác nhau cũng được. Mặt phẳng điều phối là Git remote, artifact chuẩn trong Hub, bản ghi bất biến và revision chính xác. Profile local, cache, chat, working tree và đường dẫn tuyệt đối trên máy <strong>không bao giờ</strong> là authority hay state chuẩn.</p>
+    <p>Bạn chỉ clone <strong>những repo mà role và việc của bạn cần</strong> — không phải cả cây. Trước khi ghi, agent fetch Hub và các repo liên quan, kiểm dossier đã claim và revision remote, và từ chối ghi đè công việc không liên quan.</p>
+    <h3>Vendor thấy ít hơn</h3>
+    <p>Vendor nhận bản materialize đã cắt gọt: một tập con <strong>chỉ đọc</strong> của <code>project-hub/</code>, cộng đúng <code>components/&lt;name&gt;/</code> được giao. Không thấy phần còn lại của cây.</p>
+    <h3>Thư mục bạn đang mở sẽ thành cái gì</h3>
+    <p>Đây là câu agent phải hỏi, và câu trả lời nằm trong plan bạn duyệt:</p>
+    <ul>
+      <li><strong>Thư mục chứa</strong> — file phương pháp (<code>.kafi/</code>, <code>.claude/</code>, <code>.codex/</code>, <code>.kiro/</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>) nằm ở gốc <code>&lt;project&gt;/</code>, cạnh <code>project-hub/</code>.</li>
+      <li><strong>Một component repo</strong> — nó sẽ được mount dưới một thư mục chứa; việc mount là <strong>thao tác riêng</strong>, và cài đặt không bao giờ tái cấu trúc thư mục tại chỗ cho vừa cây.</li>
+    </ul>
+    <p>Agent không suy ra vai trò này từ tên thư mục, nội dung, hay việc có <code>.git</code> hay không. Không đủ bằng chứng thì nó hỏi.</p>
   </section>
   <section id="canonical-prompt">
     <h2>Prompt chuẩn</h2>
@@ -217,6 +295,7 @@ Preserve the project root README.md.</code></pre>
         <tr><td>Dòng <code>Conflict</code></td><td><strong>Không phê duyệt được.</strong> Phải xử lý trước</td></tr>
         <tr><td>Dòng <code>Move</code> / <code>Delete</code></td><td>Không bao giờ là mặc định; nếu xuất hiện, phải có lý do rõ ràng</td></tr>
         <tr><td>Release identity và digest</td><td>Khớp với release immutable đã xác minh</td></tr>
+        <tr><td>Vai trò thư mục đích</td><td>Plan phải nói rõ: thư mục chứa hay component repo — và <code>project-hub/</code> đã có chưa</td></tr>
         <tr><td>Snapshot dự án</td><td>Cơ sở để phát hiện drift khi bạn phê duyệt</td></tr>
       </tbody></table></div>
     <p>Agent không được suy ra sự phê duyệt từ việc bạn yêu cầu cài đặt. Yêu cầu cài đặt không phải là phê duyệt.</p>
@@ -338,6 +417,8 @@ Expand-Archive -LiteralPath $BundlePath -DestinationPath $Extracted</code></pre>
     <p>Với dự án mới hoặc chưa đủ thông tin, wizard chỉ hỏi những gì còn thiếu hoặc mâu thuẫn:</p>
     <ul>
       <li>identity và acting role;</li>
+      <li><strong>Project Hub</strong>: remote của nó, và remote đó đã tồn tại, còn phải provision, hay đã clone sẵn ở <code>project-hub/</code>;</li>
+      <li><strong>vai trò của thư mục hiện tại</strong> trong cây dự án: thư mục chứa, hay một component/ops repo sẽ được mount dưới một thư mục chứa. Không suy ra từ tên thư mục, nội dung hay việc có <code>.git</code>;</li>
       <li>greenfield hay brownfield;</li>
       <li>scope: <code>full-product | backend | frontend | data | infrastructure | component-internal</code>;</li>
       <li>delivery relationship <code>in-house | outsourced | mixed | hub-led</code> và engagement profile tương ứng;</li>
