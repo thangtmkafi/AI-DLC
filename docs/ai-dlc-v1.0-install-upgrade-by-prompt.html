@@ -161,7 +161,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <li><strong>Phần 1 — Install or upgrade AI-DLC v1.0</strong>: đưa AI-DLC v1.0 vào một dự án, dù là cài mới hay nâng cấp trực tiếp từ v0.3–v0.9.x.</li>
       <li><strong>Phần 2 — Run AI-DLC v1.0</strong>: vận hành hằng ngày sau khi đã cài.</li>
     </ul>
-    <p>Bạn không chạy script cài đặt. Bạn mở agent đang dùng (Codex, Claude Code hoặc Kiro), dán một prompt, đọc plan mà agent trình bày, rồi phê duyệt đúng digest của plan đó. Trước khi bạn phê duyệt, agent không được tạo, sửa, gộp, di chuyển, xoá, sao lưu hay migrate bất kỳ file nào của dự án.</p>
+    <p>Bạn không chạy script cài đặt. Bạn mở agent đang dùng (Codex, Claude Code hoặc Kiro), dán một prompt, đọc plan mà agent trình bày, rồi phê duyệt plan đó bằng một câu đồng ý. Trước khi bạn phê duyệt, agent không được tạo, sửa, gộp, di chuyển, xoá, sao lưu hay migrate bất kỳ file nào của dự án.</p>
     <p>Bản giới thiệu khái niệm nằm ở <a href="ai-dlc-v1.0-article-vi.html">AI-DLC v1.0 Introduction</a>. Bức tranh operating model nằm ở <a href="ai-dlc-v1.0-overview.html">AI-DLC v1.0 Overview</a>.</p>
   <h2 class="part" id="part-install">Phần 1 — Install or upgrade AI-DLC v1.0</h2>
   <section id="prerequisites">
@@ -248,6 +248,20 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <li><strong>Một component repo</strong> — nó sẽ được mount dưới một thư mục chứa; việc mount là <strong>thao tác riêng</strong>, và cài đặt không bao giờ tái cấu trúc thư mục tại chỗ cho vừa cây.</li>
     </ul>
     <p>Agent không suy ra vai trò này từ tên thư mục, nội dung, hay việc có <code>.git</code> hay không. Không đủ bằng chứng thì nó hỏi.</p>
+    <h3>Thư mục đã có sẵn tài liệu và code thì sao</h3>
+    <p>Đây là trường hợp thường gặp, không phải ngoại lệ. Cài đặt <strong>không đụng vào</strong> thứ gì có sẵn: mọi file của bạn vào plan ở dòng <code>Preserve</code>, và nếu một target của AI-DLC trùng tên file của bạn thì dòng đó là <code>Conflict</code> — mà <code>Conflict</code> <strong>không duyệt được</strong>, nên plan bị chặn thay vì ghi đè.</p>
+    <p>Nhưng giữ nguyên không có nghĩa là bỏ qua. Từ v1.0.2, reverse engineering <strong>đọc toàn bộ</strong> thư mục, tự tổng hợp lại, rồi báo cho bạn biết nó tìm thấy gì và đề xuất xử lý từng nhóm — ba lựa chọn, không có lựa chọn thứ tư:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Lựa chọn</th><th>Nghĩa là</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Đưa vào Hub</strong></td><td>Đây là nguồn cho một tài liệu Hub. Agent đề xuất đích và loại tài liệu; cả hai phải được duyệt trước khi ghi</td></tr>
+        <tr><td><strong>Giữ nguyên chỗ cũ</strong></td><td>Nằm đúng chỗ đang nằm. Hub có thể trỏ tới bằng đường dẫn, không copy, không dời, không viết lại</td></tr>
+        <tr><td><strong>Ngoài phạm vi</strong></td><td>Ghi nhận là đã loại, kèm lý do, để lần sau không hỏi lại</td></tr>
+      </tbody></table></div>
+    <p>Thứ tự này là có chủ ý: agent <strong>đọc trước rồi mới hỏi</strong>. Hỏi về một thư mục mà chưa ai đọc thì bạn không có cơ sở nào để trả lời. Mọi câu hỏi và câu trả lời được ghi lại thành interaction record, nên lần chạy sau không hỏi lại.</p>
+    <p>Bạn chép vào nhiều hơn mức dự án cần cũng không sao — bản sao cũ của cùng một service, thư mục thử nghiệm, cây của dự án khác. Agent vẫn đọc hết, rồi báo cái nào trông như dư và đề xuất loại. Nó <strong>không xoá</strong> gì cả: nhóm bị đặt ngoài phạm vi vẫn nằm nguyên trên đĩa, chỉ được ghi nhận là đã loại.</p>
+    <p>Trước khi bạn trả lời, mọi nhóm ở trạng thái <code>Unknown</code> / <code>Needs Confirmation</code> và <strong>không có đích</strong>. Việc đọc này không ghi gì cả. Việc dời file, nếu có, là một dòng <code>Move</code> trong plan bạn duyệt.</p>
+    <p>Lưu ý về brownfield: <code>greenfield</code> hay <code>brownfield</code> nói về <strong>sản phẩm</strong>, không nói về thư mục. Một dự án greenfield vẫn có thể nằm trong thư mục đã đầy ghi chú và bản nháp. Nên bước đọc nội dung sẵn có chạy với mọi giá trị entry.</p>
   </section>
   <section id="canonical-prompt">
     <h2>Prompt chuẩn</h2>
@@ -285,31 +299,55 @@ Preserve the project root README.md.</code></pre>
   </section>
   <section id="review-plan">
     <h2>Đọc plan trước khi phê duyệt</h2>
+    <p>Kết thúc <code>PLAN</code>, agent hiển thị operation ID và digest của plan — dạng như thế này:</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-2b" aria-label="Sao chép ví dụ digest">Sao chép</button>
+      <pre id="prompt-2b"><code>Operation: OP-20260730-0001
+Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc19828</code></pre>
+      <span class="copy-status" id="prompt-2b-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Digest này để bạn <strong>đối chiếu</strong>, không phải để gõ lại. Nó là ảnh chụp chính xác của tập dòng đang hiển thị: đổi một dòng thì digest đổi theo, nên nó là cách kiểm rằng plan bạn duyệt đúng là plan bạn vừa đọc.</p>
     <p>Plan được render thành bảng Markdown và JSON từ <strong>cùng một tập dòng đã chuẩn hoá</strong>. Đọc kỹ những điểm sau:</p>
     <div class="tbl"><table>
       <thead><tr><th>Cần kiểm tra</th><th>Vì sao</th></tr></thead>
       <tbody>
-        <tr><td>Operation ID và plan digest</td><td>Phê duyệt gắn với đúng digest này, không dùng lại cho plan khác</td></tr>
+        <tr><td>Operation ID và plan digest</td><td>Phê duyệt gắn với đúng digest này. Agent tính lại digest lúc bạn đồng ý; một lời đồng ý không dùng được cho plan khác</td></tr>
         <tr><td>Bảng file action</td><td><code>Create</code> / <code>Update</code> / <code>Preserve</code> / <code>Conflict</code> cho từng path</td></tr>
         <tr><td><code>README.md</code> ở gốc dự án</td><td>Luôn phải là <code>Preserve</code></td></tr>
         <tr><td>Dòng <code>Conflict</code></td><td><strong>Không phê duyệt được.</strong> Phải xử lý trước</td></tr>
         <tr><td>Dòng <code>Move</code> / <code>Delete</code></td><td>Không bao giờ là mặc định; nếu xuất hiện, phải có lý do rõ ràng</td></tr>
+        <tr><td>Dòng <code>Remove superseded</code></td><td>File của bản AI-DLC cũ mà bản mới không còn dùng. Chỉ áp dụng khi bytes còn đúng nguyên bản đã cài; nếu bạn từng sửa file đó thì nó thành <code>Conflict</code></td></tr>
         <tr><td>Release identity và digest</td><td>Khớp với release immutable đã xác minh</td></tr>
         <tr><td>Vai trò thư mục đích</td><td>Plan phải nói rõ: thư mục chứa hay component repo — và <code>project-hub/</code> đã có chưa</td></tr>
+        <tr><td>Nội dung sẵn có trong thư mục</td><td>Nếu thư mục đã có tài liệu hoặc code, plan phải liệt kê theo nhóm và nêu bạn đã chọn gì cho từng nhóm: đưa vào Hub, giữ nguyên chỗ cũ, hay ngoài phạm vi</td></tr>
         <tr><td>Snapshot dự án</td><td>Cơ sở để phát hiện drift khi bạn phê duyệt</td></tr>
       </tbody></table></div>
     <p>Agent không được suy ra sự phê duyệt từ việc bạn yêu cầu cài đặt. Yêu cầu cài đặt không phải là phê duyệt.</p>
   </section>
   <section id="approve-plan">
-    <h2>Phê duyệt digest</h2>
-    <p>Phê duyệt bằng cách nêu <strong>chính xác digest</strong> mà agent vừa in ra, kèm operation ID:</p>
+    <h2>Phê duyệt plan</h2>
+    <p>Trả lời bằng lời của bạn. Một câu đồng ý rõ ràng là đủ:</p>
     <div class="prompt" data-language="text">
       <button type="button" class="copy" data-copy-target="prompt-3" aria-label="Sao chép prompt 3">Sao chép</button>
-      <pre id="prompt-3"><code>I approve plan digest sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-for operation OP-20260723-0001, provided the release and target snapshot are unchanged.</code></pre>
+      <pre id="prompt-3"><code>ok, đồng ý</code></pre>
       <span class="copy-status" id="prompt-3-status" role="status" aria-live="polite"></span>
     </div>
-    <p>Đây là <strong>ví dụ minh hoạ</strong>. Digest và operation ID ở trên là giả; không sao chép nguyên văn dòng này để phê duyệt một plan khác. Mỗi phê duyệt chỉ có hiệu lực cho đúng plan đã sinh ra digest đó.</p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-3b" aria-label="Sao chép prompt 3b">Sao chép</button>
+      <pre id="prompt-3b"><code>approve</code></pre>
+      <span class="copy-status" id="prompt-3b-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Bạn <strong>không cần dán digest</strong>. Từ v1.0.2, agent tự tính lại digest ngay lúc bạn đồng ý và so với digest nó vừa in ra — việc bạn gõ lại một chuỗi mà agent vừa hiển thị không chứng minh thêm điều gì so với phép tính lại đó. Digest vẫn được hiển thị đầy đủ trước khi bạn duyệt, và vẫn được ghi vào bản ghi phê duyệt cùng câu trả lời nguyên văn của bạn.</p>
+    <p>Bốn điều kiện phải đúng, nếu không lời đồng ý không có hiệu lực:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Điều kiện</th><th>Nghĩa là</th></tr></thead>
+      <tbody>
+        <tr><td>Digest vừa được hiển thị đầy đủ</td><td>Bạn đồng ý với plan đang thấy, không phải plan nào khác</td></tr>
+        <tr><td>Tính lại digest cho kết quả không đổi</td><td>Không có gì thay đổi giữa lúc trình plan và lúc bạn duyệt</td></tr>
+        <tr><td>Bạn có thẩm quyền cho operation này</td><td>Đúng người duyệt</td></tr>
+        <tr><td>Câu đồng ý là dứt khoát</td><td>Không suy ra từ im lặng hay câu hỏi</td></tr>
+      </tbody></table></div>
+    <p>Những trường hợp <strong>không</strong> được coi là phê duyệt: im lặng, một câu hỏi, đồng ý kèm phản đối một phần, đồng ý gửi sau khi có dòng nào trong plan đã đổi, và đồng ý nhắm vào một plan cũ hơn.</p>
     <p>Sau khi bạn phê duyệt, agent <strong>revalidate lại</strong> release và snapshot dự án trước khi ghi bất cứ thứ gì. Nếu có drift, phê duyệt mất hiệu lực và agent quay lại <code>PLAN</code> với digest mới.</p>
     <p>Từ đó agent mới vào <code>BACKUP</code>: sao lưu chỉ những path do AI-DLC sở hữu đã được duyệt và vùng managed block, áp dụng đúng các dòng có trong manifest, chạy migration đã được fixture chứng minh, xác minh kết quả, cutover và báo cáo bằng chứng. Nó <strong>không bao giờ dời nội dung dự án</strong> để giải quyết va chạm.</p>
   </section>
@@ -328,6 +366,34 @@ for operation OP-20260723-0001, provided the release and target snapshot are unc
   <section id="verify-install">
     <h2>Xác minh sau khi cài</h2>
     <p>Cài đặt chỉ được coi là xong sau <code>VERIFY_RESULT</code>, <code>CUTOVER</code> và <code>REPORT</code>. Agent không được báo hoàn tất sớm hơn.</p>
+    <h3>Cài xong nhưng gõ command không thấy gì</h3>
+    <p>Gặp trường hợp này thì <strong>bản cài không hỏng</strong>. Agent host giữ danh sách skill trong bộ nhớ đệm, và thư mục skill vừa được tạo ra <strong>trong chính phiên đang chạy</strong> — phiên đó không theo dõi một thư mục chưa tồn tại lúc nó khởi động.</p>
+    <p><strong>Mở chat mới là không đủ.</strong> Chat mới vẫn dùng lại process cũ với cache cũ. Phải nạp lại host:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Agent</th><th>Làm gì</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code · VSCode</td><td><code>Cmd+Shift+P</code> → <strong>Developer: Reload Window</strong></td></tr>
+        <tr><td>Codex · VSCode</td><td><code>Cmd+Shift+P</code> → <strong>Developer: Reload Window</strong></td></tr>
+        <tr><td>Claude Code · terminal</td><td>thoát rồi mở lại</td></tr>
+        <tr><td>Codex · terminal</td><td>thoát rồi mở lại</td></tr>
+      </tbody></table></div>
+    <p>Sau khi nạp lại, gõ <code>/</code> (Codex là <code>$</code>) phải thấy đủ bốn command.</p>
+    <p>Vì sao lại thế, nói cho đủ: tài liệu Claude Code ghi rõ <em>"If you create a top-level skills directory that didn't exist when the session started, restart Claude Code so it can watch the new directory."</em> Codex cũng vậy — API <code>skills/list</code> của nó có tham số <code>forceReload</code> đúng để <em>"bypass the skills cache and re-scan skills from disk"</em>, nhưng đó là kênh giữa IDE và daemon, agent không gọi được.</p>
+    <p><strong>Cài mới bị nhiều hơn nâng cấp.</strong> Khi nâng cấp, thư mục skill thường đã có sẵn từ bản trước nên host chỉ thấy thêm thư mục con và tự nhận ra. Cài lần đầu thì cả thư mục gốc là mới, nên gần như chắc chắn phải nạp lại một lần. Đây là lần duy nhất; những lần sau không cần nữa.</p>
+    <p>Kiểm nhanh xem file đã nằm đúng chỗ chưa — nếu có đủ, vấn đề chỉ là cache:</p>
+    <ul>
+      <li>Claude Code — <code>.claude/skills/kafi-aidlc-status/SKILL.md</code></li>
+      <li>Codex — <code>.agents/skills/kafi-aidlc-status/SKILL.md</code></li>
+      <li>Kiro — <code>.kiro/skills/kafi-aidlc-status/SKILL.md</code></li>
+    </ul>
+    <h3>Bước <code>REPORT</code> phải nói bạn làm gì tiếp</h3>
+    <p>Kết thúc operation, agent không được chỉ báo "xong". <code>REPORT</code> phải nêu:</p>
+    <ul>
+      <li><strong>bốn command</strong> kèm tiền tố đúng host bạn đang dùng;</li>
+      <li><strong>một command duy nhất nên chạy tiếp</strong>, và vì sao là command đó;</li>
+      <li><strong>dự án dùng được chưa</strong>, hay vẫn là dự án dở dang vì thiếu Hub đã bind ở <code>project-hub/</code> hoặc thiếu profile đã resolve.</li>
+    </ul>
+    <p>Điểm dễ nhầm nhất, nên <code>REPORT</code> phải nói rõ: <strong>cài package xong không phải là onboarding xong.</strong> Hai việc khác nhau, và agent phải cho biết vừa xảy ra việc nào. Nếu bạn thấy trạng thái <code>PACKAGE_INSTALL_VERIFIED_ONBOARDING_REQUIRED</code> thì package đã đúng và đã verify — việc còn lại là <code>/kafi-aidlc-onboarding</code>.</p>
     <p>Từ thời điểm này AI-DLC đã được cài, nên bạn dùng command chứ không dùng prompt nữa.</p>
     <p class="label label-read"><strong>Read-only.</strong></p>
     <div class="prompt" data-language="text">
@@ -373,12 +439,22 @@ Expand-Archive -LiteralPath $BundlePath -DestinationPath $Extracted</code></pre>
     <p>Sau khi cài xong, bạn <strong>không dùng prompt tự do nữa</strong>. Toàn bộ trải nghiệm hằng ngày thu về bốn command:</p>
     <div class="prompt" data-language="text">
       <button type="button" class="copy" data-copy-target="prompt-8" aria-label="Sao chép prompt 8">Sao chép</button>
-      <pre id="prompt-8"><code>/kafi-aidlc-onboarding
-/kafi-aidlc-status
-/kafi-aidlc-next
-/kafi-aidlc-check</code></pre>
+      <pre id="prompt-8"><code>kafi-aidlc-onboarding
+kafi-aidlc-status
+kafi-aidlc-next
+kafi-aidlc-check</code></pre>
       <span class="copy-status" id="prompt-8-status" role="status" aria-live="polite"></span>
     </div>
+    <p><strong>Ký tự gọi khác nhau theo host.</strong> Tên command thì giống nhau ở cả ba, nhưng tiền tố thì không:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Agent</th><th>Gõ thế nào</th><th>AI-DLC đặt skill ở đâu</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td><code>/kafi-aidlc-status</code></td><td><code>.claude/skills/</code></td></tr>
+        <tr><td>Kiro</td><td><code>/kafi-aidlc-status</code></td><td><code>.kiro/skills/</code></td></tr>
+        <tr><td>Codex</td><td><code>$kafi-aidlc-status</code></td><td><code>.agents/skills/</code></td></tr>
+      </tbody></table></div>
+    <p>Các ví dụ trong phần còn lại của tài liệu này viết theo dạng <code>/</code> — nếu bạn dùng Codex, đổi <code>/</code> thành <code>$</code>. Không cần gõ đúng tiền tố mới dùng được: cả ba host đều tự nhận ra intent từ câu hỏi tự do, vì mỗi skill mang sẵn phần mô tả khi nào nên dùng. Gõ command chỉ là cách gọi trực tiếp và chắc chắn.</p>
+    <p>Vừa cài xong mà gõ không thấy command nào? Nạp lại host một lần — xem <a href="#verify-install">Cài xong nhưng gõ command không thấy gì</a>.</p>
     <p>Ranh giới cần nhớ:</p>
     <div class="tbl"><table>
       <thead><tr><th>Giai đoạn</th><th>Giao diện</th><th>Vì sao</th></tr></thead>
@@ -390,7 +466,7 @@ Expand-Archive -LiteralPath $BundlePath -DestinationPath $Extracted</code></pre>
     <p>Mỗi command dưới đây được gắn nhãn:</p>
     <ul>
       <li><strong>Read-only</strong> — không ghi gì vào artifact của dự án.</li>
-      <li><strong>May produce a mutation plan requiring separate exact-digest approval</strong> — có thể dẫn tới thay đổi, và thay đổi đó vẫn đi qua gate và phê duyệt riêng.</li>
+      <li><strong>May produce a mutation plan requiring separate approval</strong> — có thể dẫn tới thay đổi, và thay đổi đó vẫn đi qua gate và phê duyệt riêng.</li>
     </ul>
   </section>
   <section id="load-context">
