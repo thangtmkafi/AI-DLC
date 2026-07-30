@@ -194,7 +194,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <table>
       <thead><tr><th></th><th>Hub (<code>project-hub/</code>)</th><th>Component và ops</th></tr></thead>
       <tbody>
-        <tr><td>Branch</td><td><strong>Không có work branch.</strong> Một <code>main</code> tuyến tính</td><td><code>main</code> được bảo vệ, work branch <code>ai-dlc/</code>, PR</td></tr>
+        <tr><td>Branch</td><td><strong>Không có work branch.</strong> Làm việc trên <code>dev</code> tuyến tính; <code>main</code> chỉ nhận baseline qua merge có duyệt</td><td>Theo <strong>Gitflow của KAFI</strong>: <code>feature/*</code> / <code>bugfix/*</code> / <code>hotfix/vX.Y.Z-n</code> + chuỗi <code>dev</code> → <code>release/uat-*</code> → <code>release/staging</code> → <code>main</code> được bảo vệ</td></tr>
         <tr><td>Cô lập công việc</td><td>Theo <strong>vị trí</strong>: bản nháp nằm trong <code>drafts/</code> của dossier, dưới một claim</td><td>Theo branch</td></tr>
         <tr><td>Vì sao</td><td>Branch sinh ra để điều phối nhiều người ghi. Hub chỉ có agent ghi, theo một phương pháp — cô lập theo vị trí cho cùng mức an toàn mà <strong>mọi việc đang làm đều nhìn thấy được</strong>, không phải checkout gì cả</td><td>Build, test, code review, CI đều gắn với branch</td></tr>
       </tbody>
@@ -218,15 +218,33 @@ footer{border-top:1px solid var(--border);margin-top:40px}
 ├── activation/
 └── operations/</code></pre>
     <p>Chỉ những thư mục thuộc operating model đang dùng mới được tạo. Work item nằm ở path cố định; đổi trạng thái là đổi field, không phải chuyển file sang thư mục khác.</p>
-    <h3>Bạn cần Hub trước khi onboarding hoàn tất</h3>
-    <p>Đây là điều kiện dễ vấp nhất, nên nói thẳng:</p>
+    <h3>Hub: có sẵn remote thì dùng, chưa có thì bắt đầu local</h3>
+    <p>Đường chuẩn khi đội có DevOps/SRE:</p>
     <ol>
       <li><strong>DevOps/SRE tạo Hub repository</strong>, kèm branch protection và cấp quyền.</li>
       <li><strong>PO/PM xác nhận</strong> đó là Hub của dự án này.</li>
       <li><strong>Agent clone</strong> vào <code>project-hub/</code> và kiểm <code>project-hub/.aidlc/project.md</code> đúng là dự án này.</li>
     </ol>
-    <p>Agent <strong>không tự tạo</strong> Hub remote, và không tự nhận một repo làm Hub chỉ vì tên hay nội dung trông giống. Thư mục không có <code>project-hub/</code> và cũng không có Hub remote đã xác nhận là <strong>dự án dở dang</strong>, không phải dự án mới: <code>project.md</code>, <code>team.md</code>, <code>components.md</code> và mọi bản ghi phê duyệt đều là artifact của Hub, nên state chuẩn không có chỗ để nằm.</p>
-    <p><strong>Cài package là một giao dịch riêng.</strong> Bạn cài được AI-DLC vào thư mục chưa có Hub — nhưng onboarding sẽ không hoàn tất ở đó, và agent phải nói rõ cần provision cái gì.</p>
+    <p><strong>Chưa xin được repo thì không phải chờ.</strong> Từ v1.0.3, agent khởi tạo Hub như một <strong>git repo local</strong> tại <code>project-hub/</code> — cùng cấu trúc, cùng cặp nhánh (<code>dev</code> để làm việc, <code>main</code> chỉ nhận baseline), cùng kỷ luật promotion như Hub clone về. Bạn làm việc bình thường từ ngày đầu. Việc thiếu remote được ghi thành open item và <code>status</code> nhắc mỗi lần chạy — vì Hub chưa có remote nghĩa là <strong>chưa có backup và chưa chia sẻ được</strong>, đó là món nợ cần trả, không phải chuyện giấu đi.</p>
+    <p>Khi xin được repo, báo agent. Agent xem remote trước khi đụng gì:</p>
+    <ul>
+      <li><strong>Remote trống</strong> → đẩy nguyên lịch sử local lên, ghi lại việc bind. Xong.</li>
+      <li><strong>Remote đã có nội dung</strong> → không tự đẩy. Agent trình plan đối chiếu — trên đó có gì, local có gì, gộp lại thành gì — bạn duyệt rồi nó mới làm. Không bao giờ force-push.</li>
+    </ul>
+    <p>Agent vẫn <strong>không tự nhận</strong> một repo làm Hub chỉ vì tên trông giống, và <strong>cài package vẫn là giao dịch riêng</strong> — cài được vào thư mục chưa có Hub, onboarding sẽ đề nghị khởi tạo local-first thay vì dừng lại ở một bức tường.</p>
+    <h3>Chạy một mình thì sao</h3>
+    <p>Chạy một mình là hợp lệ, và từ v1.0.3 nó <strong>không còn bị chặn</strong>. Trước đó có một mâu thuẫn thật: spec cho phép một người giữ mọi role, nhưng gate cấu hình dự án lại đòi một người <strong>thứ hai</strong> duyệt thay đổi authority — nên dự án một người không bao giờ tự cấu hình xong được. Lần chạy thử đầu tiên ra đúng kết quả đó: 0/41 capability được kích hoạt.</p>
+    <p>Cách hoạt động bây giờ: yêu cầu xác minh <strong>co giãn theo hồ sơ dự án</strong>, giống như số stage co giãn theo scope:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Dự án của bạn</th><th>Duyệt gate cần gì</th></tr></thead>
+      <tbody>
+        <tr><td>In-house, <strong>một mình</strong></td><td>Bạn tự duyệt, có ghi vết: định danh từ môi trường đã đăng nhập + câu đồng ý nguyên văn + dấu <code>solo</code> trên bản ghi</td></tr>
+        <tr><td>In-house, nhiều người</td><td>Đúng người có quyền duyệt là đủ; người thứ hai chỉ cần ở những gate mà catalog nêu đích danh</td></tr>
+        <tr><td>Outsourced / regulated</td><td>Giữ nguyên mức chặt cũ: phương thức doanh nghiệp + người độc lập</td></tr>
+        <tr><td>Đưa lên production</td><td>Luôn cần người độc lập ở mọi hồ sơ; solo thì bản ghi nói thẳng là không có người thứ hai</td></tr>
+      </tbody></table></div>
+    <p>Dấu <code>solo</code> không phải cách lách luật — nó là <strong>bằng chứng</strong> ghi vào record rằng dự án này về cấu trúc không có người thứ hai, để sau này ai đọc audit hiểu đúng bản chất từng phê duyệt. Khi dự án có thêm người, mức xác minh tự nâng lên từ gate kế tiếp; các bản ghi cũ giữ nguyên mức lúc chúng được tạo.</p>
+    <p>Không cần biết git, không cần biết digest là gì. Hai khái niệm duy nhất đáng biết, nói bằng tiếng người: <strong>digest</strong> là dấu vân tay của file — đổi một byte là đổi vân tay; <strong>provenance</strong> là bằng chứng gói đang cài đúng là gói đã phát hành. Cả hai đều là việc agent tự kiểm; bạn chỉ gặp chúng khi có gì đó <strong>thật sự</strong> sai.</p>
     <h3>Thêm repo code: có thứ tự bắt buộc</h3>
     <p>Không ai clone tay rồi thả vào cây.</p>
     <ol>
@@ -592,6 +610,12 @@ kafi-aidlc-check</code></pre>
       <span class="copy-status" id="prompt-19-status" role="status" aria-live="polite"></span>
     </div>
     <p><code>check</code> mặc định là read-only. Nó kiểm tra tính đầy đủ của tài liệu, mức áp dụng của profile, traceability, độ tươi của dữ liệu, link, contract pin, baseline, các interaction chưa được trả lời, khoảng trống evidence, và tính nhất quán của migration.</p>
+    <p><strong>Đọc kết quả từ trên xuống.</strong> Các finding phụ thuộc lẫn nhau — một mục chưa xác minh có thể kéo theo cả chuỗi. Từ v1.0.3, <code>check</code> mở đầu bằng <strong>danh sách mở khoá ngắn nhất</strong>: "làm 2 việc này thì 8 mục kia tự xanh", nói bằng ngôn ngữ hành động. Bảng chi tiết từng finding nằm phía dưới, cho ai cần soi. Nếu bạn thấy nhiều dòng đỏ, đừng đếm số dòng — đọc câu đầu tiên.</p>
+    <p><code>check</code> cũng để ý hai thứ nhỏ mà con người hay quên:</p>
+    <ul>
+      <li><strong>README</strong> — Hub hay component repo thiếu README, hoặc README có sẵn chỉ là placeholder/mô tả sai thứ repo đang chứa, đều được nhắc (advisory, không chặn gì). Đồng ý thì agent soạn từ tài liệu canonical — có nguồn từng câu — và bạn duyệt như mọi thay đổi khác. Từ chối thì được ghi nhận, lần sau không hỏi lại.</li>
+      <li><strong>Command chưa hiện sau khi cài</strong> — báo <code>HOST_SKILL_RELOAD_REQUIRED</code> kèm cách nạp lại đúng host.</li>
+    </ul>
     <p>Sửa chữa <strong>không</strong> tự động xảy ra: mọi repair đều cần một repair plan đã được phê duyệt.</p>
   </section>
   <section id="complete-work">
