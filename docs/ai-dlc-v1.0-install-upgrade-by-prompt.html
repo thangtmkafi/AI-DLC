@@ -327,7 +327,10 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
       <span class="copy-status" id="prompt-2b-status" role="status" aria-live="polite"></span>
     </div>
     <p>Digest này để bạn <strong>đối chiếu</strong>, không phải để gõ lại. Nó là ảnh chụp chính xác của tập dòng đang hiển thị: đổi một dòng thì digest đổi theo, nên nó là cách kiểm rằng plan bạn duyệt đúng là plan bạn vừa đọc.</p>
-    <p>Plan được render thành bảng Markdown và JSON từ <strong>cùng một tập dòng đã chuẩn hoá</strong>. Đọc kỹ những điểm sau:</p>
+    <p><strong>Thứ bạn duyệt là bản Markdown.</strong> Từ v1.0.5, agent phải trình một câu nói rõ thao tác này làm gì với dự án của bạn, rồi tới bảng từng dòng: hành động, path, và hệ quả — giải thích ngay tại chỗ các dòng <code>Conflict</code>, <code>Preserve</code>, <code>Remove superseded</code>. JSON vẫn được render từ <strong>cùng một tập dòng đã chuẩn hoá</strong> và vẫn là bản ghi chính thức, nhưng nó được <em>mời đọc</em>, không phải thứ bạn buộc phải mở mới hiểu chuyện gì sắp xảy ra.</p>
+    <p>Các kết quả xác minh — schema hợp lệ, digest tính lại khớp, revalidate từng dòng, danh tính release — nằm <strong>sau</strong> plan, mỗi mục một dòng. Chúng trả lời câu "tin được không?", mà câu đó chỉ có nghĩa sau khi bạn đã biết "cái này" là cái gì. Một màn hình mở đầu bằng digest, một link JSON và danh sách validator đã pass là màn hình đã báo cáo mọi thứ trừ thay đổi mà bạn đang được hỏi ý.</p>
+    <p><strong>Plan luôn được ghi ra file, và agent phải nói file nằm đâu.</strong> Từ v1.0.5, <code>PLAN</code> ghi <code>plan.md</code> và <code>plan.json</code> vào thư mục staging — nằm <strong>ngoài</strong> dự án của bạn, nên vẫn không có gì bị đụng trước khi bạn duyệt. Duyệt xong, hai file đó được chép vào bản ghi operation tại <code>project-hub/.aidlc/operations/&lt;operation-id&gt;/</code>, nằm cạnh journal. Lý do: một plan chỉ tồn tại trong khung chat thì không mở lại được, không so được với plan kế tiếp, và không đính kèm được vào chính bản ghi đang trích dẫn digest của nó.</p>
+    <p>Đọc kỹ những điểm sau:</p>
     <div class="tbl"><table>
       <thead><tr><th>Cần kiểm tra</th><th>Vì sao</th></tr></thead>
       <tbody>
