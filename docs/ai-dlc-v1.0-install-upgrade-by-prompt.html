@@ -136,6 +136,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
       <a href="#approve-plan">Phê duyệt digest</a>
       <a href="#upgrade-v0">Nâng cấp trực tiếp từ v0.3–v0.9.x</a>
+      <a href="#when-blocked">Khi bị chặn thì chuyện gì xảy ra</a>
       <a href="#verify-install">Xác minh sau khi cài</a>
       <a href="#windows-no-admin">Windows không cần quyền admin</a>
       <a href="#part-run" class="toc-part">Phần 2 — Run AI-DLC v1.0</a>
@@ -264,6 +265,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <ul>
       <li><strong>Thư mục chứa</strong> — file phương pháp (<code>.kafi/</code>, <code>.claude/</code>, <code>.codex/</code>, <code>.kiro/</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>) nằm ở gốc <code>&lt;project&gt;/</code>, cạnh <code>project-hub/</code>.</li>
       <li><strong>Một component repo</strong> — nó sẽ được mount dưới một thư mục chứa; việc mount là <strong>thao tác riêng</strong>, và cài đặt không bao giờ tái cấu trúc thư mục tại chỗ cho vừa cây.</li>
+      <li><strong>Một nguồn v0.x cần tái cấu trúc</strong> — chỉ khi agent nhận ra bản AI-DLC v0.3–v0.9.x đang cài ở đây. Xem <a href="#v0-restructure">Thư mục v0.x của bạn sẽ thành cái gì</a>.</li>
     </ul>
     <p>Agent không suy ra vai trò này từ tên thư mục, nội dung, hay việc có <code>.git</code> hay không. Không đủ bằng chứng thì nó hỏi.</p>
     <h3>Thư mục đã có sẵn tài liệu và code thì sao</h3>
@@ -380,6 +382,31 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
       <li>Nếu bản cũ đã bị chỉnh sửa nhiều, agent báo <code>LEGACY_PACKAGE_CUSTOMIZED</code> hoặc <code>CUSTOMIZED_TARGET_COLLISION</code> thay vì ghi đè.</li>
     </ul>
     <p>Không có prompt riêng cho nâng cấp. Prompt chuẩn ở trên đã bao gồm cả hai đường — nó yêu cầu "installation <strong>or upgrade</strong> plan" — nên bạn dùng đúng một prompt cho mọi trường hợp.</p>
+    <h3 id="v0-restructure">Thư mục v0.x của bạn sẽ thành cái gì</h3>
+    <p>Dự án v0.x là <strong>monorepo</strong>: một repo Git duy nhất giữ cả phương pháp, tài liệu lẫn code. Cây v1 thì ngược lại — thư mục chứa <strong>không được version</strong>, và <code>project-hub/</code> cùng các <code>components/&lt;name&gt;/</code> là những repo <strong>ngang hàng</strong>. Nâng cấp tại chỗ mà không đụng gì tới cấu trúc sẽ biến repo v0 thành thư mục chứa (đã được version — sai) với <code>project-hub/</code> nằm lồng bên trong (repo trong repo — cũng sai).</p>
+    <p>Nên từ v1.0.4, khi nhận diện được bản v0.x, plan <strong>hỏi bạn một câu trước</strong>: dự án này theo topology nào? Không suy diễn, vì hai đường đi khác hẳn nhau.</p>
+    <p><strong>Đường nhẹ — <code>single-repo</code>, ở lại một repo.</strong> Không đụng gì tới Git. Repo v0 trở thành repo của dự án; nội dung cũ dời vào thư mục thường <code>project-hub/</code> bên trong nó; package v1 đặt ở gốc repo; Hub adopt tiếp trên cùng lịch sử. Hợp với dự án một người, nhóm nhỏ, hoặc sản phẩm vốn là một khối. Sau này muốn tách vẫn được — đó là một migration có duyệt, không phải trôi dạt tại chỗ.</p>
+    <p><strong>Đường tách — <code>unified-project-tree</code></strong>, dành cho dự án đang hướng tới việc SA tách multi-repo: tái cấu trúc dưới dạng các dòng <code>Move</code> bạn duyệt:</p>
+    <ol>
+      <li><strong>Toàn bộ thư mục hiện tại — kể cả <code>.git</code> — chuyển vào <code>project-hub/</code>.</strong> Không rewrite lịch sử, không clone lại, không xoá gì. Hub thừa hưởng nguyên vẹn lịch sử commit và <strong>remote sẵn có của bạn</strong> — không phải xin repo mới.</li>
+      <li><strong>Thư mục vừa trống ra thành thư mục chứa</strong>, không được version, và nhận package v1 ở mức đó.</li>
+      <li><strong>Hub adopt tiếp trên lịch sử cũ</strong>: overlay <code>.aidlc/</code>, tạo <code>dev</code> từ nhánh mặc định đang có, <code>main</code> giữ vai trò baseline.</li>
+      <li><strong>Thứ tự bắt buộc</strong>: dời trước, đặt file v1 sau — để không file v1 nào từng bị repo v0 track.</li>
+    </ol>
+    <p>Đường lùi là dời ngược lại. Nó an toàn vì thao tác này chỉ đổi một ranh giới thư mục, không sửa byte nào bên trong.</p>
+    <p><strong>Code nằm trong Hub sau bước này là hợp lệ — nhưng là nợ có khai báo.</strong> Nó được ghi thành open item, <code>status</code> nhắc mỗi lần chạy, và lối ra đã định sẵn: agent đọc toàn bộ Hub rồi trình SA plan tách multi-repo, kèm cách xử lý lịch sử cho từng repo. Chừng nào code của một component còn nằm trong Hub thì component đó <strong>chưa được mount</strong> song song — một file chỉ có một chỗ đúng.</p>
+    <p>Hai finding mới của <code>check</code> bắt đúng hai trạng thái trước đây xảy ra âm thầm: <code>CONTAINER_IS_GIT_REPOSITORY</code> (thư mục chứa lại là một repo Git — <strong>không áp dụng</strong> khi bạn đã khai <code>single-repo</code>, vì ở đó gốc <em>chính là</em> repo theo thiết kế) và <code>NESTED_REPOSITORY_DETECTED</code> (một repo nằm trong cây làm việc của repo khác — không topology nào cho phép). Cả hai đều chặn, và lối sửa chính là plan tái cấu trúc ở trên.</p>
+  </section>
+  <section id="when-blocked">
+    <h2>Khi bị chặn thì chuyện gì xảy ra</h2>
+    <p>Từ v1.0.4 có một luật bao trùm: <strong>rule chỉ được chặn nếu agent trao được cho bạn một lối đi phê-duyệt-được.</strong> Trước đó, agent phát hiện vấn đề, nêu mã lỗi rồi đứng im — bạn nhận một chẩn đoán và phải tự tìm đường. Giờ nó soạn sẵn phương án gỡ đúng như soạn plan cài đặt: thao tác chính xác, ai có thẩm quyền duyệt, và bằng chứng sinh ra sau đó.</p>
+    <p>Ba hệ quả bạn thấy được ngay:</p>
+    <ul>
+      <li><strong><code>next</code> không báo tắc rồi dừng.</strong> Nó trình việc gỡ như hành động kế tiếp. Nếu thứ còn thiếu là thứ <strong>chính agent làm được</strong> — một stage chưa chạy, một record chưa soạn — thì nó chào làm luôn, không đẩy ngược thành việc của bạn.</li>
+      <li><strong><code>check</code> tách hai phần</strong>: <strong>"chặn ngay"</strong> (kèm phương án gỡ và người duyệt từng mục) và <strong>"sửa dần"</strong> (cảnh báo, nợ có lịch — không chặn việc đang làm). Đọc phần đầu là đủ để quyết định.</li>
+      <li><strong>Có van xả thật.</strong> Một số check được phép miễn trừ theo <code>quality-policy.md</code>: bạn ghi một record ngoại lệ có thẩm quyền, hạn dùng và tham chiếu khắc phục, rồi finding đó báo <code>Excepted</code> kèm đường dẫn record thay vì báo lỗi. Hết hạn thì nó quay lại đúng mức cũ và nói rõ là đã hết hạn.</li>
+    </ul>
+    <p>Điều <strong>không</strong> đổi: sàn cứng không bao giờ miễn trừ được — xác minh release, duyệt digest, protected paths, hai finding topology ở trên, chuỗi audit, và ranh giới SRE thực thi production. Ghi một file tự nhận là "đã được miễn trừ" cho những mục này thì file đó vô hiệu.</p>
   </section>
   <section id="verify-install">
     <h2>Xác minh sau khi cài</h2>
