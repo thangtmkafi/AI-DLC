@@ -136,7 +136,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
       <a href="#approve-plan">Phê duyệt digest</a>
       <a href="#upgrade-v0">Nâng cấp trực tiếp từ v0.3–v0.9.x</a>
-      <a href="#when-blocked">Khi bị chặn thì chuyện gì xảy ra</a>
+      <a href="#when-blocked">Khi phát hiện có vấn đề</a>
       <a href="#verify-install">Xác minh sau khi cài</a>
       <a href="#windows-no-admin">Windows không cần quyền admin</a>
       <a href="#part-run" class="toc-part">Phần 2 — Run AI-DLC v1.0</a>
@@ -147,7 +147,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#start-work-item">Bắt đầu một work item</a>
       <a href="#resume-work">Tiếp tục công việc đang dở</a>
       <a href="#human-gates">Human gate</a>
-      <a href="#inspect-state">Kiểm tra Project Hub, evidence, claim, journal</a>
+      <a href="#inspect-state">Kiểm tra Project Hub, evidence, claim, operation</a>
       <a href="#cross-agent-handoff">Chuyển giao giữa Codex, Claude Code và Kiro</a>
       <a href="#conformance">Conformance</a>
       <a href="#complete-work">Hoàn tất work item và bàn giao UAT/SRE</a>
@@ -191,6 +191,16 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <p>Thư mục <code>&lt;project&gt;/</code> <strong>không được version</strong>. Nó là scaffolding tái dựng được từ <code>components.md</code>: mất máy, mất ổ cứng, dựng lại từ Hub là đủ.</p>
     <p>Hub và mọi repo code là <strong>git root ngang hàng</strong>. Repo lồng trong repo bị cấm — không phải vì thẩm mỹ, mà vì nó xoá được nguyên một lớp tai nạn <code>git clean</code>/gitlink, và cho mỗi thư mục cấp một ranh giới quyền truy cập và lưu trữ riêng.</p>
     <p>Mọi tham chiếu chuẩn dùng <strong>đường dẫn tương đối gốc dự án</strong> — <code>components/&lt;name&gt;/...</code>, <code>ops/ci-cd/...</code> — một hệ địa chỉ chung cho docs, code và ops.</p>
+    <p><strong>Hub luôn nằm ở <code>project-hub/</code></strong>, dù bạn cài mới, cài lên dự án có sẵn, hay nâng cấp từ v0.x. Vị trí này không phải chi tiết của việc di chuyển dữ liệu — nó được quyết định ngay khi cài, và bản báo cáo cuối của agent nêu rõ. Một dự án cài mới chưa tạo gì bên trong <code>project-hub/</code> ngoài bản ghi operation, vì phần còn lại là việc của onboarding.</p>
+    <p><strong>Đường dẫn <code>Lives at</code> trong template là tương đối với Hub, không phải với gốc dự án.</strong> Đây là chỗ người mới hiểu nhầm nhiều nhất, và hai cách đọc đều có lý như nhau nếu không ai nói ra:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Trong template ghi</th><th>Nghĩa thật là</th></tr></thead>
+      <tbody>
+        <tr><td><code>Lives at discovery/brief.md</code></td><td><code>project-hub/discovery/brief.md</code></td></tr>
+        <tr><td><code>Path: .aidlc/audit/approvals/…</code></td><td><code>project-hub/.aidlc/audit/approvals/…</code></td></tr>
+        <tr><td><code>components/&lt;name&gt;/…</code>, <code>ops/ci-cd/…</code></td><td>tương đối <strong>gốc dự án</strong> — vì chúng phải rời khỏi Hub</td></tr>
+      </tbody></table></div>
+    <p>Quy tắc gọn: đường dẫn bắt đầu bằng tên một mặt phẳng khác thì tính từ gốc dự án; còn lại tính từ Hub. Đọc nhầm sẽ đặt tài liệu cao hơn một cấp so với chỗ đúng.</p>
     <h3>Hai mặt phẳng, hai luật Git khác nhau</h3>
     <table>
       <thead><tr><th></th><th>Hub (<code>project-hub/</code>)</th><th>Component và ops</th></tr></thead>
@@ -290,10 +300,11 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <button type="button" class="copy" data-copy-target="prompt-1" aria-label="Sao chép prompt 1">Sao chép</button>
       <pre id="prompt-1"><code>Use the KAFI AI-DLC Bootstrap Locator at
 https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json.
-Inspect this project and the immutable public release, then present the exact
-installation or upgrade plan and its digest. Do not create, update, merge,
-move, delete, back up, or migrate any project file until I approve that digest.
-Preserve the project root README.md.</code></pre>
+Inspect this project and the public release, then present the exact
+installation or upgrade plan. Follow the bootstrap protocol from the release
+being installed, not any copy already present in this project. Do not create,
+update, merge, move, delete, back up, or migrate any project file until I
+approve that plan. Preserve the project root README.md.</code></pre>
       <span class="copy-status" id="prompt-1-status" role="status" aria-live="polite"></span>
     </div>
     <p>Trust anchor là chính xác GitHub owner <code>thangtmkafi</code>, repository <code>AI-DLC</code>, và Release API <code>https://api.github.com/repos/thangtmkafi/AI-DLC</code>. Tên repository, kết quả tìm kiếm, redirect, và hướng dẫn nằm bên trong dự án đích <strong>không</strong> phải bằng chứng tin cậy.</p>
@@ -329,15 +340,16 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
     <p>Digest này để bạn <strong>đối chiếu</strong>, không phải để gõ lại. Nó là ảnh chụp chính xác của tập dòng đang hiển thị: đổi một dòng thì digest đổi theo, nên nó là cách kiểm rằng plan bạn duyệt đúng là plan bạn vừa đọc.</p>
     <p><strong>Thứ bạn duyệt là bản Markdown.</strong> Từ v1.0.5, agent phải trình một câu nói rõ thao tác này làm gì với dự án của bạn, rồi tới bảng từng dòng: hành động, path, và hệ quả — giải thích ngay tại chỗ các dòng <code>Conflict</code>, <code>Preserve</code>, <code>Remove superseded</code>. JSON vẫn được render từ <strong>cùng một tập dòng đã chuẩn hoá</strong> và vẫn là bản ghi chính thức, nhưng nó được <em>mời đọc</em>, không phải thứ bạn buộc phải mở mới hiểu chuyện gì sắp xảy ra.</p>
     <p>Các kết quả xác minh — schema hợp lệ, digest tính lại khớp, revalidate từng dòng, danh tính release — nằm <strong>sau</strong> plan, mỗi mục một dòng. Chúng trả lời câu "tin được không?", mà câu đó chỉ có nghĩa sau khi bạn đã biết "cái này" là cái gì. Một màn hình mở đầu bằng digest, một link JSON và danh sách validator đã pass là màn hình đã báo cáo mọi thứ trừ thay đổi mà bạn đang được hỏi ý.</p>
-    <p><strong>Plan luôn được ghi ra file, và agent phải nói file nằm đâu.</strong> Từ v1.0.5, <code>PLAN</code> ghi <code>plan.md</code> và <code>plan.json</code> vào thư mục staging — nằm <strong>ngoài</strong> dự án của bạn, nên vẫn không có gì bị đụng trước khi bạn duyệt. Duyệt xong, hai file đó được chép vào bản ghi operation tại <code>project-hub/.aidlc/operations/&lt;operation-id&gt;/</code>, nằm cạnh journal. Lý do: một plan chỉ tồn tại trong khung chat thì không mở lại được, không so được với plan kế tiếp, và không đính kèm được vào chính bản ghi đang trích dẫn digest của nó.</p>
+    <p><strong>Plan luôn được ghi ra file, và agent phải nói file nằm đâu.</strong> <code>PLAN</code> ghi <strong>một</strong> file <code>plan.md</code> vào thư mục staging — nằm <strong>ngoài</strong> dự án của bạn, nên vẫn không có gì bị đụng trước khi bạn duyệt. Duyệt xong, file đó được chép vào <code>project-hub/.aidlc/operations/&lt;operation-id&gt;/plan.md</code>. Lý do: một plan chỉ tồn tại trong khung chat thì không mở lại được và không so được với plan kế tiếp.</p>
+    <p><strong>File đó là toàn bộ bản ghi.</strong> Nó lớn thêm hai mục khi operation chạy: <code>## Approval</code> (ai duyệt, vai trò gì, lúc nào, và câu chấp thuận nguyên văn) và <code>## Result</code> (từng row thực sự đã làm gì). Từ v1.0.6 không còn <code>plan.json</code>, không còn <code>journal.json</code>, không còn record JSON nào khác — một bản ghi mà bạn phải chạy chương trình mới đọc được thì không phải bản ghi dành cho người nó tồn tại để thông báo. Dự án cài từ bản cũ vẫn giữ nguyên các file JSON đã có: chúng là lịch sử của chính dự án, không ai đọc và không ai phàn nàn về chúng nữa.</p>
     <p>Đọc kỹ những điểm sau:</p>
     <div class="tbl"><table>
       <thead><tr><th>Cần kiểm tra</th><th>Vì sao</th></tr></thead>
       <tbody>
-        <tr><td>Operation ID và plan digest</td><td>Phê duyệt gắn với đúng digest này. Agent tính lại digest lúc bạn đồng ý; một lời đồng ý không dùng được cho plan khác</td></tr>
+        <tr><td>Operation ID và đường dẫn <code>plan.md</code></td><td>Phê duyệt gắn với đúng bảng row bạn vừa đọc. Một lời đồng ý không dùng được cho plan khác</td></tr>
         <tr><td>Bảng file action</td><td><code>Create</code> / <code>Update</code> / <code>Preserve</code> / <code>Conflict</code> cho từng path</td></tr>
         <tr><td><code>README.md</code> ở gốc dự án</td><td>Luôn phải là <code>Preserve</code></td></tr>
-        <tr><td>Dòng <code>Conflict</code></td><td><strong>Không phê duyệt được.</strong> Phải xử lý trước</td></tr>
+        <tr><td>Dòng <code>Conflict</code></td><td>File đã bị sửa so với bản AI-DLC cài ra. Agent <strong>không tự quyết</strong> — nó nêu ra và đề xuất cách xử lý; bạn chọn giữ, ghi đè, hay để nguyên rồi mới duyệt</td></tr>
         <tr><td>Dòng <code>Move</code> / <code>Delete</code></td><td>Không bao giờ là mặc định; nếu xuất hiện, phải có lý do rõ ràng</td></tr>
         <tr><td>Dòng <code>Remove superseded</code></td><td>File của bản AI-DLC cũ mà bản mới không còn dùng. Chỉ áp dụng khi bytes còn đúng nguyên bản đã cài; nếu bạn từng sửa file đó thì nó thành <code>Conflict</code></td></tr>
         <tr><td>Release identity và digest</td><td>Khớp với release immutable đã xác minh</td></tr>
@@ -360,18 +372,19 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
       <pre id="prompt-3b"><code>approve</code></pre>
       <span class="copy-status" id="prompt-3b-status" role="status" aria-live="polite"></span>
     </div>
-    <p>Bạn <strong>không cần dán digest</strong>. Từ v1.0.2, agent tự tính lại digest ngay lúc bạn đồng ý và so với digest nó vừa in ra — việc bạn gõ lại một chuỗi mà agent vừa hiển thị không chứng minh thêm điều gì so với phép tính lại đó. Digest vẫn được hiển thị đầy đủ trước khi bạn duyệt, và vẫn được ghi vào bản ghi phê duyệt cùng câu trả lời nguyên văn của bạn.</p>
-    <p>Bốn điều kiện phải đúng, nếu không lời đồng ý không có hiệu lực:</p>
+    <p>Bạn <strong>không cần dán digest</strong> — và từ v1.0.6 thì không còn digest nào của plan để dán. Plan là một file Markdown bạn đọc được; cái được ghi lại là câu đồng ý nguyên văn của bạn, danh tính, vai trò và thời điểm. Digest duy nhất còn tồn tại là SHA-256 của <strong>file zip tải về</strong>, đối chiếu với GitHub Release API trước khi bất cứ thứ gì được cài — đó là lớp bảo vệ chuỗi cung ứng, không phải nghi thức nội bộ giữa hai bản sao của cùng một sự thật.</p>
+    <p>Ba điều kiện phải đúng, nếu không lời đồng ý không có hiệu lực:</p>
     <div class="tbl"><table>
       <thead><tr><th>Điều kiện</th><th>Nghĩa là</th></tr></thead>
       <tbody>
-        <tr><td>Digest vừa được hiển thị đầy đủ</td><td>Bạn đồng ý với plan đang thấy, không phải plan nào khác</td></tr>
-        <tr><td>Tính lại digest cho kết quả không đổi</td><td>Không có gì thay đổi giữa lúc trình plan và lúc bạn duyệt</td></tr>
+        <tr><td>Plan vừa được hiển thị đầy đủ</td><td>Bạn đồng ý với plan đang thấy, không phải plan nào khác</td></tr>
+        <tr><td>Không dòng nào đổi từ lúc bạn đọc</td><td>Nếu có, agent phải trình lại plan mới và hỏi lại</td></tr>
         <tr><td>Bạn có thẩm quyền cho operation này</td><td>Đúng người duyệt</td></tr>
-        <tr><td>Câu đồng ý là dứt khoát</td><td>Không suy ra từ im lặng hay câu hỏi</td></tr>
       </tbody></table></div>
+    <p><strong>Một câu &ldquo;đồng ý&rdquo; trống cần đúng một thứ đang chờ.</strong> Khi chỉ có một plan hoặc một tài liệu chờ quyết định thì không có gì mơ hồ. Khi có từ hai thứ trở lên — hai artifact, hoặc một câu hỏi nhiều lựa chọn — cùng câu đó không nói được bạn duyệt cái nào, và agent phải liệt kê ra rồi hỏi lại thay vì đoán. Tự chọn hộ chính là điền lời đồng ý thay bạn.</p>
+    <p><strong>Agent không được sửa tài liệu sau khi đã ghi phê duyệt của bạn.</strong> Phê duyệt gắn với đúng nội dung bạn đã đọc. Sửa một field cũ hay một dòng ngày tháng <em>sau khi</em> ghi approval sẽ làm bản ghi mô tả một nội dung không còn tồn tại — mà bản ghi vẫn ghi là đã duyệt. Đúng thứ tự là sửa trước, cho bạn xem, rồi mới lấy phê duyệt. Nếu buộc phải sửa sau thì đó là một phiên bản mới cần một phê duyệt mới, và phê duyệt cũ giữ nguyên làm lịch sử.</p>
     <p>Những trường hợp <strong>không</strong> được coi là phê duyệt: im lặng, một câu hỏi, đồng ý kèm phản đối một phần, đồng ý gửi sau khi có dòng nào trong plan đã đổi, và đồng ý nhắm vào một plan cũ hơn.</p>
-    <p>Sau khi bạn phê duyệt, agent <strong>revalidate lại</strong> release và snapshot dự án trước khi ghi bất cứ thứ gì. Nếu có drift, phê duyệt mất hiệu lực và agent quay lại <code>PLAN</code> với digest mới.</p>
+    <p>Sau khi bạn phê duyệt, agent <strong>revalidate lại</strong> release và snapshot dự án trước khi ghi bất cứ thứ gì. Nếu có drift, phê duyệt mất hiệu lực và agent quay lại <code>PLAN</code> với bảng row mới.</p>
     <p>Từ đó agent mới vào <code>BACKUP</code>: sao lưu chỉ những path do AI-DLC sở hữu đã được duyệt và vùng managed block, áp dụng đúng các dòng có trong manifest, chạy migration đã được fixture chứng minh, xác minh kết quả, cutover và báo cáo bằng chứng. Nó <strong>không bao giờ dời nội dung dự án</strong> để giải quyết va chạm.</p>
   </section>
   <section id="upgrade-v0">
@@ -401,12 +414,13 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
     <p>Hai finding mới của <code>check</code> bắt đúng hai trạng thái trước đây xảy ra âm thầm: <code>CONTAINER_IS_GIT_REPOSITORY</code> (thư mục chứa lại là một repo Git — <strong>không áp dụng</strong> khi bạn đã khai <code>single-repo</code>, vì ở đó gốc <em>chính là</em> repo theo thiết kế) và <code>NESTED_REPOSITORY_DETECTED</code> (một repo nằm trong cây làm việc của repo khác — không topology nào cho phép). Cả hai đều chặn, và lối sửa chính là plan tái cấu trúc ở trên.</p>
   </section>
   <section id="when-blocked">
-    <h2>Khi bị chặn thì chuyện gì xảy ra</h2>
-    <p>Từ v1.0.4 có một luật bao trùm: <strong>rule chỉ được chặn nếu agent trao được cho bạn một lối đi phê-duyệt-được.</strong> Trước đó, agent phát hiện vấn đề, nêu mã lỗi rồi đứng im — bạn nhận một chẩn đoán và phải tự tìm đường. Giờ nó soạn sẵn phương án gỡ đúng như soạn plan cài đặt: thao tác chính xác, ai có thẩm quyền duyệt, và bằng chứng sinh ra sau đó.</p>
+    <h2>Khi phát hiện có vấn đề</h2>
+    <p><strong>Từ v1.0.6, không finding nào chặn việc của bạn.</strong> Agent thấy sai thì nói ra, đề xuất cách sửa, lên plan cho bạn duyệt — và công việc chạy tiếp. Từ chối làm việc chưa bao giờ khiến một bản cài bị sửa trở nên an toàn hay một gate chưa duyệt trở thành đã duyệt; nó chỉ dồn toàn bộ chi phí của lỗi sang người đang cố hoàn thành việc, tức là ngược với lý do AI-DLC tồn tại.</p>
+    <p>Cái được giữ lại là hình dạng của <strong>đề xuất</strong> — vốn mới là phần luôn làm việc thật: thao tác chính xác agent sẽ làm, ai duyệt, và bằng chứng sinh ra sau đó.</p>
     <p>Ba hệ quả bạn thấy được ngay:</p>
     <ul>
       <li><strong><code>next</code> không báo tắc rồi dừng.</strong> Nó trình việc gỡ như hành động kế tiếp. Nếu thứ còn thiếu là thứ <strong>chính agent làm được</strong> — một stage chưa chạy, một record chưa soạn — thì nó chào làm luôn, không đẩy ngược thành việc của bạn.</li>
-      <li><strong><code>check</code> tách hai phần</strong>: <strong>"chặn ngay"</strong> (kèm phương án gỡ và người duyệt từng mục) và <strong>"sửa dần"</strong> (cảnh báo, nợ có lịch — không chặn việc đang làm). Đọc phần đầu là đủ để quyết định.</li>
+      <li><strong><code>check</code> tách hai phần</strong>: <strong>"sửa trước"</strong> (thứ dễ cắn nhất, kèm cách sửa agent đang chào làm) và <strong>"sửa dần"</strong> (nợ có lịch). <strong>Không phần nào chặn gì cả</strong> — đọc xong bạn quyết định, rồi làm tiếp việc bạn đang làm.</li>
       <li><strong>Có van xả thật.</strong> Một số check được phép miễn trừ theo <code>quality-policy.md</code>: bạn ghi một record ngoại lệ có thẩm quyền, hạn dùng và tham chiếu khắc phục, rồi finding đó báo <code>Excepted</code> kèm đường dẫn record thay vì báo lỗi. Hết hạn thì nó quay lại đúng mức cũ và nói rõ là đã hết hạn.</li>
     </ul>
     <p>Điều <strong>không</strong> đổi: sàn cứng không bao giờ miễn trừ được — xác minh release, duyệt digest, protected paths, hai finding topology ở trên, chuỗi audit, và ranh giới SRE thực thi production. Ghi một file tự nhận là "đã được miễn trừ" cho những mục này thì file đó vô hiệu.</p>
@@ -455,7 +469,7 @@ Plan digest: sha256:9a7b956be9da218e8c638f16d92b4bdc75611b2d8cdc04b0814632d61bc1
       <pre id="prompt-5"><code>/kafi-aidlc-check</code></pre>
       <span class="copy-status" id="prompt-5-status" role="status" aria-live="polite"></span>
     </div>
-    <p><code>status</code> cho biết installed identity, adapter đang bật, operating model và công việc đang mở. <code>check</code> đối chiếu tính đầy đủ của tài liệu, traceability, contract pin, baseline và khoảng trống evidence. Bạn cần thấy: installed identity, digest của release, danh sách adapter, bản ghi journal của lần cài này, kết quả conformance, và tham chiếu rollback.</p>
+    <p><code>status</code> cho biết installed identity, adapter đang bật, operating model và công việc đang mở. <code>check</code> đối chiếu tính đầy đủ của tài liệu, traceability, contract pin, baseline và khoảng trống evidence. Bạn cần thấy: installed identity, digest của release, danh sách adapter, bản ghi <code>plan.md</code> của lần cài này với mục <code>## Result</code> của nó, và tham chiếu rollback.</p>
   </section>
   <section id="windows-no-admin">
     <h2>Windows không cần quyền admin</h2>
@@ -610,14 +624,14 @@ kafi-aidlc-check</code></pre>
     <p>Khi <code>next</code> dừng ở một gate, việc còn lại là của người có authority tương ứng. Quyết định được ghi nhận qua chính người đó, không qua agent.</p>
   </section>
   <section id="inspect-state">
-    <h2>Kiểm tra Project Hub, evidence, claim, journal</h2>
+    <h2>Kiểm tra Project Hub, evidence, claim, operation</h2>
     <p class="label label-read"><strong>Read-only.</strong></p>
     <div class="prompt" data-language="text">
       <button type="button" class="copy" data-copy-target="prompt-17" aria-label="Sao chép prompt 17">Sao chép</button>
       <pre id="prompt-17"><code>/kafi-aidlc-status</code></pre>
       <span class="copy-status" id="prompt-17-status" role="status" aria-live="polite"></span>
     </div>
-    <p><code>status</code> cho thấy component, claim đang giữ và ai giữ, evidence record, operation journal xuyên repository, blocker, và hành động hợp lệ kế tiếp — tất cả mà không ghi gì.</p>
+    <p><code>status</code> cho thấy component, claim đang giữ và ai giữ, evidence record, các operation đã chạy xuyên repository, việc đang chờ người, và hành động hợp lệ kế tiếp — tất cả mà không ghi gì.</p>
   </section>
   <section id="cross-agent-handoff">
     <h2>Chuyển giao giữa Codex, Claude Code và Kiro</h2>
@@ -639,8 +653,10 @@ kafi-aidlc-check</code></pre>
       <pre id="prompt-19"><code>/kafi-aidlc-check</code></pre>
       <span class="copy-status" id="prompt-19-status" role="status" aria-live="polite"></span>
     </div>
-    <p><code>check</code> mặc định là read-only. Nó kiểm tra tính đầy đủ của tài liệu, mức áp dụng của profile, traceability, độ tươi của dữ liệu, link, contract pin, baseline, các interaction chưa được trả lời, khoảng trống evidence, và tính nhất quán của migration.</p>
-    <p><strong>Đọc kết quả từ trên xuống.</strong> Các finding phụ thuộc lẫn nhau — một mục chưa xác minh có thể kéo theo cả chuỗi. Từ v1.0.3, <code>check</code> mở đầu bằng <strong>danh sách mở khoá ngắn nhất</strong>: "làm 2 việc này thì 8 mục kia tự xanh", nói bằng ngôn ngữ hành động. Bảng chi tiết từng finding nằm phía dưới, cho ai cần soi. Nếu bạn thấy nhiều dòng đỏ, đừng đếm số dòng — đọc câu đầu tiên.</p>
+    <p><code>check</code> là read-only, và từ v1.0.6 nó đọc để tìm <strong>hai thứ mà tài liệu tồn tại để ngăn</strong>: chỗ code đã đi xa hơn thiết kế nói, và chỗ một artifact hoặc một quyết định chưa bao giờ được ghi lại. Nó không đi soi hạ tầng cài đặt — package hỏng thì biểu hiện là bạn không làm được việc gì đó, và <code>doctor</code> mới là lệnh cho chuyện đó.</p>
+    <p>Cụ thể nó đối chiếu: placeholder chưa điền, câu hỏi chưa ai trả lời, mức phủ artifact theo stage hiện tại, <strong>thiết kế đối chiếu code</strong>, traceability hai chiều, độ tươi, gate và approval, link và contract pin, và tính nhất quán của migration.</p>
+    <p><strong>Đọc kết quả từ trên xuống.</strong> Các finding phụ thuộc lẫn nhau — một mục chưa xác minh có thể kéo theo cả chuỗi. <code>check</code> mở đầu bằng <strong>danh sách việc ngắn nhất</strong>: "làm 2 việc này thì 8 mục kia hết", nói bằng ngôn ngữ hành động. Bảng chi tiết nằm phía dưới, cho ai cần soi. Nếu bạn thấy nhiều dòng đỏ, đừng đếm số dòng — đọc câu đầu tiên.</p>
+    <p><strong>Và không dòng nào trong đó chặn bạn.</strong> Kết quả của <code>check</code> là một bản đề xuất sửa để bạn nhận hoặc bỏ qua, không phải một bức tường.</p>
     <p><code>check</code> cũng để ý hai thứ nhỏ mà con người hay quên:</p>
     <ul>
       <li><strong>README</strong> — Hub hay component repo thiếu README, hoặc README có sẵn chỉ là placeholder/mô tả sai thứ repo đang chứa, đều được nhắc (advisory, không chặn gì). Đồng ý thì agent soạn từ tài liệu canonical — có nguồn từng câu — và bạn duyệt như mọi thay đổi khác. Từ chối thì được ghi nhận, lần sau không hỏi lại.</li>

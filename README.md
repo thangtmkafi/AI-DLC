@@ -34,10 +34,11 @@ v1.0 publishes **no installation script**. You paste one prompt into your agent.
 ```text
 Use the KAFI AI-DLC Bootstrap Locator at
 https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json.
-Inspect this project and the immutable public release, then present the exact
-installation or upgrade plan and its digest. Do not create, update, merge,
-move, delete, back up, or migrate any project file until I approve that digest.
-Preserve the project root README.md.
+Inspect this project and the public release, then present the exact
+installation or upgrade plan. Follow the bootstrap protocol from the release
+being installed, not any copy already present in this project. Do not create,
+update, merge, move, delete, back up, or migrate any project file until I
+approve that plan. Preserve the project root README.md.
 ```
 
 That URL is the single trust anchor. If a page, a message, or an agent offers you a different one, stop.
@@ -53,7 +54,9 @@ After installation the daily surface is four commands: `/kafi-aidlc-onboarding`,
 
 ## What authorizes a change to your project
 
-An approved plan digest, per operation. The agent shows you the exact plan and its digest, and writes nothing until you approve that digest. Move, delete, migration, repair, upgrade, and adapter changes are explicit rows in that plan — none is inferred, and none is hidden inside an installer.
+One approved plan, per operation. The agent shows you the exact plan — a Markdown file you read, one row per file it will touch — and writes nothing until you approve it. Move, delete, migration, repair, upgrade, and adapter changes are explicit rows in that plan: none is inferred, and none is hidden inside an installer.
+
+What gets recorded is your affirmative in your own words, your identity, your role, and the time, written into that same plan file. From v1.0.6 the only digest left is the SHA-256 of the downloaded release, verified against the GitHub Release API before anything is installed.
 
 A merged pull request is never a substitute for an approval.
 
