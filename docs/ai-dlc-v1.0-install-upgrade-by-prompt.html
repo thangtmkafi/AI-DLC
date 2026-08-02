@@ -143,6 +143,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#run-aidlc">Vận hành AI-DLC v1.0</a>
       <a href="#load-context">Nạp context đã cài</a>
       <a href="#project-setup">Thiết lập dự án — Evidence or Ask</a>
+      <a href="#join-project">Tham gia một dự án đã có sẵn</a>
       <a href="#operating-model">Xác nhận Continuous hay Phase-Gated</a>
       <a href="#start-work-item">Bắt đầu một work item</a>
       <a href="#resume-work">Tiếp tục công việc đang dở</a>
@@ -181,14 +182,19 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <p>Đọc mục này trước khi dán prompt. Nó quyết định bạn mở agent ở thư mục nào.</p>
     <h3>Một dự án là một thư mục chứa, không phải một repo</h3>
     <pre><code>&lt;project&gt;/                          ← không có .git ở cấp này
+├── .kafi/ai-dlc/                   ← gói đã cài · thuộc sở hữu của release manifest
+├── CLAUDE.md · AGENTS.md           ← file entry của host · chỉ khối AI-DLC là của package
+├── .claude/ · .codex/ · .kiro/     ← adapter projection của các host đang bật
+├── README.md                       ← của dự án · không bao giờ bị đụng tới
 ├── project-hub/                    ← docs plane · một git repo · lịch sử tuyến tính
 ├── components/                     ← code plane · mỗi component một git repo
 │   ├── &lt;component-a&gt;/
 │   └── &lt;component-b&gt;/
-└── ops/                            ← ops plane · SRE sở hữu
-    ├── ci-cd/
-    └── infra/</code></pre>
-    <p>Thư mục <code>&lt;project&gt;/</code> <strong>không được version</strong>. Nó là scaffolding tái dựng được từ <code>components.md</code>: mất máy, mất ổ cứng, dựng lại từ Hub là đủ.</p>
+├── ops/                            ← ops plane · SRE sở hữu
+│   ├── ci-cd/
+│   └── infra/
+└── &lt;bất cứ thứ gì bạn đặt vào&gt;      ← agent phát hiện rồi hỏi, không bao giờ tự đoán</code></pre>
+    <p>Mọi thứ ở cấp thư mục chứa đều <strong>không được version</strong> — kể cả gói đã cài và các adapter projection. Chúng hoặc dựng lại được (gói từ release của nó, cây từ <code>components.md</code>), hoặc không bền chút nào: mất máy, mất ổ cứng, dựng lại từ Hub là đủ. Mặt sau của điều đó cần nhớ — tài liệu chỉ tồn tại ở đây và không có ở đâu khác thì phải nằm trong một repo mới an toàn; với tài liệu tham chiếu, repo đó là Hub.</p>
     <p>Hub và mọi repo code là <strong>git root ngang hàng</strong>. Repo lồng trong repo bị cấm — không phải vì thẩm mỹ, mà vì nó xoá được nguyên một lớp tai nạn <code>git clean</code>/gitlink, và cho mỗi thư mục cấp một ranh giới quyền truy cập và lưu trữ riêng.</p>
     <p>Mọi tham chiếu chuẩn dùng <strong>đường dẫn tương đối gốc dự án</strong> — <code>components/&lt;name&gt;/...</code>, <code>ops/ci-cd/...</code> — một hệ địa chỉ chung cho docs, code và ops.</p>
     <p><strong>Hub luôn nằm ở <code>project-hub/</code></strong>, dù bạn cài mới, cài lên dự án có sẵn, hay nâng cấp từ v0.x. Vị trí này không phải chi tiết của việc di chuyển dữ liệu — nó được quyết định ngay khi cài, và bản báo cáo cuối của agent nêu rõ. Một dự án cài mới chưa tạo gì bên trong <code>project-hub/</code> ngoài bản ghi operation, vì phần còn lại là việc của onboarding.</p>
@@ -566,6 +572,30 @@ kafi-aidlc-check</code></pre>
       <li>các approver áp dụng, ví dụ UI/UX authority.</li>
     </ul>
     <p>Câu hỏi không liên quan tới profile đã resolve thì không bao giờ được hỏi. Đó là Evidence or Ask trong thực tế: có bằng chứng thì dùng bằng chứng, không có thì hỏi, không đoán.</p>
+  </section>
+  <section id="join-project">
+    <h2>Tham gia một dự án đã có sẵn</h2>
+    <p>Bạn được đưa một đường dẫn repo Project Hub và không có gì khác. Đó là đủ: thư mục chứa vốn không được version, nó là scaffolding tái dựng được từ <code>components.md</code> trong Hub. Hai đường, cùng một đích — chọn đường nào tuỳ máy bạn đã cài AI-DLC hay chưa.</p>
+    <p><strong>Đường tắt — chưa cài gì.</strong> Mở agent ở một thư mục rỗng mang tên dự án, dán prompt chuẩn ở mục <a href="#canonical-prompt">Prompt chuẩn</a>, rồi dán tiếp đoạn này trong cùng một lượt. Agent gộp cả hai thành <strong>một</strong> bản plan để bạn duyệt một lần.</p>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-join-a" aria-label="Sao chép prompt tham gia dự án">Sao chép</button>
+      <pre id="prompt-join-a"><code>Thư mục này là project container của một dự án AI-DLC đã có sẵn. Project Hub của
+nó ở &lt;đường-dẫn-repo-hub&gt;; hãy clone về project-hub/ thay vì tạo dự án mới. Cài
+release theo đúng cách trên, rồi trình một bản plan bao cả hai.</code></pre>
+      <span class="copy-status" id="prompt-join-a-status" role="status" aria-live="polite"></span>
+    </div>
+    <p><strong>Đường hai bước — đã cài AI-DLC rồi.</strong> Chạy <code>onboarding</code> và đưa đường dẫn Hub khi agent hỏi về Project Hub. Đây là đường thường gặp hơn, vì gói cài thường đã nằm sẵn trên máy.</p>
+    <p class="label label-mutate"><strong>May produce a mutation plan requiring separate approval.</strong></p>
+    <div class="prompt" data-language="text">
+      <button type="button" class="copy" data-copy-target="prompt-join-b" aria-label="Sao chép prompt onboarding khi tham gia">Sao chép</button>
+      <pre id="prompt-join-b"><code>/kafi-aidlc-onboarding</code></pre>
+      <span class="copy-status" id="prompt-join-b-status" role="status" aria-live="polite"></span>
+    </div>
+    <p>Đường nào thì agent cũng làm đúng bốn việc sau: clone Hub về <code>project-hub/</code> và kiểm tra <code>project-hub/.aidlc/project.md</code> đúng là dự án này; đối chiếu phiên bản đã cài với dòng <code>Immutable release identity</code> mà Hub ghi lại; đọc <code>components.md</code>; rồi <strong>hỏi bạn muốn dựng repo nào</strong>.</p>
+    <p>Câu hỏi cuối là chỗ đáng dừng lại. Mặc định là <strong>chỉ Hub</strong>. BA/PM không cần repo code, và thường cũng chưa được cấp quyền vào chúng — một cây dựng thiếu là hình dạng hợp lệ, không phải dự án hỏng. Dev muốn viết code thì chọn thêm các repo mình phụ trách.</p>
+    <p>Hai thứ <code>components.md</code> không mang theo được, và không nên chờ nó mang: môi trường máy — secret, toolchain, <code>.env</code> — vốn không phải sự thật của dự án; và quyền truy cập các remote, do DevOps/SRE cấp. Dựng cây thất bại vì xác thực là một yêu cầu cấp quyền, không phải lỗi.</p>
+    <p>Nếu lệnh <code>/kafi-aidlc-onboarding</code> chưa xuất hiện sau khi cài, xem <a href="#verify-install">Kiểm tra sau cài đặt</a>: host cache danh sách skill theo phiên, và mở chat mới không phải là reload.</p>
   </section>
   <section id="operating-model">
     <h2>Xác nhận Continuous hay Phase-Gated</h2>
