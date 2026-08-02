@@ -71,71 +71,77 @@
 <div class="wrap">
 
   <div class="eyebrow">KAFI Transformation Office · What's New</div>
-  <h1>What's new since v0.3</h1>
-  <p class="lede">If you're still on v0.3, here's what changed across v0.4–v0.8. AI-DLC matured from a linear spec-writer into a <strong>spec-driven, test-verified, audited lifecycle</strong> — for both backend and frontend.</p>
+  <h1>What changed, v0.3 to v1.0.8</h1>
+  <p class="lede">A history, newest first. The v0.x entries are kept because they explain how the method arrived here — <strong>they describe those releases, not the current one</strong>. Anything a v0.x entry says about blocking gates, shipped Python, or <code>curl | bash</code> installation was removed later, and the v1.0 entries say when.</p>
 
-  <h2>The four pillars (where it landed)</h2>
-  <div class="pillars">
-    <div class="pillar"><h3>1 · Spec-driven · FE + BE</h3><p>Every artifact derives from an upstream spec. BE from <code>data-model.md</code> (ENT-NN); FE from <code>design-tokens.md</code> + <code>uiux-spec.md</code> + <code>view-model.md</code> (MVVM). Chain: PRD → REQ → ENT → US → UNIT → TC → ADR.</p></div>
-    <div class="pillar"><h3>2 · Docs kept up-to-date</h3><p><code>kafi-doc-sync</code> keeps <code>aidlc-docs/</code> current with <code>src/</code>; Stage 14c audits doc-currency. Docs are the live contract.</p></div>
-    <div class="pillar"><h3>3 · Audit &amp; verifiable at each gate</h3><p>Spec-conformance trace-back + Hard/Soft checklist + Stage 14c's 5 blocking sub-checks (code · tokens · UI · tests · flow). Gates verify, not rubber-stamp.</p></div>
-    <div class="pillar"><h3>4 · Spec-driven, test-verified</h3><p>QA writes test-plan + test-cases (10b); Dev generates unit test code (14b); audit checks coverage (14c). Tests are the executable spec.</p></div>
-  </div>
-
-  <h2>Release highlights · v0.4 → v0.8</h2>
+  <h2>Release highlights · v1.0</h2>
 
   <div class="rel">
-    <div class="rel-tag">v0.4</div>
-    <h3>State-file discipline + onboarding skill + ownership fixes</h3>
-    <p class="why">Stage cycle now updates <code>aidlc-state.md</code> after every gate (no more stale resume). Added the <code>kafi-aidlc-onboarding</code> skill (3 modes: setup wizard · stage detection · resume). Stage 4 ownership → PM sole; Stage 10 → SA sole.</p>
-    <p class="do"><strong>What you do differently:</strong> run the onboarding skill on a fresh project instead of <code>/init</code>; resume "just works" from state file.</p>
+    <div class="rel-tag">v1.0.8</div>
+    <h3>Authority is a role, not a person</h3>
+    <p class="why">Separation of duties is gone: the executor-cannot-be-sole-acceptor rule, the exception-requester rule, the four-row assurance floor, and the independent-human requirement on production. Roles are accountabilities, so a person acting as SA <em>is</em> the SA; and the separation those rules reached for already exists, because the agent produces the work product and a human decides on it. Onboarding now asks which roles you hold as well as which one you are acting in.</p>
+    <p class="do"><strong>What you do differently:</strong> nothing, if you were already holding several roles — that is the point. No record is marked for it and no gate waits for a second name. Documentation collapsed from ten pages to four.</p>
   </div>
 
   <div class="rel">
-    <div class="rel-tag">v0.5</div>
-    <h3>PRD formalized as a Stage 4 co-deliverable</h3>
-    <p class="why">Stage 4 now produces both a PRD (product narrative · PRD-NN · <em>what / for whom</em>) and Requirements (REQ-NN · <em>how the system behaves</em>, each tracing to a parent PRD-NN). New <code>prd.md</code> template.</p>
-    <p class="do"><strong>What you do differently:</strong> PM writes the PRD first, then derives REQs — no more jumping straight to technical requirements.</p>
+    <div class="rel-tag">v1.0.7</div>
+    <h3>Joining a project that already exists</h3>
+    <p class="why">A container is rebuildable from <code>components.md</code>, and now there is a journey that rebuilds it. Give the agent one Project Hub repository link — with the install request, or later through onboarding — and it clones the Hub, checks the project identity, reconciles the installed release against the one the Hub records, and asks which repositories to materialize.</p>
+    <p class="do"><strong>What you do differently:</strong> hand a new joiner the Hub link and nothing else. PMs and BAs answer "Hub only".</p>
   </div>
 
   <div class="rel">
-    <div class="rel-tag">v0.6</div>
-    <h3>HTML mockups = FE source of truth + fidelity gate</h3>
-    <p class="why">Stage 7 produces self-contained HTML mockups (design-system styled). Stage 14 must reproduce them screen-by-screen — a blocking fidelity gate. No more "the build looks nothing like the design".</p>
-    <p class="do"><strong>What you do differently:</strong> Designer ships real HTML mockups; Dev reproduces them exactly; divergence is rejected at the gate.</p>
+    <div class="rel-tag">v1.0.6</div>
+    <h3>The package ships no code, and nothing blocks the work</h3>
+    <p class="why">Every executable file and JSON schema left the installed package: what a project receives is prose, templates and two reference registries. Conformance is a prose audit the agent runs by reading, as it was from v0.3 to v0.9.1. And no finding blocks: a detector reports what it found, what would fix it, and in what order, and the work continues. Plan, approval and journal digests are gone; the SHA-256 of the downloaded release stays.</p>
+    <p class="do"><strong>What you do differently:</strong> stop looking for a checker to put in CI — there isn't one, and there wasn't one for eleven versions. Read the Markdown plan and approve it in your own words.</p>
   </div>
 
   <div class="rel">
-    <div class="rel-tag">v0.7</div>
-    <h3>QA role + conformance audit + test workflow</h3>
-    <p class="why">New QA role. Stage 14 split into 14a (production code) / 14b (unit test code) / 14c (conformance audit). New templates: <code>design-tokens.md</code>, <code>uiux-spec.md</code>, <code>view-model.md</code>, <code>data-model.md</code>, <code>test-plan.md</code>, <code>test-cases.md</code>, <code>dod.md</code>. AI Review Checklist split Hard (blocking) / Soft (warning).</p>
-    <p class="do"><strong>What you do differently:</strong> QA writes test plans + cases from specs; conformance audit blocks a unit until code/tokens/UI/tests conform.</p>
+    <div class="rel-tag">v1.0.0 – v1.0.5</div>
+    <h3>One core, three generated adapters, prompt-only install</h3>
+    <p class="why">Codex, Claude Code and Kiro are generated projections of one canonical methodology rather than three hand-maintained copies. Installation and upgrade run from a plain prompt against a verified public release. The Unified Project Tree replaced nested repositories: one unversioned project folder, the Hub and every component repository as sibling git roots.</p>
+    <p class="do"><strong>What you do differently:</strong> open your agent in the project folder and paste one prompt. No installer script, no edition to choose.</p>
+  </div>
+
+  <h2>Release highlights · v0.4 → v0.9.1 <span style="font-weight:400;opacity:.7">— history</span></h2>
+
+  <div class="rel">
+    <div class="rel-tag">v0.4 – v0.6</div>
+    <h3>State discipline, onboarding, design-derived UI</h3>
+    <p class="why">The stage cycle began updating its state file after every gate so a session could resume without re-deriving; an onboarding skill replaced ad-hoc setup; UI work started deriving from design tokens and mockups rather than from prose.</p>
   </div>
 
   <div class="rel">
-    <div class="rel-tag">v0.8 · this release</div>
-    <h3>Layouts, code-flow, flow conformance, 14 skills, Operations</h3>
-    <p class="why">view-model gains a <strong>§6 layout sketch</strong> (Mermaid flowchart + ASCII). <code>user-flows.md</code> becomes Mermaid sequence diagrams; new per-unit <code>code-flow.md</code>. Stage 14c gains a <strong>5th sub-check: flow conformance</strong> (code call paths match the diagrams). <strong>14 new skills</strong>: <code>kafi-doc-sync</code>, <code>kafi-verification-loop</code>, <code>kafi-memory</code>, and <code>kafi-code-review</code> + 10 per-language reviewers (TS · Python · Go · Java · Kotlin · C++ · Rust · C# · SQL · Shell). <strong>13 new templates</strong> (now 32 total). Operations (Stage 16/17) formalized into deployment + monitoring runbooks.</p>
-    <p class="do"><strong>What you do differently:</strong> agents read layout from Mermaid; code is audited against declared flows; per-language reviewers run at Stage 14c; deploy + monitor are runbook-driven.</p>
+    <div class="rel-tag">v0.7 – v0.8</div>
+    <h3>Conformance audit and per-language review</h3>
+    <p class="why">Introduced a per-unit conformance audit over code, tokens, UI fidelity, test coverage and flow conformance, and split the review checklist into hard and soft findings. <strong>At the time these blocked a unit.</strong> v1.0.6 removed the blocking outcome entirely — the audit still runs and still reports, but it never stops the work.</p>
   </div>
 
-  <h2>Upgrading from v0.3</h2>
+  <div class="rel">
+    <div class="rel-tag">v0.9 – v0.9.1</div>
+    <h3>The last v0 line</h3>
+    <p class="why">The final v0 releases, and the migration source the v1 bootstrap reads. A v0.3–v0.9.x project upgrades directly to v1; there are no staged hops.</p>
+  </div>
+
+  <h2>Upgrading</h2>
   <div class="migrate">
-    <p style="margin-top:0;"><strong>You don't migrate documents.</strong> Re-install the package — the new stages, templates, and skills apply to work going forward. Your existing <code>00-knowledge/</code> and <code>aidlc-docs/</code> are preserved (the installer never touches them).</p>
-    <pre>
-# macOS / Linux
-curl -fsSL https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.sh | bash
-
-# Windows (PowerShell)
-iwr -useb https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/tools/install.ps1 -OutFile install.ps1; .\install.ps1</pre>
-    <p style="margin-bottom:0;">The installer auto-detects upgrade vs fresh install, backs up your current package files, and pulls the latest release. See the <span class="cta"><a href="KAFI-Installer-Guide.html">Installer Guide</a></span> for flags + safety details.</p>
+    <p style="margin-top:0;"><strong>There is no installer script any more, and you should not run one.</strong> Earlier versions of this page published <code>curl … | bash</code> and PowerShell one-liners. v1.0 installs by prompt: the agent resolves a verified public release, inspects your project, and shows you a plan before touching anything. Open your agent in the project folder and paste:</p>
+    <pre>Use the KAFI AI-DLC Bootstrap Locator at
+https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json.
+Inspect this project and the public release, then present the exact
+installation or upgrade plan. Follow the bootstrap protocol from the release
+being installed, not any copy already present in this project. Do not create,
+update, merge, move, delete, back up, or migrate any project file until I
+approve that plan. Preserve the project root README.md.</pre>
+    <p style="margin-bottom:0;">It detects a v0.x installation, classifies the folder, and asks which topology the project takes rather than inferring it. Nothing is written before you approve. Full protocol in the <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">install and operate guide</a>.</p>
   </div>
 
-  <p class="cta" style="font-size:14px;">Next: read the <a href="KAFI-AIDLC-Introduction.html">Introduction</a> (concepts + 4 pillars) and the <a href="KAFI-AIDLC-Handbook.html">Handbook</a> (per-stage reference). On a project, run the <code>kafi-aidlc-onboarding</code> skill to detect where you are.</p>
+  <p class="cta" style="font-size:14px;">Next: <a href="ai-dlc-v1.0-overview.html">Concepts</a> · <a href="ai-dlc-v1.0-role-guides.html">Scenarios and Roles</a> · <a href="AI-DLC-v1.0-runbook.html">Operating Manual</a>.</p>
 
   <footer>
-    <span>KAFI Transformation Office · v0.8 · What's New (v0.3 → v0.8)</span>
-    <span>Companion: KAFI-AIDLC-Introduction.html · KAFI-AIDLC-Handbook.html · KAFI-Installer-Guide.html</span>
+    <span>KAFI Transformation Office · v1.0.8 · What changed, v0.3 → v1.0.8</span>
+    <span>Companion: ai-dlc-v1.0-overview.html · ai-dlc-v1.0-install-upgrade-by-prompt.html</span>
   </footer>
 
 </div>

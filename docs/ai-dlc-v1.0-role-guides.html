@@ -199,6 +199,7 @@ footer a:hover{text-decoration:underline;}
     <span>KAFI · AI-DLC</span>
   </span>
   <a href="#loop"><span data-i18n lang="en">Loop</span><span data-i18n lang="vi">Vòng lặp</span></a>
+  <a href="#scenarios"><span data-i18n lang="en">Situations</span><span data-i18n lang="vi">Tình huống</span></a>
   <a href="#matrix"><span data-i18n lang="en">Matrix</span><span data-i18n lang="vi">Ma trận</span></a>
   <a href="#pm"><span class="rd" style="--rc:var(--pm)"></span>PM / PO</a>
   <a href="#ba"><span class="rd" style="--rc:var(--ba)"></span>BA</a>
@@ -225,429 +226,213 @@ footer a:hover{text-decoration:underline;}
 
   <header>
     <div class="kicker">KAFI Securities · Methodology Layer</div>
-    <h1 data-i18n lang="en">AI-DLC <span class="v">v1.0</span> · Role Guides</h1><h1 data-i18n lang="vi">AI-DLC <span class="v">v1.0</span> · Hướng dẫn theo vai trò</h1>
-    <p class="subtitle"><span data-i18n lang="en">How each role runs the system — and what changes per project profile</span><span data-i18n lang="vi">Cách mỗi role vận hành hệ thống — và điều gì thay đổi theo từng project profile</span></p>
-    <p class="lede"><span data-i18n lang="en">Every role uses the <b>same four commands</b>; the engine resolves what is applicable from the <b>Project Profile</b> (<code>Entry × Scope × Relationship × Work type</code>) and the operating model. So each guide below is written as a <b>base flow</b> — identical for every project — plus a <b>delta table</b>: what changes for <i>you</i> when the profile changes. You never manually skip a stage; capabilities that don't apply simply never reach you.</span><span data-i18n lang="vi">Mọi role dùng chung <b>bốn command</b>; engine tự resolve những gì applicable từ <b>Project Profile</b> (<code>Entry × Scope × Relationship × Work type</code>) và operating model. Vì vậy mỗi hướng dẫn dưới đây gồm một <b>base flow</b> — giống hệt nhau cho mọi dự án — cộng một <b>bảng delta</b>: điều gì thay đổi cho <i>bạn</i> khi profile thay đổi. Bạn không bao giờ phải tự tay bỏ qua một stage; capability nào không áp dụng thì đơn giản là không bao giờ đến tay bạn.</span></p>
+    <h1 data-i18n lang="en">AI-DLC <span class="v">v1.0</span> · Scenarios and Roles</h1><h1 data-i18n lang="vi">AI-DLC <span class="v">v1.0</span> · Kịch bản và vai trò</h1>
+    <p class="subtitle"><span data-i18n lang="en">Start from your situation, not from your job title</span><span data-i18n lang="vi">Bắt đầu từ tình huống của bạn, không phải từ chức danh</span></p>
+    <p class="lede"><span data-i18n lang="en">Nobody arrives asking what a BA does. They arrive with a situation: an empty folder, a legacy system, or a repository link somebody sent them. Find your situation below, run it, and read your role guide afterwards for the detail. Every step here ends in a command you can type or a decision only you can make — there is no third kind of step.</span><span data-i18n lang="vi">Không ai đến với câu hỏi "BA làm gì". Người ta đến với một tình huống: một thư mục rỗng, một hệ thống cũ, hoặc một đường dẫn repo ai đó vừa gửi. Tìm tình huống của bạn bên dưới, chạy nó, rồi đọc phần vai trò để biết chi tiết. Mọi bước ở đây kết thúc bằng một lệnh bạn gõ được hoặc một quyết định chỉ bạn mới đưa ra được — không có loại bước thứ ba.</span></p>
     <div class="chips">
-      <span class="chip"><span class="d"></span><span data-i18n lang="en"><b>4</b>&nbsp;commands · same for every role</span><span data-i18n lang="vi"><b>4</b>&nbsp;command · chung cho mọi role</span></span>
-      <span class="chip"><span class="d"></span><span data-i18n lang="en">roles = accountabilities, not headcount</span><span data-i18n lang="vi">role = accountability, không phải headcount</span></span>
-      <span class="chip"><span class="d"></span><span data-i18n lang="en">agent executes · you decide at gates</span><span data-i18n lang="vi">agent thực thi · bạn quyết định tại gate</span></span>
+      <span class="chip"><span class="d"></span><span data-i18n lang="en"><b>4</b>&nbsp;commands · same for every role</span><span data-i18n lang="vi"><b>4</b>&nbsp;lệnh · chung cho mọi vai</span></span>
+      <span class="chip"><span class="d"></span><span data-i18n lang="en">roles = accountabilities, not headcount</span><span data-i18n lang="vi">vai trò = accountability, không phải headcount</span></span>
+      <span class="chip"><span class="d"></span><span data-i18n lang="en">agent produces · you decide</span><span data-i18n lang="vi">agent tạo ra · bạn quyết định</span></span>
       <span class="chip"><span class="d"></span>Rule 0 · evidence or ask</span>
     </div>
   </header>
 
-  <!-- UNIVERSAL LOOP -->
   <section id="loop">
-    <div class="sh"><span class="snum">01</span><h2><span data-i18n lang="en">The universal loop — every role, every profile</span><span data-i18n lang="vi">Vòng lặp chung — mọi role, mọi profile</span></h2></div>
-    <p class="sdesc"><span data-i18n lang="en">You interact through four intents. Free-form conversation still works, but every governed action routes through these — no wording bypasses a gate or a missing parent artifact.</span><span data-i18n lang="vi">Bạn tương tác qua bốn intent. Trò chuyện tự do vẫn hoạt động, nhưng mọi hành động có governance đều đi qua bốn cổng này — không cách diễn đạt nào vượt được gate hay artifact cha còn thiếu.</span></p>
-
-    <div class="cmds">
-      <div class="cmd"><div class="cn">/kafi-aidlc-onboarding</div><h3><span data-i18n lang="en">"How do I start?"</span><span data-i18n lang="vi">"Bắt đầu thế nào?"</span></h3><p><span data-i18n lang="en">State-aware: detects fresh / legacy / v1, Hub or component, open migration. Asks <b>only missing or conflicting</b> info; a wizard resolves the Project Profile for new projects.</span><span data-i18n lang="vi">State-aware: nhận diện dự án mới / legacy / v1, Hub hay component, migration đang mở. <b>Chỉ hỏi thông tin còn thiếu hoặc mâu thuẫn</b>; wizard chốt Project Profile cho dự án mới.</span></p></div>
-      <div class="cmd"><div class="cn">/kafi-aidlc-status</div><h3><span data-i18n lang="en">"Where are we?"</span><span data-i18n lang="vi">"Dự án đang ở đâu?"</span></h3><p><span data-i18n lang="en">Read-only. Operating model, active work, pending gates, blockers, <code>Impacted</code> artifacts, mainstream baseline, UAT state + recommended actions.</span><span data-i18n lang="vi">Read-only. Operating model, work đang chạy, gate chờ duyệt, blocker, artifact <code>Impacted</code>, mainstream baseline, trạng thái UAT + hành động đề xuất.</span></p></div>
-      <div class="cmd"><div class="cn">/kafi-aidlc-next</div><h3><span data-i18n lang="en">"What do I do next?"</span><span data-i18n lang="vi">"Tôi nên làm gì tiếp?"</span></h3><p><span data-i18n lang="en">Resolves your highest-priority eligible action, confirms identity/acting role, reconciles exact revisions, asks &amp; records, executes, then presents the next human gate.</span><span data-i18n lang="vi">Resolve hành động hợp lệ ưu tiên cao nhất, xác nhận identity/acting role, reconcile đúng revision, hỏi &amp; record, thực thi, rồi trình human gate kế tiếp.</span></p></div>
-      <div class="cmd"><div class="cn">/kafi-aidlc-check</div><h3><span data-i18n lang="en">"Is anything wrong?"</span><span data-i18n lang="vi">"Có gì đang sai không?"</span></h3><p><span data-i18n lang="en">Read-only by default: completeness, traceability, freshness, contract pins, unanswered questions, evidence gaps. Repair needs an approved plan.</span><span data-i18n lang="vi">Read-only mặc định: completeness, traceability, freshness, contract pin, câu hỏi chưa trả lời, evidence gap. Muốn sửa phải có repair plan được duyệt.</span></p></div>
-    </div>
-
-    <div class="g3" style="margin-top:14px">
-      <div class="prow"><div class="k"><span data-i18n lang="en">At every gate</span><span data-i18n lang="vi">Tại mọi gate</span></div><div class="val"><span data-i18n lang="en">You choose <b>Request Changes</b> or <b>Approve</b>. The agent revises on the same dossier and returns until you approve. Approval binds the <b>exact content revision</b> — a changed artifact has no valid approval.</span><span data-i18n lang="vi">Bạn chọn <b>Request Changes</b> hoặc <b>Approve</b>. Agent sửa trên cùng dossier và trình lại cho đến khi bạn approve. Approval gắn với <b>exact content revision</b> — artifact đã đổi thì approval cũ không còn hiệu lực.</span></div></div>
-      <div class="prow"><div class="k"><span data-i18n lang="en">Your identity matters</span><span data-i18n lang="vi">Danh tính của bạn quan trọng</span></div><div class="val"><span data-i18n lang="en">A gated decision carries an authority result <b>and</b> identity assurance against the exact <code>team.md</code> revision. A chat message or display name is not evidence; the agent is never an approver.</span><span data-i18n lang="vi">Mỗi quyết định tại gate mang kết quả authority <b>và</b> identity assurance đối chiếu đúng revision <code>team.md</code>. Tin nhắn chat hay display name không phải bằng chứng; agent không bao giờ là người approve.</span></div></div>
-      <div class="prow"><div class="k"><span data-i18n lang="en">Answers become records</span><span data-i18n lang="vi">Câu trả lời thành record</span></div><div class="val"><span data-i18n lang="en">Every work-affecting question and your answer is recorded as an interaction. If evidence is missing, the agent <b>asks</b> — it never assumes a project fact on your behalf.</span><span data-i18n lang="vi">Mọi câu hỏi ảnh hưởng công việc và câu trả lời của bạn đều được ghi thành interaction record. Thiếu bằng chứng thì agent <b>hỏi</b> — không bao giờ tự assume một project fact thay bạn.</span></div></div>
-    </div>
+    <h2><span data-i18n lang="en">The loop — four commands, every role</span><span data-i18n lang="vi">Vòng lặp — bốn lệnh, mọi vai trò</span></h2>
+    <p><span data-i18n lang="en">There are four. They do not change by role, by profile, or by operating model; what changes is what the engine decides is applicable to you. Full reference in the <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">install and operate guide</a>.</span><span data-i18n lang="vi">Có bốn lệnh. Chúng không đổi theo vai trò, theo profile, hay theo operating model; cái đổi là những gì engine xác định là áp dụng cho bạn. Tham chiếu đầy đủ ở <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">hướng dẫn cài đặt và vận hành</a>.</span></p>
+    <div class="tbl"><table>
+      <thead><tr><th><span data-i18n lang="en">Command</span><span data-i18n lang="vi">Lệnh</span></th><th><span data-i18n lang="en">You are asking</span><span data-i18n lang="vi">Bạn đang hỏi</span></th></tr></thead>
+      <tbody>
+        <tr><td><code>/kafi-aidlc-onboarding</code></td><td><span data-i18n lang="en">How do I start, or join?</span><span data-i18n lang="vi">Bắt đầu, hoặc tham gia, thế nào?</span></td></tr>
+        <tr><td><code>/kafi-aidlc-status</code></td><td><span data-i18n lang="en">Where are we?</span><span data-i18n lang="vi">Đang ở đâu?</span></td></tr>
+        <tr><td><code>/kafi-aidlc-next</code></td><td><span data-i18n lang="en">What do I do next?</span><span data-i18n lang="vi">Làm gì tiếp?</span></td></tr>
+        <tr><td><code>/kafi-aidlc-check</code></td><td><span data-i18n lang="en">Is anything wrong?</span><span data-i18n lang="vi">Có gì sai không?</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><span data-i18n lang="en"><b>At every gate the agent produces and you decide.</b> That is also why nothing in this methodology asks for a second person: the producer and the decider are already different parties. One person holding four roles approves their own project's gates, and no record is marked for it.</span><span data-i18n lang="vi"><b>Ở mọi gate, agent tạo ra và bạn quyết định.</b> Đó cũng là lý do phương pháp này không đòi người thứ hai ở bất kỳ đâu: bên tạo ra và bên quyết định vốn đã khác nhau. Một người giữ bốn vai vẫn duyệt gate của chính dự án mình, và không bản ghi nào bị đánh dấu vì điều đó.</span></p>
   </section>
 
-  <!-- MATRIX -->
+  <section id="scenarios">
+    <h2><span data-i18n lang="en">Six situations</span><span data-i18n lang="vi">Sáu tình huống</span></h2>
+    <p><span data-i18n lang="en">Pick the one you are in. Each names who usually leads it — usually, not exclusively; the commands are the same whoever runs them.</span><span data-i18n lang="vi">Chọn tình huống bạn đang gặp. Mỗi kịch bản nêu ai thường dẫn dắt — thường thôi, không độc quyền; lệnh vẫn thế dù ai chạy.</span></p>
+
+    <h3 id="s-greenfield"><span data-i18n lang="en">1 · New product, nothing exists yet — PM leads</span><span data-i18n lang="vi">1 · Sản phẩm mới, chưa có gì — PM dẫn</span></h3>
+    <ol>
+      <li><span data-i18n lang="en">Create an empty folder named after the project. Do not <code>git init</code> — the container is scaffolding, not a repository.</span><span data-i18n lang="vi">Tạo thư mục rỗng đặt tên theo dự án. Đừng <code>git init</code> — thư mục chứa là scaffolding, không phải repo.</span></li>
+      <li><span data-i18n lang="en">Open your agent there and paste the canonical prompt from the <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html#canonical-prompt">install guide</a>. Read the plan; approve it in your own words.</span><span data-i18n lang="vi">Mở agent ở đó và dán prompt chuẩn trong <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html#canonical-prompt">hướng dẫn cài đặt</a>. Đọc plan; duyệt bằng lời của bạn.</span></li>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">answer identity, the roles you hold, the Hub, and the profile. The wizard asks only what no repository can witness.</span><span data-i18n lang="vi">trả lời danh tính, các vai bạn giữ, Hub, và profile. Wizard chỉ hỏi những gì không repo nào chứng thực được.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">the agent drafts the brief, vision and requirements; you approve at the Requirements gate.</span><span data-i18n lang="vi">agent soạn brief, vision và requirements; bạn duyệt ở gate Requirements.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en">If no Hub repository exists yet, answer <b>local-first</b>. The Hub starts as a local Git repository and binds a remote later; it is recorded as an open item, not a blocker.</span><span data-i18n lang="vi">Nếu chưa có repo Hub, trả lời <b>local-first</b>. Hub khởi tạo như một repo Git cục bộ và gắn remote sau; nó được ghi là open item, không phải blocker.</span></p>
+
+    <h3 id="s-brownfield"><span data-i18n lang="en">2 · A legacy system to understand — SA leads</span><span data-i18n lang="vi">2 · Hệ thống cũ cần hiểu — SA dẫn</span></h3>
+    <ol>
+      <li><span data-i18n lang="en">Create the container. Clone the legacy repository to <code>components/&lt;name&gt;/</code> — clone, not copy: reverse engineering keys its knowledge base to the entry commit, and a folder without <code>.git</code> has no revision to key to.</span><span data-i18n lang="vi">Tạo thư mục chứa. Clone repo cũ vào <code>components/&lt;name&gt;/</code> — clone chứ không chép: reverse engineering khoá cơ sở tri thức theo commit vào, và thư mục không có <code>.git</code> thì không có revision nào để khoá.</span></li>
+      <li><span data-i18n lang="en">Drop existing documents anywhere in the container. Do not file them into <code>project-hub/</code> by hand — moving them there is an approved row in a plan, with path, digest and approver.</span><span data-i18n lang="vi">Thả tài liệu cũ vào bất cứ đâu trong thư mục chứa. Đừng tự tay đưa vào <code>project-hub/</code> — việc đó là một hàng được duyệt trong plan, có đường dẫn, digest và người duyệt.</span></li>
+      <li><span data-i18n lang="en">Install with the canonical prompt. The plan now covers the package rows <em>and</em> asks about every content group it discovered.</span><span data-i18n lang="vi">Cài bằng prompt chuẩn. Plan lúc này bao cả các hàng của gói cài <em>và</em> hỏi về từng nhóm nội dung nó phát hiện.</span></li>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">answer <b>brownfield</b>, and answer each content group: promote, leave in place, or out of scope.</span><span data-i18n lang="vi">trả lời <b>brownfield</b>, và trả lời từng nhóm nội dung: promote, giữ nguyên chỗ, hay ngoài phạm vi.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">reverse engineering runs: skim everything, deep-read where a claim needs behaviour, propose the impact boundary. <b>You confirm the boundary</b> — it is an output of the read, never a precondition for it.</span><span data-i18n lang="vi">reverse engineering chạy: skim toàn bộ, đọc sâu ở chỗ một khẳng định cần hành vi, đề xuất impact boundary. <b>Bạn xác nhận boundary</b> — nó là kết quả của lượt đọc, không bao giờ là điều kiện để đọc.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">deep and dependency analysis inside the confirmed boundary, plus the Legacy Health Baseline, measured by running the existing suite at the entry commit.</span><span data-i18n lang="vi">phân tích sâu và phụ thuộc bên trong boundary đã xác nhận, cùng Legacy Health Baseline, đo bằng cách chạy thật bộ test tại commit vào.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en">Read the output for evidence levels before anything else: a claim marked <code>skim</code> is a proposal about how the system probably works and says so. Where old documents and the code disagree, both are recorded and <b>the disagreement is the finding</b>.</span><span data-i18n lang="vi">Đọc kết quả thì nhìn mức bằng chứng trước tiên: khẳng định mức <code>skim</code> là đề xuất về việc hệ thống có lẽ chạy thế nào, và nó tự nói vậy. Chỗ tài liệu cũ và code mâu thuẫn thì cả hai được ghi lại, và <b>chính sự mâu thuẫn là phát hiện</b>.</span></p>
+
+    <h3 id="s-provision-join"><span data-i18n lang="en">3 · SA provisions, everyone else joins</span><span data-i18n lang="vi">3 · SA dựng, những người khác tham gia</span></h3>
+    <p><span data-i18n lang="en">This is the normal way a team of more than one starts. It has two halves.</span><span data-i18n lang="vi">Đây là cách một đội nhiều hơn một người bắt đầu. Nó có hai nửa.</span></p>
+    <p><b><span data-i18n lang="en">SA, once:</span><span data-i18n lang="vi">SA, làm một lần:</span></b></p>
+    <ol>
+      <li><span data-i18n lang="en">Ask DevOps/SRE to create the Hub repository and grant access. The agent never creates the Hub remote by itself, and never adopts a repository because its name looks right.</span><span data-i18n lang="vi">Đề nghị DevOps/SRE tạo repo Hub và cấp quyền. Agent không bao giờ tự tạo remote Hub, và không nhận một repo làm Hub chỉ vì tên nó trông giống.</span></li>
+      <li><span data-i18n lang="en">Build the container and install, then <code>/kafi-aidlc-onboarding</code> to bind that remote as this project's Hub.</span><span data-i18n lang="vi">Dựng thư mục chứa và cài, rồi <code>/kafi-aidlc-onboarding</code> để gắn remote đó làm Hub của dự án.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">declare the component and ops repositories in <code>components.md</code>: each with its kind, tree path, remote and owner team. This table is the manifest everyone else's machine is rebuilt from.</span><span data-i18n lang="vi">khai báo các repo component và ops trong <code>components.md</code>: mỗi repo với kind, đường dẫn trong cây, remote và đội sở hữu. Bảng này là manifest để dựng lại máy của mọi người khác.</span></li>
+      <li><span data-i18n lang="en">Send the Hub repository link to the team. That link is the whole handover.</span><span data-i18n lang="vi">Gửi đường dẫn repo Hub cho đội. Đường dẫn đó là toàn bộ phần bàn giao.</span></li>
+    </ol>
+    <p><b><span data-i18n lang="en">Everyone else, on their own machine:</span><span data-i18n lang="vi">Những người khác, trên máy mình:</span></b></p>
+    <ol>
+      <li><span data-i18n lang="en">Create an empty folder, install with the canonical prompt — and in the same message say the folder is the container of an existing project and give the Hub link. One plan, one approval.</span><span data-i18n lang="vi">Tạo thư mục rỗng, cài bằng prompt chuẩn — và trong cùng lượt nói rằng thư mục là container của một dự án đã có, kèm đường dẫn Hub. Một plan, một lần duyệt.</span></li>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">if the package was already installed, this is where the Hub link goes instead. The agent clones the Hub, checks that <code>project.md</code> identifies this project, compares the installed release against the one the Hub records, reads <code>components.md</code>, and <b>asks which repositories to materialize</b>.</span><span data-i18n lang="vi">nếu gói cài đã có sẵn thì đây là chỗ đưa đường dẫn Hub. Agent clone Hub, kiểm tra <code>project.md</code> đúng là dự án này, đối chiếu phiên bản đã cài với phiên bản Hub ghi lại, đọc <code>components.md</code>, và <b>hỏi bạn muốn dựng repo nào</b>.</span></li>
+      <li><span data-i18n lang="en"><b>PM, BA, Designer: answer "Hub only".</b> You need no code repository and often hold no grant for one; a partial tree is a legitimate shape, not a broken project. Developers add the repositories they work in.</span><span data-i18n lang="vi"><b>PM, BA, Designer: trả lời "chỉ Hub".</b> Bạn không cần repo code và thường cũng chưa được cấp quyền; cây dựng thiếu là hình dạng hợp lệ, không phải dự án hỏng. Dev thì thêm các repo mình làm.</span></li>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">where the project stands, what is waiting on you.</span><span data-i18n lang="vi">dự án đang ở đâu, gì đang chờ bạn.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en">Two things <code>components.md</code> cannot carry: your local environment — secrets, toolchain, <code>.env</code> — which is not project truth, and access to the remotes, which SRE grants. A materialization that fails on authentication is an access request, not a defect.</span><span data-i18n lang="vi">Hai thứ <code>components.md</code> không mang theo được: môi trường máy bạn — secret, toolchain, <code>.env</code> — vốn không phải sự thật của dự án; và quyền truy cập các remote, do SRE cấp. Dựng cây thất bại vì xác thực là một yêu cầu cấp quyền, không phải lỗi.</span></p>
+
+    <h3 id="s-many-roles"><span data-i18n lang="en">4 · One person, several roles</span><span data-i18n lang="vi">4 · Một người, nhiều vai</span></h3>
+    <p><span data-i18n lang="en">You are PM and BA. Or SA and Tech Lead and Dev. This is the ordinary KAFI engagement and the methodology asks nothing extra of it.</span><span data-i18n lang="vi">Bạn vừa là PM vừa là BA. Hoặc vừa SA vừa Tech Lead vừa Dev. Đây là dạng dự án KAFI thường gặp, và phương pháp không đòi hỏi gì thêm ở nó.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">name every role you hold, not just the one you feel most like today. They go into <code>team.md</code>. Write the same name in as many rows as it truly holds; <b>inventing a colleague to fill a row is the only thing here that breaks an audit</b>.</span><span data-i18n lang="vi">nêu mọi vai bạn giữ, không chỉ vai bạn thấy giống mình nhất hôm nay. Chúng vào <code>team.md</code>. Ghi trùng tên ở đúng số dòng bạn thật sự giữ; <b>bịa ra một đồng nghiệp để lấp dòng mới là thứ duy nhất ở đây làm hỏng audit</b>.</span></li>
+      <li><span data-i18n lang="en">When a gate comes, say which role you are acting in. The record carries that role. Changing hats later is a recorded interaction and needs no justification.</span><span data-i18n lang="vi">Khi tới một gate, nói bạn đang đóng vai nào. Bản ghi mang vai đó. Đổi mũ về sau là một interaction được ghi lại và không cần biện minh.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">continue. Nothing asks for a second person, nothing withholds a gate for the want of one, and no record is marked because you hold more than one role.</span><span data-i18n lang="vi">tiếp tục. Không gì đòi người thứ hai, không gì giữ lại một gate vì thiếu người thứ hai, và không bản ghi nào bị đánh dấu vì bạn giữ nhiều vai.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en"><b>Why there is no rule here.</b> Authority attaches to the role, so a person acting as SA <em>is</em> the SA — a rule that fired because that human also held another role would be counting heads, which contradicts roles being accountabilities. And the separation such rules reach for already exists: the agent produced the work product, you decided on it. Earlier versions carried an assurance floor and a separation-of-duties table; v1.0.8 removed them, because their one real effect was telling small teams their shape was a deficiency.</span><span data-i18n lang="vi"><b>Vì sao ở đây không có luật nào.</b> Thẩm quyền gắn vào vai trò, nên người đang đóng vai SA <em>chính là</em> SA — một luật kích hoạt vì con người đó còn giữ vai khác là quay lại đếm đầu người, mâu thuẫn với việc vai trò là accountability. Và sự tách bạch mà các luật đó nhắm tới vốn đã có sẵn: agent tạo ra sản phẩm, bạn quyết định về nó. Các bản trước có bảng mức đảm bảo và bảng tách quyền; v1.0.8 gỡ bỏ, vì tác dụng thật duy nhất của chúng là nói với đội nhỏ rằng hình dạng của họ là một khiếm khuyết.</span></p>
+
+    <h3 id="s-vendor"><span data-i18n lang="en">5 · Work delivered by a vendor</span><span data-i18n lang="vi">5 · Công việc do nhà thầu thực hiện</span></h3>
+    <ol>
+      <li><span data-i18n lang="en">SA declares the engagement per component in <code>components.md</code>: who provides it, who executes, who accepts.</span><span data-i18n lang="vi">SA khai báo hình thức hợp tác theo từng component trong <code>components.md</code>: ai cung cấp, ai thực thi, ai nghiệm thu.</span></li>
+      <li><span data-i18n lang="en">The vendor receives a <b>pruned materialization</b>: a read-only subset of the Hub plus only the components assigned to them. They run the same four commands in it.</span><span data-i18n lang="vi">Nhà thầu nhận một <b>bản dựng rút gọn</b>: một phần Hub chỉ đọc, cộng đúng các component được giao. Họ chạy cùng bốn lệnh trong đó.</span></li>
+      <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">KAFI-side review of integration evidence and contract compatibility before acceptance.</span><span data-i18n lang="vi">phía KAFI xem lại bằng chứng tích hợp và tương thích contract trước khi nghiệm thu.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en">Shared artifacts and cross-component integration keep <b>one</b> Project SA authority, whatever each component's engagement is. Whether the vendor may accept their own deliverable is a term of your contract, not a rule this methodology enforces.</span><span data-i18n lang="vi">Artifact dùng chung và tích hợp liên component vẫn thuộc <b>một</b> Project SA duy nhất, bất kể từng component hợp tác kiểu gì. Việc nhà thầu có được tự nghiệm thu sản phẩm của mình hay không là điều khoản hợp đồng của bạn, không phải luật do phương pháp này áp đặt.</span></p>
+
+    <h3 id="s-upgrade"><span data-i18n lang="en">6 · A project already on v0.x</span><span data-i18n lang="vi">6 · Dự án đang ở v0.x</span></h3>
+    <ol>
+      <li><span data-i18n lang="en">Run the canonical install prompt in the existing project folder. It detects the v0.x fingerprint and classifies the folder as a <b>legacy source to be restructured</b> — neither a container nor a component.</span><span data-i18n lang="vi">Chạy prompt cài đặt chuẩn trong thư mục dự án hiện có. Nó nhận diện dấu vân tay v0.x và phân loại thư mục là <b>nguồn cũ cần tái cấu trúc</b> — không phải container, cũng không phải component.</span></li>
+      <li><span data-i18n lang="en">The plan asks which topology the project takes. It is never inferred. Read the Move rows before approving: under one answer the whole folder, <code>.git</code> included, becomes <code>project-hub/</code>.</span><span data-i18n lang="vi">Plan hỏi dự án theo topology nào. Nó không bao giờ tự suy ra. Đọc các hàng Move trước khi duyệt: với một trong hai đáp án, cả thư mục kể cả <code>.git</code> trở thành <code>project-hub/</code>.</span></li>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">then <code>/kafi-aidlc-check</code> to see what the migration left open.</span><span data-i18n lang="vi">rồi <code>/kafi-aidlc-check</code> để xem migration còn để lại gì.</span></li>
+    </ol>
+  </section>
+
   <section id="matrix">
-    <div class="sh"><span class="snum">02</span><h2><span data-i18n lang="en">Who is activated, per scope</span><span data-i18n lang="vi">Ai được kích hoạt, theo scope</span></h2></div>
-    <p class="sdesc"><span data-i18n lang="en">The Scope dimension decides which roles the engine ever involves. A dash means the role is <b>never asked</b> on that scope — not "skipped", simply Not Applicable with a recorded reason.</span><span data-i18n lang="vi">Chiều Scope quyết định engine có bao giờ gọi đến role đó hay không. Dấu gạch nghĩa là role <b>không bao giờ bị hỏi</b> trên scope đó — không phải "bị bỏ qua", mà là Not Applicable có ghi lý do.</span></p>
-    <div class="scroll">
-      <table class="matrix">
-        <thead><tr><th style="text-align:left;padding-left:12px;">Role</th><th>full-product</th><th>backend</th><th>frontend</th><th>data</th><th>infrastructure</th><th>component-internal</th></tr></thead>
-        <tbody>
-          <tr><td class="role"><b>PM / PO</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
-          <tr><td class="role"><b>BA</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td></tr>
-          <tr><td class="role"><b>Designer</b></td><td><span class="on">●</span></td><td><span class="off">—</span></td><td><span class="on">●</span></td><td><span class="off">—</span></td><td><span class="off">—</span></td><td><span class="tr">◐</span></td></tr>
-          <tr><td class="role"><b>SA</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td></tr>
-          <tr><td class="role"><b>Tech Lead</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
-          <tr><td class="role"><b>Dev</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td></tr>
-          <tr><td class="role"><b>QA (human)</b></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td><td><span class="tr">◐</span></td></tr>
-          <tr><td class="role"><b>DevOps / SRE</b></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="on">●</span></td><td><span class="tr">◐</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mkey">
-      <span><b class="on">●</b>&nbsp;<span data-i18n lang="en">activated when scope applies</span><span data-i18n lang="vi">kích hoạt khi scope áp dụng</span></span>
-      <span><b class="tr">◐</b>&nbsp;<span data-i18n lang="en">triggered — only on impact, risk or policy</span><span data-i18n lang="vi">triggered — chỉ khi có impact, risk hoặc policy</span></span>
-      <span><b class="off">—</b>&nbsp;<span data-i18n lang="en">never asked on this scope</span><span data-i18n lang="vi">không bao giờ bị hỏi trên scope này</span></span>
-      <span style="color:var(--t3)"><span data-i18n lang="en">· Vendor roles appear only when the Relationship dimension declares them (see <a href="#vendor">Vendor</a>).</span><span data-i18n lang="vi">· Vendor role chỉ xuất hiện khi chiều Relationship khai báo (xem <a href="#vendor">Vendor</a>).</span></span>
-    </div>
+    <h2><span data-i18n lang="en">What the engine activates for you</span><span data-i18n lang="vi">Engine kích hoạt gì cho bạn</span></h2>
+    <p><span data-i18n lang="en">Applicability is resolved from the Project Profile — <code>Entry × Scope × Delivery relationship × Work type</code> — not from your job title. A question irrelevant to the resolved profile is never asked, and an artifact that is Not Applicable is never reported missing.</span><span data-i18n lang="vi">Tính áp dụng được xác định từ Project Profile — <code>Entry × Scope × Delivery relationship × Work type</code> — không phải từ chức danh của bạn. Câu hỏi không liên quan tới profile đã resolve thì không bao giờ được hỏi, và artifact ở trạng thái Not Applicable không bao giờ bị báo là thiếu.</span></p>
+    <div class="tbl"><table>
+      <thead><tr><th><span data-i18n lang="en">Role</span><span data-i18n lang="vi">Vai trò</span></th><th><span data-i18n lang="en">Owns</span><span data-i18n lang="vi">Sở hữu</span></th><th><span data-i18n lang="en">Gate</span><span data-i18n lang="vi">Gate</span></th></tr></thead>
+      <tbody>
+        <tr><td>PO/PM</td><td><span data-i18n lang="en">scope · priority · Ready · UAT acceptance · baseline activation</span><span data-i18n lang="vi">phạm vi · ưu tiên · Ready · nghiệm thu UAT · kích hoạt baseline</span></td><td><span data-i18n lang="en">Requirements · UAT · Baseline</span><span data-i18n lang="vi">Requirements · UAT · Baseline</span></td></tr>
+        <tr><td>BA</td><td><span data-i18n lang="en">business analysis and review</span><span data-i18n lang="vi">phân tích nghiệp vụ và rà soát</span></td><td><span data-i18n lang="en">none of its own — reviews inside Requirements</span><span data-i18n lang="vi">không có gate riêng — rà soát trong Requirements</span></td></tr>
+        <tr><td><span data-i18n lang="en">Designer</span><span data-i18n lang="vi">Designer</span></td><td><span data-i18n lang="en">UI/UX approval where UI applies</span><span data-i18n lang="vi">duyệt UI/UX khi có UI</span></td><td><span data-i18n lang="en">UI/UX — triggered by scope</span><span data-i18n lang="vi">UI/UX — kích hoạt theo scope</span></td></tr>
+        <tr><td>SA</td><td><span data-i18n lang="en">architecture · shared contracts · NFRs · topology</span><span data-i18n lang="vi">kiến trúc · contract dùng chung · NFR · topology</span></td><td><span data-i18n lang="en">Architecture · Technical Design</span><span data-i18n lang="vi">Architecture · Technical Design</span></td></tr>
+        <tr><td>Tech Lead</td><td><span data-i18n lang="en">unit delivery · local technical design</span><span data-i18n lang="vi">giao hàng theo unit · thiết kế kỹ thuật cục bộ</span></td><td><span data-i18n lang="en">Technical Done</span><span data-i18n lang="vi">Technical Done</span></td></tr>
+        <tr><td>Dev</td><td><span data-i18n lang="en">reviews agent output</span><span data-i18n lang="vi">rà soát đầu ra của agent</span></td><td><span data-i18n lang="en">none mandatory</span><span data-i18n lang="vi">không bắt buộc gate nào</span></td></tr>
+        <tr><td>QA</td><td><span data-i18n lang="en">optional specialist; agent writes plans and tests</span><span data-i18n lang="vi">chuyên gia tuỳ chọn; agent viết test plan và test</span></td><td><span data-i18n lang="en">triggered by policy or risk</span><span data-i18n lang="vi">kích hoạt theo policy hoặc rủi ro</span></td></tr>
+        <tr><td>DevOps/SRE</td><td><span data-i18n lang="en">provisioning · access · production release</span><span data-i18n lang="vi">cấp phát · quyền truy cập · phát hành production</span></td><td><span data-i18n lang="en">SRE handoff · production</span><span data-i18n lang="vi">bàn giao SRE · production</span></td></tr>
+        <tr><td><span data-i18n lang="en">Vendor</span><span data-i18n lang="vi">Nhà thầu</span></td><td><span data-i18n lang="en">assigned components, pruned tree</span><span data-i18n lang="vi">các component được giao, cây rút gọn</span></td><td><span data-i18n lang="en">per engagement in <code>components.md</code></span><span data-i18n lang="vi">theo hình thức hợp tác trong <code>components.md</code></span></td></tr>
+      </tbody>
+    </table></div>
   </section>
 
-  <!-- ============ PM / PO ============ -->
   <section id="pm">
-    <div class="rolesec" style="--rc:var(--pm)">
-      <div class="rhead"><span class="rdot"></span><h3>PM / PO</h3><span class="rmiss"><span data-i18n lang="en">— owns the Discovery track: problem, scope, priority, acceptance, activation.</span><span data-i18n lang="vi">— sở hữu Discovery track: vấn đề, scope, độ ưu tiên, acceptance, activation.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">Project Configuration</span><span class="gate">Requirements</span><span class="gate">Delivery Scope / Ready</span><span class="gate">UAT Acceptance</span><span class="gate">Baseline Activation</span><span class="gate">Migration Plan / Cutover</span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Resolve the profile</span><span data-i18n lang="vi">Chốt profile</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">The wizard walks you through Entry, Scope, Relationship, Work type, operating model and approvers. You approve the <b>Project Configuration</b> gate. Irrelevant questions are never asked.</span><span data-i18n lang="vi">Wizard dẫn bạn qua Entry, Scope, Relationship, Work type, operating model và người approve. Bạn duyệt gate <b>Project Configuration</b>. Câu hỏi không liên quan không bao giờ được hỏi.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Frame work in plain language</span><span data-i18n lang="vi">Mô tả công việc bằng ngôn ngữ tự nhiên</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Describe the problem, outcome and acceptance intent. The agent drafts requirements, rules and acceptance criteria into the Hub — you review, not write.</span><span data-i18n lang="vi">Mô tả vấn đề, outcome và acceptance intent. Agent soạn requirements, rules và acceptance criteria vào Hub — bạn review, không phải viết.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Requirements → Ready</span><span data-i18n lang="vi">Duyệt Requirements → Ready</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Request Changes as often as needed, then Approve. The slice enters the <b>Ready pull queue</b> — approval does not force Delivery to start.</span><span data-i18n lang="vi">Request Changes bao nhiêu vòng tùy ý, rồi Approve. Slice vào <b>Ready pull queue</b> — approve không ép Delivery bắt đầu.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Watch delivery</span><span data-i18n lang="vi">Theo dõi delivery</span> <span class="tag">status</span></div><div class="sd"><span data-i18n lang="en">Read-only view of in-flight work, pending gates and blockers. If the top-priority item can't be pulled, the blocker is recorded and <b>you</b> decide whether to reprioritize.</span><span data-i18n lang="vi">Read-only: work đang chạy, gate chờ, blocker. Nếu item ưu tiên cao nhất không pull được, blocker được record và <b>bạn</b> quyết định reprioritize.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Accept UAT · activate</span><span data-i18n lang="vi">Accept UAT · activate</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Accept UAT behavior on the exact deployed candidate, then approve activation: seal baseline → activation event → <code>mainstream.md</code>.</span><span data-i18n lang="vi">Accept hành vi UAT trên đúng bản candidate đã deploy, rồi duyệt activation: seal baseline → activation event → <code>mainstream.md</code>.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Route feedback</span><span data-i18n lang="vi">Điều hướng feedback</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">A defect against approved scope → linked remediation slice. A new need → a fresh Discovery slice. Neither rewinds the project.</span><span data-i18n lang="vi">Defect với scope đã duyệt → remediation slice liên kết. Nhu cầu mới → slice Discovery mới. Không cái nào quay lui cả dự án.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You govern a <b>stream of slices</b>. Low-risk activation can run on an explicit policy you approve once; excluded scopes still come back to you.</span><span data-i18n lang="vi">Bạn quản trị một <b>dòng slice</b>. Activation rủi ro thấp có thể chạy theo policy bạn duyệt một lần; các scope bị loại trừ vẫn quay về bạn.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">You approve the <b>whole BASE/CR scope</b> at Ready (<b>Scope Locked</b>). After locking, new scope = new CR — unless you formally reopen, which marks every affected downstream approval <code>Impacted</code>. Only one CR enters the activation lane at a time.</span><span data-i18n lang="vi">Bạn duyệt <b>toàn bộ scope BASE/CR</b> tại Ready (<b>Scope Locked</b>). Sau khi khóa, scope mới = CR mới — trừ khi bạn chính thức reopen, khi đó mọi approval downstream bị tác động thành <code>Impacted</code>. Mỗi thời điểm chỉ một CR vào activation lane.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Entry</div></div>
-            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">SA owns the Current-State Baseline; you still approve scope and priority. Expect reverse-engineering work before estimates firm up.</span><span data-i18n lang="vi">SA sở hữu Current-State Baseline; bạn vẫn duyệt scope và độ ưu tiên. Sẽ có phần reverse engineering trước khi ước lượng chắc tay.</span></div></div>
-            <div class="dr"><div class="dk">Legacy AI-DLC<span class="en">v0.3–v0.9 project</span></div><div><span data-i18n lang="en">You approve the mandatory <b>migration plan</b> before any transformation, and the <b>cutover</b> after verification. In-flight work finishes under the old model.</span><span data-i18n lang="vi">Bạn duyệt <b>migration plan</b> bắt buộc trước mọi transformation, và duyệt <b>cutover</b> sau verification. Work đang chạy hoàn tất theo model cũ.</span></div></div>
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Backend / data / infra</div><div><span data-i18n lang="en">No UI/UX questions ever reach you. The Requirements and UAT gates are unchanged.</span><span data-i18n lang="vi">Không câu hỏi UI/UX nào đến tay bạn. Gate Requirements và UAT không đổi.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">UI without a Designer</span><span data-i18n lang="vi">Có UI nhưng không có Designer</span></div><div><span data-i18n lang="en">You are the configured <b>final UI/UX approver</b> for agent-produced UI/UX. This is declared at onboarding, never assumed.</span><span data-i18n lang="vi">Bạn là <b>final UI/UX approver</b> được cấu hình cho UI/UX do agent tạo. Khai báo tại onboarding, không bao giờ được suy diễn.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">Outsourced / mixed</div><div><span data-i18n lang="en">Non-negotiable: KAFI PO/PM keeps business requirements, UAT and activation in <b>every</b> vendor model. Vendor scope changes arrive as proposals for your gate.</span><span data-i18n lang="vi">Bất di bất dịch: KAFI PO/PM giữ business requirements, UAT và activation trong <b>mọi</b> vendor model. Thay đổi scope từ vendor đến dưới dạng proposal cho gate của bạn.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">You approve the business hotfix gate on an urgency lane. The fix starts from SRE-confirmed production lineage — not from mainstream.</span><span data-i18n lang="vi">Bạn duyệt business hotfix gate theo lane khẩn cấp. Fix bắt đầu từ production lineage do SRE xác nhận — không phải từ mainstream.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve business scope and activation timing; SA approves the technical plan; SRE owns production execution.</span><span data-i18n lang="vi">Bạn duyệt business scope và thời điểm activation; SA duyệt technical plan; SRE sở hữu thực thi production.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--pm)"></span>PO / PM</h2>
+    <p><span data-i18n lang="en">You own what gets built and whether it is accepted. Scenarios <a href="#s-greenfield">1</a>, <a href="#s-provision-join">3</a>, <a href="#s-many-roles">4</a>.</span><span data-i18n lang="vi">Bạn sở hữu việc xây gì và có được nghiệm thu hay không. Kịch bản <a href="#s-greenfield">1</a>, <a href="#s-provision-join">3</a>, <a href="#s-many-roles">4</a>.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">open the day here. What is waiting on your approval is at the top.</span><span data-i18n lang="vi">mở đầu ngày ở đây. Thứ đang chờ bạn duyệt nằm trên cùng.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">the agent drafts requirements, acceptance criteria and the Ready decision for you to settle.</span><span data-i18n lang="vi">agent soạn requirements, tiêu chí nghiệm thu và quyết định Ready để bạn chốt.</span></li>
+      <li><span data-i18n lang="en"><b>Decision, no command:</b> approve or request changes at Requirements, UAT and baseline activation. Approval binds the exact content you read.</span><span data-i18n lang="vi"><b>Quyết định, không có lệnh:</b> duyệt hoặc yêu cầu sửa ở Requirements, UAT và kích hoạt baseline. Phê duyệt gắn với đúng nội dung bạn đã đọc.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ BA ============ -->
   <section id="ba">
-    <div class="rolesec" style="--rc:var(--ba)">
-      <div class="rhead"><span class="rdot"></span><h3>BA</h3><span class="rmiss"><span data-i18n lang="en">— business analysis and review; your answers become project evidence.</span><span data-i18n lang="vi">— phân tích nghiệp vụ và review; câu trả lời của bạn trở thành bằng chứng dự án.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate"><span data-i18n lang="en">None mandatory — you review inside the Requirements gate owned by PO/PM</span><span data-i18n lang="vi">Không có gate bắt buộc riêng — bạn review bên trong gate Requirements do PO/PM sở hữu</span></span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the Hub</span><span data-i18n lang="vi">Onboard vào Hub</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">Confirm identity and acting role. You work in the Hub folder tree — no Git commands, no branches to know about.</span><span data-i18n lang="vi">Xác nhận identity và acting role. Bạn làm việc trên cây folder của Hub — không lệnh Git, không cần biết branch.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Answer the authorized questions</span><span data-i18n lang="vi">Trả lời các câu hỏi được ủy quyền</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent asks targeted business questions (Rule 0). Each answer is recorded as an <b>interaction record</b> — a rule confirmed in chat is not project truth until recorded.</span><span data-i18n lang="vi">Agent hỏi các câu nghiệp vụ có chủ đích (Rule 0). Mỗi câu trả lời được ghi thành <b>interaction record</b> — một rule chốt trong chat chưa phải project truth cho đến khi được record.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Review agent drafts</span><span data-i18n lang="vi">Review bản nháp của agent</span></div><div class="sd"><span data-i18n lang="en">Requirements, business rules, examples, stories and acceptance criteria are agent-drafted. You correct and refine at the source; the agent revises until it's right.</span><span data-i18n lang="vi">Requirements, business rules, ví dụ, story và acceptance criteria do agent soạn. Bạn sửa và tinh chỉnh tại nguồn; agent revise đến khi đúng.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Support the gate</span><span data-i18n lang="vi">Hỗ trợ gate</span></div><div class="sd"><span data-i18n lang="en">PO/PM holds final Requirements authority; your review is how the content gets there. There is no separate BA hard gate to wait on.</span><span data-i18n lang="vi">PO/PM giữ quyền duyệt Requirements cuối cùng; review của bạn là cách nội dung đến được đó. Không có BA hard gate riêng phải chờ.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You clarify the <b>next slice</b> while Delivery builds the current one — the two tracks run concurrently.</span><span data-i18n lang="vi">Bạn làm rõ <b>slice kế tiếp</b> trong khi Delivery đang build slice hiện tại — hai track chạy đồng thời.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Your analysis converges into the <b>full BASE/CR scope</b> before Scope Locked; afterwards clarifications refine locked scope, they don't extend it.</span><span data-i18n lang="vi">Phân tích của bạn hội tụ về <b>toàn bộ scope BASE/CR</b> trước Scope Locked; sau đó phần làm rõ chỉ tinh chỉnh scope đã khóa, không mở rộng.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Entry</div></div>
-            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">You confirm <b>as-is business behavior</b> during reverse engineering — which observed behavior is a rule vs. an accident. Unconfirmed areas stay <code>Not Assessed</code>.</span><span data-i18n lang="vi">Bạn xác nhận <b>as-is business behavior</b> trong reverse engineering — hành vi quan sát được nào là rule, cái nào là tình cờ. Vùng chưa xác nhận giữ <code>Not Assessed</code>.</span></div></div>
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Emphasis shifts to business rules, data dictionary meanings and validation invariants the pipeline must preserve.</span><span data-i18n lang="vi">Trọng tâm chuyển sang business rules, ngữ nghĩa data dictionary và validation invariant mà pipeline phải bảo toàn.</span></div></div>
-            <div class="dr"><div class="dk">Infrastructure / component-internal</div><div><span data-i18n lang="en">Usually little to no BA involvement — business truth is consumed from the Hub, not re-analyzed.</span><span data-i18n lang="vi">Thường ít hoặc không cần BA — business truth được consume từ Hub, không phân tích lại.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">Outsourced</div><div><span data-i18n lang="en">Vendor questions reach you only through recorded Hub interactions — never side-channel email or chat that leaves no evidence.</span><span data-i18n lang="vi">Câu hỏi từ vendor chỉ đến bạn qua Hub interaction có record — không bao giờ qua email/chat bên lề không để lại bằng chứng.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Change Request / hotfix</div><div><span data-i18n lang="en">You confirm the impacted rules only; the agent's impact analysis decides which requirements you're asked about.</span><span data-i18n lang="vi">Bạn chỉ xác nhận các rule bị tác động; impact analysis của agent quyết định bạn được hỏi về requirement nào.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--ba)"></span>BA</h2>
+    <p><span data-i18n lang="en">You have no gate of your own — you review inside the Requirements gate PO/PM owns. Scenarios <a href="#s-greenfield">1</a>, <a href="#s-brownfield">2</a>.</span><span data-i18n lang="vi">Bạn không có gate riêng — bạn rà soát bên trong gate Requirements do PO/PM sở hữu. Kịch bản <a href="#s-greenfield">1</a>, <a href="#s-brownfield">2</a>.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">what is in Discovery and what changed.</span><span data-i18n lang="vi">đang có gì ở Discovery và cái gì đã đổi.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">the agent drafts rules, examples and edge cases; you correct them against the business.</span><span data-i18n lang="vi">agent soạn quy tắc, ví dụ và trường hợp biên; bạn chỉnh lại theo nghiệp vụ.</span></li>
+      <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">where documents and code disagree. On a brownfield project that disagreement is the finding, not a nuisance.</span><span data-i18n lang="vi">chỗ tài liệu và code mâu thuẫn. Với dự án brownfield, mâu thuẫn đó chính là phát hiện, không phải phiền toái.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ DESIGNER ============ -->
   <section id="design">
-    <div class="rolesec" style="--rc:var(--design)">
-      <div class="rhead"><span class="rdot"></span><h3>Designer</h3><span class="rmiss"><span data-i18n lang="en">— final UI/UX authority when assigned; activated only when the profile has UI scope.</span><span data-i18n lang="vi">— quyền UI/UX cuối cùng khi được chỉ định; chỉ kích hoạt khi profile có UI scope.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">UI/UX Design</span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — when UI applies</span><span data-i18n lang="vi">Base flow — khi UI áp dụng</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Confirm you're the approver</span><span data-i18n lang="vi">Xác nhận bạn là người approve</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">The project configures exactly one final UI/UX approver: you when assigned, otherwise PO/PM. This is recorded — never inferred from a job title.</span><span data-i18n lang="vi">Dự án cấu hình đúng một final UI/UX approver: bạn khi được chỉ định, ngược lại là PO/PM. Điều này được record — không bao giờ suy từ chức danh.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Direct the agent's UI work</span><span data-i18n lang="vi">Định hướng phần UI agent làm</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent produces flows, mockups, design tokens, view models, interaction specs and accessibility notes as dossier drafts. You direct and iterate.</span><span data-i18n lang="vi">Agent tạo flow, mockup, design token, view model, interaction spec và accessibility note dưới dạng dossier draft. Bạn định hướng và iterate.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve UI/UX</span><span data-i18n lang="vi">Duyệt UI/UX</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Approve the exact revision; the promotion commit lands it at the canonical path. Tech Lead may confirm feasibility but is <b>not</b> the UI/UX approver.</span><span data-i18n lang="vi">Approve đúng revision; promotion commit đưa nó về vị trí canonical. Tech Lead có thể xác nhận feasibility nhưng <b>không phải</b> người approve UI/UX.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Stay in the loop on impact</span><span data-i18n lang="vi">Theo sát impact</span></div><div class="sd"><span data-i18n lang="en">A later change that touches UI reopens your gate — and only then. Verification includes UI-fidelity checks against your approved spec.</span><span data-i18n lang="vi">Thay đổi sau này chạm UI sẽ reopen gate của bạn — và chỉ khi đó. Verification gồm kiểm tra UI fidelity so với spec bạn đã duyệt.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">UI/UX runs <b>per slice</b> when that slice impacts UI — not as a one-time phase.</span><span data-i18n lang="vi">UI/UX chạy <b>theo từng slice</b> khi slice đó tác động UI — không phải một phase một lần.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">UI/UX is approved within the BASE/CR scope; a UI-affecting CR reopens the gate for the impacted screens only.</span><span data-i18n lang="vi">UI/UX được duyệt trong scope BASE/CR; CR chạm UI chỉ reopen gate cho các màn hình bị tác động.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Full product</div><div><span data-i18n lang="en">You own the FE source of truth; S7 runs whenever impact touches UI.</span><span data-i18n lang="vi">Bạn sở hữu FE source of truth; S7 chạy mỗi khi impact chạm UI.</span></div></div>
-            <div class="dr"><div class="dk">Frontend / mobile</div><div><span data-i18n lang="en">Same as full product, plus: the app <b>consumes</b> existing backend contracts — your view models bind to pinned contract revisions, never invent them.</span><span data-i18n lang="vi">Như full product, thêm: app <b>consume</b> backend contract có sẵn — view model của bạn bind vào contract revision đã pin, không bao giờ tự bịa.</span></div></div>
-            <div class="dr"><div class="dk">Backend / data / infrastructure</div><div><span data-i18n lang="en">You are never asked. The capability is <code>Not Applicable</code> with a recorded reason — no empty UI/UX stage exists.</span><span data-i18n lang="vi">Bạn không bao giờ bị hỏi. Capability ở trạng thái <code>Not Applicable</code> có ghi lý do — không tồn tại stage UI/UX rỗng.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Outsourced UI work</span><span data-i18n lang="vi">UI giao vendor làm</span></div><div><span data-i18n lang="en">The vendor implements against your approved spec and tokens; UI-fidelity verification is part of their evidence. Approval authority stays with you (or PO/PM).</span><span data-i18n lang="vi">Vendor implement theo spec và token bạn đã duyệt; UI-fidelity verification nằm trong evidence của họ. Quyền approve vẫn ở bạn (hoặc PO/PM).</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">CR / hotfix</div><div><span data-i18n lang="en">Your gate reopens only when impact analysis proves UI behavior changes. A backend-only CR with identical UI never involves you.</span><span data-i18n lang="vi">Gate của bạn chỉ reopen khi impact analysis chứng minh hành vi UI thay đổi. CR backend-only với UI giữ nguyên không bao giờ gọi đến bạn.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--design)"></span><span data-i18n lang="en">Designer</span><span data-i18n lang="vi">Designer</span></h2>
+    <p><span data-i18n lang="en">Activated only when the profile has UI scope. Where no Designer is assigned, PO/PM is the approver.</span><span data-i18n lang="vi">Chỉ kích hoạt khi profile có scope UI. Khi không ai được phân vai Designer, PO/PM là người duyệt.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">confirm you are the UI/UX approver, once.</span><span data-i18n lang="vi">xác nhận bạn là người duyệt UI/UX, một lần.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">the agent produces flows, states and tokens against the design system.</span><span data-i18n lang="vi">agent tạo flow, state và token theo design system.</span></li>
+      <li><span data-i18n lang="en"><b>Decision, no command:</b> approve the UI/UX gate on the exact revision shown.</span><span data-i18n lang="vi"><b>Quyết định, không có lệnh:</b> duyệt gate UI/UX trên đúng revision được trình.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ SA ============ -->
   <section id="sa">
-    <div class="rolesec" style="--rc:var(--sa)">
-      <div class="rhead"><span class="rdot"></span><h3>SA</h3><span class="rmiss"><span data-i18n lang="en">— owns solution-level Delivery governance: architecture, shared contracts, topology, integration.</span><span data-i18n lang="vi">— sở hữu Delivery governance cấp solution: architecture, shared contract, topology, integration.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">Current-State Baseline</span><span class="gate">Architecture</span><span class="gate">Technical Design (by impact)</span><span class="gate">Integration (multi-Unit)</span><span class="gate">Cutover technical plan</span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Reconcile before deciding</span><span data-i18n lang="vi">Reconcile trước khi quyết</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">The agent fetches exact Hub + component revisions and rebuilds context before presenting any architecture decision to you.</span><span data-i18n lang="vi">Agent fetch đúng revision Hub + component và rebuild context trước khi trình bất kỳ quyết định kiến trúc nào cho bạn.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Direct solution design</span><span data-i18n lang="vi">Định hướng solution design</span></div><div class="sd"><span data-i18n lang="en">The agent drafts application design, data model, shared contracts, ADRs — and <code>components.md</code>: which repos exist, their <code>kind</code> and tree path. Topology is <b>your</b> work product.</span><span data-i18n lang="vi">Agent soạn application design, data model, shared contract, ADR — và <code>components.md</code>: repo nào tồn tại, <code>kind</code> gì, tree path nào. Topology là work product <b>của bạn</b>.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Architecture</span><span data-i18n lang="vi">Duyệt Architecture</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Approval authorizes promotion to canonical paths and hands the repo list to SRE for provisioning. A shared-contract change later re-triggers this gate.</span><span data-i18n lang="vi">Approval ủy quyền promotion về canonical path và chuyển danh sách repo cho SRE cấp phát. Thay đổi shared contract sau này sẽ re-trigger gate này.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Guard integration</span><span data-i18n lang="vi">Canh giữ integration</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">As slices complete, the agent composes cross-component contract and end-to-end evidence. You approve Integration for multi-Unit work.</span><span data-i18n lang="vi">Khi các slice hoàn tất, agent compose bằng chứng contract xuyên component và end-to-end. Bạn approve Integration cho công việc multi-Unit.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Arbitrate escalated designs</span><span data-i18n lang="vi">Phân xử design được escalate</span></div><div class="sd"><span data-i18n lang="en">Technical Design escalates from Tech Lead to you when it touches architecture, shared contracts, cross-Unit behavior, important NFRs, infrastructure or topology.</span><span data-i18n lang="vi">Technical Design escalate từ Tech Lead lên bạn khi chạm architecture, shared contract, hành vi xuyên Unit, NFR quan trọng, hạ tầng hoặc topology.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">Impact-driven: a slice on current approved architecture never repeats your gates. You confirm feasibility at Ready <b>only when impact rules require it</b>.</span><span data-i18n lang="vi">Impact-driven: slice trên kiến trúc đã duyệt không lặp lại gate của bạn. Bạn xác nhận feasibility tại Ready <b>chỉ khi impact rule yêu cầu</b>.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Cross-Unit integration approval per BASE/CR; coordinated branch sets are verified against exact revisions before promotion to component <code>main</code>.</span><span data-i18n lang="vi">Duyệt cross-Unit integration theo từng BASE/CR; coordinated branch set được verify theo đúng revision trước khi promote về <code>main</code> của component.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Entry</div></div>
-            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">You approve the <b>Current-State Baseline</b>: declared scope, exact source revision, known risks, explicit unknowns. Reverse engineering is progressive — outside the boundary stays <code>Not Assessed</code>.</span><span data-i18n lang="vi">Bạn approve <b>Current-State Baseline</b>: scope khai báo, đúng source revision, rủi ro đã biết, unknown tường minh. Reverse engineering là tiến trình tăng dần — ngoài boundary giữ <code>Not Assessed</code>.</span></div></div>
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Backend</div><div><span data-i18n lang="en">Contract emitted by type — REST, async/message, RPC, GraphQL, FIX. No UI variants appear.</span><span data-i18n lang="vi">Contract phát ra theo type — REST, async/message, RPC, GraphQL, FIX. Không xuất hiện biến thể UI.</span></div></div>
-            <div class="dr"><div class="dk">Frontend / mobile</div><div><span data-i18n lang="en">FE architecture variant; you <b>bind</b> to existing backend contracts (exact pins) rather than authoring them.</span><span data-i18n lang="vi">Biến thể kiến trúc FE; bạn <b>bind</b> vào backend contract có sẵn (pin chính xác) thay vì tự viết.</span></div></div>
-            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Data-contract, pipeline, data-model and data-NFR variants replace app-service design.</span><span data-i18n lang="vi">Biến thể data-contract, pipeline, data-model và data-NFR thay cho thiết kế app-service.</span></div></div>
-            <div class="dr"><div class="dk">Infrastructure</div><div><span data-i18n lang="en">Infrastructure contracts, NFRs, deployment and operations design; product/UI capabilities never activate.</span><span data-i18n lang="vi">Contract hạ tầng, NFR, deployment và operations design; capability product/UI không bao giờ kích hoạt.</span></div></div>
-            <div class="dr"><div class="dk">Component-internal</div><div><span data-i18n lang="en">Your shared artifacts are <b>Consumed</b> by the component; delegation is limited to component-local design unless <code>team.md</code> grants more.</span><span data-i18n lang="vi">Artifact chung của bạn được component <b>Consume</b>; delegation giới hạn ở thiết kế cục bộ trừ khi <code>team.md</code> cấp thêm.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">KAFI Solution – Vendor Delivery</div><div><span data-i18n lang="en">You own solution, contracts and NFRs end-to-end; the vendor implements your approved solution.</span><span data-i18n lang="vi">Bạn sở hữu solution, contract và NFR từ đầu tới cuối; vendor implement solution bạn đã duyệt.</span></div></div>
-            <div class="dr"><div class="dk">Vendor Solution &amp; Delivery</div><div><span data-i18n lang="en">The <b>Vendor SA is Project SA</b> for the assigned scope. You run <b>Architecture Assurance</b> when a risk trigger fires — sensitive data, financial transactions, shared/public contracts, cross-project impact, topology/security, HA/DR, hard-to-reverse migration. Unclear risk = Assurance Required until resolved.</span><span data-i18n lang="vi"><b>Vendor SA là Project SA</b> cho scope được giao. Bạn chạy <b>Architecture Assurance</b> khi risk trigger kích hoạt — dữ liệu nhạy cảm, giao dịch tài chính, contract shared/public, impact xuyên dự án, topology/security, HA/DR, migration khó đảo ngược. Risk chưa rõ = Assurance Required cho đến khi làm rõ.</span></div></div>
-            <div class="dr"><div class="dk">Mixed</div><div><span data-i18n lang="en">Exactly <b>one</b> Project SA owns shared artifacts and cross-component integration; component SAs are scoped in <code>team.md</code>.</span><span data-i18n lang="vi">Đúng <b>một</b> Project SA sở hữu shared artifact và integration xuyên component; component SA được scope trong <code>team.md</code>.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Usually no architecture gate — unless the minimal fix trips a risk trigger or touches a shared contract.</span><span data-i18n lang="vi">Thường không có architecture gate — trừ khi bản fix tối thiểu chạm risk trigger hoặc shared contract.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span><span class="en">DATA-MIG-NN</span></div><div><span data-i18n lang="en">You approve the transformation/integrity design; Tech Lead owns scripts and evidence; SRE executes production.</span><span data-i18n lang="vi">Bạn duyệt thiết kế transformation/integrity; Tech Lead sở hữu script và evidence; SRE thực thi production.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve the technical plan: merge/deploy order, compatibility, rollback, rehearsal. Expand-and-contract and flags are attempted before hard cutover.</span><span data-i18n lang="vi">Bạn duyệt technical plan: thứ tự merge/deploy, compatibility, rollback, rehearsal. Expand-and-contract và flag được thử trước hard cutover.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--sa)"></span>SA</h2>
+    <p><span data-i18n lang="en">You decide the shape of the system and the shape of the tree. Scenarios <a href="#s-brownfield">2</a>, <a href="#s-provision-join">3</a>, <a href="#s-vendor">5</a>, <a href="#s-upgrade">6</a>.</span><span data-i18n lang="vi">Bạn quyết định hình dạng hệ thống và hình dạng cây dự án. Kịch bản <a href="#s-brownfield">2</a>, <a href="#s-provision-join">3</a>, <a href="#s-vendor">5</a>, <a href="#s-upgrade">6</a>.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">reconcile before deciding. Never decide from memory of the last session.</span><span data-i18n lang="vi">đối chiếu trước khi quyết. Đừng bao giờ quyết theo trí nhớ của phiên trước.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">declare the component and ops topology in <code>components.md</code>; SRE provisions what you declare, and the agent mounts it.</span><span data-i18n lang="vi">khai báo topology component và ops trong <code>components.md</code>; SRE cấp phát theo khai báo của bạn, và agent gắn vào cây.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">on brownfield: confirm the impact boundary the agent proposed, then decide reuse per area — <code>keep</code>, <code>refactor</code>, <code>wrap</code>, <code>replace</code>, <code>out of scope</code>. The agent recommends; you decide, and it is recorded as an ADR.</span><span data-i18n lang="vi">với brownfield: xác nhận impact boundary agent đề xuất, rồi quyết định tái sử dụng theo từng vùng — <code>keep</code>, <code>refactor</code>, <code>wrap</code>, <code>replace</code>, <code>out of scope</code>. Agent khuyến nghị; bạn quyết, và nó được ghi thành ADR.</span></li>
+    </ol>
+    <p class="note"><span data-i18n lang="en">A <code>replace</code> recommendation for behaviour nobody documented needs characterization evidence first: replacing behaviour nobody wrote down destroys it.</span><span data-i18n lang="vi">Khuyến nghị <code>replace</code> cho hành vi không ai ghi lại thì cần characterization evidence trước: thay thế hành vi không ai từng viết ra là phá huỷ nó.</span></p>
   </section>
 
-  <!-- ============ TECH LEAD ============ -->
   <section id="tl">
-    <div class="rolesec" style="--rc:var(--tl)">
-      <div class="rhead"><span class="rdot"></span><h3>Tech Lead</h3><span class="rmiss"><span data-i18n lang="en">— pulls Ready work by capacity; owns Unit delivery through Done.</span><span data-i18n lang="vi">— pull công việc Ready theo capacity; sở hữu Unit delivery cho tới Done.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">Technical Design (local Unit)</span><span class="gate">Technical Done</span><span class="gate">Delivery pull acceptance</span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">See the Ready queue</span><span data-i18n lang="vi">Xem Ready queue</span> <span class="tag">status</span></div><div class="sd"><span data-i18n lang="en">Ready slices are visible dossier folders in the Hub. The agent recommends the next eligible item but <b>never silently starts Delivery</b>.</span><span data-i18n lang="vi">Slice Ready là các dossier folder nhìn thấy được trong Hub. Agent đề xuất item hợp lệ kế tiếp nhưng <b>không bao giờ tự ý bắt đầu Delivery</b>.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Pull — a decision, not a Git command</span><span data-i18n lang="vi">Pull — một quyết định, không phải lệnh Git</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Pulling = accepting Delivery accountability by capacity and technical readiness. The agent claims the work item, opens the dossier, creates <code>ai-dlc/slice/*</code> branches per affected repo, links them in <code>code.md</code>, and pins approved context.</span><span data-i18n lang="vi">Pull = nhận trách nhiệm Delivery theo capacity và technical readiness. Agent claim work item, mở dossier, tạo branch <code>ai-dlc/slice/*</code> trên từng repo bị tác động, nối trong <code>code.md</code>, và pin approved context.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Technical Design</span><span data-i18n lang="vi">Duyệt Technical Design</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Functional design, code flow, test plan, NFR delta — agent-drafted. Local Unit scope is yours; architecture / contract / cross-Unit / topology impact escalates to SA.</span><span data-i18n lang="vi">Functional design, code flow, test plan, NFR delta — agent soạn. Phạm vi Unit cục bộ là của bạn; impact về architecture / contract / xuyên Unit / topology escalate lên SA.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Supervise the build</span><span data-i18n lang="vi">Giám sát build</span></div><div class="sd"><span data-i18n lang="en">The agent implements, writes automated tests, runs verification and assembles evidence on the work branches. You review as needed; Devs collaborate.</span><span data-i18n lang="vi">Agent implement, viết automated test, chạy verification và tập hợp evidence trên work branch. Bạn review khi cần; Dev cùng tham gia.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Approve Technical Done</span><span data-i18n lang="vi">Duyệt Technical Done</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Code, automated evidence and documentation sync for the Unit. An impacted required document must be updated <b>before</b> Done.</span><span data-i18n lang="vi">Code, automated evidence và đồng bộ tài liệu cho Unit. Tài liệu bắt buộc bị impact phải cập nhật <b>trước khi</b> Done.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">One slice = one dossier + one branch per affected repo. If the top item can't be pulled, the blocker is recorded and PO/PM reprioritizes — you don't force it.</span><span data-i18n lang="vi">Một slice = một dossier + một branch mỗi repo bị tác động. Item đầu queue không pull được thì blocker được record và PO/PM reprioritize — bạn không ép.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">You approve component/Unit completion inside the BASE/CR; the coordinated branch set is promoted only after all required approvals, preserving the exact UAT-tested SHA where possible.</span><span data-i18n lang="vi">Bạn duyệt hoàn tất component/Unit trong BASE/CR; coordinated branch set chỉ promote sau đủ approval, giữ đúng SHA đã test UAT khi có thể.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Entry</div></div>
-            <div class="dr"><div class="dk">Brownfield</div><div><span data-i18n lang="en">A pre-existing failing check may be accepted only if reproduced at the entry commit, isolated outside the impact boundary, not worsened, and approved via quality exception. <b>A failure in your changed scope always blocks.</b></span><span data-i18n lang="vi">Check fail có sẵn chỉ được chấp nhận nếu tái hiện tại entry commit, nằm ngoài impact boundary, không tệ hơn, và được duyệt qua quality exception. <b>Fail trong scope bạn thay đổi luôn blocking.</b></span></div></div>
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Any scope</span><span data-i18n lang="vi">Mọi scope</span></div><div><span data-i18n lang="en">Your loop is identical — scope changes which capabilities feed your Technical Design gate (UI fidelity, data invariants, IaC checks…), not your accountability.</span><span data-i18n lang="vi">Vòng lặp của bạn không đổi — scope thay đổi capability nào đổ vào gate Technical Design (UI fidelity, data invariant, IaC check…), không đổi accountability.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">Outsourced<span class="en">executing vs accepting</span></div><div><span data-i18n lang="en">The roles split: the <b>Vendor Tech Lead</b> executes and declares Vendor Technical Complete; the <b>KAFI accepting Tech Lead</b> grants final Technical Acceptance. The executor is never the sole final acceptor.</span><span data-i18n lang="vi">Vai trò tách đôi: <b>Vendor Tech Lead</b> thực thi và declare Vendor Technical Complete; <b>KAFI accepting Tech Lead</b> cấp Technical Acceptance cuối cùng. Người thực thi không bao giờ là acceptor cuối duy nhất.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">The branch forks from the <b>SRE-confirmed production composition</b>, not from <code>main</code>. Minimal fix + automated regression; after PROD, the agent forward-ports into current <code>main</code> and every impacted in-flight item.</span><span data-i18n lang="vi">Branch fork từ <b>production composition do SRE xác nhận</b>, không phải từ <code>main</code>. Fix tối thiểu + automated regression; sau PROD, agent forward-port vào <code>main</code> hiện tại và mọi item đang mở bị tác động.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span></div><div><span data-i18n lang="en">You own migration scripts and rehearsal evidence — idempotency, validation invariants, abort checkpoints — against UAT-safe data only.</span><span data-i18n lang="vi">Bạn sở hữu migration script và rehearsal evidence — idempotency, validation invariant, abort checkpoint — chỉ trên dữ liệu UAT-safe.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--tl)"></span>Tech Lead</h2>
+    <p><span data-i18n lang="en">You own unit delivery through Technical Done.</span><span data-i18n lang="vi">Bạn sở hữu việc giao hàng theo unit cho tới Technical Done.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">the Ready queue.</span><span data-i18n lang="vi">hàng đợi Ready.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">pull a unit. The agent plans it, writes the code and the tests, and opens the PR.</span><span data-i18n lang="vi">kéo một unit. Agent lập kế hoạch, viết code và test, và mở PR.</span></li>
+      <li><span data-i18n lang="en"><b>Decision, no command:</b> approve Technical Done, or request changes on the same dossier.</span><span data-i18n lang="vi"><b>Quyết định, không có lệnh:</b> duyệt Technical Done, hoặc yêu cầu sửa trên cùng dossier.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ DEV ============ -->
   <section id="dev">
-    <div class="rolesec" style="--rc:var(--dev)">
-      <div class="rhead"><span class="rdot"></span><h3>Dev</h3><span class="rmiss"><span data-i18n lang="en">— collaborates with and reviews the agent on owned components; no separate mandatory gate.</span><span data-i18n lang="vi">— cộng tác và review agent trên component mình sở hữu; không có gate bắt buộc riêng.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate"><span data-i18n lang="en">None mandatory — Tech Lead approves Technical Done</span><span data-i18n lang="vi">Không có gate bắt buộc — Tech Lead duyệt Technical Done</span></span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the component</span><span data-i18n lang="vi">Onboard component</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">Materialize your component at its declared tree path (<code>components/&lt;name&gt;/</code>). <code>.aidlc/link.md</code> already backlinks the Hub — you never type a Hub URL.</span><span data-i18n lang="vi">Materialize component tại đúng tree path (<code>components/&lt;name&gt;/</code>). <code>.aidlc/link.md</code> đã backlink Hub — bạn không bao giờ phải gõ Hub URL.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Build with the agent</span><span data-i18n lang="vi">Build cùng agent</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Code and tests grow on the claimed <code>ai-dlc/*</code> branch, against pinned contract revisions. You steer, pair and correct; the agent handles fetch/rebase/commit/push/PR.</span><span data-i18n lang="vi">Code và test lớn dần trên branch <code>ai-dlc/*</code> đã claim, theo contract revision đã pin. Bạn dẫn dắt, pair và sửa; agent lo fetch/rebase/commit/push/PR.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Self-check before handback</span><span data-i18n lang="vi">Tự check trước khi trả bài</span> <span class="tag">check</span></div><div class="sd"><span data-i18n lang="en">Traceability, freshness, contract pins, evidence gaps — read-only, catches drift before the Tech Lead sees it.</span><span data-i18n lang="vi">Traceability, freshness, contract pin, evidence gap — read-only, bắt drift trước khi Tech Lead nhìn thấy.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Review, don't rubber-stamp</span><span data-i18n lang="vi">Review, đừng đóng dấu cho có</span></div><div class="sd"><span data-i18n lang="en">Your review is collaboration quality, not a gate. A green PR is never a substitute for the human approvals the flow requires.</span><span data-i18n lang="vi">Review của bạn là chất lượng cộng tác, không phải gate. PR xanh không bao giờ thay thế các human approval mà flow yêu cầu.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">You work slice-by-slice; a sibling slice touching the same repo shows up as a visible claim, not a surprise conflict.</span><span data-i18n lang="vi">Bạn làm việc theo từng slice; slice khác đụng cùng repo hiện ra như một claim nhìn thấy được, không phải conflict bất ngờ.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">Your branches belong to a coordinated BASE/CR set; short-lived Unit branches are implementation mechanics under the same governance identity.</span><span data-i18n lang="vi">Branch của bạn thuộc coordinated BASE/CR set; Unit branch ngắn hạn là cơ chế thực thi dưới cùng governance identity.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Component-internal</div><div><span data-i18n lang="en">Hub context (requirements, contracts, decisions) is <b>Consumed</b> — you never recreate canonical artifacts locally; the component adds only its own detail.</span><span data-i18n lang="vi">Hub context (requirements, contract, decision) được <b>Consume</b> — bạn không bao giờ tái tạo artifact canonical cục bộ; component chỉ thêm detail của riêng nó.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">Vendor-side Dev</div><div><span data-i18n lang="en">Same loop inside a pruned materialization: read-only Hub subset + your assigned component. Proposals for shared changes route to the Hub.</span><span data-i18n lang="vi">Cùng vòng lặp trong bản materialize đã tỉa: Hub subset read-only + component được giao. Proposal cho thay đổi chung route về Hub.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Smallest possible change from confirmed production lineage, plus regression tests proving the incident path.</span><span data-i18n lang="vi">Thay đổi nhỏ nhất có thể từ production lineage đã xác nhận, kèm regression test chứng minh đường sự cố.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--dev)"></span>Dev</h2>
+    <p><span data-i18n lang="en">You hold no mandatory gate; Tech Lead approves Technical Done. Your work is reviewing what the agent produced and telling it what is wrong.</span><span data-i18n lang="vi">Bạn không giữ gate bắt buộc nào; Tech Lead duyệt Technical Done. Việc của bạn là rà soát thứ agent tạo ra và chỉ ra chỗ sai.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">on a machine that only needs some repositories, materialize just those.</span><span data-i18n lang="vi">trên máy chỉ cần vài repo, chỉ dựng đúng những repo đó.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">take the next task in your component.</span><span data-i18n lang="vi">nhận việc tiếp theo trong component của bạn.</span></li>
+      <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">before handing back: where the design documents and the code have drifted apart.</span><span data-i18n lang="vi">trước khi bàn giao: chỗ tài liệu thiết kế và code đã trôi khỏi nhau.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ QA ============ -->
   <section id="qa">
-    <div class="rolesec" style="--rc:var(--qa)">
-      <div class="rhead"><span class="rdot"></span><h3>QA</h3><span class="rmiss"><span data-i18n lang="en">— optional specialist. The agent plans, automates and runs tests; a human is triggered by policy or risk.</span><span data-i18n lang="vi">— chuyên gia tùy chọn. Agent lập kế hoạch, tự động hóa và chạy test; con người được trigger theo policy hoặc risk.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate"><span data-i18n lang="en">Independent assurance — when triggered</span><span data-i18n lang="vi">Independent assurance — khi được trigger</span></span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — mostly the agent's</span><span data-i18n lang="vi">Base flow — phần lớn là của agent</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Agent derives the test approach</span><span data-i18n lang="vi">Agent suy ra test approach</span></div><div class="sd"><span data-i18n lang="en">From requirements and acceptance criteria: unit, integration, contract, regression, security and E2E checks as applicable — recorded in the test plan at Technical Design.</span><span data-i18n lang="vi">Từ requirements và acceptance criteria: unit, integration, contract, regression, security và E2E khi áp dụng — ghi trong test plan tại Technical Design.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Agent automates and runs</span><span data-i18n lang="vi">Agent tự động hóa và chạy</span></div><div class="sd"><span data-i18n lang="en">Commands, results, gaps and residual risk land in <code>verification.md</code>. The agent <b>never claims evidence it did not observe</b>.</span><span data-i18n lang="vi">Lệnh, kết quả, gap và rủi ro tồn dư ghi vào <code>verification.md</code>. Agent <b>không bao giờ claim evidence nó không quan sát</b>.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Human QA joins when triggered</span><span data-i18n lang="vi">Human QA tham gia khi được trigger</span></div><div class="sd"><span data-i18n lang="en">Regulatory/financial criticality, acceptance that can't be automated, device/UX testing, large blast radius, or explicitly requested independent assurance.</span><span data-i18n lang="vi">Mức trọng yếu regulatory/tài chính, acceptance không tự động hóa được, test device/UX, blast radius lớn, hoặc yêu cầu assurance độc lập tường minh.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Exceptions are records, not shrugs</span><span data-i18n lang="vi">Exception là record, không phải cái nhún vai</span></div><div class="sd"><span data-i18n lang="en">A waivable failure needs a policy match plus an immutable exception record — evidence, impact, alternative verification, authority, expiry. There is no generic "continue anyway".</span><span data-i18n lang="vi">Fail có thể waive cần khớp policy cộng một exception record bất biến — evidence, impact, verification thay thế, authority, expiry. Không tồn tại nút "continue anyway" chung chung.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">Verification runs per slice; a UAT defect after merge becomes a linked <b>remediation slice</b>.</span><span data-i18n lang="vi">Verification chạy theo slice; defect UAT sau merge thành <b>remediation slice</b> liên kết.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">A defect against locked acceptance criteria stays on the open BASE/CR; new behavior needs a new CR.</span><span data-i18n lang="vi">Defect so với acceptance criteria đã khóa ở lại BASE/CR đang mở; hành vi mới cần CR mới.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Full product / frontend</div><div><span data-i18n lang="en">Verification includes UI-fidelity conformance against the approved UI/UX spec and tokens.</span><span data-i18n lang="vi">Verification gồm UI-fidelity conformance so với UI/UX spec và token đã duyệt.</span></div></div>
-            <div class="dr"><div class="dk">Data</div><div><span data-i18n lang="en">Validation invariants, reconciliation checks and volume/rehearsal evidence for pipelines and migrations.</span><span data-i18n lang="vi">Validation invariant, reconciliation check và bằng chứng volume/rehearsal cho pipeline và migration.</span></div></div>
-            <div class="dr grp"><div>Relationship</div></div>
-            <div class="dr"><div class="dk">Outsourced</div><div><span data-i18n lang="en">Vendor delivery evidence feeds KAFI acceptance — the conformance evidence set is the trust boundary between executing and accepting sides.</span><span data-i18n lang="vi">Delivery evidence của vendor nuôi acceptance của KAFI — bộ conformance evidence là ranh giới niềm tin giữa bên thực thi và bên chấp nhận.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">Focused regression on the incident path + UAT-safe verification; speed never waives mandatory safety, integrity or contract-compatibility checks.</span><span data-i18n lang="vi">Regression tập trung vào đường sự cố + UAT-safe verification; tốc độ không bao giờ waive các check bắt buộc về safety, integrity, contract compatibility.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--qa)"></span>QA</h2>
+    <p><span data-i18n lang="en">An optional specialist. The agent writes test plans, automated tests and verification evidence; a human QA is triggered by policy or risk. Tech Lead stays accountable for unit technical quality either way.</span><span data-i18n lang="vi">Chuyên gia tuỳ chọn. Agent viết test plan, test tự động và bằng chứng kiểm thử; QA là người thì được kích hoạt theo policy hoặc rủi ro. Dù thế nào, Tech Lead vẫn chịu trách nhiệm chất lượng kỹ thuật của unit.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">what is in UAT and what evidence exists.</span><span data-i18n lang="vi">đang có gì ở UAT và có bằng chứng nào.</span></li>
+      <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">coverage as a counted number, and which failures pre-date the change.</span><span data-i18n lang="vi">độ phủ tính bằng con số, và những lỗi nào có trước thay đổi.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ SRE ============ -->
   <section id="sre">
-    <div class="rolesec" style="--rc:var(--ops)">
-      <div class="rhead"><span class="rdot"></span><h3>DevOps / SRE</h3><span class="rmiss"><span data-i18n lang="en">— provisions the platform, deploys UAT, and exclusively owns production.</span><span data-i18n lang="vi">— cấp phát nền tảng, deploy UAT, và độc quyền sở hữu production.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">SRE Handoff Acceptance</span><span class="gate"><span data-i18n lang="en">Production execution — exclusive</span><span data-i18n lang="vi">Thực thi production — độc quyền</span></span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any profile</span><span data-i18n lang="vi">Base flow — mọi profile</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Provision from <code>components.md</code></span><span data-i18n lang="vi">Cấp phát từ <code>components.md</code></span></div><div class="sd"><span data-i18n lang="en">SA declares topology; you provision each remote — repo, branch protection, access grants. Authority stays yours even when the agent executes the platform mechanics. Your own repos live in the <code>ops/</code> plane of the same tree.</span><span data-i18n lang="vi">SA khai báo topology; bạn cấp phát từng remote — repo, branch protection, access grant. Quyền vẫn của bạn kể cả khi agent thực thi cơ chế platform. Repo của bạn sống trong plane <code>ops/</code> của cùng cây.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Constrain the design</span><span data-i18n lang="vi">Ràng buộc thiết kế</span></div><div class="sd"><span data-i18n lang="en">You supply platform and access constraints; infrastructure design (S13) is drafted by the agent and approved by SA through Technical Design.</span><span data-i18n lang="vi">Bạn cung cấp ràng buộc platform và access; infrastructure design (S13) do agent soạn và SA duyệt qua Technical Design.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Deploy the exact candidate</span><span data-i18n lang="vi">Deploy đúng bản candidate</span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">UAT gets the exact baseline-candidate SHAs; the deployment record notes what is actually running where. Mainstream ≠ deployed — they're separate records.</span><span data-i18n lang="vi">UAT nhận đúng SHA của baseline candidate; deployment record ghi cái gì đang thật sự chạy ở đâu. Mainstream ≠ deployed — hai record tách biệt.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Accept the handoff</span><span data-i18n lang="vi">Chấp nhận handoff</span> <span class="tag g">gate</span></div><div class="sd"><span data-i18n lang="en">Operational package completeness — runbooks, monitoring, troubleshooting, recovery. Your Request Changes reopens only the affected verification, not the whole flow. No code/architecture approval implied.</span><span data-i18n lang="vi">Độ đầy đủ của operational package — runbook, monitoring, troubleshooting, recovery. Request Changes của bạn chỉ reopen phần verification bị ảnh hưởng, không cả flow. Không hàm ý duyệt code/kiến trúc.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Own production</span><span data-i18n lang="vi">Sở hữu production</span></div><div class="sd"><span data-i18n lang="en">PROD promotion, release/tag authority, rollback and production data migration are exclusively yours. Production state may be mirrored into the Hub only from your evidence.</span><span data-i18n lang="vi">PROD promotion, quyền release/tag, rollback và production data migration là độc quyền của bạn. Trạng thái production chỉ được mirror vào Hub từ evidence của bạn.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">Continuous</div><p><span data-i18n lang="en">The <b>first MVP</b> requires full handoff acceptance before sealing. Later baselines need only a delta review when operational behavior is impacted.</span><span data-i18n lang="vi"><b>MVP đầu tiên</b> cần full handoff acceptance trước khi seal. Baseline sau chỉ cần delta review khi hành vi vận hành bị impact.</span></p></div>
-            <div class="omc"><div class="ot">Phase-Gated</div><p><span data-i18n lang="en">One activation lane: your handoff sits between UAT Acceptance and baseline sealing for each BASE/CR that reaches it.</span><span data-i18n lang="vi">Một activation lane: handoff của bạn nằm giữa UAT Acceptance và seal baseline cho từng BASE/CR đi tới đó.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div>Entry</div></div>
-            <div class="dr"><div class="dk">Brownfield / legacy migration</div><div><span data-i18n lang="en">You help inventory branch topology, protection rules, CI triggers and release lineage. Legacy Git Flow keeps serving its cohorts during the migration window; nothing is renamed before cutover approval.</span><span data-i18n lang="vi">Bạn giúp inventory branch topology, protection rule, CI trigger và release lineage. Git Flow cũ tiếp tục phục vụ cohort của nó trong migration window; không rename gì trước khi cutover được duyệt.</span></div></div>
-            <div class="dr grp"><div>Scope</div></div>
-            <div class="dr"><div class="dk">Infrastructure</div><div><span data-i18n lang="en">You're the primary delivery lane: infra contracts, NFRs, deployment and operations documents are the product.</span><span data-i18n lang="vi">Bạn là lane delivery chính: contract hạ tầng, NFR, deployment và tài liệu vận hành chính là sản phẩm.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk">Hotfix</div><div><span data-i18n lang="en">You supply the <b>exact production composition evidence</b> the fix must fork from, execute PROD promotion, and your activation evidence triggers the agent's forward-port.</span><span data-i18n lang="vi">Bạn cung cấp <b>exact production composition evidence</b> mà bản fix phải fork từ đó, thực thi PROD promotion, và evidence activation của bạn kích hoạt forward-port của agent.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Data migration</span><span data-i18n lang="vi">Data migration</span><span class="en">DATA-MIG-NN</span></div><div><span data-i18n lang="en">You exclusively authorize and execute production data migration, from the rehearsed runbook — backup/restore, abort checkpoints, rollback/roll-forward classification included.</span><span data-i18n lang="vi">Bạn độc quyền ủy quyền và thực thi production data migration, theo runbook đã rehearse — gồm backup/restore, abort checkpoint, phân loại rollback/roll-forward.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Coordinated cutover</span><span data-i18n lang="vi">Coordinated cutover</span><span class="en">CUTOVER-NN</span></div><div><span data-i18n lang="en">You approve production handoff and execute the sequenced cutover; a work item in a mandatory cutover group is not independently activatable.</span><span data-i18n lang="vi">Bạn duyệt production handoff và thực thi cutover theo trình tự; work item trong nhóm cutover bắt buộc không được activate độc lập.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--ops)"></span>DevOps / SRE</h2>
+    <p><span data-i18n lang="en">Production is yours. Scenarios <a href="#s-provision-join">3</a>, <a href="#s-vendor">5</a>.</span><span data-i18n lang="vi">Production là của bạn. Kịch bản <a href="#s-provision-join">3</a>, <a href="#s-vendor">5</a>.</span></p>
+    <ol>
+      <li><span data-i18n lang="en"><b>Decision, no command:</b> create each repository the SA declared in <code>components.md</code>, with its branch protection and access grants. Provisioning authority stays with you even when the agent executes the platform mechanics.</span><span data-i18n lang="vi"><b>Quyết định, không có lệnh:</b> tạo từng repo mà SA đã khai báo trong <code>components.md</code>, kèm branch protection và cấp quyền. Thẩm quyền cấp phát vẫn thuộc về bạn kể cả khi agent thực hiện thao tác trên nền tảng.</span></li>
+      <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">what is proposed for release and what composition is actually in production.</span><span data-i18n lang="vi">cái gì đang đề xuất phát hành và thành phần nào thật sự đang chạy production.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">the agent packages the SRE handoff: build, tests, migrations, runbooks, rollback.</span><span data-i18n lang="vi">agent đóng gói bàn giao SRE: build, test, migration, runbook, rollback.</span></li>
+    </ol>
   </section>
 
-  <!-- ============ VENDOR ============ -->
   <section id="vendor">
-    <div class="rolesec" style="--rc:var(--vendor)">
-      <div class="rhead"><span class="rdot"></span><h3>Vendor — SA / Tech Lead / team</h3><span class="rmiss"><span data-i18n lang="en">— delivers assigned scope with scoped authority; shared project truth stays with KAFI.</span><span data-i18n lang="vi">— deliver scope được giao với authority có giới hạn; project truth chung ở lại với KAFI.</span></span></div>
-      <div class="gates"><span class="gl"><span data-i18n lang="en">Your gates</span><span data-i18n lang="vi">Gate của bạn</span></span>
-        <span class="gate">Vendor Technical Complete (declare)</span><span class="gate"><span data-i18n lang="en">Solution artifacts — Vendor SA, assigned scope only</span><span data-i18n lang="vi">Solution artifacts — Vendor SA, chỉ trong scope được giao</span></span>
-      </div>
-      <div class="rgrid">
-        <div>
-          <p class="subh"><span data-i18n lang="en">Base flow — any engagement</span><span data-i18n lang="vi">Base flow — mọi engagement</span></p>
-          <ol class="steps">
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Onboard the pruned tree</span><span data-i18n lang="vi">Onboard cây đã tỉa</span> <span class="tag">onboarding</span></div><div class="sd"><span data-i18n lang="en">You materialize a policy-pruned view: read-only Hub subset + only your assigned <code>components/&lt;name&gt;/</code>. Same commands, scoped authority.</span><span data-i18n lang="vi">Bạn materialize một view đã tỉa theo policy: Hub subset read-only + đúng <code>components/&lt;name&gt;/</code> được giao. Cùng command, authority có scope.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Deliver on <code>ai-dlc/*</code> branches</span><span data-i18n lang="vi">Deliver trên branch <code>ai-dlc/*</code></span> <span class="tag">next</span></div><div class="sd"><span data-i18n lang="en">Code, automated tests and the delivery dossier for the assigned unit. Branch push rights never imply merge or approval rights on canonical <code>main</code>.</span><span data-i18n lang="vi">Code, automated test và delivery dossier cho unit được giao. Quyền push branch không bao giờ hàm ý quyền merge hay approve trên <code>main</code> canonical.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Route shared changes as proposals</span><span data-i18n lang="vi">Đưa thay đổi chung thành proposal</span></div><div class="sd"><span data-i18n lang="en">You cannot edit canonical requirements, shared contracts, <code>team.md</code>, governance or activation. A needed contract change is a recorded change proposal to the Hub, decided at the owning KAFI gate.</span><span data-i18n lang="vi">Bạn không thể sửa canonical requirements, shared contract, <code>team.md</code>, governance hay activation. Cần đổi contract thì tạo change proposal có record về Hub, quyết tại gate KAFI sở hữu.</span></div></div></li>
-            <li><div class="sbox"><div class="sttl"><span data-i18n lang="en">Declare Complete → KAFI accepts</span><span data-i18n lang="vi">Declare Complete → KAFI accept</span></div><div class="sd"><span data-i18n lang="en">Vendor Tech Lead declares <b>Vendor Technical Complete</b>; the KAFI accepting Tech Lead grants <b>Technical Acceptance</b>. KAFI always keeps UAT and activation.</span><span data-i18n lang="vi">Vendor Tech Lead declare <b>Vendor Technical Complete</b>; KAFI accepting Tech Lead cấp <b>Technical Acceptance</b>. KAFI luôn giữ UAT và activation.</span></div></div></li>
-          </ol>
-        </div>
-        <div>
-          <div class="om">
-            <div class="omc"><div class="ot">KAFI Solution – Vendor Delivery</div><p><span data-i18n lang="en">KAFI PO/PM owns requirements; KAFI SA owns solution, contracts and NFRs. You implement the approved solution and submit questions through recorded Hub interactions.</span><span data-i18n lang="vi">KAFI PO/PM sở hữu requirements; KAFI SA sở hữu solution, contract và NFR. Bạn implement solution đã duyệt và gửi câu hỏi qua Hub interaction có record.</span></p></div>
-            <div class="omc"><div class="ot">Vendor Solution &amp; Delivery</div><p><span data-i18n lang="en">Your SA <b>is</b> the Project SA for the assigned scope — drafting architecture, contracts, NFR detail and ADRs as dossier drafts under claim. KAFI <b>Architecture Assurance</b> reviews when a risk trigger fires; unclear risk means Assurance Required until resolved.</span><span data-i18n lang="vi">SA của bạn <b>chính là</b> Project SA cho scope được giao — soạn architecture, contract, NFR detail và ADR dưới dạng dossier draft có claim. KAFI <b>Architecture Assurance</b> review khi risk trigger kích hoạt; risk chưa rõ nghĩa là Assurance Required cho đến khi làm rõ.</span></p></div>
-          </div>
-          <p class="subh"><span data-i18n lang="en">What changes by profile</span><span data-i18n lang="vi">Điều gì thay đổi theo profile</span></p>
-          <div class="scroll"><div class="delta">
-            <div class="dr grp"><div><span data-i18n lang="en">Relationship detail</span><span data-i18n lang="vi">Chi tiết relationship</span></div></div>
-            <div class="dr"><div class="dk">Mixed per component</div><div><span data-i18n lang="en">Engagement is declared per component in <code>components.md</code> — one component may be KAFI-built while yours runs Vendor Solution &amp; Delivery. Authority is never inferred from a company name.</span><span data-i18n lang="vi">Engagement khai báo theo từng component trong <code>components.md</code> — một component có thể do KAFI build trong khi component của bạn chạy Vendor Solution &amp; Delivery. Authority không bao giờ suy từ tên công ty.</span></div></div>
-            <div class="dr"><div class="dk">Hub-led<span class="en">not a vendor model</span></div><div><span data-i18n lang="en">A repo consuming an authoritative Hub is <code>hub-led</code> — that alone does not make it a vendor relationship or reduce its team's in-house authority.</span><span data-i18n lang="vi">Repo consume một Hub authoritative là <code>hub-led</code> — riêng điều đó không biến nó thành quan hệ vendor hay giảm authority in-house của team đó.</span></div></div>
-            <div class="dr grp"><div>Work type</div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">IDs &amp; intake</span><span data-i18n lang="vi">ID &amp; intake</span></div><div><span data-i18n lang="en">Without Hub allocation authority you use temporary references; KAFI intake assigns canonical IDs on acceptance.</span><span data-i18n lang="vi">Chưa có quyền cấp ID từ Hub thì bạn dùng tham chiếu tạm; KAFI intake gán ID canonical khi accept.</span></div></div>
-            <div class="dr"><div class="dk"><span data-i18n lang="en">Hotfix on your component</span><span data-i18n lang="vi">Hotfix trên component của bạn</span></div><div><span data-i18n lang="en">The same production-lineage rule applies; SRE evidence and KAFI acceptance gates are unchanged by the engagement model.</span><span data-i18n lang="vi">Cùng luật production-lineage; evidence của SRE và các gate acceptance của KAFI không đổi theo engagement model.</span></div></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <h2><span class="rd" style="--rc:var(--vendor)"></span><span data-i18n lang="en">Vendor — SA, Tech Lead, team</span><span data-i18n lang="vi">Nhà thầu — SA, Tech Lead, đội</span></h2>
+    <p><span data-i18n lang="en">You work in a pruned tree: a read-only subset of the Hub plus the components assigned to you. Scenario <a href="#s-vendor">5</a>.</span><span data-i18n lang="vi">Bạn làm trong cây rút gọn: một phần Hub chỉ đọc, cộng các component được giao. Kịch bản <a href="#s-vendor">5</a>.</span></p>
+    <ol>
+      <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">onboard the pruned tree. The Hub remains the source of requirements; do not create a parallel copy of them.</span><span data-i18n lang="vi">onboard cây rút gọn. Hub vẫn là nguồn của requirements; đừng tạo bản sao song song.</span></li>
+      <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">deliver against the contracts the Hub declares.</span><span data-i18n lang="vi">giao hàng theo các contract Hub khai báo.</span></li>
+      <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">integration evidence and contract compatibility before you declare complete.</span><span data-i18n lang="vi">bằng chứng tích hợp và tương thích contract trước khi bạn tuyên bố hoàn tất.</span></li>
+    </ol>
   </section>
 
-  <footer>
-    <span data-i18n lang="en"><b>AI-DLC v1.0 · Role Guides</b> · KAFI Securities. Companion to
-    <a href="ai-dlc-v1.0-overview.html">Concept &amp; Operating Model</a> and
-    <a href="ai-dlc-v1.0-workflow.html">Dual-track Workflow</a>.
-    Content aligned to the AI-DLC v1.0 consolidated specification (§3–§6, §8, §13–§14).</span><span data-i18n lang="vi"><b>AI-DLC v1.0 · Role Guides</b> · KAFI Securities. Tài liệu đồng hành với
-    <a href="ai-dlc-v1.0-overview.html">Concept &amp; Operating Model</a> và
-    <a href="ai-dlc-v1.0-workflow.html">Dual-track Workflow</a>.
-    Nội dung bám theo AI-DLC v1.0 consolidated specification (§3–§6, §8, §13–§14).</span>
-    <span class="baseline">Content baseline: AI-DLC v1.0 Locked Spec</span>
-  </footer>
-
+  <section id="where-next">
+    <h2><span data-i18n lang="en">Where to go next</span><span data-i18n lang="vi">Đi tiếp đâu</span></h2>
+    <p><span data-i18n lang="en">Why the system is shaped this way: <a href="ai-dlc-v1.0-overview.html">Concepts</a>. Installing, joining and the full command reference: <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Install and operate</a>. Flows, diagrams and the step-by-step procedures: <a href="AI-DLC-v1.0-runbook.html">Operating manual</a>.</span><span data-i18n lang="vi">Vì sao hệ thống có hình dạng này: <a href="ai-dlc-v1.0-overview.html">Khái niệm</a>. Cài đặt, tham gia và tham chiếu lệnh đầy đủ: <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Cài đặt và vận hành</a>. Sơ đồ, luồng và thủ tục từng bước: <a href="AI-DLC-v1.0-runbook.html">Sổ tay vận hành</a>.</span></p>
+    <p class="note">Content baseline: AI-DLC v1.0 Locked Spec · v1.0.8</p>
+  </section>
 </main>
 
 <script>
