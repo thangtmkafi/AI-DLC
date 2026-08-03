@@ -69,7 +69,12 @@ html{scroll-behavior:smooth;}
 body{margin:0;background:var(--page);font-family:var(--font);color:var(--t2);-webkit-font-smoothing:antialiased;line-height:1.5;
   background-image:var(--glow);background-repeat:no-repeat;transition:background-color .2s ease,color .2s ease;}
 .wrap{max-width:1160px;margin:0 auto;padding:0 20px 110px;}
-code{font-family:var(--mono);font-size:0.88em;background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:5px;}
+code{font-family:var(--mono);font-size:0.88em;background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere;}
+/* Wide content scrolls inside its own box; the page body never scrolls sideways.
+   An ASCII tree is exact layout, so it must not be re-wrapped — it scrolls. An
+   inline token like a long reason code has no layout to preserve and wraps. */
+pre{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}
+pre code{overflow-wrap:normal;white-space:pre;}
 
 /* NAV */
 nav.toc{position:sticky;top:0;z-index:60;background:var(--navbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
