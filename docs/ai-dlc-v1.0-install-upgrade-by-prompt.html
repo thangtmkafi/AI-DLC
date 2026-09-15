@@ -135,6 +135,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#fresh-install">Cài mới</a>
       <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
       <a href="#approve-plan">Phê duyệt digest</a>
+      <a href="#upgrade-v1">Nâng cấp từ v1.0.0–v1.0.9</a>
       <a href="#upgrade-v0">Nâng cấp trực tiếp từ v0.3–v0.9.x</a>
       <a href="#when-blocked">Khi phát hiện có vấn đề</a>
       <a href="#verify-install">Xác minh sau khi cài</a>
@@ -242,7 +243,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
     <ol>
       <li><strong>DevOps/SRE tạo Hub repository</strong>, kèm branch protection và cấp quyền.</li>
       <li><strong>PO/PM xác nhận</strong> đó là Hub của dự án này.</li>
-      <li><strong>Agent clone</strong> vào <code>project-hub/</code> và kiểm <code>project-hub/.aidlc/project.md</code> đúng là dự án này.</li>
+      <li><strong>Agent clone</strong> vào <code>project-hub/</code> và kiểm <code>project-hub/project.md</code> đúng là dự án này.</li>
     </ol>
     <p><strong>Chưa xin được repo thì không phải chờ.</strong> Từ v1.0.3, agent khởi tạo Hub như một <strong>git repo local</strong> tại <code>project-hub/</code> — cùng cấu trúc, cùng cặp nhánh (<code>dev</code> để làm việc, <code>main</code> chỉ nhận baseline), cùng kỷ luật promotion như Hub clone về. Bạn làm việc bình thường từ ngày đầu. Việc thiếu remote được ghi thành open item và <code>status</code> nhắc mỗi lần chạy — vì Hub chưa có remote nghĩa là <strong>chưa có backup và chưa chia sẻ được</strong>, đó là món nợ cần trả, không phải chuyện giấu đi.</p>
     <p>Khi xin được repo, báo agent. Agent xem remote trước khi đụng gì:</p>
@@ -396,6 +397,16 @@ Plan: /tmp/kafi-aidlc-&lt;id&gt;/plan.md</code></pre>
     <p>Từ đó agent mới vào <code>BACKUP</code>: sao lưu chỉ những path do AI-DLC sở hữu đã được duyệt và vùng managed block, áp dụng đúng các dòng có trong manifest, chạy migration đã được fixture chứng minh, xác minh kết quả, cutover và báo cáo bằng chứng. Nó <strong>không bao giờ dời nội dung dự án</strong> để giải quyết va chạm.</p>
   </section>
   <section id="upgrade-v0">
+    <a id="upgrade-v1"></a>
+    <h2>Nâng cấp từ v1.0.0–v1.0.9: bộ tài liệu đổi hình dạng</h2>
+    <p>v1.0.10 sắp xếp lại Hub theo người đọc: <code>project.md</code>, <code>team.md</code>, <code>components.md</code> lên gốc Hub; <code>overview/</code> giữ <code>state.md</code>, <code>open-items.md</code>, <code>decisions.md</code>, <code>traceability.md</code>, <code>capabilities.md</code>; record nằm theo tháng trong <code>.aidlc/audit/&lt;loại&gt;/&lt;yyyy-mm&gt;/</code>; bộ brownfield vào <code>discovery/brownfield/</code>. Gói được cài như bình thường bằng prompt chuẩn — Hub cũ vẫn chạy.</p>
+    <ul>
+      <li><strong>Dấu hiệu:</strong> <code>status</code> báo <code>DOC_SHAPE_LEGACY</code> vì <code>project.md</code> chưa có dòng <code>Document set shape:</code>. Không có gì bị chặn.</li>
+      <li><strong>Bước <code>PLAN</code> đề xuất, từng dòng có thể từ chối:</strong> ba file control lên gốc Hub (<code>Move</code>, không đổi byte); record phẳng vào thư mục tháng theo <code>Timestamp:</code>; bộ brownfield vào <code>discovery/brownfield/</code>; view derived bị xóa rồi dựng lại ở chỗ mới — không di chuyển.</li>
+      <li><strong>Phần đổi nội dung đi qua <code>DOC-MIG</code> với row <code>Normalise</code>,</strong> PO/PM duyệt từng row: <code>open-items.md</code> thành <code>overview/open-items.md</code> với <code>OI-NNNN</code> mỗi dòng, dòng đã đóng sang <code>archive/&lt;tháng&gt;/overview/open-items.md</code> (BA xác nhận); <code>registry.md</code> chỉ giữ counter, log sang <code>.aidlc/reservations/&lt;tháng&gt;.md</code>; <code>team.md</code> chỉ giữ authority hiện tại, bảng <code>rev-N → commit</code> ở <code>archive/&lt;tháng&gt;/.aidlc/team-revisions.md</code>.</li>
+      <li><strong>Body cũ đầy gạch ngang</strong> đi qua <code>Re-approve (clean)</code>: agent soạn bản hiện trạng, mỗi authority duyệt một gate gộp.</li>
+      <li><strong>Không có gì bị ghi trước khi bạn duyệt.</strong> Blob cũ giữ nguyên tại <code>archive/&lt;tháng&gt;/&lt;đường dẫn cũ&gt;</code>; link không bao giờ bị viết lại — đường dẫn cũ tra theo bảng relocation trong <code>.kafi/ai-dlc/core/migrations/doc-shape/DOC-SHAPE-1.0.10.md</code>.</li>
+    </ul>
     <h2>Nâng cấp trực tiếp từ v0.3–v0.9.x</h2>
     <p>Dùng đúng prompt chuẩn — không có prompt riêng cho nâng cấp. Agent tự nhận diện bản đang cài qua legacy fingerprint và dựng plan nâng cấp.</p>
     <p>Điểm khác so với cài mới:</p>
@@ -403,7 +414,7 @@ Plan: /tmp/kafi-aidlc-&lt;id&gt;/plan.md</code></pre>
       <li>Plan có thêm <strong>migration mapping</strong>: cái gì chuyển sang cấu trúc v1, cái gì giữ nguyên.</li>
       <li>Nội dung dự án của bạn không tự động được dời đi. Mọi thay đổi vị trí phải nằm trong plan đã duyệt, kèm đường lùi.</li>
       <li>Managed block được gộp theo phạm vi; phần bytes bạn tự sửa ngoài vùng managed được giữ nguyên.</li>
-      <li>Nếu bản cũ đã bị chỉnh sửa nhiều, agent báo <code>LEGACY_PACKAGE_CUSTOMIZED</code> hoặc <code>CUSTOMIZED_TARGET_COLLISION</code> thay vì ghi đè.</li>
+      <li>Nếu bản cũ đã bị chỉnh sửa nhiều, agent báo <code>LEGACY_PACKAGE_CUSTOMIZED</code> thay vì ghi đè.</li>
     </ul>
     <p>Không có prompt riêng cho nâng cấp. Prompt chuẩn ở trên đã bao gồm cả hai đường — nó yêu cầu "installation <strong>or upgrade</strong> plan" — nên bạn dùng đúng một prompt cho mọi trường hợp.</p>
     <h3 id="v0-restructure">Thư mục v0.x của bạn sẽ thành cái gì</h3>
@@ -594,7 +605,7 @@ release theo đúng cách trên, rồi trình một bản plan bao cả hai.</co
       <pre id="prompt-join-b"><code>/kafi-aidlc-onboarding</code></pre>
       <span class="copy-status" id="prompt-join-b-status" role="status" aria-live="polite"></span>
     </div>
-    <p>Đường nào thì agent cũng làm đúng bốn việc sau: clone Hub về <code>project-hub/</code> và kiểm tra <code>project-hub/.aidlc/project.md</code> đúng là dự án này; đối chiếu phiên bản đã cài với dòng <code>Immutable release identity</code> mà Hub ghi lại; đọc <code>components.md</code>; rồi <strong>hỏi bạn muốn dựng repo nào</strong>.</p>
+    <p>Đường nào thì agent cũng làm đúng bốn việc sau: clone Hub về <code>project-hub/</code> và kiểm tra <code>project-hub/project.md</code> đúng là dự án này; đối chiếu phiên bản đã cài với dòng <code>Immutable release identity</code> mà Hub ghi lại; đọc <code>components.md</code>; rồi <strong>hỏi bạn muốn dựng repo nào</strong>.</p>
     <p>Câu hỏi cuối là chỗ đáng dừng lại. Mặc định là <strong>chỉ Hub</strong>. BA/PM không cần repo code, và thường cũng chưa được cấp quyền vào chúng — một cây dựng thiếu là hình dạng hợp lệ, không phải dự án hỏng. Dev muốn viết code thì chọn thêm các repo mình phụ trách.</p>
     <p>Hai thứ <code>components.md</code> không mang theo được, và không nên chờ nó mang: môi trường máy — secret, toolchain, <code>.env</code> — vốn không phải sự thật của dự án; và quyền truy cập các remote, do DevOps/SRE cấp. Dựng cây thất bại vì xác thực là một yêu cầu cấp quyền, không phải lỗi.</p>
     <p>Nếu lệnh <code>/kafi-aidlc-onboarding</code> chưa xuất hiện sau khi cài, xem <a href="#verify-install">Kiểm tra sau cài đặt</a>: host cache danh sách skill theo phiên, và mở chat mới không phải là reload.</p>
@@ -721,13 +732,9 @@ release theo đúng cách trên, rồi trình một bản plan bao cả hai.</co
       <tbody>
         <tr><td><code>ADAPTER_SELECTION_REQUIRED</code></td><td>Không xác định được host đang hoạt động</td><td>Nêu rõ Codex, Claude Code hay Kiro</td></tr>
         <tr><td><code>MANAGED_BLOCK_CONFLICT</code></td><td>Vùng managed block đã bị sửa thủ công</td><td>Xem lại vùng đó, quyết định giữ hay nhận bản mới</td></tr>
-        <tr><td><code>CUSTOMIZED_TARGET_COLLISION</code></td><td>File đích đã bị tuỳ biến, khác bytes chuẩn</td><td>Xử lý va chạm trước, không ghi đè</td></tr>
         <tr><td><code>LEGACY_PROJECT_CONTENT_COLLISION</code></td><td>Nội dung dự án nằm ở vị trí v1 cần dùng</td><td>Quyết định vị trí, không để agent tự dời</td></tr>
         <tr><td><code>LEGACY_VERSION_UNSUPPORTED</code></td><td>Bản cũ ngoài phạm vi v0.3–v0.9.x</td><td>Liên hệ release authority</td></tr>
-        <tr><td><code>INSTALLED_AIDLC_TARGET_DRIFT</code></td><td>Bản đã cài lệch so với bytes đã ghi nhận</td><td>Xem drift trước khi nâng cấp</td></tr>
-        <tr><td><code>GIT_INSPECTION_FAILED</code></td><td>Không đọc được trạng thái Git</td><td>Sửa trạng thái repository rồi chạy lại</td></tr>
         <tr><td><code>LOCATOR_RECOMMENDED_REVOKED</code></td><td>Release được đề xuất đã bị thu hồi</td><td>Chờ locator trỏ sang bản thay thế</td></tr>
-        <tr><td><code>MIGRATION_PACKAGE_PHASE_UNAVAILABLE</code></td><td>Thiếu recipe migration có fixture chứng minh</td><td>Không tự chế biến; báo release authority</td></tr>
       </tbody></table></div>
     <p>Dòng <code>Conflict</code> trong plan là <strong>không phê duyệt được</strong>. Không có cách nào bỏ qua nó bằng prompt.</p>
   </section>
@@ -763,7 +770,8 @@ release theo đúng cách trên, rồi trình một bản plan bao cả hai.</co
       </tbody>
     </table></div>
     <p>Mặc định nên là <strong>Leave in place</strong>. Một con trỏ không tốn gì và không bao giờ lệch khỏi thứ nó trỏ tới. <code>discovery/references/</code> hẹp có chủ đích: dành cho thứ không đường dẫn nào với tới — tài liệu đối tác gửi qua mail, spec không thuộc repo nào. Đằng nào nhóm đó cũng vào <code>discovery/knowledge-sources.md</code>, và <strong>chính sổ đăng ký đó, không phải thư mục, là thứ Rule 0 trích dẫn</strong>.</p>
-    <p><strong>Chạy reverse engineering</strong> — sáu lượt: <strong>kiểm kê mọi thứ bạn đưa vào</strong> rồi mới quyết cách quét; skim mọi file; đọc sâu ở chỗ một khẳng định cần hành vi, kể cả truy chuỗi gọi của từng giao dịch nghiệp vụ xuyên các component; <strong>đề xuất impact boundary để bạn xác nhận</strong>; phân tích sâu bên trong boundary đó; rồi ráp báo cáo. Boundary là <em>kết quả</em> của lượt đọc, không phải điều kiện để bắt đầu đọc — người mới gặp một hệ thống lạ không thể gọi tên phạm vi trước khi có thứ gì đó đọc nó.</p>
+    <p><strong>Chạy reverse engineering</strong> — bảy lượt: <strong>kiểm kê mọi thứ bạn đưa vào</strong> rồi mới quyết cách quét; skim mọi file; <strong>đọc cách hệ thống được triển khai</strong> — manifest Kubernetes, IaC, pipeline, configmap — trước khi chốt bất kỳ kết luận kiến trúc nào; đọc sâu ở chỗ một khẳng định cần hành vi, kể cả truy chuỗi gọi của từng giao dịch nghiệp vụ xuyên các component và đào business rule theo từng domain nghiệp vụ; <strong>đề xuất impact boundary để bạn xác nhận</strong>; phân tích sâu bên trong boundary đó, gồm cả tầng dữ liệu; rồi ráp báo cáo. Boundary là <em>kết quả</em> của lượt đọc, không phải điều kiện để bắt đầu đọc — người mới gặp một hệ thống lạ không thể gọi tên phạm vi trước khi có thứ gì đó đọc nó.</p>
+    <p><strong>Lượt triển khai đứng trước lượt kiến trúc, và nó có quyền sửa lại kết luận.</strong> Một service là thứ nó <em>được triển khai thành</em>, không phải cái tên repo của nó. Ở một hệ 56 repo, đọc manifest cho thấy một component tưởng là WebSocket gateway thật ra là tầng worker của một mesh ba tầng, hai mesh độc lập chạy cùng một image, và hai service khác tên dùng chung một image. Không kết luận nào trong số đó nhìn ra được từ mã nguồn. Ngược lại, manifest là <em>cấu hình khai báo</em>, không phải trạng thái runtime: số replica thật, độ trễ và thông lượng vẫn là <code>Not Assessed</code> cho tới khi có ai đó đo.</p>
     <p class="label label-mutate"><strong>May produce a mutation plan requiring separate approval.</strong></p>
     <div class="prompt" data-language="text">
       <button type="button" class="copy" data-copy-target="prompt-re" aria-label="Sao chép prompt next">Sao chép</button>
@@ -773,7 +781,10 @@ release theo đúng cách trên, rồi trình một bản plan bao cả hai.</co
     <p>Kết quả nằm ở <code>project-hub/discovery/</code> — <strong>một bộ cho cả dự án</strong>, dù nó trải trên bao nhiêu repo. Mỗi repo là một mục <code>### &lt;component&gt;</code> bên trong các tài liệu đó, mang commit vào của riêng nó, nên repo nào đổi thì chỉ đọc lại các mục trích dẫn nó. Từ v1.0.9 không còn <code>discovery/components/&lt;tên&gt;/</code>: giao dịch nghiệp vụ đi xuyên nhiều repo thì không tài liệu phạm vi một repo nào giữ được nó.</p>
     <p>Thứ đáng đọc trước là <strong><code>system-overview.md</code> § Business transactions</strong> và <strong><code>as-is-architecture.md</code> § Interaction sequences</strong> — danh sách giao dịch có tên có số, và một sơ đồ tuần tự cho mỗi giao dịch, mỗi chặng kèm <code>path:line</code> chứng minh lời gọi đó có thật. Chặng nào không truy được thì ghi <code>Not Assessed</code> chứ không đoán.</p>
     <p>Đọc mức bằng chứng trước tiên: <code>skim</code> là suy từ hình dạng, <code>read</code> là đã đọc hành vi, <code>executed</code> là đã chạy và ghi lại. Một khẳng định mức <code>skim</code> không bao giờ được trình bày như hành vi đã xác lập. Một câu chỉ có trong tài liệu cũ thì trích dẫn tài liệu đó và <strong>không</strong> mang mức nào trong ba mức trên — ba mức đó nói về việc đọc <em>mã</em>. Độ phủ là một <strong>con số</strong> — bao nhiêu file có mặt, đã đọc, bị loại và vì lý do máy kiểm được. Chỗ tài liệu cũ và code mâu thuẫn thì cả hai được ghi lại, và <strong>chính sự mâu thuẫn là phát hiện</strong>.</p>
-    <p>Cuối cùng bạn có <code>discovery/reverse-engineering-report.md</code> và bản <code>.html</code> song ngữ đọc trong một lượt: một tài liệu, mười ba mục, cộng một bảng liệt kê từng component. Đây là thứ SA đọc khi duyệt Current-State Baseline — nhưng cái được duyệt vẫn là các artifact canonical, và báo cáo dựng từ revision đã cũ thì gate không qua cho tới khi ráp lại.</p>
+    <p>Ba tầng luồng được tách riêng và trỏ lẫn nhau, vì chúng trả lời ba câu hỏi khác nhau cho ba người đọc khác nhau: <strong>luồng nghiệp vụ</strong> là dòng thời gian sự kiện trong <code>system-overview.md</code> — nơi hệ có message bus thì tên topic chính là từ vựng sự kiện có sẵn; <strong>luồng người dùng</strong> nằm ở <code>as-is-user-flows.md</code>, chi tiết tới từng màn hình: sơ đồ điều hướng cho mỗi app, hành trình vẽ dạng service blueprint có đường ranh nhìn thấy, và bảng liệt kê màn hình kèm route, đường dẫn cài đặt, endpoint gọi ra và các trạng thái ngoài happy path; <strong>luồng hệ thống</strong> vẫn ở <code>as-is-architecture.md</code>.</p>
+    <p>Từ v1.0.10 có thêm <code>as-is-deployment.md</code> (topology, ma trận môi trường × namespace × năng lực, ánh xạ image → repo, tư thế scaling, nơi cấu hình và bí mật nằm) và <code>as-is-data-model.md</code> — tài liệu duy nhất nhìn thấy được ghép nối qua cơ sở dữ liệu dùng chung: nó không có import, không có endpoint, không đi qua kênh nào, nên không artifact nào khác thấy nó.</p>
+    <p>Sơ đồ vẽ bằng <strong>Mermaid</strong>; ASCII box art bị bỏ. SVG viết tay chỉ dành cho topology cả hệ, và phải nói rõ tại chỗ vì sao auto-layout không dùng được.</p>
+    <p>Cuối cùng bạn có <code>discovery/reverse-engineering-report.md</code> và bản <code>.html</code> song ngữ đọc trong một lượt: bốn phần — cho người ra quyết định, kiến trúc, nghiệp vụ và bề mặt tiếp xúc, xuyên suốt và đánh giá — cộng phụ lục, nơi duy nhất được liệt kê đầy đủ. Cao độ của báo cáo lấy từ phạm vi RE đã khai trong <code>project.md</code>, agent không tự chọn: báo cáo mức hệ thống không bao giờ là phép nối các báo cáo mức app. Bản HTML chưa được mở ra xem thì chưa xong — cả hai theme, cả khổ rộng lẫn hẹp, không cuộn ngang, console không lỗi — và đã kiểm tra những gì thì ghi lại. Đây là thứ SA đọc khi duyệt Current-State Baseline — nhưng cái được duyệt vẫn là các artifact canonical, và báo cáo dựng từ revision đã cũ thì gate không qua cho tới khi ráp lại.</p>
   </section>
   <section id="command-reference">
     <h2>Tham chiếu lệnh và gate</h2>

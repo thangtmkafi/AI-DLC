@@ -1,6 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang-scaffold data-default-language="en" data-default-theme="light" data-theme="light" data-lang="en">
 <head>
+<script>
+(function(){try{
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var t=localStorage.getItem(THEME_KEY);
+  var l=localStorage.getItem(LANGUAGE_KEY);
+  d.dataset.theme=(t==='dark')?'dark':'light';
+  d.dataset.lang=(l==='vi')?'vi':'en';
+  d.lang=d.dataset.lang;
+}catch(e){}})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KAFI AI-DLC — Introduction · Claude Code + Kiro</title>
@@ -1062,6 +1073,59 @@ footer {
   .next-box { grid-template-columns: 1fr; }
   .doc-title { font-size: 32px; }
 }
+
+/* ============ THEME + LANGUAGE (added 2026-08-19) ============ */
+/* The page palette is authored light-first, so `light` stays the default and
+   `dark` is the override. Concepts does it the other way round; the token
+   values below are the same ones that page resolves to, so the two agree. */
+:root { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-success-bg:  rgba(0,198,148,0.10);
+  --color-success-text:#7FE7CE;
+  --color-warning-bg:  rgba(249,204,78,0.12);
+  --color-warning-text:#F9CC4E;
+  --color-danger-bg:   rgba(255,107,107,0.12);
+  --color-danger-text: #FF8F8F;
+  --color-info-bg:     rgba(91,141,239,0.14);
+  --color-info-text:   #9DBBF7;
+  --color-purple-bg:   rgba(183,140,245,0.14);
+  --color-purple-text: #C9AEF9;
+  --page-bg:           #080D12;
+  --card-bg:           #0C1219;
+  --section-alt:       rgba(255,255,255,0.035);
+  --table-header-bg:   rgba(255,255,255,0.04);
+  --text-primary:      #F0F4F8;
+  --text-secondary:    #A8B5C0;
+  --text-muted:        #546070;
+  --border-card:       1.5px solid rgba(255,255,255,0.12);
+  --border-internal:   1px solid rgba(255,255,255,0.08);
+  --shadow-sm:         0 1px 4px rgba(0,0,0,0.25);
+  --shadow-md:         0 3px 12px rgba(0,0,0,0.35);
+}
+:root[data-lang="en"] [data-i18n][lang="vi"] { display: none; }
+:root[data-lang="vi"] [data-i18n][lang="en"] { display: none; }
+body { transition: background-color .2s ease, color .2s ease; }
+
+.ctrls {
+  position: fixed; top: 14px; right: 16px; z-index: 60;
+  display: flex; gap: 8px; align-items: center;
+  padding: 6px; border-radius: var(--radius-button, 32px);
+  background: var(--card-bg, var(--surface, #FFF));
+  border: var(--border-card, 1.5px solid var(--border, rgba(16,24,32,0.10)));
+  box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.12));
+}
+.seg { display: inline-flex; border: 1px solid var(--text-muted); border-radius: var(--radius-button, 32px); overflow: hidden; }
+.seg button {
+  border: none; background: transparent; color: var(--text-secondary);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer; transition: .15s;
+}
+.seg button + button { border-left: 1px solid var(--text-muted); }
+.seg button:hover { color: var(--text-primary, var(--text)); }
+.seg button[aria-pressed="true"] { background: var(--kafi-green); color: #06231C; }
+@media (max-width: 720px) { .ctrls { top: 8px; right: 8px; padding: 4px; } }
+@media print { .ctrls { display: none; } }
 </style>
 
 <style>
@@ -1077,84 +1141,253 @@ footer {
 .v1-legacy-label{max-width:960px;margin:24px auto 0;padding:12px 18px;border:1.5px solid rgba(128,128,128,.35);
   border-radius:18px;font:700 12px 'JetBrains Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;
   text-transform:uppercase;opacity:.8;font-family:'JetBrains Mono',ui-monospace,Consolas,monospace}
+
+/* ============ PROJECT TREE + ARTIFACT TABLE (v1.0.10 docs refresh) ============ */
+.tree-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; margin: 0 0 var(--sp5) 0; }
+.tree-wrap pre {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+  padding: 0;
+}
+.tbl { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+.tbl table { font-size: 12.5px; }
+.tbl td { line-height: 1.6; }
+.tbl td:first-child { white-space: nowrap; }
 @media print{.v1-banner{border-color:#101820}}
 </style>
 </head>
 <body>
+<div class="ctrls">
+  <div class="seg" role="group" aria-label="Language">
+    <button id="lang-en" type="button" aria-pressed="true">EN</button>
+    <button id="lang-vi" type="button" aria-pressed="false">VI</button>
+  </div>
+  <div class="seg" role="group" aria-label="Theme">
+    <button id="th-light" type="button" aria-pressed="true"><span data-i18n lang="en">Light</span><span data-i18n lang="vi">S&#225;ng</span></button>
+    <button id="th-dark" type="button" aria-pressed="false"><span data-i18n lang="en">Dark</span><span data-i18n lang="vi">T&#7889;i</span></button>
+  </div>
+</div>
 <div class="v1-banner">
-<div class="v1-eyebrow">KAFI AI-DLC · v1.0.9</div>
-<h2>This is the v1.0 introduction.</h2><p>One universal release serves <strong>Codex</strong>, <strong>Claude Code</strong> and <strong>Kiro</strong>. A v0.3–v0.9.x project upgrades directly; there are no staged hops. The v0.x material that used to live on this page is summarised as history in <a href="KAFI-AIDLC-Whats-New.html">What changed</a>.</p>
+<div class="v1-eyebrow">KAFI AI-DLC · v1.0.10</div>
+<h2><span data-i18n lang="en">This is the v1.0 introduction.</span><span data-i18n lang="vi">Đây là bản giới thiệu v1.0.</span></h2><p><span data-i18n lang="en">One universal release serves <strong>Codex</strong>, <strong>Claude Code</strong> and <strong>Kiro</strong>. A v0.3–v0.9.x project upgrades directly; there are no staged hops. The v0.x material that used to live on this page is summarised as history in <a href="KAFI-AIDLC-Whats-New.html">What changed</a>.</span><span data-i18n lang="vi">Một release universal phục vụ cả <strong>Codex</strong>, <strong>Claude Code</strong> và <strong>Kiro</strong>. Dự án v0.3–v0.9.x nâng cấp thẳng lên, không đi qua bước trung gian nào. Phần nội dung v0.x từng nằm ở trang này được tóm tắt thành lịch sử trong <a href="KAFI-AIDLC-Whats-New.html">Có gì thay đổi</a>.</span></p>
 </div>
 
 <div class="container">
 
 <header class="doc-header">
-  <div class="doc-eyebrow">KAFI Transformation Office · Introduction</div>
+  <div class="doc-eyebrow">KAFI Transformation Office · <span data-i18n lang="en">Introduction</span><span data-i18n lang="vi">Giới thiệu</span></div>
   <h1>AI-DLC v1.0</h1>
-  <p class="doc-sub">A methodology for building software with an AI agent doing the work and a human deciding what is acceptable.</p>
-  <div class="doc-meta"><strong>Audience</strong> · Leadership · PM/PO · BA · SA · Tech Lead · Dev · QA · DevOps/SRE</div>
+  <p class="doc-sub"><span data-i18n lang="en">A methodology for building software with an AI agent doing the work and a human deciding what is acceptable.</span><span data-i18n lang="vi">Phương pháp làm phần mềm trong đó AI agent làm việc, còn con người quyết định cái gì được chấp nhận.</span></p>
+  <div class="doc-meta"><strong><span data-i18n lang="en">Audience</span><span data-i18n lang="vi">Đối tượng</span></strong> · Leadership · PM/PO · BA · SA · Tech Lead · Dev · QA · DevOps/SRE</div>
 </header>
 
 <section>
-  <h2>What it is</h2>
-  <p>AI-DLC is a methodology, not a tool. What you install into a project is prose, templates and two reference registries — <strong>no executable code at all</strong>. The agent reads it and behaves accordingly; there is no checker to put in CI, and there has not been one since v0.3.</p>
-  <p>It supports Codex, Claude Code and Kiro from one canonical source. The three adapters are generated projections, not three hand-maintained copies, so they cannot drift apart.</p>
+  <h2><span data-i18n lang="en">What it is</span><span data-i18n lang="vi">Nó là cái gì</span></h2>
+  <p><span data-i18n lang="en">AI-DLC is a methodology, not a tool. What you install into a project is prose, templates and two reference registries — <strong>no executable code at all</strong>. The agent reads it and behaves accordingly; there is no checker to put in CI, and there has not been one since v0.3.</span><span data-i18n lang="vi">AI-DLC là một phương pháp, không phải một công cụ. Cái bạn cài vào dự án là văn bản, template và hai registry tham chiếu — <strong>không có một dòng mã chạy được nào</strong>. Agent đọc và hành xử theo; không có checker nào để cắm vào CI, và từ v0.3 tới nay chưa từng có.</span></p>
+  <p><span data-i18n lang="en">It supports Codex, Claude Code and Kiro from one canonical source. The three adapters are generated projections, not three hand-maintained copies, so they cannot drift apart.</span><span data-i18n lang="vi">Nó hỗ trợ Codex, Claude Code và Kiro từ một nguồn chuẩn duy nhất. Ba adapter là projection sinh ra, không phải ba bản chép tay, nên chúng không thể lệch nhau.</span></p>
 </section>
 
 <section>
-  <h2>The one sentence that explains the rest</h2>
-  <p><strong>The agent produces the work product; a human decides whether it is acceptable.</strong></p>
-  <p>Everything else follows. The agent is never an approver, so authority always rests with a person. Because the producer and the decider are already different parties, no rule anywhere asks for a second human — one person holding four roles approves their own project's gates and nothing is marked for it. And because the agent does the producing, the human's job is judgment at gates rather than typing.</p>
+  <h2><span data-i18n lang="en">The one sentence that explains the rest</span><span data-i18n lang="vi">Một câu giải thích tất cả phần còn lại</span></h2>
+  <p><strong><span data-i18n lang="en">The agent produces the work product; a human decides whether it is acceptable.</span><span data-i18n lang="vi">Agent tạo ra sản phẩm công việc; con người quyết định nó có được chấp nhận hay không.</span></strong></p>
+  <p><span data-i18n lang="en">Everything else follows. The agent is never an approver, so authority always rests with a person. Because the producer and the decider are already different parties, no rule anywhere asks for a second human — one person holding four roles approves their own project's gates and nothing is marked for it. And because the agent does the producing, the human's job is judgment at gates rather than typing.</span><span data-i18n lang="vi">Mọi thứ khác đều suy ra từ đó. Agent không bao giờ là người duyệt, nên authority luôn thuộc về một con người. Vì bên tạo ra và bên quyết định vốn đã là hai bên khác nhau, không có luật nào đòi thêm một người thứ hai — một người giữ bốn role vẫn tự duyệt gate của dự án mình và không có gì bị đánh dấu vì chuyện đó. Và vì agent làm phần tạo ra, việc của con người là phán đoán ở gate chứ không phải gõ.</span></p>
 </section>
 
 <section>
-  <h2>Four commands</h2>
-  <p>The entire daily surface, the same for every role:</p>
+  <h2><span data-i18n lang="en">Six commands</span><span data-i18n lang="vi">Sáu lệnh</span></h2>
+  <p><span data-i18n lang="en">The entire daily surface, the same for every role:</span><span data-i18n lang="vi">Toàn bộ bề mặt dùng hằng ngày, giống nhau cho mọi role:</span></p>
   <ul>
-    <li><code>/kafi-aidlc-onboarding</code> — how do I start, or join?</li>
-    <li><code>/kafi-aidlc-status</code> — where are we?</li>
-    <li><code>/kafi-aidlc-next</code> — what do I do next?</li>
-    <li><code>/kafi-aidlc-check</code> — is anything wrong?</li>
+    <li><code>/kafi-aidlc-onboarding</code> — <span data-i18n lang="en">how do I start, or join?</span><span data-i18n lang="vi">tôi bắt đầu, hoặc tham gia, thế nào?</span></li>
+    <li><code>/kafi-aidlc-status</code> — <span data-i18n lang="en">where are we?</span><span data-i18n lang="vi">chúng ta đang ở đâu?</span></li>
+    <li><code>/kafi-aidlc-next</code> — <span data-i18n lang="en">what do I do next?</span><span data-i18n lang="vi">tiếp theo tôi làm gì?</span></li>
+    <li><code>/kafi-aidlc-check</code> — <span data-i18n lang="en">is anything wrong?</span><span data-i18n lang="vi">có gì sai không?</span></li>
+    <li><code>/kafi-aidlc-bootstrap</code> — <span data-i18n lang="en">install or upgrade the package here</span><span data-i18n lang="vi">cài hoặc nâng cấp package ở đây</span></li>
+    <li><code>/kafi-aidlc-doctor</code> — <span data-i18n lang="en">why is this stuck, and what clears it?</span><span data-i18n lang="vi">vì sao đang tắc, và gỡ thế nào?</span></li>
   </ul>
-  <p>Installation is a prompt, not a script. You paste it, the agent resolves a verified public release, inspects your project, and shows a plan. Nothing is created, moved or deleted until you approve that plan in your own words.</p>
+  <p><span data-i18n lang="en">Installation is a prompt, not a script. You paste it, the agent resolves a verified public release, inspects your project, and shows a plan. Nothing is created, moved or deleted until you approve that plan in your own words.</span><span data-i18n lang="vi">Cài đặt là một prompt, không phải script. Bạn dán vào, agent phân giải một public release đã được xác minh, khảo sát dự án của bạn, rồi trình ra một kế hoạch. Không có gì được tạo, di chuyển hay xoá cho tới khi bạn duyệt kế hoạch đó bằng lời của chính mình.</span></p>
 </section>
 
 <section>
-  <h2>What the project looks like</h2>
-  <p>A project is <strong>one folder</strong>, not one repository. The folder itself is unversioned scaffolding, rebuildable from a manifest in the Hub:</p>
-  <pre>&lt;project&gt;/
-├── project-hub/      docs plane · one git repo · the canonical state
-├── components/       code plane · one git repo per component
-└── ops/              ops plane · SRE-owned</pre>
-  <p>Everything a project decides lives in the Project Hub as Markdown. Component repositories hold code and reference the Hub; they never establish a parallel copy of requirements or approvals.</p>
+  <h2><span data-i18n lang="en">What the project looks like</span><span data-i18n lang="vi">Dự án trông như thế nào</span></h2>
+  <p><span data-i18n lang="en">A project is <strong>one folder</strong>, not one repository. The folder itself is unversioned scaffolding, rebuildable from <code>components.md</code> in the Hub — so nothing that sits directly in it is durable, and everything that matters lives inside one of the repositories below.</span><span data-i18n lang="vi">Một dự án là <strong>một thư mục</strong>, không phải một repository. Bản thân thư mục đó không được version, chỉ là khung dựng lại được từ <code>components.md</code> trong Hub — nên không thứ gì nằm trực tiếp trong nó là bền, và mọi thứ quan trọng đều nằm bên trong một trong các repository dưới đây.</span></p>
+  <div class="tree-wrap"><pre data-i18n lang="en">&lt;project&gt;/                         no .git at this level
+├── .kafi/ai-dlc/              the installed package · owned by the release manifest
+├── CLAUDE.md · AGENTS.md      host entry files · AI-DLC block only, rest project-owned
+├── .claude/ .codex/ .kiro/    generated adapter projections for the active hosts
+├── README.md                  project-owned · never an adapter target
+├── project-hub/               docs plane · one git repo · the canonical state
+├── components/                code plane · one git repo per component
+└── ops/                       ops plane · SRE-owned (ci-cd, infra)</pre><pre data-i18n lang="vi">&lt;project&gt;/                         không có .git ở mức này
+├── .kafi/ai-dlc/              gói đã cài · thuộc sở hữu của release manifest
+├── CLAUDE.md · AGENTS.md      file entry của host · chỉ khối AI-DLC, phần còn lại của dự án
+├── .claude/ .codex/ .kiro/    adapter projection sinh ra cho các host đang bật
+├── README.md                  của dự án · không bao giờ là đích của adapter
+├── project-hub/               mặt phẳng tài liệu · một git repo · trạng thái chuẩn
+├── components/                mặt phẳng mã nguồn · mỗi component một git repo
+└── ops/                       mặt phẳng vận hành · SRE sở hữu (ci-cd, infra)</pre></div>
+  <p><span data-i18n lang="en">Everything a project decides lives in the Project Hub as Markdown. Component repositories hold code and reference the Hub; they never establish a parallel copy of requirements or approvals. Cross-references use project-root-relative paths, so one addressing scheme covers docs, code and ops.</span><span data-i18n lang="vi">Mọi thứ dự án quyết định đều nằm trong Project Hub dưới dạng Markdown. Repo component chứa mã và tham chiếu tới Hub; chúng không bao giờ dựng một bản song song của requirements hay approval. Tham chiếu chéo dùng đường dẫn tương đối từ gốc dự án, nên một cách đánh địa chỉ phủ cả tài liệu, mã và vận hành.</span></p>
+
+  <h3><span data-i18n lang="en">Inside the Hub</span><span data-i18n lang="vi">Bên trong Hub</span></h3>
+  <p><span data-i18n lang="en">Only the folders your profile makes applicable are created. Work items keep stable paths for life — status is a field, not a folder to move between.</span><span data-i18n lang="vi">Chỉ những thư mục mà profile của bạn làm cho applicable mới được tạo. Work item giữ nguyên đường dẫn suốt đời — status là một field, không phải một thư mục để di chuyển qua lại.</span></p>
+  <div class="tree-wrap"><pre data-i18n lang="en">project-hub/
+├── .aidlc/                 who, what and where the project is
+│   ├── project.md          installed AI-DLC identity, release digest, adapters
+│   ├── team.md             people, roles held, roles acted in, authority
+│   ├── components.md       the declared tree — the container rebuilds from this
+│   ├── registry.md         artifact registry
+│   ├── state.md            derived project state — generated, never authored
+│   ├── audit/              interactions · approvals · exceptions · events
+│   └── migrations/         upgrade and restructuring records
+├── discovery/              reverse engineering · keyed to the project, not per repo
+│   └── references/         promoted reference material
+├── requirements/           vision, PRD, epics, stories, rules, glossary
+├── design/                 architecture, ADRs, data model, UI/UX, NFR
+│   └── contracts/          REST, GraphQL, RPC, async, message, data, frontend
+├── delivery/
+│   ├── slices/             work-item dossiers — one folder per bounded change
+│   ├── baselines/          baseline candidates, manifests, UAT records
+│   ├── change-requests/    Phase-Gated CRs
+│   ├── hotfixes/
+│   ├── cutovers/           cutover plans, rehearsals, rollback
+│   └── data-migrations/    runbooks, verification reports
+├── activation/             what is live — baselines, deployments, events, mainstream.md
+└── operations/             handover, runbooks, guides, postmortems</pre><pre data-i18n lang="vi">project-hub/
+├── .aidlc/                 dự án là ai, là gì, ở đâu
+│   ├── project.md          danh tính AI-DLC đã cài, digest của release, adapter
+│   ├── team.md             người, role đang giữ, role đang đóng, authority
+│   ├── components.md       cây đã khai báo — container dựng lại từ file này
+│   ├── registry.md         registry của artifact
+│   ├── state.md            trạng thái dẫn xuất — sinh ra, không ai viết tay
+│   ├── audit/              interaction · approval · exception · event
+│   └── migrations/         hồ sơ nâng cấp và tái cấu trúc
+├── discovery/              reverse engineering · khoá theo dự án, không theo từng repo
+│   └── references/         tài liệu tham chiếu được đưa vào
+├── requirements/           vision, PRD, epic, story, business rule, glossary
+├── design/                 kiến trúc, ADR, data model, UI/UX, NFR
+│   └── contracts/          REST, GraphQL, RPC, async, message, data, frontend
+├── delivery/
+│   ├── slices/             dossier của work item — mỗi thay đổi một thư mục
+│   ├── baselines/          baseline candidate, manifest, hồ sơ UAT
+│   ├── change-requests/    CR của Phase-Gated
+│   ├── hotfixes/
+│   ├── cutovers/           kế hoạch cutover, diễn tập, rollback
+│   └── data-migrations/    runbook, báo cáo kiểm chứng
+├── activation/             cái gì đang chạy — baseline, deployment, event, mainstream.md
+└── operations/             bàn giao, runbook, hướng dẫn, postmortem</pre></div>
+
+  <h3><span data-i18n lang="en">Every artifact type</span><span data-i18n lang="vi">Toàn bộ loại artifact</span></h3>
+  <p><span data-i18n lang="en">The package ships <strong>125 artifact templates</strong>, grouped below by where they live in the Hub. None is mandatory by default: a profile — <code>Entry × Scope × Delivery relationship × Work type</code> — decides which apply, and an artifact that is Not Applicable is never reported missing.</span><span data-i18n lang="vi">Gói này ship <strong>125 template artifact</strong>, nhóm bên dưới theo chỗ chúng nằm trong Hub. Mặc định không cái nào bắt buộc: một profile — <code>Entry × Scope × Delivery relationship × Work type</code> — quyết định cái nào áp dụng, và một artifact Not Applicable không bao giờ bị báo là thiếu.</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th><span data-i18n lang="en">Family</span><span data-i18n lang="vi">Nhóm</span></th><th><span data-i18n lang="en">What it holds</span><span data-i18n lang="vi">Chứa gì</span></th><th><span data-i18n lang="en">Artifact types</span><span data-i18n lang="vi">Loại artifact</span></th></tr></thead>
+    <tbody>
+      <tr><td><strong><span data-i18n lang="en">Governance</span><span data-i18n lang="vi">Governance</span></strong></td><td><span data-i18n lang="en">Who the project is, and what it has decided about itself</span><span data-i18n lang="vi">Dự án là ai, và đã tự quyết những gì về mình</span></td><td>project · team · components · registry · activation policy · quality policy · policy evaluation · claim · link · open items</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Audit records</span><span data-i18n lang="vi">Audit record</span></strong></td><td><span data-i18n lang="en">Immutable facts. Append-only; never edited, only superseded</span><span data-i18n lang="vi">Sự kiện bất biến. Chỉ ghi thêm; không sửa, chỉ thay thế</span></td><td>approval · interaction · impact · artifact claim · activation event · generic event · exception waiver · revocation / supersede · external deployment ref</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Discovery &amp; requirements</span><span data-i18n lang="vi">Discovery &amp; requirements</span></strong></td><td><span data-i18n lang="en">What is being built, and why</span><span data-i18n lang="vi">Đang xây cái gì, và vì sao</span></td><td>vision · brief · PRD · requirements · epic · user story · story map · personas · user flows · business rules · glossary · discovery item · delivery plan · risk register · technical environment · knowledge sources</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Brownfield</span><span data-i18n lang="vi">Brownfield</span></strong></td><td><span data-i18n lang="en">What already exists — one knowledge base per project, never one per repository</span><span data-i18n lang="vi">Cái đã tồn tại — một knowledge base cho cả dự án, không phải mỗi repo một cái</span></td><td>system overview · as-is architecture · as-is assessment · code structure · API inventory · technology stack · component inventory · dependency inventory · reuse recommendation · reverse engineering plan · legacy health baseline · characterization evidence</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Design</span><span data-i18n lang="vi">Design</span></strong></td><td><span data-i18n lang="en">How it is built, and the decisions behind it</span><span data-i18n lang="vi">Xây bằng cách nào, và những quyết định đứng sau</span></td><td>conceptual · application · component · infrastructure design · design-lite · ADR · data model · view model · UI/UX spec · design tokens · NFR requirements and design · security &amp; privacy · availability / DR · architecture assurance (+ trigger) · user flows</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Contracts</span><span data-i18n lang="vi">Contracts</span></strong></td><td><span data-i18n lang="en">The interfaces between components, versioned with the design</span><span data-i18n lang="vi">Giao diện giữa các component, version cùng với thiết kế</span></td><td>REST · GraphQL · RPC · async · message · data · frontend · infrastructure · fix</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Work item</span><span data-i18n lang="vi">Work item</span></strong></td><td><span data-i18n lang="en">One bounded change — the micro-DLC dossier</span><span data-i18n lang="vi">Một thay đổi có ranh giới — dossier của micro-DLC</span></td><td>context · dossier index · functional design · code · code flow · change impact · documentation impact · test plan · test cases · verification · DoD · KAFI technical acceptance · scope amendment · reassignment plan · forward port · vendor solution draft / ready-to-build / technical-complete</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Coordination &amp; migration</span><span data-i18n lang="vi">Coordination &amp; migration</span></strong></td><td><span data-i18n lang="en">Work that crosses repositories, environments or versions</span><span data-i18n lang="vi">Việc đi qua nhiều repo, nhiều môi trường hoặc nhiều phiên bản</span></td><td>cutover · rollback plan · data migration (+ runbook) · migration verification report · operation journal · repo mapping checkpoint · AI-DLC migration plan · operating-model migration plan · migration help</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Baseline &amp; UAT</span><span data-i18n lang="vi">Baseline &amp; UAT</span></strong></td><td><span data-i18n lang="en">What is being released, and the evidence it works</span><span data-i18n lang="vi">Cái gì sắp phát hành, và bằng chứng nó chạy được</span></td><td>baseline candidate · baseline manifest · integration report · UAT report · UAT deployment record · known issues · release notes · documentation completeness · mainstream</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Publish &amp; handoff</span><span data-i18n lang="vi">Publish &amp; handoff</span></strong></td><td><span data-i18n lang="en">What the people who run it need after go-live</span><span data-i18n lang="vi">Cái người vận hành cần sau khi go-live</span></td><td>SRE production handoff · operations guideline · configuration guide · monitoring &amp; observability runbook · recovery / rollback guide · troubleshooting guide · UAT deployment runbook · API consumer guide · developer component guide · user &amp; admin guide · postmortem</td></tr>
+      <tr><td><strong><span data-i18n lang="en">Derived</span><span data-i18n lang="vi">Derived</span></strong></td><td><span data-i18n lang="en">Generated views. Never authored by hand, never approved</span><span data-i18n lang="vi">View sinh ra. Không ai viết tay, không bao giờ được duyệt</span></td><td>state · artifact index · capabilities · board views · reverse engineering report</td></tr>
+    </tbody>
+  </table></div>
+  <p><span data-i18n lang="en">Every artifact carries the same control fields — ID and type, scope and stage, freshness, parents and consumers, the artifact it supersedes, decision references, the exact revision or commit it was verified against, and its required approver. Approval status is never an agent-edited field: it is established by an immutable approval record and materialized into derived state.</span><span data-i18n lang="vi">Mọi artifact đều mang cùng một bộ control field — ID và type, scope và stage, freshness, parent và consumer, artifact mà nó thay thế, tham chiếu quyết định, đúng revision hoặc commit đã kiểm chứng, và người duyệt bắt buộc. Trạng thái phê duyệt không bao giờ là field do agent sửa: nó được thiết lập bởi một approval record bất biến rồi vật chất hoá vào derived state.</span></p>
 </section>
 
 <section>
-  <h2>What is applicable is resolved, not assumed</h2>
-  <p>A profile — <code>Entry × Scope × Delivery relationship × Work type</code> — decides which stages, artifacts and gates apply. A question irrelevant to your profile is never asked, and an artifact that is Not Applicable is never reported missing. Two operating models sit on top: Continuous for flowing slices, Phase-Gated for baselines and change requests.</p>
-</section>
+  <h2><span data-i18n lang="en">What each stage produces</span><span data-i18n lang="vi">Mỗi stage sinh ra cái gì</span></h2>
+  <p><span data-i18n lang="en">The seventeen stages are internal capabilities, not a checklist you walk. The agent resolves which of them run from your profile and the impact of the change, and most finish on an automated checkpoint — a human gate appears only where the row below names one. Everything is Markdown in the Hub unless stated otherwise.</span><span data-i18n lang="vi">Mười bảy stage là capability nội bộ, không phải checklist bạn đi qua. Agent phân giải xem cái nào chạy dựa trên profile của bạn và impact của thay đổi, và phần lớn kết thúc bằng một checkpoint tự động — human gate chỉ xuất hiện ở dòng nào có nêu tên. Mọi thứ đều là Markdown trong Hub trừ khi nói khác.</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th>Stage</th><th><span data-i18n lang="en">Artifacts produced</span><span data-i18n lang="vi">Artifact sinh ra</span></th><th><span data-i18n lang="en">Human gate</span><span data-i18n lang="vi">Human gate</span></th></tr></thead>
+    <tbody>
+      <tr><td><strong>S1</strong> <span data-i18n lang="en">Workspace Detection</span><span data-i18n lang="vi">Phát hiện workspace</span></td><td><span data-i18n lang="en">project · team · components · registry · state · link</span><span data-i18n lang="vi">project · team · components · registry · state · link</span></td><td><span data-i18n lang="en">Project Configuration, when new or changed</span><span data-i18n lang="vi">Project Configuration, khi mới hoặc có thay đổi</span></td></tr>
+      <tr><td><strong>S2</strong> <span data-i18n lang="en">Context Loading</span><span data-i18n lang="vi">Nạp ngữ cảnh</span></td><td><span data-i18n lang="en">knowledge sources · technical environment</span><span data-i18n lang="vi">knowledge sources · technical environment</span></td><td><span data-i18n lang="en">none</span><span data-i18n lang="vi">không có</span></td></tr>
+      <tr><td><strong>S3</strong> <span data-i18n lang="en">Reverse Engineering</span><span data-i18n lang="vi">Reverse engineering</span></td><td><span data-i18n lang="en">reverse engineering plan · system overview · as-is architecture · as-is assessment · code structure · API inventory · technology stack · component inventory · dependency inventory · reuse recommendation · legacy health baseline · characterization evidence · assembled report</span><span data-i18n lang="vi">reverse engineering plan · system overview · as-is architecture · as-is assessment · code structure · API inventory · technology stack · component inventory · dependency inventory · reuse recommendation · legacy health baseline · characterization evidence · báo cáo tổng hợp</span></td><td><span data-i18n lang="en">Current-State Baseline</span><span data-i18n lang="vi">Current-State Baseline</span></td></tr>
+      <tr><td><strong>S4</strong> <span data-i18n lang="en">Requirements Analysis</span><span data-i18n lang="vi">Phân tích yêu cầu</span></td><td><span data-i18n lang="en">brief · vision · PRD · requirements · business rules · glossary · personas · risk register · discovery item</span><span data-i18n lang="vi">brief · vision · PRD · requirements · business rules · glossary · personas · risk register · discovery item</span></td><td><span data-i18n lang="en">Requirements</span><span data-i18n lang="vi">Requirements</span></td></tr>
+      <tr><td><strong>S5</strong> <span data-i18n lang="en">Stories / Conceptual Design</span><span data-i18n lang="vi">Story / thiết kế khái niệm</span></td><td><span data-i18n lang="en">epics · user stories with acceptance criteria · story map · conceptual design</span><span data-i18n lang="vi">epic · user story kèm acceptance criteria · story map · conceptual design</span></td><td><span data-i18n lang="en">Requirements</span><span data-i18n lang="vi">Requirements</span></td></tr>
+      <tr><td><strong>S6</strong> <span data-i18n lang="en">Workflow Planning</span><span data-i18n lang="vi">Lập kế hoạch workflow</span></td><td><span data-i18n lang="en">delivery plan · policy evaluation — the resolved stage and document set for this work</span><span data-i18n lang="vi">delivery plan · policy evaluation — tập stage và tài liệu đã giải cho việc này</span></td><td><span data-i18n lang="en">automated checkpoint; read again at Ready</span><span data-i18n lang="vi">checkpoint tự động; đọc lại ở Ready</span></td></tr>
+      <tr><td><strong>S7</strong> <span data-i18n lang="en">Product / UI/UX Design</span><span data-i18n lang="vi">Thiết kế sản phẩm / UI/UX</span></td><td><span data-i18n lang="en">UI/UX spec · user flows · design tokens · view model · design-lite · frontend contract</span><span data-i18n lang="vi">UI/UX spec · user flow · design token · view model · design-lite · frontend contract</span></td><td><span data-i18n lang="en">UI/UX Design</span><span data-i18n lang="vi">UI/UX Design</span></td></tr>
+      <tr><td><strong>S8</strong> <span data-i18n lang="en">Application Design</span><span data-i18n lang="vi">Thiết kế ứng dụng</span></td><td><span data-i18n lang="en">application design · component design · data model · ADRs · architecture assurance (+ trigger) · contracts: REST, GraphQL, RPC, async, message, data, fix · vendor solution draft</span><span data-i18n lang="vi">application design · component design · data model · ADR · architecture assurance (+ trigger) · contract: REST, GraphQL, RPC, async, message, data, fix · vendor solution draft</span></td><td><span data-i18n lang="en">Architecture</span><span data-i18n lang="vi">Architecture</span></td></tr>
+      <tr><td><strong>S9</strong> <span data-i18n lang="en">Units Generation</span><span data-i18n lang="vi">Sinh đơn vị công việc</span></td><td><span data-i18n lang="en">slice / BASE / CR decomposition with dependencies · repo mapping into <code>components.md</code> · dossier index · work-item context · change impact</span><span data-i18n lang="vi">phân rã slice / BASE / CR kèm phụ thuộc · ánh xạ repo vào <code>components.md</code> · dossier index · context của work item · change impact</span></td><td><span data-i18n lang="en">Delivery Scope / Ready</span><span data-i18n lang="vi">Delivery Scope / Ready</span></td></tr>
+      <tr><td><strong>S10</strong> <span data-i18n lang="en">Functional Design</span><span data-i18n lang="vi">Thiết kế chức năng</span></td><td><span data-i18n lang="en">functional design · code flow · implementation plan</span><span data-i18n lang="vi">functional design · code flow · kế hoạch hiện thực</span></td><td><span data-i18n lang="en">Technical Design</span><span data-i18n lang="vi">Technical Design</span></td></tr>
+      <tr><td><strong>S10b</strong> <span data-i18n lang="en">Test Planning</span><span data-i18n lang="vi">Lập kế hoạch kiểm thử</span></td><td><span data-i18n lang="en">test plan · test cases</span><span data-i18n lang="vi">test plan · test case</span></td><td><span data-i18n lang="en">Technical Design</span><span data-i18n lang="vi">Technical Design</span></td></tr>
+      <tr><td><strong>S11</strong> <span data-i18n lang="en">NFR Requirements</span><span data-i18n lang="vi">Yêu cầu NFR</span></td><td><span data-i18n lang="en">NFR requirements — performance, security, availability, compliance targets · security &amp; privacy design</span><span data-i18n lang="vi">NFR requirements — chỉ tiêu hiệu năng, bảo mật, sẵn sàng, tuân thủ · security &amp; privacy design</span></td><td><span data-i18n lang="en">Technical Design, or SA by impact</span><span data-i18n lang="vi">Technical Design, hoặc SA tuỳ impact</span></td></tr>
+      <tr><td><strong>S12</strong> <span data-i18n lang="en">NFR Design</span><span data-i18n lang="vi">Thiết kế NFR</span></td><td><span data-i18n lang="en">NFR design — how each target is implemented and verified</span><span data-i18n lang="vi">NFR design — từng chỉ tiêu được hiện thực và kiểm chứng ra sao</span></td><td><span data-i18n lang="en">Technical Design, or SA by impact</span><span data-i18n lang="vi">Technical Design, hoặc SA tuỳ impact</span></td></tr>
+      <tr><td><strong>S13</strong> <span data-i18n lang="en">Infrastructure Design</span><span data-i18n lang="vi">Thiết kế hạ tầng</span></td><td><span data-i18n lang="en">infrastructure design · availability / DR · infrastructure contract · data migration design</span><span data-i18n lang="vi">infrastructure design · availability / DR · infrastructure contract · thiết kế data migration</span></td><td><span data-i18n lang="en">SA, through Technical Design</span><span data-i18n lang="vi">SA, qua Technical Design</span></td></tr>
+      <tr><td><strong>S14a</strong> <span data-i18n lang="en">Implementation</span><span data-i18n lang="vi">Hiện thực</span></td><td><span data-i18n lang="en">production code, configuration and schema migrations in the component repository · documentation impact</span><span data-i18n lang="vi">mã production, cấu hình và schema migration trong repo component · documentation impact</span></td><td><span data-i18n lang="en">automated checkpoint</span><span data-i18n lang="vi">checkpoint tự động</span></td></tr>
+      <tr><td><strong>S14b</strong> <span data-i18n lang="en">Automated Tests</span><span data-i18n lang="vi">Kiểm thử tự động</span></td><td><span data-i18n lang="en">executable automated tests, in the component repository</span><span data-i18n lang="vi">test tự động chạy được, nằm trong repo component</span></td><td><span data-i18n lang="en">automated checkpoint</span><span data-i18n lang="vi">checkpoint tự động</span></td></tr>
+      <tr><td><strong>S14c</strong> <span data-i18n lang="en">Verification</span><span data-i18n lang="vi">Kiểm chứng</span></td><td><span data-i18n lang="en">verification evidence · Definition of Done · KAFI technical acceptance</span><span data-i18n lang="vi">bằng chứng kiểm chứng · Definition of Done · KAFI technical acceptance</span></td><td><span data-i18n lang="en">Technical Done package</span><span data-i18n lang="vi">gói Technical Done</span></td></tr>
+      <tr><td><strong>S15</strong> <span data-i18n lang="en">Build</span><span data-i18n lang="vi">Build</span></td><td><span data-i18n lang="en">CI and build artifacts at exact versions — produced by your pipeline, referenced from the Hub, never copied into it</span><span data-i18n lang="vi">artifact CI và build ở đúng version — do pipeline của bạn sinh ra, Hub tham chiếu tới chứ không sao chép vào</span></td><td><span data-i18n lang="en">Technical Done</span><span data-i18n lang="vi">Technical Done</span></td></tr>
+      <tr><td><strong>S16</strong> <span data-i18n lang="en">UAT Deployment</span><span data-i18n lang="vi">Triển khai UAT</span></td><td><span data-i18n lang="en">UAT deployment runbook · UAT deployment record · baseline candidate · cutover</span><span data-i18n lang="vi">UAT deployment runbook · UAT deployment record · baseline candidate · cutover</span></td><td><span data-i18n lang="en">governed by project access and policy</span><span data-i18n lang="vi">theo quyền truy cập và policy của dự án</span></td></tr>
+      <tr><td><strong>S17</strong> <span data-i18n lang="en">UAT Verification and Handoff</span><span data-i18n lang="vi">Kiểm chứng UAT và bàn giao</span></td><td><span data-i18n lang="en">UAT report · baseline manifest · integration report · known issues · release notes · documentation completeness · mainstream · activation policy · rollback plan · data migration runbook · SRE production handoff · operations guideline · configuration guide · monitoring &amp; observability runbook · recovery / rollback guide · troubleshooting guide · API consumer guide · developer component guide · user &amp; admin guide</span><span data-i18n lang="vi">UAT report · baseline manifest · integration report · known issues · release notes · documentation completeness · mainstream · activation policy · rollback plan · data migration runbook · SRE production handoff · operations guideline · configuration guide · monitoring &amp; observability runbook · recovery / rollback guide · troubleshooting guide · API consumer guide · developer component guide · user &amp; admin guide</span></td><td><span data-i18n lang="en">UAT Acceptance, then SRE Handoff</span><span data-i18n lang="vi">UAT Acceptance, rồi SRE Handoff</span></td></tr>
+    </tbody>
+  </table></div>
 
-<section>
-  <h2>Two rules worth knowing before you start</h2>
-  <p><strong>Evidence or ask.</strong> The agent cites the artifact, revision or commit behind every claim. Where evidence is absent it records the question and asks rather than inventing an answer. It never fabricates identity, authority, approvals, test results or commit SHAs.</p>
-  <p><strong>No finding blocks the work.</strong> A detector that finds something wrong reports what it found, what would fix it, and in what order — and the work continues. Refusing to proceed never made a broken install safe; it moved the cost onto the person trying to get something done. The one exception is a test failure inside the scope you just changed.</p>
-</section>
-
-<section>
-  <h2>Where to go next</h2>
+  <h3><span data-i18n lang="en">What no stage owns</span><span data-i18n lang="vi">Cái không stage nào sở hữu</span></h3>
+  <p><span data-i18n lang="en">Three groups of artifact are not produced by a stage, and looking for them in the table above is the wrong question:</span><span data-i18n lang="vi">Ba nhóm artifact không do stage nào sinh ra, và tìm chúng trong bảng trên là hỏi sai câu:</span></p>
   <ul>
-    <li><a href="ai-dlc-v1.0-overview.html">Concepts</a> — the model in full: profiles, operating models, gates, the tree.</li>
-    <li><a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Install and operate</a> — installing, upgrading, joining an existing project, and the command reference.</li>
-    <li><a href="ai-dlc-v1.0-role-guides.html">Scenarios and Roles</a> — start from your situation; per-role guides follow.</li>
-    <li><a href="AI-DLC-v1.0-runbook.html">Operating Manual</a> — the day-to-day procedures.</li>
-    <li><a href="KAFI-AIDLC-Whats-New.html">What changed</a> — v0.3 to v1.0.8.</li>
+    <li><strong><span data-i18n lang="en">Audit records</span><span data-i18n lang="vi">Audit record</span></strong> — <span data-i18n lang="en">approval, interaction, impact, artifact claim, activation event, generic event, exception waiver, revocation / supersede, external deployment ref. Written whenever the thing they record happens, at any stage. Append-only: never edited, only superseded.</span><span data-i18n lang="vi">approval, interaction, impact, artifact claim, activation event, generic event, exception waiver, revocation / supersede, external deployment ref. Ghi bất cứ khi nào việc chúng ghi lại xảy ra, ở bất kỳ stage nào. Chỉ ghi thêm: không sửa, chỉ thay thế.</span></li>
+    <li><strong><span data-i18n lang="en">Derived views</span><span data-i18n lang="vi">View dẫn xuất</span></strong> — <span data-i18n lang="en">state, artifact index, capabilities, board views, reverse engineering report. Regenerated from canonical artifacts on demand. Never authored by hand and never approved; approving a derived view would approve a copy rather than the thing itself.</span><span data-i18n lang="vi">state, artifact index, capabilities, board views, reverse engineering report. Sinh lại từ artifact chuẩn khi cần. Không ai viết tay và không bao giờ được duyệt; duyệt một view dẫn xuất là duyệt một bản sao chứ không phải chính vật đó.</span></li>
+    <li><strong><span data-i18n lang="en">Event-driven artifacts</span><span data-i18n lang="vi">Artifact theo tình huống</span></strong> — <span data-i18n lang="en">scope amendment, forward port, reassignment plan, postmortem, open items, quality policy, and the migration set (AI-DLC migration plan, operating-model migration plan, operation journal, repo mapping checkpoint, migration verification report). These answer a situation, not a stage.</span><span data-i18n lang="vi">scope amendment, forward port, reassignment plan, postmortem, open items, quality policy, và bộ migration (AI-DLC migration plan, operating-model migration plan, operation journal, repo mapping checkpoint, migration verification report). Chúng trả lời một tình huống, không phải một stage.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span data-i18n lang="en">What is applicable is resolved, not assumed</span><span data-i18n lang="vi">Cái gì applicable là do phân giải, không do mặc định</span></h2>
+  <p><span data-i18n lang="en">A profile — <code>Entry × Scope × Delivery relationship × Work type</code> — decides which stages, artifacts and gates apply. A question irrelevant to your profile is never asked, and an artifact that is Not Applicable is never reported missing. Two operating models sit on top: Continuous for flowing slices, Phase-Gated for baselines and change requests.</span><span data-i18n lang="vi">Một profile — <code>Entry × Scope × Delivery relationship × Work type</code> — quyết định stage, artifact và gate nào áp dụng. Câu hỏi không liên quan tới profile của bạn sẽ không bao giờ được hỏi, và artifact Not Applicable không bao giờ bị báo thiếu. Bên trên là hai operating model: Continuous cho slice chảy liên tục, Phase-Gated cho baseline và change request.</span></p>
+</section>
+
+<section>
+  <h2><span data-i18n lang="en">Two rules worth knowing before you start</span><span data-i18n lang="vi">Hai luật nên biết trước khi bắt đầu</span></h2>
+  <p><strong><span data-i18n lang="en">Evidence or ask.</span><span data-i18n lang="vi">Có bằng chứng, hoặc hỏi.</span></strong> <span data-i18n lang="en">The agent cites the artifact, revision or commit behind every claim. Where evidence is absent it records the question and asks rather than inventing an answer. It never fabricates identity, authority, approvals, test results or commit SHAs.</span><span data-i18n lang="vi">Agent trích dẫn artifact, revision hoặc commit đứng sau mọi khẳng định. Chỗ nào không có bằng chứng, nó ghi lại câu hỏi và đi hỏi chứ không bịa ra câu trả lời. Nó không bao giờ bịa danh tính, authority, phê duyệt, kết quả test hay commit SHA.</span></p>
+  <p><strong><span data-i18n lang="en">No finding blocks the work.</span><span data-i18n lang="vi">Không finding nào chặn công việc.</span></strong> <span data-i18n lang="en">A detector that finds something wrong reports what it found, what would fix it, and in what order — and the work continues. Refusing to proceed never made a broken install safe; it moved the cost onto the person trying to get something done. The one exception is a test failure inside the scope you just changed.</span><span data-i18n lang="vi">Một detector phát hiện sai sót sẽ báo nó tìm thấy gì, cái gì sẽ sửa được, và theo thứ tự nào — rồi công việc đi tiếp. Từ chối chạy tiếp chưa bao giờ làm một bản cài hỏng trở nên an toàn; nó chỉ đẩy chi phí sang người đang cố làm cho xong việc. Ngoại lệ duy nhất là test fail nằm trong đúng phạm vi bạn vừa thay đổi.</span></p>
+</section>
+
+<section>
+  <h2><span data-i18n lang="en">Where to go next</span><span data-i18n lang="vi">Đi tiếp ở đâu</span></h2>
+  <ul>
+    <li><a href="ai-dlc-v1.0-overview.html"><span data-i18n lang="en">Concepts</span><span data-i18n lang="vi">Khái niệm</span></a> — <span data-i18n lang="en">the model in full: profiles, operating models, gates, the tree.</span><span data-i18n lang="vi">toàn bộ mô hình: profile, operating model, gate, cây dự án.</span></li>
+    <li><a href="ai-dlc-v1.0-install-upgrade-by-prompt.html"><span data-i18n lang="en">Install and operate</span><span data-i18n lang="vi">Cài đặt và vận hành</span></a> — <span data-i18n lang="en">installing, upgrading, joining an existing project, and the command reference.</span><span data-i18n lang="vi">cài, nâng cấp, tham gia một dự án đã có, và tra cứu lệnh.</span></li>
+    <li><a href="ai-dlc-v1.0-role-guides.html"><span data-i18n lang="en">Scenarios and Roles</span><span data-i18n lang="vi">Kịch bản và Role</span></a> — <span data-i18n lang="en">start from your situation; per-role guides follow.</span><span data-i18n lang="vi">bắt đầu từ tình huống của bạn; hướng dẫn theo từng role nằm ngay sau.</span></li>
+    <li><a href="AI-DLC-v1.0-runbook.html"><span data-i18n lang="en">Operating Manual</span><span data-i18n lang="vi">Sổ tay vận hành</span></a> — <span data-i18n lang="en">the day-to-day procedures.</span><span data-i18n lang="vi">quy trình dùng hằng ngày.</span></li>
+    <li><a href="KAFI-AIDLC-Whats-New.html"><span data-i18n lang="en">What changed</span><span data-i18n lang="vi">Có gì thay đổi</span></a> — v0.3 <span data-i18n lang="en">to</span><span data-i18n lang="vi">tới</span> v1.0.9.</li>
   </ul>
 </section>
 
 <footer>
-  <span>KAFI Transformation Office · AI-DLC v1.0.8 · Introduction</span>
+  <span>KAFI Transformation Office · AI-DLC v1.0.10 · <span data-i18n lang="en">Introduction</span><span data-i18n lang="vi">Giới thiệu</span></span>
 </footer>
 
 </div>
+<script>
+(function(){
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var btns={
+    'lang-en':function(){set(LANGUAGE_KEY,'lang','en');},
+    'lang-vi':function(){set(LANGUAGE_KEY,'lang','vi');},
+    'th-light':function(){set(THEME_KEY,'theme','light');},
+    'th-dark':function(){set(THEME_KEY,'theme','dark');}
+  };
+  function set(key,attr,val){
+    d.dataset[attr]=val;
+    if(attr==='lang'){d.lang=val;}
+    try{localStorage.setItem(key,val);}catch(e){}
+    sync();
+  }
+  function press(id,on){var b=document.getElementById(id); if(b) b.setAttribute('aria-pressed',on?'true':'false');}
+  function sync(){
+    press('lang-en',d.dataset.lang!=='vi'); press('lang-vi',d.dataset.lang==='vi');
+    press('th-light',d.dataset.theme!=='dark'); press('th-dark',d.dataset.theme==='dark');
+  }
+  Object.keys(btns).forEach(function(id){var b=document.getElementById(id); if(b) b.onclick=btns[id];});
+  sync();
+})();
+</script>
 </body>
 </html>

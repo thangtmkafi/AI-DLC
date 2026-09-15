@@ -1,6 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang-scaffold data-default-language="en" data-default-theme="light" data-theme="light" data-lang="en">
 <head>
+<script>
+(function(){try{
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var t=localStorage.getItem(THEME_KEY);
+  var l=localStorage.getItem(LANGUAGE_KEY);
+  d.dataset.theme=(t==='dark')?'dark':'light';
+  d.dataset.lang=(l==='vi')?'vi':'en';
+  d.lang=d.dataset.lang;
+}catch(e){}})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KAFI AI-DLC — What's New · v0.3 → v0.8</title>
@@ -41,6 +52,64 @@
   pre { background: var(--text); color: #E8F5F0; border-radius: 12px; padding: 16px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.5; }
   .cta a { color: var(--kafi-green); font-weight: 600; text-decoration: none; }
   footer { border-top: 1.5px solid var(--border); margin-top: 64px; padding-top: 24px; color: var(--text-muted); font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+
+/* ============ THEME + LANGUAGE (added 2026-08-19) ============ */
+/* The page palette is authored light-first, so `light` stays the default and
+   `dark` is the override. Concepts does it the other way round; the token
+   values below are the same ones that page resolves to, so the two agree. */
+:root { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* This page's own token names — it predates the shared vocabulary. */
+  --text:              #F0F4F8;
+  --surface:           #080D12;
+  --surface-muted:     #0C1219;
+  --border:            rgba(255,255,255,0.12);
+  --color-success-bg:  rgba(0,198,148,0.10);
+  --color-success-text:#7FE7CE;
+  --color-warning-bg:  rgba(249,204,78,0.12);
+  --color-warning-text:#F9CC4E;
+  --color-danger-bg:   rgba(255,107,107,0.12);
+  --color-danger-text: #FF8F8F;
+  --color-info-bg:     rgba(91,141,239,0.14);
+  --color-info-text:   #9DBBF7;
+  --color-purple-bg:   rgba(183,140,245,0.14);
+  --color-purple-text: #C9AEF9;
+  --page-bg:           #080D12;
+  --card-bg:           #0C1219;
+  --section-alt:       rgba(255,255,255,0.035);
+  --table-header-bg:   rgba(255,255,255,0.04);
+  --text-primary:      #F0F4F8;
+  --text-secondary:    #A8B5C0;
+  --text-muted:        #546070;
+  --border-card:       1.5px solid rgba(255,255,255,0.12);
+  --border-internal:   1px solid rgba(255,255,255,0.08);
+  --shadow-sm:         0 1px 4px rgba(0,0,0,0.25);
+  --shadow-md:         0 3px 12px rgba(0,0,0,0.35);
+}
+:root[data-lang="en"] [data-i18n][lang="vi"] { display: none; }
+:root[data-lang="vi"] [data-i18n][lang="en"] { display: none; }
+body { transition: background-color .2s ease, color .2s ease; }
+
+.ctrls {
+  position: fixed; top: 14px; right: 16px; z-index: 60;
+  display: flex; gap: 8px; align-items: center;
+  padding: 6px; border-radius: var(--radius-button, 32px);
+  background: var(--card-bg, var(--surface, #FFF));
+  border: var(--border-card, 1.5px solid var(--border, rgba(16,24,32,0.10)));
+  box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.12));
+}
+.seg { display: inline-flex; border: 1px solid var(--text-muted); border-radius: var(--radius-button, 32px); overflow: hidden; }
+.seg button {
+  border: none; background: transparent; color: var(--text-secondary);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer; transition: .15s;
+}
+.seg button + button { border-left: 1px solid var(--text-muted); }
+.seg button:hover { color: var(--text-primary, var(--text)); }
+.seg button[aria-pressed="true"] { background: var(--kafi-green); color: #06231C; }
+@media (max-width: 720px) { .ctrls { top: 8px; right: 8px; padding: 4px; } }
+@media print { .ctrls { display: none; } }
 </style>
 
 <style>
@@ -60,73 +129,97 @@
 </style>
 </head>
 <body>
+<div class="ctrls">
+  <div class="seg" role="group" aria-label="Language">
+    <button id="lang-en" type="button" aria-pressed="true">EN</button>
+    <button id="lang-vi" type="button" aria-pressed="false">VI</button>
+  </div>
+  <div class="seg" role="group" aria-label="Theme">
+    <button id="th-light" type="button" aria-pressed="true"><span data-i18n lang="en">Light</span><span data-i18n lang="vi">S&#225;ng</span></button>
+    <button id="th-dark" type="button" aria-pressed="false"><span data-i18n lang="en">Dark</span><span data-i18n lang="vi">T&#7889;i</span></button>
+  </div>
+</div>
 <div class="v1-banner">
-<div class="v1-eyebrow">KAFI AI-DLC · WHAT CHANGES IN v1.0</div>
-<h2>From <code>v0.3</code>-<code>v0.9.x</code> to v1.0 — what breaks.</h2><p>The v1 bootstrap migrates a <code>v0.3</code>-<code>v0.9.x</code> project directly; there are no staged hops. These are the changes that alter how you work:</p><ul><li><strong>Two editions become one universal release.</strong> There is no edition to choose and no per-host download. Codex, Claude Code, and Kiro read the same committed state.</li><li><strong>The installer script is gone.</strong> v1.0 installs by prompt. Nothing is created, moved, backed up, or deleted until you approve an exact plan digest.</li><li><strong>Nothing is relocated automatically.</strong> The v0 installer tucked existing files away on a non-empty folder. v1 lists every file it would touch in the plan you approve.</li><li><strong>The fixed 17-stage lifecycle goes internal.</strong> The seventeen capabilities still exist, but the agent resolves which run from the project profile and impact. Your surface is four commands: <code>/kafi-aidlc-onboarding</code>, <code>/kafi-aidlc-status</code>, <code>/kafi-aidlc-next</code>, <code>/kafi-aidlc-check</code>.</li><li><strong>Continuous becomes the default flow.</strong> Discovery and Delivery run as concurrent tracks with a Ready queue between them; Phase-Gated remains available where governance requires baselines.</li><li><strong>Your root <code>README.md</code> is explicitly protected.</strong> It is never an install target, in v1 or in any earlier version.</li></ul><p><strong>Release status.</strong> The currently published release is <code>v0.9.1</code>. <strong>v1.0 is in preparation and is not published yet</strong> — no v1.0 download is offered anywhere.</p><p class="v1-mono"><a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-article-vi.html">Introduction (v1.0)</a> · <a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html">Install / Upgrade + User Guide (v1.0)</a> · <a href="index.html">Documentation index</a></p>
+<div class="v1-eyebrow">KAFI AI-DLC · <span data-i18n lang="en">WHAT CHANGES IN v1.0</span><span data-i18n lang="vi">NHỮNG THAY ĐỔI TRONG v1.0</span></div>
+<h2><span data-i18n lang="en">From</span><span data-i18n lang="vi">Từ</span> <code>v0.3</code>-<code>v0.9.x</code> <span data-i18n lang="en">to v1.0 — what breaks.</span><span data-i18n lang="vi">lên v1.0 — điều gì bị phá vỡ.</span></h2><p><span data-i18n lang="en">The v1 bootstrap migrates a</span><span data-i18n lang="vi">Bootstrap v1 nâng cấp một dự án</span> <code>v0.3</code>-<code>v0.9.x</code> <span data-i18n lang="en">project directly; there are no staged hops. These are the changes that alter how you work:</span><span data-i18n lang="vi">trực tiếp; không có bước trung gian nào. Đây là những thay đổi tác động đến cách bạn làm việc:</span></p><ul><li><strong><span data-i18n lang="en">Two editions become one universal release.</span><span data-i18n lang="vi">Hai edition gộp thành một release universal duy nhất.</span></strong> <span data-i18n lang="en">There is no edition to choose and no per-host download. Codex, Claude Code, and Kiro read the same committed state.</span><span data-i18n lang="vi">Không còn edition nào để chọn, không còn tải theo từng host. Codex, Claude Code và Kiro đọc cùng một committed state.</span></li><li><strong><span data-i18n lang="en">The installer script is gone.</span><span data-i18n lang="vi">Installer script không còn nữa.</span></strong> <span data-i18n lang="en">v1.0 installs by prompt. Nothing is created, moved, backed up, or deleted until you approve an exact plan digest.</span><span data-i18n lang="vi">v1.0 cài đặt bằng prompt. Không có gì được tạo, di chuyển, sao lưu hay xoá cho tới khi bạn duyệt đúng plan digest.</span></li><li><strong><span data-i18n lang="en">Nothing is relocated automatically.</span><span data-i18n lang="vi">Không có gì bị di chuyển tự động.</span></strong> <span data-i18n lang="en">The v0 installer tucked existing files away on a non-empty folder. v1 lists every file it would touch in the plan you approve.</span><span data-i18n lang="vi">Installer của v0 giấu các file có sẵn đi khi gặp một folder không rỗng. v1 liệt kê mọi file nó sẽ đụng tới trong kế hoạch bạn duyệt.</span></li><li><strong><span data-i18n lang="en">The fixed 17-stage lifecycle goes internal.</span><span data-i18n lang="vi">Lifecycle 17-stage cố định giờ trở thành nội bộ.</span></strong> <span data-i18n lang="en">The seventeen capabilities still exist, but the agent resolves which run from the project profile and impact. Your surface is six commands:</span><span data-i18n lang="vi">Mười bảy capability vẫn tồn tại, nhưng agent phân giải xem cái nào chạy dựa trên project profile và impact. Bề mặt bạn thấy chỉ còn sáu lệnh:</span> <code>/kafi-aidlc-onboarding</code>, <code>/kafi-aidlc-status</code>, <code>/kafi-aidlc-next</code>, <code>/kafi-aidlc-check</code>, <code>/kafi-aidlc-bootstrap</code>, <code>/kafi-aidlc-doctor</code>.</li><li><strong><span data-i18n lang="en">Continuous becomes the default flow.</span><span data-i18n lang="vi">Continuous trở thành flow mặc định.</span></strong> <span data-i18n lang="en">Discovery and Delivery run as concurrent tracks with a Ready queue between them; Phase-Gated remains available where governance requires baselines.</span><span data-i18n lang="vi">Discovery và Delivery chạy như hai track song song với một Ready queue ở giữa; Phase-Gated vẫn khả dụng ở những nơi việc quản trị đòi hỏi baseline.</span></li><li><strong><span data-i18n lang="en">Your root</span><span data-i18n lang="vi">File</span> <code>README.md</code> <span data-i18n lang="en">is explicitly protected.</span><span data-i18n lang="vi">gốc của bạn được bảo vệ rõ ràng.</span></strong> <span data-i18n lang="en">It is never an install target, in v1 or in any earlier version.</span><span data-i18n lang="vi">Nó không bao giờ là install target, dù ở v1 hay bất kỳ version nào trước đó.</span></li></ul><p><strong><span data-i18n lang="en">Release status.</span><span data-i18n lang="vi">Trạng thái release.</span></strong> <span data-i18n lang="en">The currently published release is</span><span data-i18n lang="vi">Release đang publish hiện tại là</span> <code>v1.0.10</code> (2026-09-16), <span data-i18n lang="en">and it is what the bootstrap locator recommends.</span><span data-i18n lang="vi">và đó là release mà bootstrap locator khuyến nghị.</span> <code>v0.9.1</code> <span data-i18n lang="en">was the last of the v0 line.</span><span data-i18n lang="vi">là bản cuối cùng của dòng v0.</span></p><p class="v1-mono"><a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-article-vi.html"><span data-i18n lang="en">Introduction (v1.0)</span><span data-i18n lang="vi">Giới thiệu (v1.0)</span></a> · <a href="https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html"><span data-i18n lang="en">Install / Upgrade + User Guide (v1.0)</span><span data-i18n lang="vi">Cài đặt / Nâng cấp + Hướng dẫn sử dụng (v1.0)</span></a> · <a href="index.html"><span data-i18n lang="en">Documentation index</span><span data-i18n lang="vi">Mục lục tài liệu</span></a></p>
 </div>
 
 <!-- legacy:v0.x -->
-<div class="v1-legacy-label">Legacy v0.x — the v0 line, up to and including the currently published v0.9.1. Not the v1.0 path.</div>
+<div class="v1-legacy-label"><span data-i18n lang="en">Legacy v0.x — the v0 line, up to and including its last release v0.9.1. Not the v1.0 path.</span><span data-i18n lang="vi">Legacy v0.x — dòng v0, tính đến và bao gồm cả release cuối cùng v0.9.1. Không phải path của v1.0.</span></div>
 
 <div class="wrap">
 
-  <div class="eyebrow">KAFI Transformation Office · What's New</div>
-  <h1>What changed, v0.3 to v1.0.8</h1>
-  <p class="lede">A history, newest first. The v0.x entries are kept because they explain how the method arrived here — <strong>they describe those releases, not the current one</strong>. Anything a v0.x entry says about blocking gates, shipped Python, or <code>curl | bash</code> installation was removed later, and the v1.0 entries say when.</p>
+  <div class="eyebrow">KAFI Transformation Office · <span data-i18n lang="en">What's New</span><span data-i18n lang="vi">Có gì mới</span></div>
+  <h1><span data-i18n lang="en">What changed, v0.3 to v1.0.10</span><span data-i18n lang="vi">Có gì thay đổi, v0.3 đến v1.0.10</span></h1>
+  <p class="lede"><span data-i18n lang="en">A history, newest first. The v0.x entries are kept because they explain how the method arrived here — <strong>they describe those releases, not the current one</strong>. Anything a v0.x entry says about blocking gates, shipped Python, or <code>curl | bash</code> installation was removed later, and the v1.0 entries say when.</span><span data-i18n lang="vi">Một lịch sử, mới nhất trước. Các entry v0.x được giữ lại vì chúng giải thích cách phương pháp đi tới đây — <strong>chúng mô tả các release đó, không phải release hiện tại</strong>. Bất cứ điều gì một entry v0.x nói về blocking gate, Python được ship kèm, hay cài đặt bằng <code>curl | bash</code> đều đã bị gỡ bỏ sau đó, và các entry v1.0 nói rõ gỡ từ khi nào.</span></p>
 
-  <h2>Release highlights · v1.0</h2>
+  <h2><span data-i18n lang="en">Release highlights</span><span data-i18n lang="vi">Điểm nổi bật release</span> · v1.0</h2>
+
+  <div class="rel">
+    <div class="rel-tag">v1.0.10</div>
+    <h3><span data-i18n lang="en">Reverse engineering reads deployment, data, and the three flow layers</span><span data-i18n lang="vi">Reverse engineering đọc triển khai, dữ liệu, và ba tầng luồng</span></h3>
+    <p class="why"><span data-i18n lang="en">v1.0.9 fixed <em>who</em> the brownfield artifacts describe. A run over 56 repositories then showed the set was missing whole subjects: two runs of the same templates over the same estate produced 5 business transactions against 25 and 5 cited business rules against roughly 180, reading the deployment repository <em>corrected</em> conclusions drawn from source rather than adding an appendix to them, and two component-to-component dependencies existed only through a shared database schema — visible in no import graph, no endpoint list and no channel catalogue. Three artifacts are new: <code>as-is-deployment.md</code>, <code>as-is-data-model.md</code>, <code>as-is-user-flows.md</code>. ASCII box art is withdrawn in favour of Mermaid. A Design System becomes a product with a publish and adopt lifecycle, and a breaking change to a published token is treated as a shared-contract change.</span><span data-i18n lang="vi">v1.0.9 sửa <em>ai</em> là chủ thể mà các artifact brownfield mô tả. Một đợt chạy trên 56 repo sau đó cho thấy bộ artifact còn thiếu hẳn nhiều chủ đề: hai lần chạy cùng bộ template trên cùng hệ cho ra 5 giao dịch nghiệp vụ so với 25, và 5 business rule có trích dẫn so với khoảng 180; đọc repo triển khai <em>sửa lại</em> kết luận rút từ mã nguồn chứ không phải thêm một phụ lục; và hai phụ thuộc giữa các component chỉ tồn tại qua một schema cơ sở dữ liệu dùng chung — không đồ thị import, danh sách endpoint hay danh mục kênh nào thấy được. Ba artifact mới: <code>as-is-deployment.md</code>, <code>as-is-data-model.md</code>, <code>as-is-user-flows.md</code>. ASCII box art bị bỏ, thay bằng Mermaid. Design System trở thành một sản phẩm có vòng đời publish và adopt, và breaking change trên một token đã publish được xử lý như một thay đổi hợp đồng dùng chung.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">mount the repository that holds your Kubernetes manifests, IaC and pipelines alongside the source — the agent reads it <em>before</em> it fixes any architecture conclusion, and where a manifest contradicts the code the manifest wins. Expect the report to arrive in four parts with an appendix, and expect the agent to say it has opened the HTML and checked it in both themes at both widths. Where a project consumes a Design System, record the pin in <code>components.md</code>: that field is what decides who gets told when the Design System breaks something. And when the methodology itself costs you time, say "ghi painpoint": the agent writes a <code>PP-NN</code> record under <code>.aidlc/audit/feedback/</code> with the rule involved and the measured cost, and sends it to the AI-DLC team only if you ask.</span><span data-i18n lang="vi">mount cả repo chứa manifest Kubernetes, IaC và pipeline cạnh mã nguồn — agent đọc nó <em>trước</em> khi chốt bất kỳ kết luận kiến trúc nào, và chỗ nào manifest mâu thuẫn với code thì manifest thắng. Báo cáo sẽ ra theo bốn phần cộng phụ lục, và agent sẽ nói rõ là đã mở bản HTML ra kiểm ở cả hai theme, cả hai khổ màn hình. Dự án nào consume một Design System thì ghi pin vào <code>components.md</code>: chính field đó quyết định ai được báo khi Design System phá vỡ thứ gì đó. Và khi chính phương pháp làm bạn mất thời gian, nói "ghi painpoint": agent ghi một record <code>PP-NN</code> dưới <code>.aidlc/audit/feedback/</code> với đoạn quy tắc liên quan và chi phí đo được, và chỉ gửi cho đội AI-DLC khi bạn yêu cầu.</span></p>
+  </div>
+
+  <div class="rel">
+    <div class="rel-tag">v1.0.9</div>
+    <h3><span data-i18n lang="en">Reverse engineering describes the project, not each repository</span><span data-i18n lang="vi">Reverse engineering mô tả dự án, không phải từng repository</span></h3>
+    <p class="why"><span data-i18n lang="en">A run over a 55-repository platform produced 1.37 MB of report in which the phrase "business transaction" appeared zero times and the interaction-sequence section was empty. Six of the twelve brownfield artifacts were keyed to the repository, so knowledge that exists only <em>between</em> repositories — a transaction entering one component and finishing in a fifth — belonged to no artifact, and what nobody owns, nobody writes. The knowledge base is now keyed to the project at <code>discovery/</code>, with each repository appearing inside it as a <code>### &lt;component&gt;</code> subsection carrying its own entry commit SHA, so re-reading stays incremental. <code>discovery/components/&lt;name&gt;/</code> is retired. Business transactions are named and each one is traced: one Mermaid sequence per transaction, every arrow carrying the <code>path:line</code> that proves the call exists.</span><span data-i18n lang="vi">Một lần chạy trên một platform 55 repository tạo ra 1.37 MB report, trong đó cụm "business transaction" xuất hiện 0 lần và phần interaction-sequence trống rỗng. Sáu trong mười hai brownfield artifact được key theo repository, nên knowledge chỉ tồn tại <em>giữa</em> các repository — một transaction đi vào một component và kết thúc ở component thứ năm — không thuộc về artifact nào, và cái không ai sở hữu thì không ai viết. Knowledge base giờ được key theo dự án tại <code>discovery/</code>, với mỗi repository xuất hiện bên trong nó như một subsection <code>### &lt;component&gt;</code> mang entry commit SHA riêng, nên việc đọc lại vẫn incremental. <code>discovery/components/&lt;name&gt;/</code> bị retire. Business transaction được đặt tên và mỗi cái đều được trace: một Mermaid sequence cho mỗi transaction, mỗi arrow mang <code>path:line</code> chứng minh call đó tồn tại.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">hand the agent the folder somebody dropped the material into — old documents, a PRD, pictures of the architecture, at best a list of repository URLs. Pass 0 inventories and classifies all of it before anything is filtered, so <code>components.md</code> and <code>knowledge-sources.md</code> are now outputs rather than things you must supply first. The assembled report is mandatory and is what the SA reads at the Current-State Baseline gate. A project already on the old layout consolidates without re-reading any code.</span><span data-i18n lang="vi">đưa agent folder mà ai đó đã thả tài liệu vào — document cũ, một PRD, ảnh chụp architecture, hoặc chỉ là một danh sách URL repository. Pass 0 inventory và classify toàn bộ trước khi bất cứ thứ gì bị lọc, nên <code>components.md</code> và <code>knowledge-sources.md</code> giờ là output chứ không phải thứ bạn phải cung cấp trước. Báo cáo tổng hợp là bắt buộc và là thứ SA đọc tại gate Current-State Baseline. Một dự án đã ở layout cũ thì consolidate mà không cần đọc lại code.</span></p>
+  </div>
 
   <div class="rel">
     <div class="rel-tag">v1.0.8</div>
-    <h3>Authority is a role, not a person</h3>
-    <p class="why">Separation of duties is gone: the executor-cannot-be-sole-acceptor rule, the exception-requester rule, the four-row assurance floor, and the independent-human requirement on production. Roles are accountabilities, so a person acting as SA <em>is</em> the SA; and the separation those rules reached for already exists, because the agent produces the work product and a human decides on it. Onboarding now asks which roles you hold as well as which one you are acting in.</p>
-    <p class="do"><strong>What you do differently:</strong> nothing, if you were already holding several roles — that is the point. No record is marked for it and no gate waits for a second name. Documentation collapsed from ten pages to four.</p>
+    <h3><span data-i18n lang="en">Authority is a role, not a person</span><span data-i18n lang="vi">Authority là một role, không phải một con người</span></h3>
+    <p class="why"><span data-i18n lang="en">Separation of duties is gone: the executor-cannot-be-sole-acceptor rule, the exception-requester rule, the four-row assurance floor, and the independent-human requirement on production. Roles are accountabilities, so a person acting as SA <em>is</em> the SA; and the separation those rules reached for already exists, because the agent produces the work product and a human decides on it. Onboarding now asks which roles you hold as well as which one you are acting in.</span><span data-i18n lang="vi">Tách quyền (separation of duties) không còn nữa: rule executor-không-thể-tự-là-sole-acceptor, rule exception-requester, mức đảm bảo bốn hàng (four-row assurance floor), và yêu cầu independent-human trên production. Role là accountability, nên một người đóng vai SA <em>chính là</em> SA; và sự tách bạch mà các rule đó nhắm tới vốn đã tồn tại sẵn, vì agent tạo ra work product còn con người quyết định trên đó. Onboarding giờ hỏi bạn giữ những role nào cũng như đang acting role nào.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">nothing, if you were already holding several roles — that is the point. No record is marked for it and no gate waits for a second name. Documentation collapsed from ten pages to four.</span><span data-i18n lang="vi">không gì cả, nếu bạn vốn đã giữ nhiều role — đó chính là điểm mấu chốt. Không record nào bị đánh dấu vì chuyện đó và không gate nào chờ một cái tên thứ hai. Documentation rút từ mười trang xuống còn bốn.</span></p>
   </div>
 
   <div class="rel">
     <div class="rel-tag">v1.0.7</div>
-    <h3>Joining a project that already exists</h3>
-    <p class="why">A container is rebuildable from <code>components.md</code>, and now there is a journey that rebuilds it. Give the agent one Project Hub repository link — with the install request, or later through onboarding — and it clones the Hub, checks the project identity, reconciles the installed release against the one the Hub records, and asks which repositories to materialize.</p>
-    <p class="do"><strong>What you do differently:</strong> hand a new joiner the Hub link and nothing else. PMs and BAs answer "Hub only".</p>
+    <h3><span data-i18n lang="en">Joining a project that already exists</span><span data-i18n lang="vi">Tham gia một dự án đã tồn tại sẵn</span></h3>
+    <p class="why"><span data-i18n lang="en">A container is rebuildable from <code>components.md</code>, and now there is a journey that rebuilds it. Give the agent one Project Hub repository link — with the install request, or later through onboarding — and it clones the Hub, checks the project identity, reconciles the installed release against the one the Hub records, and asks which repositories to materialize.</span><span data-i18n lang="vi">Một container là rebuildable từ <code>components.md</code>, và giờ có một journey để rebuild nó. Đưa agent một link repository Project Hub — cùng với install request, hoặc sau đó qua onboarding — và nó clone Hub, kiểm tra project identity, reconcile release đã cài với release mà Hub ghi nhận, rồi hỏi repository nào cần materialize.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">hand a new joiner the Hub link and nothing else. PMs and BAs answer "Hub only".</span><span data-i18n lang="vi">đưa cho người mới tham gia link Hub và không gì khác. PM và BA chỉ cần trả lời "Hub only".</span></p>
   </div>
 
   <div class="rel">
     <div class="rel-tag">v1.0.6</div>
-    <h3>The package ships no code, and nothing blocks the work</h3>
-    <p class="why">Every executable file and JSON schema left the installed package: what a project receives is prose, templates and two reference registries. Conformance is a prose audit the agent runs by reading, as it was from v0.3 to v0.9.1. And no finding blocks: a detector reports what it found, what would fix it, and in what order, and the work continues. Plan, approval and journal digests are gone; the SHA-256 of the downloaded release stays.</p>
-    <p class="do"><strong>What you do differently:</strong> stop looking for a checker to put in CI — there isn't one, and there wasn't one for eleven versions. Read the Markdown plan and approve it in your own words.</p>
+    <h3><span data-i18n lang="en">The package ships no code, and nothing blocks the work</span><span data-i18n lang="vi">Package không ship code nào, và không gì chặn công việc</span></h3>
+    <p class="why"><span data-i18n lang="en">Every executable file and JSON schema left the installed package: what a project receives is prose, templates and two reference registries. Conformance is a prose audit the agent runs by reading, as it was from v0.3 to v0.9.1. And no finding blocks: a detector reports what it found, what would fix it, and in what order, and the work continues. Plan, approval and journal digests are gone; the SHA-256 of the downloaded release stays.</span><span data-i18n lang="vi">Mọi file thực thi và JSON schema đã rời khỏi package cài đặt: cái một dự án nhận được là prose, template và hai registry tham chiếu. Conformance là một audit dạng prose mà agent chạy bằng cách đọc, giống như từ v0.3 đến v0.9.1. Và không finding nào chặn: một detector báo cáo nó tìm thấy gì, cách nào để fix, và theo thứ tự nào, rồi công việc tiếp tục. Plan digest, approval digest và journal digest không còn nữa; SHA-256 của release đã tải về vẫn được giữ.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">stop looking for a checker to put in CI — there isn't one, and there wasn't one for eleven versions. Read the Markdown plan and approve it in your own words.</span><span data-i18n lang="vi">ngừng tìm một checker để cắm vào CI — không có cái nào, và đã không có suốt mười một version. Đọc plan dạng Markdown và duyệt nó bằng lời của chính mình.</span></p>
   </div>
 
   <div class="rel">
     <div class="rel-tag">v1.0.0 – v1.0.5</div>
-    <h3>One core, three generated adapters, prompt-only install</h3>
-    <p class="why">Codex, Claude Code and Kiro are generated projections of one canonical methodology rather than three hand-maintained copies. Installation and upgrade run from a plain prompt against a verified public release. The Unified Project Tree replaced nested repositories: one unversioned project folder, the Hub and every component repository as sibling git roots.</p>
-    <p class="do"><strong>What you do differently:</strong> open your agent in the project folder and paste one prompt. No installer script, no edition to choose.</p>
+    <h3><span data-i18n lang="en">One core, three generated adapters, prompt-only install</span><span data-i18n lang="vi">Một core, ba adapter được sinh ra, cài đặt chỉ bằng prompt</span></h3>
+    <p class="why"><span data-i18n lang="en">Codex, Claude Code and Kiro are generated projections of one canonical methodology rather than three hand-maintained copies. Installation and upgrade run from a plain prompt against a verified public release. The Unified Project Tree replaced nested repositories: one unversioned project folder, the Hub and every component repository as sibling git roots.</span><span data-i18n lang="vi">Codex, Claude Code và Kiro là các projection được sinh ra từ một methodology chuẩn duy nhất, thay vì ba bản chép tay riêng. Install và upgrade chạy từ một prompt thuần, nhắm vào một public release đã được xác minh. Unified Project Tree thay thế repository lồng nhau: một project folder không version, Hub và mọi component repository là các sibling git root.</span></p>
+    <p class="do"><strong><span data-i18n lang="en">What you do differently:</span><span data-i18n lang="vi">Bạn làm khác đi ở đâu:</span></strong> <span data-i18n lang="en">open your agent in the project folder and paste one prompt. No installer script, no edition to choose.</span><span data-i18n lang="vi">mở agent của bạn trong project folder và dán một prompt. Không installer script, không edition nào để chọn.</span></p>
   </div>
 
-  <h2>Release highlights · v0.4 → v0.9.1 <span style="font-weight:400;opacity:.7">— history</span></h2>
+  <h2><span data-i18n lang="en">Release highlights</span><span data-i18n lang="vi">Điểm nổi bật release</span> · v0.4 → v0.9.1 <span style="font-weight:400;opacity:.7">— <span data-i18n lang="en">history</span><span data-i18n lang="vi">lịch sử</span></span></h2>
 
   <div class="rel">
     <div class="rel-tag">v0.4 – v0.6</div>
-    <h3>State discipline, onboarding, design-derived UI</h3>
-    <p class="why">The stage cycle began updating its state file after every gate so a session could resume without re-deriving; an onboarding skill replaced ad-hoc setup; UI work started deriving from design tokens and mockups rather than from prose.</p>
+    <h3><span data-i18n lang="en">State discipline, onboarding, design-derived UI</span><span data-i18n lang="vi">Kỷ luật state, onboarding, UI dẫn xuất từ design</span></h3>
+    <p class="why"><span data-i18n lang="en">The stage cycle began updating its state file after every gate so a session could resume without re-deriving; an onboarding skill replaced ad-hoc setup; UI work started deriving from design tokens and mockups rather than from prose.</span><span data-i18n lang="vi">Chu trình stage bắt đầu cập nhật state file sau mỗi gate để một session có thể resume mà không cần suy lại từ đầu; một onboarding skill thay thế cho việc setup tùy tiện; công việc UI bắt đầu dẫn xuất từ design token và mockup thay vì từ prose.</span></p>
   </div>
 
   <div class="rel">
     <div class="rel-tag">v0.7 – v0.8</div>
-    <h3>Conformance audit and per-language review</h3>
-    <p class="why">Introduced a per-unit conformance audit over code, tokens, UI fidelity, test coverage and flow conformance, and split the review checklist into hard and soft findings. <strong>At the time these blocked a unit.</strong> v1.0.6 removed the blocking outcome entirely — the audit still runs and still reports, but it never stops the work.</p>
+    <h3><span data-i18n lang="en">Conformance audit and per-language review</span><span data-i18n lang="vi">Conformance audit và review theo từng ngôn ngữ</span></h3>
+    <p class="why"><span data-i18n lang="en">Introduced a per-unit conformance audit over code, tokens, UI fidelity, test coverage and flow conformance, and split the review checklist into hard and soft findings. <strong>At the time these blocked a unit.</strong> v1.0.6 removed the blocking outcome entirely — the audit still runs and still reports, but it never stops the work.</span><span data-i18n lang="vi">Đưa vào một conformance audit theo từng unit, phủ code, token, UI fidelity, test coverage và flow conformance, đồng thời tách review checklist thành hard finding và soft finding. <strong>Ở thời điểm đó, các finding này chặn một unit.</strong> v1.0.6 gỡ bỏ hoàn toàn kết quả chặn này — audit vẫn chạy và vẫn báo cáo, nhưng nó không bao giờ dừng công việc lại nữa.</span></p>
   </div>
 
   <div class="rel">
     <div class="rel-tag">v0.9 – v0.9.1</div>
-    <h3>The last v0 line</h3>
-    <p class="why">The final v0 releases, and the migration source the v1 bootstrap reads. A v0.3–v0.9.x project upgrades directly to v1; there are no staged hops.</p>
+    <h3><span data-i18n lang="en">The last v0 line</span><span data-i18n lang="vi">Dòng v0 cuối cùng</span></h3>
+    <p class="why"><span data-i18n lang="en">The final v0 releases, and the migration source the v1 bootstrap reads. A v0.3–v0.9.x project upgrades directly to v1; there are no staged hops.</span><span data-i18n lang="vi">Những release v0 cuối cùng, và cũng là migration source mà bootstrap v1 đọc. Một dự án v0.3–v0.9.x nâng cấp trực tiếp lên v1; không có bước trung gian nào.</span></p>
   </div>
 
-  <h2>Upgrading</h2>
+  <h2><span data-i18n lang="en">Upgrading</span><span data-i18n lang="vi">Nâng cấp</span></h2>
   <div class="migrate">
-    <p style="margin-top:0;"><strong>There is no installer script any more, and you should not run one.</strong> Earlier versions of this page published <code>curl … | bash</code> and PowerShell one-liners. v1.0 installs by prompt: the agent resolves a verified public release, inspects your project, and shows you a plan before touching anything. Open your agent in the project folder and paste:</p>
+    <p style="margin-top:0;"><strong><span data-i18n lang="en">There is no installer script any more, and you should not run one.</span><span data-i18n lang="vi">Không còn installer script nào nữa, và bạn không nên tự chạy một cái.</span></strong> <span data-i18n lang="en">Earlier versions of this page published <code>curl … | bash</code> and PowerShell one-liners. v1.0 installs by prompt: the agent resolves a verified public release, inspects your project, and shows you a plan before touching anything. Open your agent in the project folder and paste:</span><span data-i18n lang="vi">Các bản trước của trang này từng công bố <code>curl … | bash</code> và PowerShell one-liner. v1.0 cài đặt bằng prompt: agent phân giải một public release đã xác minh, khảo sát dự án của bạn, và trình ra một kế hoạch trước khi đụng vào bất cứ thứ gì. Mở agent của bạn trong project folder và dán:</span></p>
     <pre>Use the KAFI AI-DLC Bootstrap Locator at
 https://raw.githubusercontent.com/thangtmkafi/AI-DLC/main/.well-known/kafi-aidlc-bootstrap.json.
 Inspect this project and the public release, then present the exact
@@ -134,17 +227,42 @@ installation or upgrade plan. Follow the bootstrap protocol from the release
 being installed, not any copy already present in this project. Do not create,
 update, merge, move, delete, back up, or migrate any project file until I
 approve that plan. Preserve the project root README.md.</pre>
-    <p style="margin-bottom:0;">It detects a v0.x installation, classifies the folder, and asks which topology the project takes rather than inferring it. Nothing is written before you approve. Full protocol in the <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">install and operate guide</a>.</p>
+    <p style="margin-bottom:0;"><span data-i18n lang="en">It detects a v0.x installation, classifies the folder, and asks which topology the project takes rather than inferring it. Nothing is written before you approve. Full protocol in the <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">install and operate guide</a>.</span><span data-i18n lang="vi">Nó phát hiện một install v0.x, classify folder, và hỏi dự án đi theo topology nào thay vì tự suy đoán. Không có gì được ghi trước khi bạn duyệt. Protocol đầy đủ nằm trong <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">hướng dẫn cài đặt và vận hành</a>.</span></p>
   </div>
 
-  <p class="cta" style="font-size:14px;">Next: <a href="ai-dlc-v1.0-overview.html">Concepts</a> · <a href="ai-dlc-v1.0-role-guides.html">Scenarios and Roles</a> · <a href="AI-DLC-v1.0-runbook.html">Operating Manual</a>.</p>
+  <p class="cta" style="font-size:14px;"><span data-i18n lang="en">Next:</span><span data-i18n lang="vi">Tiếp theo:</span> <a href="ai-dlc-v1.0-overview.html"><span data-i18n lang="en">Concepts</span><span data-i18n lang="vi">Khái niệm</span></a> · <a href="ai-dlc-v1.0-role-guides.html"><span data-i18n lang="en">Scenarios and Roles</span><span data-i18n lang="vi">Kịch bản và Role</span></a> · <a href="AI-DLC-v1.0-runbook.html"><span data-i18n lang="en">Operating Manual</span><span data-i18n lang="vi">Sổ tay vận hành</span></a>.</p>
 
   <footer>
-    <span>KAFI Transformation Office · v1.0.8 · What changed, v0.3 → v1.0.8</span>
-    <span>Companion: ai-dlc-v1.0-overview.html · ai-dlc-v1.0-install-upgrade-by-prompt.html</span>
+    <span>KAFI Transformation Office · v1.0.10 · <span data-i18n lang="en">What changed, v0.3 → v1.0.10</span><span data-i18n lang="vi">Có gì thay đổi, v0.3 → v1.0.10</span></span>
+    <span><span data-i18n lang="en">Companion:</span><span data-i18n lang="vi">Tài liệu liên quan:</span> ai-dlc-v1.0-overview.html · ai-dlc-v1.0-install-upgrade-by-prompt.html</span>
   </footer>
 
 </div>
 <!-- /legacy -->
+<script>
+(function(){
+  var d=document.documentElement;
+  var LANGUAGE_KEY="kafi-aidlc-language", THEME_KEY="kafi-aidlc-theme";
+  var btns={
+    'lang-en':function(){set(LANGUAGE_KEY,'lang','en');},
+    'lang-vi':function(){set(LANGUAGE_KEY,'lang','vi');},
+    'th-light':function(){set(THEME_KEY,'theme','light');},
+    'th-dark':function(){set(THEME_KEY,'theme','dark');}
+  };
+  function set(key,attr,val){
+    d.dataset[attr]=val;
+    if(attr==='lang'){d.lang=val;}
+    try{localStorage.setItem(key,val);}catch(e){}
+    sync();
+  }
+  function press(id,on){var b=document.getElementById(id); if(b) b.setAttribute('aria-pressed',on?'true':'false');}
+  function sync(){
+    press('lang-en',d.dataset.lang!=='vi'); press('lang-vi',d.dataset.lang==='vi');
+    press('th-light',d.dataset.theme!=='dark'); press('th-dark',d.dataset.theme==='dark');
+  }
+  Object.keys(btns).forEach(function(id){var b=document.getElementById(id); if(b) b.onclick=btns[id];});
+  sync();
+})();
+</script>
 </body>
 </html>
