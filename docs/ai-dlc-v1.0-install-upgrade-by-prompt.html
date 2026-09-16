@@ -135,7 +135,7 @@ footer{border-top:1px solid var(--border);margin-top:40px}
       <a href="#fresh-install">Cài mới</a>
       <a href="#review-plan">Đọc plan trước khi phê duyệt</a>
       <a href="#approve-plan">Phê duyệt digest</a>
-      <a href="#upgrade-v1">Nâng cấp từ v1.0.0–v1.0.9</a>
+      <a href="#upgrade-v1">Nâng cấp từ v1.0.0–v1.0.11</a>
       <a href="#upgrade-v0">Nâng cấp trực tiếp từ v0.3–v0.9.x</a>
       <a href="#when-blocked">Khi phát hiện có vấn đề</a>
       <a href="#verify-install">Xác minh sau khi cài</a>
@@ -398,8 +398,16 @@ Plan: /tmp/kafi-aidlc-&lt;id&gt;/plan.md</code></pre>
   </section>
   <section id="upgrade-v0">
     <a id="upgrade-v1"></a>
-    <h2>Nâng cấp từ v1.0.0–v1.0.9: bộ tài liệu đổi hình dạng</h2>
-    <p>v1.0.10 sắp xếp lại Hub theo người đọc: <code>project.md</code>, <code>team.md</code>, <code>components.md</code> lên gốc Hub; <code>overview/</code> giữ <code>state.md</code>, <code>open-items.md</code>, <code>decisions.md</code>, <code>traceability.md</code>, <code>capabilities.md</code>; record nằm theo tháng trong <code>.aidlc/audit/&lt;loại&gt;/&lt;yyyy-mm&gt;/</code>; bộ brownfield vào <code>discovery/brownfield/</code>. Gói được cài như bình thường bằng prompt chuẩn — Hub cũ vẫn chạy.</p>
+    <h2>Nâng cấp từ v1.0.0–v1.0.11: bộ tài liệu đổi hình dạng</h2>
+    <p><strong>Từ v1.0.10 hoặc v1.0.11 lên v1.0.12.</strong> Phần lớn v1.0.12 là xoá bỏ, và xoá bỏ không làm một file đang hợp lệ thành không hợp lệ: mọi ngân sách số từ, <code>FILE_OVER_BUDGET</code>, <code>FOLDER_OVER_BUDGET</code> và giới hạn ký tự trên dòng register đều biến mất, nên một dự án không làm gì vẫn giữ mọi tài liệu hợp lệ và thôi bị báo là file quá dài. Chạy <code>/kafi-aidlc-check</code> rồi <code>/kafi-aidlc-next</code>; <code>DOC-MIG</code> đề xuất, từng dòng có thể từ chối:</p>
+    <ul>
+      <li><strong><code>Header</code></strong> thêm dòng <code>Readers:</code> vào mỗi tài liệu sống, và trên bốn loại tài liệu sống từng ghi giá trị <code>Freshness</code> vào <code>Status:</code> thì đổi <code>Status: Current</code> thành giá trị vòng đời (<code>Draft | In review | Approved</code>). Không đổi body, không làm mất phê duyệt nào.</li>
+      <li><strong><code>Re-approve</code></strong> trên hai register — <code>overview/open-items.md</code> và <code>discovery/risk-register.md</code> — để mỗi dòng mang ô <code>Status</code> từ một tập khai báo (<code>Open | Blocked | Waiting | Closed | Superseded</code>; risk register thêm <code>Mitigating</code> và <code>Accepted</code>), dòng còn sống xếp trước, dòng đã đóng chuyển sang <code>archive/</code>.</li>
+      <li><strong><code>Move</code></strong>, giữ nguyên byte: file <code>EVT-</code> từng nằm dưới <code>activation/events/</code> hoặc <code>activation/deployments/</code> về <code>.aidlc/audit/events/&lt;yyyy-mm&gt;/</code>; một <code>activation/policy-evaluation.md</code> cố định về <code>activation/evaluations/&lt;yyyy-mm&gt;/</code>. Hub vốn ghi đúng chỗ thì không có gì để chuyển.</li>
+      <li><strong>Register không phải là một bảng</strong> — nhiều bảng, hoặc danh sách gạch đầu dòng — thì không <code>Normalise</code> được: nó đi theo đường thích nghi, retire nguyên vẹn vào <code>archive/</code>, mở register mới, và chuyển từng item sang khi công việc chạm tới, BA hoặc PO/PM duyệt.</li>
+      <li><strong>Record đã hoàn tất không bao giờ bị sửa</strong>, kể cả record mang <code>Authority status: n/a</code>. Một control field mà template không có thì để yên: không gì đọc nó và không dòng nào gỡ nó.</li>
+    </ul>
+    <p><strong>Từ v1.0.0–v1.0.9 lên v1.0.10.</strong> v1.0.10 sắp xếp lại Hub theo người đọc: <code>project.md</code>, <code>team.md</code>, <code>components.md</code> lên gốc Hub; <code>overview/</code> giữ <code>state.md</code>, <code>open-items.md</code>, <code>decisions.md</code>, <code>traceability.md</code>, <code>capabilities.md</code>; record nằm theo tháng trong <code>.aidlc/audit/&lt;loại&gt;/&lt;yyyy-mm&gt;/</code>; bộ brownfield vào <code>discovery/brownfield/</code>. Gói được cài như bình thường bằng prompt chuẩn — Hub cũ vẫn chạy.</p>
     <ul>
       <li><strong>Dấu hiệu:</strong> <code>status</code> báo <code>DOC_SHAPE_LEGACY</code> vì <code>project.md</code> chưa có dòng <code>Document set shape:</code>. Không có gì bị chặn.</li>
       <li><strong>Bước <code>PLAN</code> đề xuất, từng dòng có thể từ chối:</strong> ba file control lên gốc Hub (<code>Move</code>, không đổi byte); record phẳng vào thư mục tháng theo <code>Timestamp:</code>; bộ brownfield vào <code>discovery/brownfield/</code>; view derived bị xóa rồi dựng lại ở chỗ mới — không di chuyển.</li>
@@ -801,9 +809,12 @@ release theo đúng cách trên, rồi trình một bản plan bao cả hai.</co
         <tr><td><code>/kafi-aidlc-status</code></td><td>Đang ở đâu?</td><td>Không ghi gì</td></tr>
         <tr><td><code>/kafi-aidlc-next</code></td><td>Làm gì tiếp?</td><td>Có thể sinh plan cần duyệt riêng</td></tr>
         <tr><td><code>/kafi-aidlc-check</code></td><td>Có gì sai không?</td><td>Không ghi gì; sửa thì cần plan được duyệt</td></tr>
+        <tr><td><code>/kafi-aidlc-bootstrap</code></td><td>Cài, nâng cấp, sửa hoặc rollback chính gói AI-DLC ở đây</td><td>Có thể sinh plan cần duyệt riêng</td></tr>
+        <tr><td><code>/kafi-aidlc-doctor</code></td><td>Vì sao đang tắc, và gỡ thế nào?</td><td>Không ghi gì</td></tr>
+        <tr><td><code>/kafi-aidlc-feedback</code></td><td>Ghi painpoint — chỗ chính AI-DLC làm dự án tốn công</td><td>Một record <code>PP</code> dưới <code>.aidlc/audit/feedback/</code>, sau khi bạn xác nhận; chỉ gửi lên upstream khi bạn yêu cầu</td></tr>
       </tbody>
     </table></div>
-    <p>Trên Codex tiền tố là <code>$</code>; trên Claude Code và Kiro là <code>/</code>. Diễn đạt tự do vẫn đi qua cùng intent engine — nó không phải đường vòng.</p>
+    <p>Trên Codex tiền tố là <code>$</code>; trên Claude Code và Kiro là <code>/</code>. Bốn lệnh đầu là vòng lặp hằng ngày; ba lệnh sau nằm ngoài vòng lặp. Diễn đạt tự do vẫn đi qua cùng intent engine — nó không phải đường vòng.</p>
     <p><strong>Gate là quyết định của con người, không phải lệnh.</strong> Agent trình sản phẩm, diff, bằng chứng, rủi ro và một khuyến nghị; bạn Duyệt hoặc Yêu cầu sửa. Một câu đồng ý rõ ràng bằng lời của bạn, bằng bất kỳ ngôn ngữ nào, là duyệt đúng thứ vừa được trình. Im lặng, một câu hỏi, một phản đối một phần, và một câu đồng ý nhắm vào bản plan cũ đều <strong>không</strong> phải phê duyệt.</p>
     <div class="tbl"><table>
       <thead><tr><th>Gate</th><th>Thẩm quyền cuối</th></tr></thead>

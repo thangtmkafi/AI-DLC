@@ -7,7 +7,7 @@
 
 **What is published today** is listed on the [Releases page](https://github.com/thangtmkafi/AI-DLC/releases). Read the release notes for the version you intend to use, and pin it.
 
-**Docs:** [Introduction (v1.0)](https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-article-vi.html) · [Install / Upgrade + User Guide (v1.0)](https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html) · [Documentation index](https://thangtmkafi.github.io/AI-DLC/index.html)
+**Docs:** [Introduction (v1.0)](https://thangtmkafi.github.io/AI-DLC/KAFI-AIDLC-Introduction.html) · [Install / Upgrade + User Guide (v1.0)](https://thangtmkafi.github.io/AI-DLC/ai-dlc-v1.0-install-upgrade-by-prompt.html) · [Documentation index](https://thangtmkafi.github.io/AI-DLC/index.html)
 
 ---
 
@@ -48,7 +48,7 @@ That URL is the single trust anchor. If a page, a message, or an agent offers yo
 - **Your root `README.md` is never taken.** AI-DLC packages never claim a consuming project's root README.
 - **Direct upgrade from `v0.3`–`v0.9.x`.** No staged hops, and no automatic relocation of your content: anything the plan would move is listed in the plan you approve.
 
-After installation the daily surface is four commands: `/kafi-aidlc-onboarding`, `/kafi-aidlc-status`, `/kafi-aidlc-next`, `/kafi-aidlc-check`. Part 2 of the combined guide covers operating the methodology, not just installing it.
+After installation the surface is seven commands. Four make the daily loop — `/kafi-aidlc-onboarding`, `/kafi-aidlc-status`, `/kafi-aidlc-next`, `/kafi-aidlc-check` — and three sit outside it: `/kafi-aidlc-bootstrap` to upgrade, repair or roll back the package, `/kafi-aidlc-doctor` when nothing runs, and `/kafi-aidlc-feedback` to record where the methodology itself cost you time. Part 2 of the combined guide covers operating the methodology, not just installing it.
 
 ---
 

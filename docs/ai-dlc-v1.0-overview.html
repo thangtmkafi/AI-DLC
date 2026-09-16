@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-DLC v1.0 — Role Guides</title>
+<title>AI-DLC v1.0 — Concepts</title>
 <script>
 (function(){try{
   var d=document.documentElement;
@@ -404,6 +404,7 @@ figure,.tbl,blockquote,pre{break-inside:avoid}
   <section id="documents">
     <h2><span data-i18n lang="en">Everything is Markdown</span><span data-i18n lang="vi">Mọi thứ là Markdown</span></h2>
     <p><span data-i18n lang="en">Nothing AI-DLC writes into a project is JSON. Every governance, audit, coordination and state record is a Markdown document written from one of the shipped templates. A record nobody can read without running a program was never a record for the human it exists to inform.</span><span data-i18n lang="vi">Không thứ gì AI-DLC ghi vào dự án là JSON. Mọi bản ghi quản trị, audit, điều phối và trạng thái đều là tài liệu Markdown viết từ template được ship kèm. Một bản ghi mà bạn phải chạy chương trình mới đọc được thì chưa bao giờ là bản ghi dành cho người nó tồn tại để thông báo.</span></p>
+    <p><span data-i18n lang="en">Two rules govern what a document says, and neither is about length. Every living document names its <code>Readers:</code> — the roles it is written for — and the test it must pass is that those roles can follow it, not that it fits a word count; no document carries a size budget. And a claim of fact carries a source that resolves in the Hub — a knowledge-source entry, a component coordinate with its revision, an answered record, or the document that owns the fact. A claim whose source does not resolve is not written; it is counted, on the record that presents the document.</span><span data-i18n lang="vi">Hai luật chi phối nội dung một tài liệu, và không luật nào nói về độ dài. Mọi tài liệu sống nêu rõ <code>Readers:</code> — các vai nó được viết cho — và bài kiểm tra nó phải qua là những vai đó đọc theo được, chứ không phải vừa một số từ; không tài liệu nào mang ngân sách kích thước. Và một khẳng định về sự kiện mang theo nguồn phân giải được trong Hub — một mục knowledge source, một toạ độ component kèm revision, một record đã được trả lời, hoặc tài liệu sở hữu sự kiện đó. Khẳng định mà nguồn không phân giải được thì không được viết; nó được đếm, trên record trình tài liệu đó.</span></p>
     <p><span data-i18n lang="en">Machine formats survive at two boundaries only: the GitHub Release API, which speaks JSON, and read-only reference data the package ships and the agent never writes. External executable configuration keeps its native format — GitHub Actions, OpenAPI, deployment manifests, <b>Backstage</b> <code>catalog-info.yaml</code>.</span><span data-i18n lang="vi">Định dạng máy chỉ còn tồn tại ở hai ranh giới: GitHub Release API, vốn nói JSON, và dữ liệu tham chiếu chỉ đọc mà gói cài mang theo và agent không bao giờ ghi. Cấu hình thực thi bên ngoài giữ định dạng gốc — GitHub Actions, OpenAPI, deployment manifest, <b>Backstage</b> <code>catalog-info.yaml</code>.</span></p>
   </section>
 
@@ -414,8 +415,8 @@ figure,.tbl,blockquote,pre{break-inside:avoid}
   </section>
 
   <section id="commands">
-    <h2><span data-i18n lang="en">Six commands</span><span data-i18n lang="vi">Sáu lệnh</span></h2>
-    <p><span data-i18n lang="en">The entire surface, identical for every role: four in the daily loop, plus bootstrap for installing and upgrading and doctor when nothing runs. Free-form wording routes through the same intent engine — it is not a bypass.</span><span data-i18n lang="vi">Toàn bộ bề mặt, giống hệt nhau cho mọi vai: bốn lệnh trong vòng lặp hằng ngày, cộng bootstrap để cài và nâng cấp, và doctor khi không có gì chạy. Diễn đạt tự do vẫn đi qua cùng intent engine — nó không phải đường vòng.</span></p>
+    <h2><span data-i18n lang="en">Seven commands</span><span data-i18n lang="vi">Bảy lệnh</span></h2>
+    <p><span data-i18n lang="en">The entire surface, identical for every role: four in the daily loop, plus bootstrap for installing and upgrading, doctor when nothing runs, and feedback for the moment the methodology itself cost you time. Free-form wording routes through the same intent engine — it is not a bypass.</span><span data-i18n lang="vi">Toàn bộ bề mặt, giống hệt nhau cho mọi vai: bốn lệnh trong vòng lặp hằng ngày, cộng bootstrap để cài và nâng cấp, doctor khi không có gì chạy, và feedback cho lúc chính phương pháp làm bạn mất thời gian. Diễn đạt tự do vẫn đi qua cùng intent engine — nó không phải đường vòng.</span></p>
     <div class="tbl"><table>
       <tbody>
         <tr><td><code>/kafi-aidlc-onboarding</code></td><td><span data-i18n lang="en">How do I start, or join?</span><span data-i18n lang="vi">Bắt đầu, hoặc tham gia, thế nào?</span></td></tr>
@@ -424,6 +425,7 @@ figure,.tbl,blockquote,pre{break-inside:avoid}
         <tr><td><code>/kafi-aidlc-check</code></td><td><span data-i18n lang="en">Is anything wrong?</span><span data-i18n lang="vi">Có gì sai không?</span></td></tr>
         <tr><td><code>/kafi-aidlc-bootstrap</code></td><td><span data-i18n lang="en">Install or upgrade the package here.</span><span data-i18n lang="vi">Cài hoặc nâng cấp package ở đây.</span></td></tr>
         <tr><td><code>/kafi-aidlc-doctor</code></td><td><span data-i18n lang="en">Why is this stuck, and what clears it?</span><span data-i18n lang="vi">Vì sao đang tắc, và gỡ thế nào?</span></td></tr>
+        <tr><td><code>/kafi-aidlc-feedback</code></td><td><span data-i18n lang="en">Record where AI-DLC itself cost this project — a painpoint record, sent upstream only when you ask.</span><span data-i18n lang="vi">Ghi lại chỗ chính AI-DLC làm dự án tốn công — một painpoint record, chỉ gửi lên upstream khi bạn yêu cầu.</span></td></tr>
       </tbody>
     </table></div>
     <p class="note"><span data-i18n lang="en">On Codex the prefix is <code>$</code>; on Claude Code and Kiro it is <code>/</code>. Installation itself is a prompt, not a command — see <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Install and operate</a>.</span><span data-i18n lang="vi">Trên Codex tiền tố là <code>$</code>; trên Claude Code và Kiro là <code>/</code>. Bản thân việc cài đặt là một prompt, không phải lệnh — xem <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Cài đặt và vận hành</a>.</span></p>
@@ -1457,7 +1459,7 @@ Frontend (code branch): ai-dlc/slice/SLICE-ORDER-001-checkout</code></pre>
   <section id="next-step">
     <h2><span data-i18n lang="en">Where to go next</span><span data-i18n lang="vi">Đi tiếp đâu</span></h2>
     <p><span data-i18n lang="en">Installing, upgrading, joining an existing project, reverse engineering, and the full command and gate reference: <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Install and operate</a>. Start from your situation: <a href="ai-dlc-v1.0-role-guides.html">Scenarios and Roles</a>. Day-to-day procedures: <a href="AI-DLC-v1.0-runbook.html">Operating Manual</a>.</span><span data-i18n lang="vi">Cài đặt, nâng cấp, tham gia dự án có sẵn, reverse engineering, và tham chiếu đầy đủ về lệnh và gate: <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Cài đặt và vận hành</a>. Bắt đầu từ tình huống của bạn: <a href="ai-dlc-v1.0-role-guides.html">Kịch bản và vai trò</a>. Thủ tục hằng ngày: <a href="AI-DLC-v1.0-runbook.html">Sổ tay vận hành</a>.</span></p>
-    <p class="note">Content baseline: AI-DLC v1.0 Locked Spec · v1.0.11</p>
+    <p class="note">Content baseline: AI-DLC v1.0 Locked Spec · v1.0.12</p>
   </section>
 
 </main>
