@@ -294,26 +294,58 @@ footer{border-top:1px solid var(--border);padding:24px 0;font-size:13px;color:va
   <p data-i18n lang="en">The tree has <b>two planes</b>: what a person opens to understand the project sits at the top level; what exists so a rule can be applied sits under <code>.aidlc/</code>.</p>
   <p data-i18n lang="vi">Cây có <b>hai tầng</b>: những gì một người mở ra để hiểu dự án nằm ở cấp trên; những gì tồn tại để một luật được áp dụng nằm dưới <code>.aidlc/</code>.</p>
   <figure class="tree">
-    <div class="scroll"><pre>&lt;project&gt;/
-├── .kafi/ai-dlc/
-├── CLAUDE.md · AGENTS.md
-├── .claude/ · .codex/ · .kiro/
-├── README.md
+    <div class="scroll" data-i18n lang="en"><pre>&lt;project&gt;/
+├── .kafi/ai-dlc/                                ← agent
+├── CLAUDE.md · AGENTS.md                        ← agent
+├── .claude/ · .codex/ · .kiro/                  ← agent
+├── README.md                                    ← everyone
 ├── project-hub/
-│   ├── README.md  project.md  team.md  components.md
-│   ├── overview/
-│   ├── .aidlc/
-│   ├── discovery/
-│   ├── requirements/
-│   ├── design/
-│   ├── contracts/
-│   ├── delivery/
-│   ├── activation/
-│   ├── operations/
-│   └── archive/
-├── components/&lt;name&gt;/
-└── ops/&lt;name&gt;/</pre></div>
-    <figcaption><span data-i18n lang="en">The project container and the top level of the Hub, as the two tables below describe them. The tables give each folder's contents, class, owner and language; the full closed tree is spec §10.2.</span><span data-i18n lang="vi">Thư mục dự án và cấp trên cùng của Hub, như hai bảng dưới đây mô tả. Hai bảng nêu nội dung, lớp, người sở hữu và ngôn ngữ của từng thư mục; cây đóng đầy đủ là spec §10.2.</span></figcaption>
+│   ├── README.md  project.md                    ← PO/PM · SA · Tech Lead
+│   │   team.md  components.md                   ← PO/PM · SA · Tech Lead
+│   ├── overview/                                ← PO/PM · SA · Tech Lead
+│   ├── .aidlc/                                  ← agent; PO/PM · SA · Tech Lead to trace an approval or decision
+│   ├── discovery/                               ← PO/PM · BA · QA · BizUser
+│   │   ├── knowledge-sources.md …               ← SA · Tech Lead · Dev
+│   │   └── brownfield/                          ← SA · Tech Lead · Dev
+│   ├── requirements/                            ← PO/PM · BA · QA · BizUser
+│   ├── design/                                  ← SA · Tech Lead · Dev
+│   │   └── conceptual-design.md, uiux-spec.md   ← PO/PM · BA · QA · BizUser
+│   ├── contracts/                               ← SA · Tech Lead · Dev
+│   ├── delivery/&lt;kind&gt;/&lt;ID&gt;/
+│   │   ├── index.md (dossier)                   ← PO/PM · BA · QA · BizUser
+│   │   └── design, code, verification           ← SA · Tech Lead · Dev
+│   ├── activation/                              ← SA · Tech Lead · Dev · DevOps/SRE
+│   ├── operations/                              ← Tech Lead · Dev · DevOps/SRE
+│   │   └── user-admin guides                    ← BA · QA · BizUser
+│   └── archive/                                 ← whoever read it before it closed
+├── components/&lt;name&gt;/                           ← Tech Lead · Dev
+└── ops/&lt;name&gt;/                                  ← DevOps/SRE</pre></div><div class="scroll" data-i18n lang="vi"><pre>&lt;project&gt;/
+├── .kafi/ai-dlc/                                ← agent
+├── CLAUDE.md · AGENTS.md                        ← agent
+├── .claude/ · .codex/ · .kiro/                  ← agent
+├── README.md                                    ← mọi người
+├── project-hub/
+│   ├── README.md  project.md                    ← PO/PM · SA · Tech Lead
+│   │   team.md  components.md                   ← PO/PM · SA · Tech Lead
+│   ├── overview/                                ← PO/PM · SA · Tech Lead
+│   ├── .aidlc/                                  ← agent; PO/PM · SA · Tech Lead tra một approval hay quyết định
+│   ├── discovery/                               ← PO/PM · BA · QA · BizUser
+│   │   ├── knowledge-sources.md …               ← SA · Tech Lead · Dev
+│   │   └── brownfield/                          ← SA · Tech Lead · Dev
+│   ├── requirements/                            ← PO/PM · BA · QA · BizUser
+│   ├── design/                                  ← SA · Tech Lead · Dev
+│   │   └── conceptual-design.md, uiux-spec.md   ← PO/PM · BA · QA · BizUser
+│   ├── contracts/                               ← SA · Tech Lead · Dev
+│   ├── delivery/&lt;kind&gt;/&lt;ID&gt;/
+│   │   ├── index.md (dossier)                   ← PO/PM · BA · QA · BizUser
+│   │   └── thiết kế, code, kiểm chứng           ← SA · Tech Lead · Dev
+│   ├── activation/                              ← SA · Tech Lead · Dev · DevOps/SRE
+│   ├── operations/                              ← Tech Lead · Dev · DevOps/SRE
+│   │   └── hướng dẫn người dùng                 ← BA · QA · BizUser
+│   └── archive/                                 ← người từng đọc nó lúc còn mở
+├── components/&lt;name&gt;/                           ← Tech Lead · Dev
+└── ops/&lt;name&gt;/                                  ← DevOps/SRE</pre></div>
+    <figcaption><span data-i18n lang="en">The project container and the top level of the Hub. The arrow names who a folder is written for: each template declares its <code>Readers:</code> (§10.3) as one of three sets — business (PO/PM · BA · QA · BizUser), technical (SA · Tech Lead · Dev) or coordination (PO/PM · SA · Tech Lead); DevOps/SRE is added where the tables below make them the owner. Records under <code>.aidlc/audit/</code> name no readers: people reach them through an <code>Approved:</code> line or a view in <code>overview/</code>. The tables give each folder's contents, class, owner and language; the full closed tree is spec §10.2.</span><span data-i18n lang="vi">Thư mục dự án và cấp trên cùng của Hub. Mũi tên chỉ tài liệu trong thư mục được viết cho ai: mỗi template khai <code>Readers:</code> (§10.3) là một trong ba nhóm — nghiệp vụ (PO/PM · BA · QA · BizUser), kỹ thuật (SA · Tech Lead · Dev) hoặc điều phối (PO/PM · SA · Tech Lead); DevOps/SRE được thêm ở nơi hai bảng dưới đây ghi họ là người sở hữu. Record dưới <code>.aidlc/audit/</code> không khai người đọc: người ta tới đó qua dòng <code>Approved:</code> hoặc một view trong <code>overview/</code>. Hai bảng nêu nội dung, lớp, người sở hữu và ngôn ngữ của từng thư mục; cây đóng đầy đủ là spec §10.2.</span></figcaption>
   </figure>
 
   <h3><span data-i18n lang="en">Project container level</span><span data-i18n lang="vi">Cấp thư mục dự án (container)</span></h3>
