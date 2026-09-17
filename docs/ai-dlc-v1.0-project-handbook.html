@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en" data-default-language="en" data-default-theme="dark" data-theme="dark" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AI-DLC Project Handbook for KAFI AI-DLC v1.0.12: where everything in a project lives, what each kind of document is, and what to do in the situations a first project meets. Bilingual.">
+<title>AI-DLC Project Handbook</title>
+<script>
+(function(){try{
+  var d=document.documentElement;
+  var t=localStorage.getItem("kafi-aidlc-theme"), l=localStorage.getItem("kafi-aidlc-language");
+  d.dataset.theme=(t==="light")?"light":"dark";
+  d.dataset.lang=(l==="vi")?"vi":"en";
+  d.lang=d.dataset.lang;
+}catch(e){}})();
+</script>
+<style>
+:root{
+  color-scheme:dark;
+  --accent:#00C694;
+  --bg:#090D11; --surface:#10161C; --surface-2:#151D24;
+  --t1:#F2F5F4; --t2:#B4BBC0; --t3:#78838B;
+  --border:#26313A; --line:#1E272F;
+  --code-bg:#151D24; --code-fg:#DDF7EF;
+  --navbg:rgba(9,13,17,0.9);
+  --rcard:18px;
+  --font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#F6F7F8; --surface:#FFFFFF; --surface-2:#F0F2F3;
+  --t1:#101820; --t2:#585667; --t3:#9095A0;
+  --border:#D9DEE2; --line:#E6E9EC;
+  --code-bg:#EEF1F3; --code-fg:#101820;
+  --navbg:rgba(246,247,248,0.92);
+}
+:root[data-lang="en"] [data-i18n][lang="vi"]{display:none;}
+:root[data-lang="vi"] [data-i18n][lang="en"]{display:none;}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);font-family:var(--font);color:var(--t2);line-height:1.62;-webkit-font-smoothing:antialiased;}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;background:var(--accent);color:#101820;border-radius:10px;}
+.skip:focus{top:12px;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+a{color:var(--t1);text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1.5px;}
+a:hover{color:var(--accent);}
+code{font-family:var(--mono);font-size:.86em;background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere;}
+b,strong{color:var(--t1);}
+em{color:var(--t1);}
+nav.top{position:sticky;top:0;z-index:50;background:var(--navbg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+nav.top .in{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+.brand{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent);text-decoration:none;}
+.ctrls{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.switch{display:inline-flex;border:1px solid var(--border);border-radius:12px;padding:3px;background:var(--surface);}
+.switch button{border:0;background:transparent;color:var(--t2);font:700 11px var(--mono);padding:5px 9px;border-radius:8px;cursor:pointer;}
+.switch button:hover{color:var(--t1);}
+.switch button[aria-pressed="true"]{background:var(--accent);color:#101820;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 90px;}
+header.doc{padding:52px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px;}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px;}
+h1{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--t1);margin:0 0 16px;}
+h2{font-size:27px;font-weight:700;letter-spacing:-.015em;line-height:1.2;color:var(--t1);margin:0 0 14px;}
+h3{font-size:17px;font-weight:700;color:var(--t1);margin:26px 0 8px;}
+p{margin:0 0 14px;}
+ul,ol{margin:0 0 14px;padding-left:22px;}
+li{margin:0 0 8px;}
+.lede{font-size:17px;max-width:780px;}
+.source{font-size:14px;max-width:780px;color:var(--t2);}
+section{margin:0 0 58px;scroll-margin-top:70px;}
+.card{border:1px solid var(--border);border-radius:var(--rcard);padding:22px 24px;margin:0 0 16px;background:transparent;}
+.card h3:first-child{margin-top:0;}
+.card > :last-child{margin-bottom:0;}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.grid .card{margin:0;}
+.callout{border:1px solid var(--accent);border-radius:var(--rcard);padding:20px 24px;margin:0 0 18px;}
+.callout > :last-child{margin-bottom:0;}
+.toc{margin-bottom:48px;}
+.toc ol{columns:2;column-gap:32px;margin:0;padding-left:0;list-style:none;}
+.toc li{break-inside:avoid;margin:0 0 6px;}
+.toc .n{display:inline-block;min-width:28px;font:700 12px var(--mono);color:var(--accent);}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:0 0 18px;border:1px solid var(--border);border-radius:var(--rcard);}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th{text-align:left;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--t2);padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:bottom;}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55;}
+tr:last-child td{border-bottom:none;}
+td.k{white-space:nowrap;}
+table.wide{min-width:760px;}
+table.xwide{min-width:980px;}
+figure.tree{margin:0 0 18px;border:1px solid var(--border);border-radius:var(--rcard);padding:18px 20px;}
+figure.tree .scroll{overflow-x:auto;max-width:100%;}
+figure.tree pre{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--t1);margin:0;}
+figure.tree figcaption{margin-top:12px;font-size:13.5px;color:var(--t2);}
+.lbl{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t2);margin:0 0 8px;}
+.sit h3{margin-top:0;}
+footer{border-top:1px solid var(--border);padding:24px 0;font-size:13px;color:var(--t2);}
+/* #00C694 on the light ground is 2.1:1, too faint for text: in Light the accent marks, the text stays ink. */
+:root[data-theme="light"] .brand,:root[data-theme="light"] .eyebrow,:root[data-theme="light"] .toc .n{color:var(--t1);}
+:root[data-theme="light"] .eyebrow::before,:root[data-theme="light"] .brand::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--accent);margin-right:8px;vertical-align:1px;}
+@media (max-width:760px){
+  h1{font-size:30px;}h2{font-size:22px;}
+  .grid{grid-template-columns:1fr;}
+  .toc ol{columns:1;}
+  header.doc{padding:32px 0 26px;}
+  .card,.callout{padding:18px;}
+}
+@media print{nav.top{display:none;}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content"><span data-i18n lang="en">Skip to content</span><span data-i18n lang="vi">Chuyển đến nội dung</span></a>
+<nav class="top" aria-label="Page controls"><div class="in">
+  <a class="brand" href="index.html">KAFI AI-DLC · DOCS</a>
+  <div class="ctrls">
+    <div class="switch" role="group" aria-label="Language / Ngôn ngữ">
+      <button type="button" data-language-control="en" aria-pressed="true">EN</button>
+      <button type="button" data-language-control="vi" aria-pressed="false">VI</button>
+    </div>
+    <div class="switch" role="group" aria-label="Theme / Giao diện">
+      <button type="button" data-theme-control="dark" aria-pressed="true"><span data-i18n lang="en">Dark</span><span data-i18n lang="vi">Tối</span></button>
+      <button type="button" data-theme-control="light" aria-pressed="false"><span data-i18n lang="en">Light</span><span data-i18n lang="vi">Sáng</span></button>
+    </div>
+  </div>
+</div></nav>
+
+<div class="wrap">
+<header class="doc">
+  <div class="eyebrow">KAFI AI-DLC · v1.0.12</div>
+  <h1><span data-i18n lang="en">AI-DLC Project Handbook</span><span data-i18n lang="vi">Sổ tay dự án AI-DLC</span></h1>
+  <p class="lede"><span data-i18n lang="en">Where everything in an AI-DLC project lives, what each kind of document is, how to read one, and what to do in the situations a project meets. Written for PO/PM, BA, QA, SA and Tech Lead.</span><span data-i18n lang="vi">Mọi thứ trong một dự án AI-DLC nằm ở đâu, mỗi loại tài liệu là gì, đọc một tài liệu thế nào, và làm gì trong những tình huống dự án gặp phải. Viết cho PO/PM, BA, QA, SA và Tech Lead.</span></p>
+  <p class="source"><span data-i18n lang="en">This handbook describes KAFI AI-DLC v1.0.12. The same text ships in the installed package at <code>.kafi/ai-dlc/core/guide/project-handbook.md</code>. Where it disagrees with the spec at <code>.kafi/ai-dlc/core/spec/AI-DLC-v1.0.12-spec.md</code>, the spec wins.</span><span data-i18n lang="vi">Sổ tay này mô tả KAFI AI-DLC v1.0.12. Cùng nội dung này nằm trong gói đã cài tại <code>.kafi/ai-dlc/core/guide/project-handbook.md</code>. Khi có khác biệt với spec tại <code>.kafi/ai-dlc/core/spec/AI-DLC-v1.0.12-spec.md</code>, spec luôn thắng.</span></p>
+</header>
+
+<main id="content">
+<nav class="card toc" aria-label="Contents / Mục lục">
+  <p class="lbl"><span data-i18n lang="en">Contents</span><span data-i18n lang="vi">Mục lục</span></p>
+  <ol>
+    <li><a href="#edition"><span class="n">00</span><span data-i18n lang="en">This edition describes v1.0.12</span><span data-i18n lang="vi">Bản này mô tả v1.0.12</span></a></li>
+    <li><a href="#six-lines"><span class="n">01</span><span data-i18n lang="en">AI-DLC in six lines</span><span data-i18n lang="vi">AI-DLC trong sáu dòng</span></a></li>
+    <li><a href="#loop"><span class="n">02</span><span data-i18n lang="en">The loop: four commands</span><span data-i18n lang="vi">Vòng lặp: bốn lệnh</span></a></li>
+    <li><a href="#on-disk"><span class="n">03</span><span data-i18n lang="en">Your project on disk</span><span data-i18n lang="vi">Dự án của bạn trên đĩa</span></a></li>
+    <li><a href="#classes"><span class="n">04</span><span data-i18n lang="en">Five kinds of document</span><span data-i18n lang="vi">Năm loại tài liệu</span></a></li>
+    <li><a href="#finding"><span class="n">05</span><span data-i18n lang="en">Finding things</span><span data-i18n lang="vi">Tìm mọi thứ</span></a></li>
+    <li><a href="#reading"><span class="n">06</span><span data-i18n lang="en">Reading a document</span><span data-i18n lang="vi">Đọc một tài liệu</span></a></li>
+    <li><a href="#work-item"><span class="n">07</span><span data-i18n lang="en">A work item from start to archive</span><span data-i18n lang="vi">Một work item, từ đầu tới lúc lưu trữ</span></a></li>
+    <li><a href="#ids"><span class="n">08</span><span data-i18n lang="en">IDs</span><span data-i18n lang="vi">ID</span></a></li>
+    <li><a href="#names"><span class="n">09</span><span data-i18n lang="en">The names Vietnamese readers know</span><span data-i18n lang="vi">Tên tài liệu mà người Việt quen thuộc</span></a></li>
+    <li><a href="#situations"><span class="n">10</span><span data-i18n lang="en">Situations</span><span data-i18n lang="vi">Tình huống</span></a></li>
+    <li><a href="#upgrading"><span class="n">11</span><span data-i18n lang="en">Upgrading and migrating the document set</span><span data-i18n lang="vi">Nâng cấp và di chuyển bộ tài liệu</span></a></li>
+    <li><a href="#next"><span class="n">12</span><span data-i18n lang="en">Where to go next</span><span data-i18n lang="vi">Đi tiếp ở đâu</span></a></li>
+  </ol>
+</nav>
+
+<!-- 0 -->
+<section id="edition">
+  <div class="eyebrow">00</div>
+  <h2><span data-i18n lang="en">This edition describes v1.0.12</span><span data-i18n lang="vi">Bản này mô tả v1.0.12</span></h2>
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">New against v1.0.11</span><span data-i18n lang="vi">Mới so với v1.0.11</span></h3>
+      <ul data-i18n lang="en">
+        <li>No word or file-size limit remains. Instead every document states <code>Readers:</code> — who it is written for — and every claim carries a source in the Hub.</li>
+        <li>Register rows state their own <code>Status</code>.</li>
+        <li>A legacy register kept as many tables is archived whole and a fresh one opened, rather than normalised row by row (§16).</li>
+      </ul>
+      <ul data-i18n lang="vi">
+        <li>Không còn giới hạn số từ hay kích thước file nào. Thay vào đó mỗi tài liệu ghi <code>Readers:</code> — nó viết cho ai — và mỗi khẳng định có một nguồn trong Hub.</li>
+        <li>Dòng register tự nêu <code>Status</code> của mình.</li>
+        <li>Register cũ nhiều bảng được lưu nguyên vào <code>archive/</code> rồi mở register mới, thay vì chuẩn hoá từng dòng (§16).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Still true from v1.0.11</span><span data-i18n lang="vi">Vẫn đúng từ v1.0.11</span></h3>
+      <p data-i18n lang="en">Three things a reader — not an agent operator — will notice changed:</p>
+      <p data-i18n lang="vi">Ba điều một người đọc — chứ không phải người vận hành agent — sẽ thấy khác so với trước:</p>
+      <ul data-i18n lang="en">
+        <li>Every work item (Slice/BASE/CR/Hotfix) now holds <b>four files</b> (<code>index.md</code>, <code>design.md</code>, <code>verification.md</code>, <code>code.md</code>) instead of seven.</li>
+        <li>The Hub tree is <b>closed</b> — every folder is named in spec §10.2, and one that is not gets flagged <code>UNDECLARED_FOLDER</code> by <code>check</code>.</li>
+        <li>Every document belongs to exactly one of <b>five classes</b> (record, control, living, work record, derived), each with one lifecycle.</li>
+      </ul>
+      <ul data-i18n lang="vi">
+        <li>Mỗi work item (Slice/BASE/CR/Hotfix) giờ chỉ có <b>bốn file</b> (<code>index.md</code>, <code>design.md</code>, <code>verification.md</code>, <code>code.md</code>) thay vì bảy.</li>
+        <li>Cây thư mục Hub được <b>đóng kín</b> — mọi thư mục đều có tên trong spec §10.2, thư mục nào không được vẽ ra sẽ bị <code>check</code> gắn cờ <code>UNDECLARED_FOLDER</code>.</li>
+        <li>Mọi tài liệu thuộc đúng một trong <b>năm lớp</b> (record, control, living, work record, derived), mỗi lớp có đúng một vòng đời.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:16px">
+    <p data-i18n lang="en">Nothing rewrites your project's documents automatically if it is still in an older shape. Moving to the new shape is a separate, optional work item called <code>DOC-MIG-NN</code> (<a href="#upgrading">§11</a>).</p>
+    <p data-i18n lang="vi">Nếu dự án của bạn đang ở hình dạng cũ, không có gì tự động viết lại tài liệu — chuyển sang hình dạng mới là một work item riêng, tùy chọn, gọi là <code>DOC-MIG-NN</code> (<a href="#upgrading">§11</a>).</p>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="six-lines">
+  <div class="eyebrow">01</div>
+  <h2><span data-i18n lang="en">AI-DLC in six lines</span><span data-i18n lang="vi">AI-DLC trong sáu dòng</span></h2>
+  <div class="card">
+    <ol data-i18n lang="en">
+      <li><b>The agent produces the work product; a human decides whether it is acceptable.</b></li>
+      <li>You type the four loop commands — and <code>doctor</code> when something is off; the agent resolves everything else.</li>
+      <li>Everything the project decides is Markdown in the Project Hub; code lives in its own repositories and points back to it.</li>
+      <li>Nothing applies to you by default — a profile (project type, scope, operating model) decides what exists.</li>
+      <li>Work moves in bounded units — Slice, BASE, CR, Hotfix — each carrying its own evidence through only the gates it actually touches.</li>
+      <li>No finding blocks work; it states what is wrong and hands the authorized human a prepared way through (§5.4).</li>
+    </ol>
+    <ol data-i18n lang="vi">
+      <li><b>Agent tạo ra sản phẩm công việc; con người quyết định nó có được chấp nhận hay không.</b></li>
+      <li>Bạn gõ bốn lệnh của vòng lặp — và <code>doctor</code> khi có gì bất ổn; agent tự phân giải phần còn lại.</li>
+      <li>Mọi quyết định của dự án là Markdown trong Project Hub; code nằm ở repo riêng và trỏ ngược về Hub.</li>
+      <li>Mặc định không gì áp dụng cho bạn — một profile (loại dự án, phạm vi, mô hình vận hành) quyết định cái gì tồn tại.</li>
+      <li>Công việc đi theo từng đơn vị có ranh giới — Slice, BASE, CR, Hotfix — mỗi đơn vị mang bằng chứng riêng và chỉ đi qua những gate mà nó thực sự động tới.</li>
+      <li>Không finding nào chặn công việc; nó nêu cái gì sai và chuẩn bị sẵn đường đi tiếp cho người có thẩm quyền quyết định (§5.4).</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="loop">
+  <div class="eyebrow">02</div>
+  <h2><span data-i18n lang="en">The loop: four commands and what each role does with them</span><span data-i18n lang="vi">Vòng lặp: bốn lệnh và việc của từng vai trò</span></h2>
+  <div class="tbl"><table class="xwide">
+    <thead><tr><th><span data-i18n lang="en">Role</span><span data-i18n lang="vi">Vai trò</span></th><th><code>/kafi-aidlc-onboarding</code></th><th><code>/kafi-aidlc-status</code></th><th><code>/kafi-aidlc-next</code></th><th><code>/kafi-aidlc-check</code></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><b>PO/PM</b></td>
+        <td><span data-i18n lang="en">Confirms profile, engagement, Design System baseline, confirms the Hub</span><span data-i18n lang="vi">Xác nhận profile, engagement, Design System baseline, xác nhận Hub</span></td>
+        <td><span data-i18n lang="en">Reviews pending approvals, UAT state</span><span data-i18n lang="vi">Xem approval đang chờ, trạng thái UAT</span></td>
+        <td><span data-i18n lang="en">Approves Ready, Delivery Scope, UAT Acceptance, baseline activation</span><span data-i18n lang="vi">Duyệt Ready, Delivery Scope, UAT Acceptance, kích hoạt baseline</span></td>
+        <td><span data-i18n lang="en">Reviews findings gating a PO/PM decision</span><span data-i18n lang="vi">Xem finding chặn quyết định của PO/PM</span></td></tr>
+      <tr><td class="k"><b>BA</b></td>
+        <td><span data-i18n lang="en">Answers discovery questions</span><span data-i18n lang="vi">Trả lời câu hỏi discovery</span></td>
+        <td><span data-i18n lang="en">Checks open discovery items</span><span data-i18n lang="vi">Xem discovery item còn mở</span></td>
+        <td><span data-i18n lang="en">Drafts requirements, rules, acceptance criteria with the agent</span><span data-i18n lang="vi">Soạn cùng agent: requirement, rule, acceptance criteria</span></td>
+        <td><span data-i18n lang="en">Reviews traceability, business-rule coverage</span><span data-i18n lang="vi">Xem traceability, độ phủ business rule</span></td></tr>
+      <tr><td class="k"><b>Designer</b><br><span data-i18n lang="en">UI/UX approver</span><span data-i18n lang="vi">người duyệt UI/UX</span></td>
+        <td><span data-i18n lang="en">Declares the Design System baseline when scope has UI</span><span data-i18n lang="vi">Khai báo Design System baseline khi có UI</span></td>
+        <td><span data-i18n lang="en">Tracks UI/UX gate status</span><span data-i18n lang="vi">Theo dõi trạng thái gate UI/UX</span></td>
+        <td><span data-i18n lang="en">Approves the UI/UX Design gate</span><span data-i18n lang="vi">Duyệt gate UI/UX Design</span></td>
+        <td><span data-i18n lang="en">Reviews UI/UX findings</span><span data-i18n lang="vi">Xem finding về UI/UX</span></td></tr>
+      <tr><td class="k"><b>SA</b></td>
+        <td><span data-i18n lang="en">Declares <code>components.md</code> (topology), engagement risk</span><span data-i18n lang="vi">Khai báo <code>components.md</code> (topology), rủi ro engagement</span></td>
+        <td><span data-i18n lang="en">Tracks Architecture, Integration</span><span data-i18n lang="vi">Theo dõi Architecture, Integration</span></td>
+        <td><span data-i18n lang="en">Approves Current-State Baseline, Architecture, Integration; confirms feasibility at Ready</span><span data-i18n lang="vi">Duyệt Current-State Baseline, Architecture, Integration; xác nhận feasibility khi Ready</span></td>
+        <td><span data-i18n lang="en">Reviews architecture/contract findings</span><span data-i18n lang="vi">Xem finding về architecture/contract</span></td></tr>
+      <tr><td class="k"><b>Tech Lead</b></td>
+        <td><span data-i18n lang="en">Joins as component owner, materializes repos</span><span data-i18n lang="vi">Tham gia như chủ component, materialize repo</span></td>
+        <td><span data-i18n lang="en">Tracks Unit Delivery</span><span data-i18n lang="vi">Theo dõi Unit Delivery</span></td>
+        <td><span data-i18n lang="en">Accepts the pull, approves Technical Design (local Unit), Technical Done</span><span data-i18n lang="vi">Nhận pull, duyệt Technical Design (Unit nội bộ), Technical Done</span></td>
+        <td><span data-i18n lang="en">Reviews Unit-level findings</span><span data-i18n lang="vi">Xem finding cấp Unit</span></td></tr>
+      <tr><td class="k"><b>Dev</b></td>
+        <td>—</td>
+        <td><span data-i18n lang="en">Tracks own work item</span><span data-i18n lang="vi">Theo dõi work item của mình</span></td>
+        <td><span data-i18n lang="en">Collaborates, reviews agent output when needed</span><span data-i18n lang="vi">Cộng tác, review kết quả agent khi cần</span></td>
+        <td>—</td></tr>
+      <tr><td class="k"><b>QA</b><br><span data-i18n lang="en">optional</span><span data-i18n lang="vi">tùy chọn</span></td>
+        <td><span data-i18n lang="en">Declares when human QA is triggered</span><span data-i18n lang="vi">Khai báo khi cần human QA</span></td>
+        <td><span data-i18n lang="en">Tracks test evidence</span><span data-i18n lang="vi">Theo dõi bằng chứng test</span></td>
+        <td><span data-i18n lang="en">Reviews test plans/evidence when engaged</span><span data-i18n lang="vi">Review test plan/evidence khi được engage</span></td>
+        <td><span data-i18n lang="en">Reviews evidence gaps</span><span data-i18n lang="vi">Xem khoảng trống evidence</span></td></tr>
+      <tr><td class="k"><b>DevOps/SRE</b></td>
+        <td><span data-i18n lang="en">Provisions repos/access, confirms the Hub</span><span data-i18n lang="vi">Cấp phát repo/quyền, xác nhận Hub</span></td>
+        <td><span data-i18n lang="en">Tracks SRE Handoff, production state</span><span data-i18n lang="vi">Theo dõi SRE Handoff, trạng thái production</span></td>
+        <td><span data-i18n lang="en">Approves SRE Handoff Acceptance; executes production</span><span data-i18n lang="vi">Duyệt SRE Handoff Acceptance; thực thi production</span></td>
+        <td><span data-i18n lang="en">Reviews topology, production-boundary findings</span><span data-i18n lang="vi">Xem finding về topology, ranh giới production</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">The same commands for everyone</span><span data-i18n lang="vi">Cùng bốn lệnh cho mọi người</span></h3>
+      <p data-i18n lang="en">The four commands do not change by role, profile, or operating model (§8.5) — only the invocation prefix changes by host: <code>/kafi-aidlc-status</code> on Claude Code and Kiro, <code>$kafi-aidlc-status</code> on Codex.</p>
+      <p data-i18n lang="vi">Bốn lệnh không đổi theo role, theo profile hay theo operating model (§8.5) — chỉ tiền tố đổi theo host: <code>/kafi-aidlc-status</code> trên Claude Code và Kiro, <code>$kafi-aidlc-status</code> trên Codex.</p>
+      <p data-i18n lang="en">A vendor Tech Lead uses these same four commands, differing only in final authority per the engagement profile (§4.5).</p>
+      <p data-i18n lang="vi">Vendor Tech Lead dùng đúng bốn lệnh này, chỉ khác thẩm quyền cuối theo engagement profile (§4.5).</p>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Dev, QA, and auditors</span><span data-i18n lang="vi">Dev, QA và kiểm toán</span></h3>
+      <p data-i18n lang="en">Dev and QA hold no separate mandatory gate (§4.2): they collaborate and review, the agent remains the party producing evidence, and Tech Lead remains accountable for Unit technical quality.</p>
+      <p data-i18n lang="vi">Dev và QA không giữ gate bắt buộc riêng (§4.2): họ cộng tác và review, agent vẫn là bên tạo bằng chứng và Tech Lead vẫn chịu trách nhiệm chất lượng kỹ thuật của Unit.</p>
+      <p data-i18n lang="en">The spec names no separate “auditor” role — an auditor reads the Hub through <code>status</code>/<code>check</code> like anyone else, since both commands are read-only (§8.2, §8.4).</p>
+      <p data-i18n lang="vi">Spec không đặt tên một role “auditor” riêng — người kiểm toán đọc Hub qua <code>status</code>/<code>check</code> như bất kỳ ai khác, vì hai lệnh này chỉ đọc, không ghi (§8.2, §8.4).</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:16px">
+    <p data-i18n lang="en"><b>Outside the loop sit two more:</b> <code>kafi-aidlc-doctor</code> when skills do not appear or “nothing works”, and <code>kafi-aidlc-bootstrap</code> for install and upgrade (§8.5).</p>
+    <p data-i18n lang="vi"><b>Ngoài vòng lặp còn hai lệnh:</b> <code>kafi-aidlc-doctor</code> khi skill không hiện hay “không gì chạy”, và <code>kafi-aidlc-bootstrap</code> cho cài đặt và nâng cấp (§8.5).</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="on-disk">
+  <div class="eyebrow">03</div>
+  <h2><span data-i18n lang="en">Your project on disk</span><span data-i18n lang="vi">Dự án của bạn trên đĩa</span></h2>
+  <p data-i18n lang="en">The tree has <b>two planes</b>: what a person opens to understand the project sits at the top level; what exists so a rule can be applied sits under <code>.aidlc/</code>.</p>
+  <p data-i18n lang="vi">Cây có <b>hai tầng</b>: những gì một người mở ra để hiểu dự án nằm ở cấp trên; những gì tồn tại để một luật được áp dụng nằm dưới <code>.aidlc/</code>.</p>
+  <figure class="tree">
+    <div class="scroll"><pre>&lt;project&gt;/
+├── .kafi/ai-dlc/
+├── CLAUDE.md · AGENTS.md
+├── .claude/ · .codex/ · .kiro/
+├── README.md
+├── project-hub/
+│   ├── README.md  project.md  team.md  components.md
+│   ├── overview/
+│   ├── .aidlc/
+│   ├── discovery/
+│   ├── requirements/
+│   ├── design/
+│   ├── contracts/
+│   ├── delivery/
+│   ├── activation/
+│   ├── operations/
+│   └── archive/
+├── components/&lt;name&gt;/
+└── ops/&lt;name&gt;/</pre></div>
+    <figcaption><span data-i18n lang="en">The project container and the top level of the Hub, as the two tables below describe them. The tables give each folder's contents, class, owner and language; the full closed tree is spec §10.2.</span><span data-i18n lang="vi">Thư mục dự án và cấp trên cùng của Hub, như hai bảng dưới đây mô tả. Hai bảng nêu nội dung, lớp, người sở hữu và ngôn ngữ của từng thư mục; cây đóng đầy đủ là spec §10.2.</span></figcaption>
+  </figure>
+
+  <h3><span data-i18n lang="en">Project container level</span><span data-i18n lang="vi">Cấp thư mục dự án (container)</span></h3>
+  <div class="tbl"><table class="xwide">
+    <thead><tr><th>Path</th><th><span data-i18n lang="en">What lives there</span><span data-i18n lang="vi">Ở đây có gì</span></th><th><span data-i18n lang="en">Class</span><span data-i18n lang="vi">Lớp</span></th><th><span data-i18n lang="en">Who edits/approves</span><span data-i18n lang="vi">Ai sửa/duyệt</span></th><th><span data-i18n lang="en">Language</span><span data-i18n lang="vi">Ngôn ngữ</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><code>.kafi/ai-dlc/</code></td><td><span data-i18n lang="en">installed methodology package</span><span data-i18n lang="vi">Gói methodology đã cài</span></td><td><span data-i18n lang="en">— (owned by the release manifest)</span><span data-i18n lang="vi">— (sở hữu bởi release manifest)</span></td><td><span data-i18n lang="en">nobody — only installer/upgrader writes</span><span data-i18n lang="vi">không ai — chỉ installer/upgrader ghi</span></td><td>en</td></tr>
+      <tr><td class="k"><code>CLAUDE.md</code> · <code>AGENTS.md</code></td><td><span data-i18n lang="en">host entry files; AI-DLC block only</span><span data-i18n lang="vi">File vào cửa cho host; chỉ khối AI-DLC là của package</span></td><td><span data-i18n lang="en">control (the AI-DLC block)</span><span data-i18n lang="vi">control (khối AI-DLC)</span></td><td><span data-i18n lang="en">agent writes the AI-DLC block; the rest is project-owned</span><span data-i18n lang="vi">agent ghi khối AI-DLC; phần còn lại thuộc dự án</span></td><td>en</td></tr>
+      <tr><td class="k"><code>.claude/</code> · <code>.codex/</code> · <code>.kiro/</code></td><td><span data-i18n lang="en">generated adapter projections for active hosts</span><span data-i18n lang="vi">Adapter đã sinh cho host đang dùng</span></td><td>derived</td><td><span data-i18n lang="en">regenerated, never hand-edited</span><span data-i18n lang="vi">sinh lại tự động, không sửa tay</span></td><td>en</td></tr>
+      <tr><td class="k"><code>README.md</code> (root)</td><td><span data-i18n lang="en">describes your project itself</span><span data-i18n lang="vi">Mô tả chính dự án của bạn</span></td><td><span data-i18n lang="en">project-owned, never an AI-DLC target</span><span data-i18n lang="vi">thuộc dự án, không phải AI-DLC</span></td><td><span data-i18n lang="en">project owner</span><span data-i18n lang="vi">chủ dự án</span></td><td><span data-i18n lang="en">project's choice</span><span data-i18n lang="vi">tuỳ dự án</span></td></tr>
+      <tr><td class="k"><code>project-hub/</code></td><td><span data-i18n lang="en">the Hub — one Git repo, every canonical decision</span><span data-i18n lang="vi">Hub — một Git repo, mọi quyết định chuẩn</span></td><td><span data-i18n lang="en">see the Hub table below</span><span data-i18n lang="vi">xem cây Hub bên dưới</span></td><td>—</td><td>—</td></tr>
+      <tr><td class="k"><code>components/&lt;name&gt;/</code></td><td><span data-i18n lang="en">one Git repo of code per component</span><span data-i18n lang="vi">Một Git repo code cho mỗi component</span></td><td><span data-i18n lang="en">project-owned</span><span data-i18n lang="vi">thuộc dự án</span></td><td>Tech Lead / Dev</td><td><span data-i18n lang="en">project's choice</span><span data-i18n lang="vi">tuỳ dự án</span></td></tr>
+      <tr><td class="k"><code>ops/&lt;name&gt;/</code></td><td><span data-i18n lang="en">SRE-owned ops/infra repos</span><span data-i18n lang="vi">Repo ops/infra do SRE sở hữu</span></td><td><span data-i18n lang="en">project-owned</span><span data-i18n lang="vi">thuộc dự án</span></td><td>DevOps/SRE</td><td><span data-i18n lang="en">project's choice</span><span data-i18n lang="vi">tuỳ dự án</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span data-i18n lang="en">Inside the Hub (<code>project-hub/</code>)</span><span data-i18n lang="vi">Bên trong Hub (<code>project-hub/</code>)</span></h3>
+  <div class="tbl"><table class="xwide">
+    <thead><tr><th>Path</th><th><span data-i18n lang="en">What lives there</span><span data-i18n lang="vi">Ở đây có gì</span></th><th><span data-i18n lang="en">Class</span><span data-i18n lang="vi">Lớp</span></th><th><span data-i18n lang="en">Who edits/approves</span><span data-i18n lang="vi">Ai sửa/duyệt</span></th><th><span data-i18n lang="en">Language</span><span data-i18n lang="vi">Ngôn ngữ</span></th></tr></thead>
+    <tbody>
+      <tr><td><code>README.md</code></td><td><span data-i18n lang="en">what the project is, who does what, where to read</span><span data-i18n lang="vi">Dự án là gì, ai làm việc gì, đọc ở đâu</span></td><td>control</td><td>PO/PM</td><td>vi</td></tr>
+      <tr><td><code>project.md</code></td><td>Profile, operating model, governance</td><td>control</td><td>PO/PM</td><td>en</td></tr>
+      <tr><td><code>team.md</code></td><td><span data-i18n lang="en">who holds which role, who has what authority</span><span data-i18n lang="vi">Ai giữ role nào, ai có thẩm quyền gì</span></td><td>control</td><td>PO/PM</td><td>en</td></tr>
+      <tr><td><code>components.md</code></td><td><span data-i18n lang="en">component/ops map + the project-tree manifest</span><span data-i18n lang="vi">Bản đồ component/ops + manifest của cây dự án</span></td><td>control</td><td>SA</td><td>en</td></tr>
+      <tr><td><code>overview/state.md</code></td><td><span data-i18n lang="en">active work, pending approvals, blockers — rebuilt by <code>status</code></span><span data-i18n lang="vi">Việc đang làm, chờ duyệt, bị chặn — dựng lại bởi <code>status</code></span></td><td>derived</td><td><span data-i18n lang="en">agent rebuilds</span><span data-i18n lang="vi">agent dựng lại</span></td><td>en</td></tr>
+      <tr><td><code>overview/open-items.md</code></td><td><span data-i18n lang="en">open items and who they wait on; a closed row leaves in the closing commit</span><span data-i18n lang="vi">Việc còn mở, chờ ai; dòng đóng rời đi ngay trong commit đóng</span></td><td>control</td><td><span data-i18n lang="en">the relevant role, per row</span><span data-i18n lang="vi">vai trò liên quan, theo từng dòng</span></td><td>vi</td></tr>
+      <tr><td><code>overview/decisions.md</code></td><td><span data-i18n lang="en">what was decided, by scope, rebuilt from the records</span><span data-i18n lang="vi">Đã quyết gì, theo phạm vi, dựng lại từ bản ghi</span></td><td>derived</td><td><span data-i18n lang="en">agent rebuilds</span><span data-i18n lang="vi">agent dựng lại</span></td><td>vi</td></tr>
+      <tr><td><code>overview/traceability.md</code>, <code>overview/capabilities.md</code>, <code>overview/board.md</code></td><td><span data-i18n lang="en">traceability, capabilities, board</span><span data-i18n lang="vi">Truy vết requirement → test → approval; capability nào chạy được; bảng công việc</span></td><td>derived</td><td><span data-i18n lang="en">agent rebuilds</span><span data-i18n lang="vi">agent dựng lại</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/registry.md</code>, <code>.aidlc/reservations/&lt;yyyy-mm&gt;.md</code></td><td><span data-i18n lang="en">ID counters; the monthly reservation log</span><span data-i18n lang="vi">Bộ đếm ID; nhật ký reserve theo tháng</span></td><td>control</td><td><span data-i18n lang="en">agent (system)</span><span data-i18n lang="vi">agent (hệ thống)</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/quality-policy.md</code>, <code>activation-policy.md</code></td><td><span data-i18n lang="en">quality/activation policy</span><span data-i18n lang="vi">Chính sách chất lượng/kích hoạt</span></td><td>control</td><td>PO/PM, SA</td><td>en</td></tr>
+      <tr><td><code>.aidlc/artifact-index.md</code></td><td><span data-i18n lang="en">applicability index per logical type</span><span data-i18n lang="vi">Chỉ mục áp dụng theo loại tài liệu</span></td><td>derived</td><td><span data-i18n lang="en">agent rebuilds</span><span data-i18n lang="vi">agent dựng lại</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/derived/context/&lt;ID&gt;.md</code></td><td><span data-i18n lang="en">a work item's reconciled context</span><span data-i18n lang="vi">Ngữ cảnh đã đối chiếu của một work item</span></td><td>derived</td><td><span data-i18n lang="en">agent rebuilds</span><span data-i18n lang="vi">agent dựng lại</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/audit/interactions/&lt;yyyy-mm&gt;/</code></td><td><span data-i18n lang="en">every question/answer, decision, gate request, by the month it was written</span><span data-i18n lang="vi">Mọi câu hỏi-trả lời, quyết định, gate request, theo tháng ghi</span></td><td>record</td><td><span data-i18n lang="en">agent writes once</span><span data-i18n lang="vi">agent ghi một lần</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code>, <code>exceptions/&lt;yyyy-mm&gt;/</code>, <code>events/&lt;yyyy-mm&gt;/</code></td><td><span data-i18n lang="en">approval/exception/event records by month (and impact, activation, claim/release, revocation per §11.8's templates)</span><span data-i18n lang="vi">Bản ghi approval/exception/event theo tháng (và impact, activation, claim/release, revocation theo template §11.8)</span></td><td>record</td><td><span data-i18n lang="en">agent writes once</span><span data-i18n lang="vi">agent ghi một lần</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/migrations/</code></td><td><span data-i18n lang="en">AIDLC-MIG, OM-MIG, DOC-MIG plans and journals</span><span data-i18n lang="vi">Kế hoạch/nhật ký AIDLC-MIG, OM-MIG, DOC-MIG</span></td><td>work record</td><td><span data-i18n lang="en">PO/PM approves</span><span data-i18n lang="vi">PO/PM duyệt</span></td><td>en</td></tr>
+      <tr><td><code>.aidlc/operations/</code></td><td><span data-i18n lang="en">install/upgrade/repair operation records</span><span data-i18n lang="vi">Bản ghi install/upgrade/repair</span></td><td>work record</td><td><span data-i18n lang="en">agent, closed at <code>REPORT</code></span><span data-i18n lang="vi">agent, đóng ở <code>REPORT</code></span></td><td>en</td></tr>
+      <tr><td><code>discovery/</code>, <code>discovery/items/</code> (<code>DISC-NN</code>), <code>discovery/references/</code></td><td><span data-i18n lang="en">vision, glossary, knowledge sources; discovery items; promoted reference material</span><span data-i18n lang="vi">Vision, glossary, nguồn tri thức; item discovery; tài liệu tham chiếu đã promote</span></td><td>living</td><td>PO/PM, BA</td><td>vi</td></tr>
+      <tr><td><code>discovery/brownfield/</code></td><td><span data-i18n lang="en">the reverse-engineering set and its report</span><span data-i18n lang="vi">Bộ reverse engineering và báo cáo của nó</span></td><td>living</td><td>SA, Tech Lead</td><td>en</td></tr>
+      <tr><td><code>requirements/prd.md</code>, <code>delivery-plan.md</code>, <code>story-map.md</code></td><td><span data-i18n lang="en">PRD, delivery plan, story map</span><span data-i18n lang="vi">PRD, kế hoạch giao, story map</span></td><td>living</td><td>PO/PM</td><td>vi</td></tr>
+      <tr><td><code>requirements/items/</code> (<code>REQ-NN.md</code>)</td><td><span data-i18n lang="en">one file per requirement</span><span data-i18n lang="vi">Một file mỗi requirement</span></td><td>living</td><td><span data-i18n lang="en">BA drafts, PO/PM approves</span><span data-i18n lang="vi">BA soạn, PO/PM duyệt</span></td><td>vi</td></tr>
+      <tr><td><code>requirements/business-rules/</code></td><td><span data-i18n lang="en">one file per business domain</span><span data-i18n lang="vi">Một file mỗi business domain</span></td><td>living</td><td>BA</td><td>vi</td></tr>
+      <tr><td><code>requirements/epics/</code> (<code>EPIC-NN</code>), <code>requirements/stories/</code> (<code>US-NN</code>)</td><td><span data-i18n lang="en">epics, stories</span><span data-i18n lang="vi">Epic, story</span></td><td>living</td><td>BA</td><td>vi</td></tr>
+      <tr><td><code>design/</code> (application, component, data model, NFR, security, tokens), <code>design/adr/</code>, <code>design/mockups/</code>, <code>design/design-system-releases/</code></td><td><span data-i18n lang="en">architecture and solution design; architecture decisions; mockups; Design System release records</span><span data-i18n lang="vi">Kiến trúc và thiết kế giải pháp; quyết định kiến trúc; mockup; bản ghi release Design System</span></td><td>living</td><td><span data-i18n lang="en">SA (UI/UX: Designer)</span><span data-i18n lang="vi">SA (UI/UX: Designer)</span></td><td>en (<code>uiux-spec.md</code>: vi)</td></tr>
+      <tr><td><code>contracts/</code></td><td><span data-i18n lang="en">one contract template, one section per kind (REST, async, RPC, GraphQL, data, message, FIX, FE, infra)</span><span data-i18n lang="vi">Một template hợp đồng, mỗi phần một loại (REST, async, RPC, GraphQL, data, message, FIX, FE, infra)</span></td><td>living</td><td>SA / Tech Lead</td><td>en</td></tr>
+      <tr><td><code>delivery/slices/</code>, <code>baselines/</code>, <code>change-requests/</code>, <code>hotfixes/</code>, <code>cutovers/</code>, <code>data-migrations/</code> → <code>&lt;ID&gt;/</code></td><td><span data-i18n lang="en">work-item dossiers — see <a href="#work-item">§7</a></span><span data-i18n lang="vi">Dossier work item — xem <a href="#work-item">§7</a></span></td><td><span data-i18n lang="en">see §7</span><span data-i18n lang="vi">xem §7</span></td><td><span data-i18n lang="en">see §7</span><span data-i18n lang="vi">xem §7</span></td><td><span data-i18n lang="en">see §7</span><span data-i18n lang="vi">xem §7</span></td></tr>
+      <tr><td><code>activation/baselines/</code>, <code>deployments/</code>, <code>evaluations/&lt;yyyy-mm&gt;/</code>, <code>mainstream.md</code></td><td><span data-i18n lang="en">sealed baselines, UAT deployment records, policy evaluations (<code>PE-NN</code>), mainstream pointer — activation events and external deployment references are records under <code>.aidlc/audit/events/</code></span><span data-i18n lang="vi">Baseline đã niêm phong, bản ghi triển khai UAT, đánh giá policy (<code>PE-NN</code>), con trỏ mainstream — sự kiện kích hoạt và tham chiếu triển khai bên ngoài là record dưới <code>.aidlc/audit/events/</code></span></td><td>record (manifest) / control (<code>mainstream.md</code>)</td><td>PO/PM, SRE</td><td>en</td></tr>
+      <tr><td><code>operations/</code></td><td><span data-i18n lang="en">published runbooks and guides</span><span data-i18n lang="vi">Runbook và guide đã publish</span></td><td>living</td><td>Tech Lead / SRE</td><td>en</td></tr>
+      <tr><td><code>archive/</code>, <code>archive/index.md</code></td><td><span data-i18n lang="en">closed work records, retired living documents; ID → current-path index</span><span data-i18n lang="vi">Work record đã đóng, living document đã retire; chỉ mục ID → path hiện tại</span></td><td><span data-i18n lang="en">— (see §4) / derived (<code>index.md</code>)</span><span data-i18n lang="vi">— (xem §4) / derived (<code>index.md</code>)</span></td><td><span data-i18n lang="en">nobody edits content</span><span data-i18n lang="vi">không ai sửa nội dung</span></td><td>en</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">The tree is closed</span><span data-i18n lang="vi">Cây là đóng</span></h3>
+      <p data-i18n lang="en">A folder under <code>project-hub/</code> or <code>.aidlc/</code> not drawn above — an invented <code>.aidlc/plans/</code> or <code>.aidlc/gates/</code> — is reported by <code>check</code> as <code>UNDECLARED_FOLDER</code> with a proposed move, and nothing moves without approval (§10.2).</p>
+      <p data-i18n lang="vi">Một thư mục dưới <code>project-hub/</code> hoặc <code>.aidlc/</code> không được vẽ ở trên — ví dụ một <code>.aidlc/plans/</code> hay <code>.aidlc/gates/</code> tự đặt ra — sẽ bị <code>check</code> báo <code>UNDECLARED_FOLDER</code> kèm đề xuất di chuyển, và không có gì tự di chuyển khi chưa duyệt (§10.2).</p>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">A path you knew is gone</span><span data-i18n lang="vi">Một path bạn từng biết không còn</span></h3>
+      <p data-i18n lang="en">It exists no longer because the item it held has closed and moved. The lookup rule: try <code>archive/&lt;YYYY-MM or BASELINE-NN&gt;/&lt;original path&gt;</code>, or open <code>archive/index.md</code> to resolve the ID to where it lives now. Links are never rewritten; the ID is the durable reference, the path is only where it lives today (§11.11).</p>
+      <p data-i18n lang="vi">Nó không còn vì item đã đóng và di chuyển. Tra theo quy tắc: thử <code>archive/&lt;YYYY-MM hoặc BASELINE-NN&gt;/&lt;path cũ&gt;</code>, hoặc mở <code>archive/index.md</code> để tra ID ra path hiện tại. Liên kết không bao giờ được viết lại; ID mới là tham chiếu bền, path chỉ là nơi nó đang sống hôm nay (§11.11).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="classes">
+  <div class="eyebrow">04</div>
+  <h2><span data-i18n lang="en">Five kinds of document</span><span data-i18n lang="vi">Năm loại tài liệu</span></h2>
+  <p data-i18n lang="en">Every file AI-DLC writes into the Hub belongs to exactly one of five classes (§10.1); <code>COVERAGE.md</code> records the class of every template.</p>
+  <p data-i18n lang="vi">Mọi file AI-DLC ghi vào Hub thuộc đúng một trong năm lớp (§10.1); <code>COVERAGE.md</code> ghi lớp của từng template.</p>
+  <div class="tbl"><table class="wide">
+    <thead><tr><th><span data-i18n lang="en">Class</span><span data-i18n lang="vi">Lớp</span></th><th><span data-i18n lang="en">What belongs to it</span><span data-i18n lang="vi">Gồm những gì</span></th><th><span data-i18n lang="en">Its lifecycle</span><span data-i18n lang="vi">Vòng đời</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><b>Record</b></td>
+        <td><span data-i18n lang="en">The §15 records: interaction, approval, exception, revocation, impact, claim, activation, event; and a sealed baseline manifest.</span><span data-i18n lang="vi">Bản ghi §15: interaction, approval, exception, revocation, impact, claim, activation, event; và manifest baseline đã seal.</span></td>
+        <td><span data-i18n lang="en">Written once; never edited after completion; a correction is a new superseding record (<code>Supersedes</code>), never a move.</span><span data-i18n lang="vi">Viết một lần; không bao giờ sửa sau khi hoàn tất; sai thì viết bản ghi mới thay thế (<code>Supersedes</code>), không bao giờ di chuyển.</span></td></tr>
+      <tr><td class="k"><b>Control</b></td>
+        <td><code>project.md</code>, <code>team.md</code>, <code>components.md</code>, <code>.aidlc/registry.md</code>, <code>overview/open-items.md</code>, <code>quality-policy.md</code>, <code>activation-policy.md</code>, <code>link.md</code>, <span data-i18n lang="en">the Hub <code>README.md</code></span><span data-i18n lang="vi">Hub <code>README.md</code></span></td>
+        <td><span data-i18n lang="en">“Edited in place” means git holds the history, the file stays at the same path, and it is never archived.</span><span data-i18n lang="vi">“Sửa tại chỗ” nghĩa là git giữ lịch sử, file luôn ở đúng path đó, không bao giờ archive.</span></td></tr>
+      <tr><td class="k"><b>Living</b></td>
+        <td><span data-i18n lang="en">Documents describing the product as it is now: vision, PRD, requirements, business rules, glossary, epics/stories, the UI/UX specification, tokens, architecture/component/data design, ADRs, NFR, security, the brownfield knowledge base, runbooks, guides.</span><span data-i18n lang="vi">Tài liệu mô tả sản phẩm hiện tại: vision, PRD, requirements, business rules, glossary, epics/stories, UI/UX spec, tokens, thiết kế kiến trúc/component/data, ADR, NFR, security, brownfield KB, runbook, guide.</span></td>
+        <td><span data-i18n lang="en">Edited in place through claim → draft → promote (§13.2); when it stops describing anything it is “retired” — <code>Freshness: Superseded</code> is written, and it moves once into <code>archive/</code>.</span><span data-i18n lang="vi">Sửa tại chỗ qua claim → draft → promote (§13.2); khi không còn mô tả gì nữa thì “retire” — ghi <code>Freshness: Superseded</code> và di chuyển một lần vào <code>archive/</code>.</span></td></tr>
+      <tr><td class="k"><b>Work record</b></td>
+        <td><span data-i18n lang="en">A dossier (Slice, BASE, CR, Hotfix, CUTOVER, DATA-MIG), a Baseline Candidate, a migration or archive plan, an install/upgrade/repair operation record (closed at <code>REPORT</code>).</span><span data-i18n lang="vi">Dossier (Slice, BASE, CR, Hotfix, CUTOVER, DATA-MIG), Baseline Candidate, migration/archive plan, bản ghi vận hành install/upgrade/repair (đóng ở <code>REPORT</code>).</span></td>
+        <td><span data-i18n lang="en">Edited in place while open; “moves once” — on close it moves, exactly once, into <code>archive/</code>.</span><span data-i18n lang="vi">Sửa tại chỗ khi còn mở; “moves once” — khi đóng, di chuyển đúng một lần vào <code>archive/</code>.</span></td></tr>
+      <tr><td class="k"><b>Derived</b></td>
+        <td><span data-i18n lang="en">The pages under <code>overview/</code> (<code>state.md</code>, <code>decisions.md</code>, <code>traceability.md</code>, <code>capabilities.md</code>, <code>board.md</code>), <code>.aidlc/artifact-index.md</code>, <code>.aidlc/derived/context/&lt;ID&gt;.md</code>, <code>archive/index.md</code>, the reverse engineering report.</span><span data-i18n lang="vi">Các trang dưới <code>overview/</code> (<code>state.md</code>, <code>decisions.md</code>, <code>traceability.md</code>, <code>capabilities.md</code>, <code>board.md</code>), <code>.aidlc/artifact-index.md</code>, <code>.aidlc/derived/context/&lt;ID&gt;.md</code>, <code>archive/index.md</code>, báo cáo reverse engineering.</span></td>
+        <td><span data-i18n lang="en">“Rebuilt” means the agent regenerates it from canonical inputs whenever needed; it is never hand-edited, never an approval subject, and never archived — only rebuilt or deleted.</span><span data-i18n lang="vi">“Rebuilt” nghĩa là agent dựng lại từ nguồn chuẩn mỗi lần cần; không bao giờ sửa tay, không bao giờ là đối tượng approval, không bao giờ archive — chỉ dựng lại hoặc xoá.</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 5 -->
+<section id="finding">
+  <div class="eyebrow">05</div>
+  <h2><span data-i18n lang="en">Finding things</span><span data-i18n lang="vi">Tìm mọi thứ</span></h2>
+  <div class="tbl"><table class="xwide">
+    <thead><tr><th><span data-i18n lang="en">Question</span><span data-i18n lang="vi">Câu hỏi</span></th><th><span data-i18n lang="en">Open this</span><span data-i18n lang="vi">Mở cái này</span></th><th><span data-i18n lang="en">Note</span><span data-i18n lang="vi">Ghi chú</span></th></tr></thead>
+    <tbody>
+      <tr><td><span data-i18n lang="en">What is the current requirement for X?</span><span data-i18n lang="vi">Requirement hiện tại cho X là gì?</span></td><td><code>requirements/items/REQ-NNN.md</code>, <span data-i18n lang="en">via <code>artifact-index.md</code></span><span data-i18n lang="vi">tra qua <code>artifact-index.md</code></span></td><td><span data-i18n lang="en">one file per <code>REQ</code></span><span data-i18n lang="vi">Một file mỗi <code>REQ</code></span></td></tr>
+      <tr><td><span data-i18n lang="en">Which stories/tests cover it, is it done?</span><span data-i18n lang="vi">Story/test nào phủ nó, đã xong chưa?</span></td><td><code>overview/traceability.md</code></td><td><span data-i18n lang="en">a rebuilt view mapping requirement → story → acceptance criteria → test case → evidence → approval</span><span data-i18n lang="vi">View dựng lại, ánh xạ requirement → story → acceptance criteria → test case → evidence → approval</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the approval for Y?</span><span data-i18n lang="vi">Approval cho Y ở đâu?</span></td><td><span data-i18n lang="en">the <code>Approved:</code> line in Y's header, pointing into <code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code></span><span data-i18n lang="vi">Dòng <code>Approved:</code> trong header của Y, trỏ tới <code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code></span></td><td><span data-i18n lang="en">the header names the reference; what was approved and why lives in the record</span><span data-i18n lang="vi">Header nêu tham chiếu; nội dung “được duyệt gì và vì sao” nằm trong bản ghi</span></td></tr>
+      <tr><td><span data-i18n lang="en">What was decided about Z?</span><span data-i18n lang="vi">Đã quyết định gì về Z?</span></td><td><span data-i18n lang="en"><code>overview/decisions.md</code> — one row per decision that holds, with its record ID; <code>design/adr/</code> for architecture; <code>overview/open-items.md</code> for open items</span><span data-i18n lang="vi"><code>overview/decisions.md</code> — một dòng mỗi quyết định còn hiệu lực, kèm ID bản ghi; <code>design/adr/</code> cho kiến trúc; <code>overview/open-items.md</code> cho việc còn mở</span></td><td>—</td></tr>
+      <tr><td><span data-i18n lang="en">What does the API return for a screen, and where is the field list?</span><span data-i18n lang="vi">API trả về gì cho một màn hình, danh sách trường ở đâu?</span></td><td><span data-i18n lang="en"><code>contracts/</code>, the section for that kind of contract</span><span data-i18n lang="vi"><code>contracts/</code>, phần của loại hợp đồng đó</span></td><td><span data-i18n lang="en">start from the view model in <code>design/uiux-spec.md</code>: each element binds to <code>CTR-NN §&lt;operation&gt;.&lt;field&gt;</code>, which is the address to open (§11.3)</span><span data-i18n lang="vi">Bắt đầu từ view model trong <code>design/uiux-spec.md</code>: mỗi phần tử trên màn bind tới <code>CTR-NN §&lt;operation&gt;.&lt;field&gt;</code>, và đó chính là chỗ cần mở (§11.3)</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the screenshot or mockup of a screen, and how do I know it is current?</span><span data-i18n lang="vi">Ảnh chụp màn hình hoặc mockup ở đâu, và làm sao biết nó còn đúng?</span></td><td><span data-i18n lang="en">mockups in <code>design/mockups/</code>; screenshots of the built product in <code>design/media/</code>, <code>delivery/slices/&lt;ID&gt;/media/</code>, and <code>operations/media/</code></span><span data-i18n lang="vi"><code>design/mockups/</code> cho mockup; ảnh chụp sản phẩm đã dựng ở <code>design/media/</code>, <code>delivery/slices/&lt;ID&gt;/media/</code>, <code>operations/media/</code></span></td><td><span data-i18n lang="en">each image declares the screen and baseline it was taken at, and <code>check</code> reports <code>SCREENSHOT_STALE</code> when the screen moved on (§11.11)</span><span data-i18n lang="vi">Mỗi ảnh khai màn hình và baseline nó chụp; màn đổi sau đó thì <code>check</code> báo <code>SCREENSHOT_STALE</code> (§11.11)</span></td></tr>
+      <tr><td><span data-i18n lang="en">Who holds a role?</span><span data-i18n lang="vi">Ai giữ role nào?</span></td><td><code>team.md</code> <span data-i18n lang="en">(at the Hub root)</span><span data-i18n lang="vi">(ở gốc Hub)</span></td><td><span data-i18n lang="en">roles are accountabilities, not headcount (§4.2)</span><span data-i18n lang="vi">Vai trò là accountability, không phải đầu người (§4.2)</span></td></tr>
+      <tr><td><span data-i18n lang="en">What is in flight or waiting?</span><span data-i18n lang="vi">Cái gì đang chạy hoặc đang chờ?</span></td><td><code>overview/state.md</code>, <code>overview/open-items.md</code>, <code>overview/capabilities.md</code></td><td><span data-i18n lang="en"><code>state.md</code> is a rebuilt view, never hand-edited</span><span data-i18n lang="vi"><code>state.md</code> là view dựng lại, không sửa tay</span></td></tr>
+      <tr><td><span data-i18n lang="en">What was archived, and where?</span><span data-i18n lang="vi">Cái gì đã bị archive, và ở đâu?</span></td><td><code>archive/index.md</code></td><td><span data-i18n lang="en">maps every archived ID to where it lives now</span><span data-i18n lang="vi">Ánh xạ mọi ID đã archive tới path hiện tại</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the gate request for a decision?</span><span data-i18n lang="vi">Gate request cho một quyết định ở đâu?</span></td><td><code>.aidlc/audit/interactions/&lt;yyyy-mm&gt;/</code></td><td><span data-i18n lang="en">a gate request is a kind of interaction record, with no folder of its own (§15)</span><span data-i18n lang="vi">Gate request là một loại interaction record, không có folder riêng (§15)</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the design of a slice?</span><span data-i18n lang="vi">Thiết kế của một slice ở đâu?</span></td><td><code>delivery/slices/&lt;ID&gt;/design.md</code></td><td><span data-i18n lang="en">functional design, code flow, test plan</span><span data-i18n lang="vi">Thiết kế chức năng, code flow, test plan</span></td></tr>
+      <tr><td><span data-i18n lang="en">Which commit shipped a slice?</span><span data-i18n lang="vi">Commit nào đã ship một slice?</span></td><td><code>delivery/slices/&lt;ID&gt;/code.md</code></td><td><span data-i18n lang="en">branch/PR/SHA linkage per affected component repo</span><span data-i18n lang="vi">Liên kết branch/PR/SHA theo từng component repo bị ảnh hưởng</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the existing system described?</span><span data-i18n lang="vi">Hệ thống hiện có được mô tả ở đâu?</span></td><td><code>discovery/brownfield/</code> — <span data-i18n lang="en"><code>system-overview.md</code> first, then <code>reverse-engineering-report.html</code></span><span data-i18n lang="vi"><code>system-overview.md</code> trước, rồi <code>reverse-engineering-report.html</code></span></td><td>—</td></tr>
+      <tr><td><span data-i18n lang="en">Where is the operations runbook?</span><span data-i18n lang="vi">Runbook vận hành ở đâu?</span></td><td><code>operations/</code> <span data-i18n lang="en">(from template <code>08-publish-handoff/operations-runbook.md</code>)</span><span data-i18n lang="vi">(từ template <code>08-publish-handoff/operations-runbook.md</code>)</span></td><td><span data-i18n lang="en">approved by SRE</span><span data-i18n lang="vi">Được SRE duyệt</span></td></tr>
+      <tr><td><span data-i18n lang="en">Where is the UAT acceptance minutes?</span><span data-i18n lang="vi">Biên bản nghiệm thu UAT ở đâu?</span></td><td><code>07-baseline-uat/uat-report.md</code>, <span data-i18n lang="en">titled as the acceptance minutes a Vietnamese reader expects (§11.5)</span><span data-i18n lang="vi">đặt tên như biên bản nghiệm thu người Việt quen thuộc (§11.5)</span></td><td><span data-i18n lang="en">PO/PM approves</span><span data-i18n lang="vi">PO/PM duyệt</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout">
+    <p data-i18n lang="en"><b>If a path in this table does not exist in your project</b> — no <code>contracts/</code>, no <code>requirements/items/</code>, no <code>design/mockups/</code> — the project was most likely written <b>before v1.0.10</b> and its document set is still in the older shape. That is legal and it keeps working. Run <code>check</code>: it reports <code>DOC_SHAPE_LEGACY</code> — including when <code>project.md</code> carries no <code>Document set shape:</code> line at all, since the missing line <em>is</em> the signal — and <code>next</code> offers a <code>DOC-MIG</code>. Until that runs, ask the agent where this project keeps that kind of document rather than searching by path, and do not move files by hand.</p>
+    <p data-i18n lang="vi"><b>Nếu path trong bảng này không tồn tại trong dự án của bạn</b> — không có <code>contracts/</code>, không có <code>requirements/items/</code>, không có <code>design/mockups/</code> — thì rất có thể dự án được viết <b>trước v1.0.10</b> và bộ tài liệu vẫn ở hình dạng cũ. Đó là hợp lệ và vẫn chạy được. Chạy <code>check</code>: nó báo <code>DOC_SHAPE_LEGACY</code> (kể cả khi <code>project.md</code> chưa có dòng <code>Document set shape:</code> — thiếu dòng đó chính là dấu hiệu), và <code>next</code> sẽ đề xuất một <code>DOC-MIG</code>. Trong lúc chưa migrate, hỏi agent <em>“tài liệu loại này của dự án đang nằm ở đâu”</em> thay vì tìm theo path — và đừng tự dời file.</p>
+  </div>
+  <p data-i18n lang="en"><b>The common pattern:</b> almost every answer resolves to one of three places — a filename/ID in the §10.2 tree, a rebuilt page under <code>overview/</code> or a record under <code>.aidlc/audit/&lt;kind&gt;/&lt;yyyy-mm&gt;/</code>, or the document's own header (the <code>Approved:</code>, <code>Status:</code>, <code>Freshness:</code> lines). When a view finds its canonical inputs disagreeing, it reports that as a finding instead of picking a side (§12.1) — read the headers of the cited sources to see which one is current.</p>
+  <p data-i18n lang="vi"><b>Điểm chung:</b> gần như mọi câu trả lời quy về một trong ba nơi — tên file/ID trong cây §10.2, một trang dựng lại dưới <code>overview/</code>, hoặc một bản ghi dưới <code>.aidlc/audit/&lt;loại&gt;/&lt;yyyy-mm&gt;/</code>, hoặc header của chính tài liệu (dòng <code>Approved:</code>, <code>Status:</code>, <code>Freshness:</code>). Khi một view báo dữ liệu nguồn mâu thuẫn nhau, nó nêu đó là một finding thay vì tự chọn một bên (§12.1) — đọc header của các nguồn được trỏ tới để biết bên nào đúng.</p>
+</section>
+
+<!-- 6 -->
+<section id="reading">
+  <div class="eyebrow">06</div>
+  <h2><span data-i18n lang="en">Reading a document</span><span data-i18n lang="vi">Đọc một tài liệu</span></h2>
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">Header</span><span data-i18n lang="vi">Header</span></h3>
+      <p data-i18n lang="en">Every canonical document has a <b>header</b> and a <b>body</b> (§10.3). The header runs from the title line through the control fields, stopping before the first <code>## </code> heading: the title, a summary of at most five lines, and fields such as <code>ID:</code>, <code>Status:</code>, <code>Freshness:</code>, <code>Approved:</code>.</p>
+      <p data-i18n lang="vi">Mỗi tài liệu chuẩn có <b>header</b> và <b>body</b> (§10.3). Header chạy từ dòng tiêu đề tới hết các control field, dừng trước heading <code>## </code> đầu tiên: tiêu đề, tóm tắt tối đa năm dòng, các field như <code>ID:</code>, <code>Status:</code>, <code>Freshness:</code>, <code>Approved:</code>.</p>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Body</span><span data-i18n lang="vi">Body</span></h3>
+      <p data-i18n lang="en">The body is everything from the first <code>## </code> heading onward — normative content (a requirement, rule, decision, design, criterion) lives in the body only.</p>
+      <p data-i18n lang="vi">Body là mọi thứ từ <code>## </code> đầu tiên trở đi — nội dung có tính chuẩn (requirement, rule, decision, design, criterion) chỉ sống trong body.</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:16px">
+    <p data-i18n lang="en"><b>Approval binds the body</b>, not the header (§5.3): an approval recorded against one blob stands for every later revision whose body is byte-identical to the approved body. That is why the agent can update <code>Status:</code>, <code>Approved:</code>, <code>Freshness:</code>, <code>Verified against:</code> in place after approval without voiding it — these fields describe the approved body rather than being part of it. <code>Superseded by:</code> appears once a document is retired, pointing at its replacement. A header stating something the body does not is a finding, and the body wins.</p>
+    <p data-i18n lang="vi"><b>Approval gắn với body</b>, không gắn với header (§5.3): một approval ghi nhận trên một blob đứng vững cho mọi bản sau có body giống hệt từng byte với body đã duyệt. Vì vậy sau khi duyệt, agent vẫn cập nhật tại chỗ <code>Status:</code>, <code>Approved:</code>, <code>Freshness:</code>, <code>Verified against:</code> mà không làm mất hiệu lực approval — những field này mô tả body đã duyệt, không phải là một phần của nó. <code>Superseded by:</code> xuất hiện khi tài liệu bị retire, trỏ tới tài liệu thay thế. Nếu header nói một điều mà body không nói, đó là một finding — và body luôn thắng.</p>
+    <p data-i18n lang="en"><b><code>Freshness:</code> takes three values</b> (§10.3). <code>Current</code> — the body still describes the project. <code>Impacted (&lt;record ID&gt;)</code> — something it depends on changed and was promoted; the ID in parentheses is the impact record that says what changed, and an open item was written beside it. Nothing stops: the document stays readable and usable, but its next gate cannot pass until the change is reconciled — open the named record, then ask the agent for <code>next</code>. <code>Superseded</code> — retired; <code>Superseded by:</code> names the replacement.</p>
+    <p data-i18n lang="vi"><b><code>Freshness:</code> có ba giá trị</b> (§10.3). <code>Current</code> — body vẫn mô tả đúng dự án. <code>Impacted (&lt;record ID&gt;)</code> — một tài liệu nó phụ thuộc đã thay đổi và được promote; ID trong ngoặc là impact record ghi thay đổi đó, kèm một open item. Không có gì bị chặn: tài liệu vẫn đọc và dùng được, nhưng gate kế tiếp của nó không qua được cho tới khi thay đổi được đối chiếu — mở record được nêu, rồi nhờ agent chạy <code>next</code>. <code>Superseded</code> — đã retire; <code>Superseded by:</code> chỉ tài liệu thay thế.</p>
+  </div>
+  <h3><span data-i18n lang="en">No word budgets</span><span data-i18n lang="vi">Không có ngân sách từ</span></h3>
+  <p data-i18n lang="en"><b>No document carries a word budget, and no record carries one either.</b> A figure a template still names is a split trigger given before writing — <em>at about this size, split by ID, by domain, by entity group</em> — and splitting keeps the content. A living document is kept in shape by the cleanup that already exists: closed rows leave their register, records partition by month, large views split by year or epic. A record is kept in shape by its field set — it holds that and nothing else, and it cites rather than quotes, because a record is read whole and is never edited after it completes.</p>
+  <p data-i18n lang="vi"><b>Không tài liệu nào có ngân sách từ, và record cũng không.</b> Con số mà một template còn nêu là <b>ngưỡng tách cho biết trước khi viết</b> — <em>tới cỡ này thì tách theo ID, theo miền, theo nhóm thực thể</em> — và tách thì giữ nguyên nội dung. Tài liệu sống được giữ gọn bằng cơ chế dọn đã có: dòng đã đóng rời sổ đăng ký, record chia theo tháng, view lớn tách theo năm hoặc theo epic. Record được giữ gọn bằng <b>bộ field của nó</b> — nó chỉ mang bộ field đó và không gì khác, và nó <b>trích dẫn chứ không trích nguyên văn</b>, vì record được đọc nguyên khối và không bao giờ sửa sau khi hoàn tất.</p>
+</section>
+
+<!-- 7 -->
+<section id="work-item">
+  <div class="eyebrow">07</div>
+  <h2><span data-i18n lang="en">A work item from start to archive</span><span data-i18n lang="vi">Một work item, từ đầu tới lúc lưu trữ</span></h2>
+  <p data-i18n lang="en">Each Slice/BASE/CR/Hotfix lives in a stable <b>dossier</b> — the work item's governance identity — holding at most four files plus a <code>drafts/</code> folder (§11.4):</p>
+  <p data-i18n lang="vi">Mỗi Slice/BASE/CR/Hotfix sống trong một <b>dossier</b> ổn định — danh tính quản trị của work item — chứa tối đa bốn file cộng một thư mục <code>drafts/</code> (§11.4):</p>
+  <div class="tbl"><table class="wide">
+    <thead><tr><th>File</th><th><span data-i18n lang="en">Gate it answers to</span><span data-i18n lang="vi">Gate nó trả lời</span></th><th><span data-i18n lang="en">Written for</span><span data-i18n lang="vi">Viết cho ai</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><code>index.md</code></td><td>Delivery Scope/Ready</td><td><span data-i18n lang="en">PO/PM, BA — in their language (Vietnamese)</span><span data-i18n lang="vi">PO/PM, BA — bằng ngôn ngữ của họ (tiếng Việt)</span></td></tr>
+      <tr><td class="k"><code>design.md</code></td><td>Technical Design</td><td><span data-i18n lang="en">Tech Lead (local Unit) / SA (architecture, contracts, cross-Unit)</span><span data-i18n lang="vi">Tech Lead (Unit nội bộ) / SA (kiến trúc, hợp đồng, liên Unit)</span></td></tr>
+      <tr><td class="k"><code>verification.md</code></td><td>Technical Done</td><td>Tech Lead / QA</td></tr>
+      <tr><td class="k"><code>code.md</code></td><td><span data-i18n lang="en">not itself gated — the code-plane linkage only</span><span data-i18n lang="vi">không tự có gate — chỉ là liên kết code-plane</span></td><td><span data-i18n lang="en">agent updates it as code moves</span><span data-i18n lang="vi">agent cập nhật khi code di chuyển</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">Context and drafts</span><span data-i18n lang="vi">Ngữ cảnh và drafts</span></h3>
+      <p data-i18n lang="en">The work item's context view (<code>.aidlc/derived/context/&lt;ID&gt;.md</code>) is rebuilt at each stage entry and deleted when the dossier moves to <code>archive/</code> — it does not sit in the dossier, because only the agent reads it.</p>
+      <p data-i18n lang="vi">Ngữ cảnh của work item (<code>.aidlc/derived/context/&lt;ID&gt;.md</code>) được dựng lại ở đầu mỗi giai đoạn và xoá khi dossier chuyển vào archive — nó không nằm trong dossier, vì chỉ agent đọc nó.</p>
+      <p data-i18n lang="en"><code>drafts/</code> holds copy-on-write copies of canonical artifacts this work item is changing, under a recorded claim (§13.2), until promoted at the gate that owns them.</p>
+      <p data-i18n lang="vi"><code>drafts/</code> chứa bản copy-on-write của các artifact chuẩn mà work item này đang thay đổi, dưới một claim đã ghi nhận (§13.2), cho tới khi được promote tại gate sở hữu nó.</p>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Done, then archive</span><span data-i18n lang="vi">Done, rồi archive</span></h3>
+      <p data-i18n lang="en">The dossier stays at its path while open; <code>Done</code>/<code>Cancelled</code> are values of the <code>Status:</code> field, never a folder move.</p>
+      <p data-i18n lang="vi">Dossier ở nguyên path trong khi còn mở; <code>Done</code>/<code>Cancelled</code> chỉ là giá trị của field <code>Status:</code>, không phải một lần chuyển thư mục.</p>
+      <p data-i18n lang="en">On close, the dossier moves <b>exactly once</b> into <code>archive/&lt;YYYY-MM&gt;/&lt;original path&gt;</code> (or <code>archive/&lt;BASELINE-NN&gt;/...</code> when a baseline composes it), under an archive plan PO/PM approves.</p>
+      <p data-i18n lang="vi">Khi đóng, dossier di chuyển <b>đúng một lần</b> vào <code>archive/&lt;YYYY-MM&gt;/&lt;path cũ&gt;</code> (hoặc <code>archive/&lt;BASELINE-NN&gt;/...</code> khi baseline gộp nó), theo một archive plan mà PO/PM duyệt.</p>
+    </div>
+  </div>
+
+  <h3><span data-i18n lang="en">Worked example: one feature, all the way down</span><span data-i18n lang="vi">Ví dụ: một tính năng, từ trên xuống dưới</span></h3>
+  <p data-i18n lang="en"><code>vision.md</code> states why the product exists. <code>requirements/prd.md</code> declares feature <code>PRD-04</code> — cash withdrawal. <code>PRD-04</code> produces three requirements in <code>requirements/items/</code>: <code>REQ-017.md</code> (daily limit), <code>REQ-018.md</code> (reject over balance), <code>REQ-019.md</code> (show reference) — <code>REQ-017</code> and <code>REQ-018</code> both obey <code>BR-007</code> in <code>requirements/business-rules/withdrawals.md</code>. <code>REQ-018</code> is realized by <code>requirements/stories/US-041.md</code> (“request a withdrawal”), which <code>requirements/epics/EPIC-03.md</code> plans. <code>US-041</code> carries three acceptance criteria, cut into two slices: <code>delivery/slices/SLICE-012/</code> covers AC-1 and AC-2, <code>delivery/slices/SLICE-013/</code> covers AC-3. <code>SLICE-012/code.md</code> pins two branches — <code>components/web</code> and <code>components/order-svc</code>, both on <code>feature/SLICE-012-withdrawal</code> — each at its exact SHA.</p>
+  <p data-i18n lang="vi"><code>vision.md</code> nêu lý do sản phẩm tồn tại. <code>requirements/prd.md</code> khai báo tính năng <code>PRD-04</code> — rút tiền. <code>PRD-04</code> sinh ra ba requirement trong <code>requirements/items/</code>: <code>REQ-017.md</code> (hạn mức ngày), <code>REQ-018.md</code> (từ chối khi vượt số dư), <code>REQ-019.md</code> (hiển thị mã tham chiếu) — cả hai <code>REQ-017</code> và <code>REQ-018</code> tuân theo <code>BR-007</code> trong <code>requirements/business-rules/withdrawals.md</code>. <code>REQ-018</code> được <code>requirements/stories/US-041.md</code> (“yêu cầu rút tiền”) hiện thực hoá, và <code>requirements/epics/EPIC-03.md</code> lập kế hoạch cho nó. <code>US-041</code> có ba acceptance criteria, được cắt thành hai slice: <code>delivery/slices/SLICE-012/</code> phủ AC-1 và AC-2, <code>delivery/slices/SLICE-013/</code> phủ AC-3. <code>SLICE-012/code.md</code> ghim hai branch — <code>components/web</code> và <code>components/order-svc</code>, cùng trên <code>feature/SLICE-012-withdrawal</code> — mỗi branch với SHA chính xác.</p>
+  <figure class="tree">
+    <div class="scroll"><pre data-i18n lang="en">vision.md                                   why the product exists
+requirements/prd.md                         PRD-04 · cash withdrawal
+├── requirements/items/REQ-017.md           daily limit          ─┐ both obey BR-007 in
+├── requirements/items/REQ-018.md           reject over balance  ─┘ requirements/business-rules/withdrawals.md
+│   └── realized by requirements/stories/US-041.md   "request a withdrawal"
+│       │   planned by requirements/epics/EPIC-03.md
+│       ├── delivery/slices/SLICE-012/      AC-1, AC-2
+│       │   └── code.md  components/web        feature/SLICE-012-withdrawal @ SHA
+│       │                components/order-svc  feature/SLICE-012-withdrawal @ SHA
+│       └── delivery/slices/SLICE-013/      AC-3
+└── requirements/items/REQ-019.md           show reference</pre><pre data-i18n lang="vi">vision.md                                   lý do sản phẩm tồn tại
+requirements/prd.md                         PRD-04 · rút tiền
+├── requirements/items/REQ-017.md           hạn mức ngày           ─┐ cùng tuân theo BR-007 trong
+├── requirements/items/REQ-018.md           từ chối khi vượt số dư ─┘ requirements/business-rules/withdrawals.md
+│   └── hiện thực hoá bởi requirements/stories/US-041.md   "yêu cầu rút tiền"
+│       │   lập kế hoạch trong requirements/epics/EPIC-03.md
+│       ├── delivery/slices/SLICE-012/      AC-1, AC-2
+│       │   └── code.md  components/web        feature/SLICE-012-withdrawal @ SHA
+│       │                components/order-svc  feature/SLICE-012-withdrawal @ SHA
+│       └── delivery/slices/SLICE-013/      AC-3
+└── requirements/items/REQ-019.md           hiển thị mã tham chiếu</pre></div>
+    <figcaption><span data-i18n lang="en">The worked example above, drawn as a tree. <code>US-041</code> has two parents: the requirement it realizes and the epic that plans it.</span><span data-i18n lang="vi">Ví dụ ở trên, vẽ thành cây. <code>US-041</code> có hai cha: requirement mà nó hiện thực hoá và epic lập kế hoạch cho nó.</span></figcaption>
+  </figure>
+</section>
+
+<!-- 8 -->
+<section id="ids">
+  <div class="eyebrow">08</div>
+  <h2><span data-i18n lang="en">IDs</span><span data-i18n lang="vi">ID</span></h2>
+  <div class="tbl"><table class="wide">
+    <thead><tr><th>Prefix</th><th><span data-i18n lang="en">Meaning</span><span data-i18n lang="vi">Ý nghĩa</span></th><th><span data-i18n lang="en">Where the file lives</span><span data-i18n lang="vi">File sống ở đâu</span></th><th><span data-i18n lang="en">Example</span><span data-i18n lang="vi">Ví dụ</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><code>REQ-NN</code></td><td>Requirement</td><td><code>requirements/items/REQ-NN.md</code></td><td class="k"><code>REQ-017</code></td></tr>
+      <tr><td class="k"><code>BR-NN</code></td><td>Business rule</td><td><span data-i18n lang="en">inside a domain file under <code>requirements/business-rules/</code></span><span data-i18n lang="vi">Trong file domain của <code>requirements/business-rules/</code></span></td><td class="k"><code>BR-007</code></td></tr>
+      <tr><td class="k"><code>EPIC-NN</code></td><td>Epic</td><td><code>requirements/epics/EPIC-NN.md</code></td><td class="k"><code>EPIC-03</code></td></tr>
+      <tr><td class="k"><code>US-NN</code></td><td>User story</td><td><code>requirements/stories/US-NN.md</code></td><td class="k"><code>US-041</code></td></tr>
+      <tr><td class="k"><code>PRD-NN</code></td><td><span data-i18n lang="en">PRD feature</span><span data-i18n lang="vi">Tính năng trong PRD</span></td><td><span data-i18n lang="en">a block inside <code>requirements/prd.md</code></span><span data-i18n lang="vi">Một khối trong <code>requirements/prd.md</code></span></td><td class="k"><code>PRD-04</code></td></tr>
+      <tr><td class="k"><code>DISC-NN</code></td><td>Discovery item</td><td><code>discovery/items/DISC-NN.md</code></td><td class="k"><code>DISC-012</code></td></tr>
+      <tr><td class="k"><code>ADR-NN</code></td><td>Architecture decision</td><td><code>design/adr/ADR-NN.md</code></td><td class="k"><code>ADR-009</code></td></tr>
+      <tr><td class="k"><code>NFR-NN</code></td><td>Non-functional requirement</td><td><span data-i18n lang="en">inside <code>design/nfr.md</code></span><span data-i18n lang="vi">Trong <code>design/nfr.md</code></span></td><td class="k"><code>NFR-004</code></td></tr>
+      <tr><td class="k"><code>CTR-NN</code></td><td>Contract</td><td><span data-i18n lang="en">inside <code>contracts/</code>, by kind</span><span data-i18n lang="vi">Trong <code>contracts/</code>, theo loại</span></td><td class="k"><code>CTR-002</code></td></tr>
+      <tr><td class="k"><code>TC-NN</code></td><td>Test case</td><td><span data-i18n lang="en">inside the dossier's <code>verification.md</code></span><span data-i18n lang="vi">Trong <code>verification.md</code> của dossier</span></td><td class="k"><code>TC-118</code></td></tr>
+      <tr><td class="k"><code>SLICE-NN</code></td><td>Continuous slice</td><td><code>delivery/slices/SLICE-NN/</code></td><td class="k"><code>SLICE-012</code></td></tr>
+      <tr><td class="k"><code>BASE-NN</code></td><td>Phase-Gated baseline</td><td><code>delivery/baselines/BASE-NN/</code></td><td class="k"><code>BASE-03</code></td></tr>
+      <tr><td class="k"><code>CR-NN</code></td><td>Change request</td><td><code>delivery/change-requests/CR-NN/</code></td><td class="k"><code>CR-012</code></td></tr>
+      <tr><td class="k"><code>HOTFIX-NN</code></td><td>Hotfix</td><td><code>delivery/hotfixes/HOTFIX-NN/</code></td><td class="k"><code>HOTFIX-04</code></td></tr>
+      <tr><td class="k"><code>PP-NNNN</code></td><td><span data-i18n lang="en">Painpoint · where AI-DLC cost the project</span><span data-i18n lang="vi">Painpoint · chỗ AI-DLC gây khó cho dự án</span></td><td><code>.aidlc/audit/feedback/&lt;yyyy-mm&gt;/PP-NNNN.md</code></td><td class="k"><code>PP-0003</code></td></tr>
+      <tr><td class="k"><code>CUTOVER-NN</code></td><td>Coordinated cutover</td><td><code>delivery/cutovers/CUTOVER-NN/</code></td><td class="k"><code>CUTOVER-02</code></td></tr>
+      <tr><td class="k"><code>DATA-MIG-NN</code></td><td>Application data migration</td><td><code>delivery/data-migrations/DATA-MIG-NN/</code></td><td class="k"><code>DATA-MIG-01</code></td></tr>
+      <tr><td class="k"><code>BASELINE-NN</code></td><td>Sealed baseline</td><td><code>activation/baselines/</code> (manifest)</td><td class="k"><code>BASELINE-05</code></td></tr>
+      <tr><td class="k"><code>INT-NN</code></td><td>Interaction record</td><td><code>.aidlc/audit/interactions/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>INT-231</code></td></tr>
+      <tr><td class="k"><code>APPR-NN</code></td><td>Approval record</td><td><code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>APPR-118</code></td></tr>
+      <tr><td class="k"><code>EXC-NN</code></td><td>Exception / waiver</td><td><code>.aidlc/audit/exceptions/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>EXC-004</code></td></tr>
+      <tr><td class="k"><code>IMP-NN</code></td><td>Impact record</td><td><code>.aidlc/audit/events/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>IMP-017</code></td></tr>
+      <tr><td class="k"><code>CLAIM-NN</code></td><td>Artifact/work claim</td><td><code>.aidlc/audit/events/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>CLAIM-045</code></td></tr>
+      <tr><td class="k"><code>EVT-NN</code></td><td>Generic event</td><td><code>.aidlc/audit/events/&lt;yyyy-mm&gt;/</code></td><td class="k"><code>EVT-002</code></td></tr>
+      <tr><td class="k"><code>OI-NN</code></td><td><span data-i18n lang="en">open-items register row</span><span data-i18n lang="vi">Mục trong sổ việc mở</span></td><td><code>overview/open-items.md</code>; <span data-i18n lang="en">when closed:</span><span data-i18n lang="vi">khi đóng:</span> <code>archive/&lt;yyyy-mm&gt;/overview/open-items.md</code></td><td class="k"><code>OI-0142</code></td></tr>
+      <tr><td class="k"><code>AIDLC-MIG-NN</code></td><td>Framework migration</td><td><code>.aidlc/migrations/AIDLC-MIG-NN/</code></td><td class="k"><code>AIDLC-MIG-01</code></td></tr>
+      <tr><td class="k"><code>OM-MIG-NN</code></td><td>Operating-model migration</td><td><code>.aidlc/migrations/OM-MIG-NN/</code></td><td class="k"><code>OM-MIG-01</code></td></tr>
+      <tr><td class="k"><code>DOC-MIG-NN</code></td><td>Document-set migration</td><td><code>.aidlc/migrations/DOC-MIG-NN/</code></td><td class="k"><code>DOC-MIG-01</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout">
+    <p data-i18n lang="en">An ID is <b>reserved before it is cited</b>: the reservation is its own commit to <code>registry.md</code>, pushed before any file names the ID; on a lost race, the writer takes the next free number. <b>A cited ID is never renumbered</b> — even when two writers publish the same number, the later one takes a new number and every earlier citation stays correct (§13.4).</p>
+    <p data-i18n lang="vi">Một ID được <b>reserve trước khi được cite</b>: việc reserve là một commit riêng vào <code>registry.md</code>, đẩy trước khi bất kỳ file nào nhắc tới ID đó; nếu thua một cuộc đua ghi đồng thời, người viết lấy số kế tiếp còn trống. <b>Một ID đã cite không bao giờ bị đánh số lại</b> — kể cả khi hai người cùng công bố trùng số, người công bố sau lấy số mới, còn trích dẫn cũ vẫn đúng (§13.4).</p>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="names">
+  <div class="eyebrow">09</div>
+  <h2><span data-i18n lang="en">The names Vietnamese readers know</span><span data-i18n lang="vi">Tên tài liệu mà người Việt quen thuộc</span></h2>
+  <div class="tbl"><table class="wide">
+    <thead><tr><th><span data-i18n lang="en">AI-DLC document</span><span data-i18n lang="vi">Tài liệu AI-DLC</span></th><th><span data-i18n lang="en">Familiar name</span><span data-i18n lang="vi">Tên quen thuộc</span></th><th><span data-i18n lang="en">Who signs</span><span data-i18n lang="vi">Ai ký</span></th><th><span data-i18n lang="en">Language</span><span data-i18n lang="vi">Ngôn ngữ</span></th></tr></thead>
+    <tbody>
+      <tr><td><code>discovery/vision.md</code></td><td>BRD (Business Requirements Document) — <span data-i18n lang="en">the business case</span><span data-i18n lang="vi">lý do kinh doanh</span></td><td>PO/PM</td><td>vi</td></tr>
+      <tr><td><code>requirements/prd.md</code></td><td>PRD — Đặc tả yêu cầu sản phẩm</td><td>PO/PM</td><td>vi</td></tr>
+      <tr><td><code>requirements/items/REQ-NN.md</code> <span data-i18n lang="en">(as a set)</span><span data-i18n lang="vi">(tập hợp)</span></td><td>SRS/FRS — Đặc tả yêu cầu hệ thống/chức năng</td><td>PO/PM, BA</td><td>vi</td></tr>
+      <tr><td><code>design/application-design.md</code>, <code>design/component-design.md</code></td><td>Thiết kế cơ sở (basic design)</td><td>SA</td><td>en</td></tr>
+      <tr><td><span data-i18n lang="en">Dossier</span><span data-i18n lang="vi">Dossier</span> <code>design.md</code></td><td>Thiết kế chi tiết (detail design)</td><td><span data-i18n lang="en">Tech Lead (SA when cross-Unit)</span><span data-i18n lang="vi">Tech Lead (SA khi liên Unit)</span></td><td>en</td></tr>
+      <tr><td><code>design/uiux-spec.md</code></td><td>Đặc tả giao diện</td><td>Designer / PO/PM</td><td>vi</td></tr>
+      <tr><td><code>07-baseline-uat/uat-report.md</code></td><td>Biên bản nghiệm thu</td><td>PO/PM</td><td>vi</td></tr>
+      <tr><td><code>08-publish-handoff/sre-production-handoff.md</code></td><td>Biên bản bàn giao vận hành</td><td>SRE</td><td>en</td></tr>
+      <tr><td><code>08-publish-handoff/user-admin-guide.md</code></td><td>HDSD (hướng dẫn sử dụng)</td><td>Tech Lead</td><td>vi</td></tr>
+      <tr><td><code>08-publish-handoff/operations-runbook.md</code></td><td>Tài liệu vận hành</td><td>SRE</td><td>en</td></tr>
+      <tr><td><span data-i18n lang="en">Dossier</span><span data-i18n lang="vi">Dossier</span> <code>verification.md</code></td><td>Test plan / test case</td><td>Tech Lead / QA</td><td>en</td></tr>
+      <tr><td><code>07-baseline-uat/uat-report.md</code></td><td>UAT (biên bản/kết quả)</td><td>PO/PM</td><td>vi</td></tr>
+    </tbody>
+  </table></div>
+  <p data-i18n lang="en">Two rows quote the spec's own words: “biên bản nghiệm thu” for <code>uat-report.md</code> and “biên bản bàn giao vận hành” for <code>sre-production-handoff.md</code> (§11.5). The remaining mappings — BRD, SRS/FRS, basic design, detail design, HDSD, operations documentation — are the names Vietnamese IT teams already use for that kind of document; the spec itself does not use these labels, so do not look for a file literally named <code>SRS.md</code>. <code>COVERAGE.md</code> is the source of truth for actual filenames.</p>
+  <p data-i18n lang="vi">Hai dòng trong bảng là chữ chính spec dùng: “biên bản nghiệm thu” cho <code>uat-report.md</code> và “biên bản bàn giao vận hành” cho <code>sre-production-handoff.md</code> (§11.5). Các ánh xạ còn lại — BRD, SRS/FRS, thiết kế cơ sở, thiết kế chi tiết, HDSD, tài liệu vận hành — là cách gọi quen thuộc với đội ngũ CNTT Việt Nam cho đúng loại tài liệu đó; bản thân spec không dùng các tên này, nên đừng tìm một file có tên <code>SRS.md</code>. <code>COVERAGE.md</code> là nguồn chuẩn cho tên file thật.</p>
+</section>
+
+<!-- 10 -->
+<section id="situations">
+  <div class="eyebrow">10</div>
+  <h2><span data-i18n lang="en">Situations</span><span data-i18n lang="vi">Tình huống</span></h2>
+  <div class="grid">
+    <div class="card sit">
+      <h3><span data-i18n lang="en">A document is wrong</span><span data-i18n lang="vi">Một tài liệu bị sai</span></h3>
+      <p data-i18n lang="en">If it is not yet approved, correct it in place — that is how a living/control document works. If it is already approved, claim it, edit in <code>drafts/</code>, and go through the owning authority's gate to promote the correction (§13.2) — never edit an approved body directly. If the wrong statement is inside a completed record (§15), the record is never edited; a new record with <code>Supersedes</code> pointing back is written instead. A document states the truth in the present tense — the wrong sentence is corrected in place, not narrated over (§11.11).</p>
+      <p data-i18n lang="vi">Nếu chưa được duyệt, sửa tại chỗ — đó là cách living/control document hoạt động. Nếu đã được duyệt, phải claim nó, sửa trong <code>drafts/</code>, rồi qua gate của thẩm quyền sở hữu để promote bản sửa (§13.2) — không sửa trực tiếp một body đã có approval. Nếu sai nằm trong một record đã hoàn tất (§15), record đó không bao giờ được sửa; viết một record mới với <code>Supersedes</code> trỏ ngược lại. Một tài liệu luôn nói sự thật ở thì hiện tại — sửa đúng câu sai, không kể lại quá trình (§11.11).</p>
+    </div>
+    <div class="card sit">
+      <h3><span data-i18n lang="en">A link points nowhere</span><span data-i18n lang="vi">Một liên kết trỏ vào chỗ không còn tồn tại</span></h3>
+      <p data-i18n lang="en">That is the sign the path has been archived. Try <code>archive/&lt;YYYY-MM or BASELINE-NN&gt;/&lt;original path&gt;</code>, or resolve the ID through <code>archive/index.md</code>. Links are never rewritten to “fix” this — the ID is the durable thing, the path is only where it lives (§11.11).</p>
+      <p data-i18n lang="vi">Đây là dấu hiệu path đó đã archive. Thử <code>archive/&lt;YYYY-MM hoặc BASELINE-NN&gt;/&lt;path cũ&gt;</code>, hoặc tra ID trong <code>archive/index.md</code>. Liên kết không bao giờ được viết lại để “sửa” — ID là cái bền, path chỉ là chỗ nó đang ở (§11.11).</p>
+    </div>
+    <div class="card sit">
+      <h3><span data-i18n lang="en">The agent proposes an archive plan</span><span data-i18n lang="vi">Agent đề xuất một archive plan</span></h3>
+      <p data-i18n lang="en">Check: each row carries an ID, the from/to paths, a reason, and an approver (PO/PM for dossiers and baseline composition; the owning authority for a retired living document). The plan only proposes — nothing moves until you approve it in one pass, and one commit applies the whole thing. Closed rows of <code>overview/open-items.md</code> are not an archive-plan input: they left in the commit that closed them. Everything the plan touches only moves intact (§11.11).</p>
+      <p data-i18n lang="vi">Kiểm tra: mỗi dòng có ID, path cũ/mới, lý do, và người duyệt (PO/PM cho dossier và baseline composition; thẩm quyền sở hữu cho living document bị retire). Plan chỉ đề xuất — không có gì di chuyển tới khi bạn duyệt trong một lượt, và một commit áp dụng toàn bộ. Dòng đã đóng của <code>overview/open-items.md</code> không phải đầu vào của archive plan: chúng rời đi ngay trong commit đóng chúng. Plan này chỉ di chuyển nguyên vẹn (§11.11).</p>
+    </div>
+    <div class="card sit">
+      <h3><span data-i18n lang="en">A claim holds a file you need</span><span data-i18n lang="vi">Một claim đang giữ file bạn cần</span></h3>
+      <p data-i18n lang="en">You will see a <code>held by {work item}</code> state. Your work does not stop — everything else continues; only that one file waits to be released through promotion or cancellation of the work item holding it. A claim is a time-bound lease, not a permanent lock: if it expires unrenewed, the next agent proves the expiry, checks for unpromoted work, records a stale-claim recovery event, then renews it for the same owner, performs an approved handoff, or releases it per project policy (§13.2, §13.5).</p>
+      <p data-i18n lang="vi">Bạn sẽ thấy trạng thái <code>held by {work item}</code>. Việc của bạn không dừng lại — mọi thứ khác vẫn tiếp tục; chỉ file đó chờ được giải phóng qua promote hoặc huỷ work item đang giữ nó. Claim là một lease có thời hạn, không phải khoá vĩnh viễn: nếu hết hạn mà chưa gia hạn, agent kế tiếp chứng minh việc hết hạn, kiểm tra công việc chưa promote, ghi một sự kiện khôi phục claim-cũ, rồi gia hạn cho cùng chủ, thực hiện bàn giao đã duyệt, hoặc giải phóng theo chính sách dự án (§13.2, §13.5).</p>
+    </div>
+    <div class="card sit">
+      <h3><span data-i18n lang="en">You see <code>DOC_SHAPE_LEGACY</code> after an upgrade</span><span data-i18n lang="vi">Bạn thấy <code>DOC_SHAPE_LEGACY</code> sau khi nâng cấp</span></h3>
+      <p data-i18n lang="en">This means <code>COVERAGE.md</code> describes a release other than the <code>Document set shape:</code> your project records. <code>next</code> offers a <code>DOC-MIG-NN</code> as the recommended next action — it is <b>optional</b>: declining keeps the project working, legacy dossiers close and archive whole in their old shape, single-file requirements stay valid, and only new work takes the new shape (§16). See <a href="#upgrading">§11</a> below.</p>
+      <p data-i18n lang="vi">Nghĩa là <code>COVERAGE.md</code> mô tả một release khác với <code>Document set shape:</code> mà dự án đang ghi. <code>next</code> sẽ đề xuất một <code>DOC-MIG-NN</code> như hành động khuyến nghị tiếp theo — đây là <b>tuỳ chọn</b>: từ chối vẫn để dự án chạy bình thường, dossier cũ đóng và archive nguyên hình dạng cũ, requirements một-file vẫn hợp lệ, chỉ công việc mới đi theo hình dạng mới (§16). Xem thêm <a href="#upgrading">§11</a> bên dưới.</p>
+    </div>
+    <div class="card sit">
+      <h3><span data-i18n lang="en">An auditor asks for acceptance evidence</span><span data-i18n lang="vi">Auditor hỏi bằng chứng nghiệm thu</span></h3>
+      <p data-i18n lang="en">Point them at <code>07-baseline-uat/uat-report.md</code> (the acceptance minutes) and its <code>Approved:</code> line, which leads into <code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code>; and, when a specific baseline is in question, the manifest under <code>activation/baselines/</code>. An auditor needs no write access — <code>status</code> and <code>check</code> are enough for them to read everything themselves, since both are read-only (§8.2, §8.4).</p>
+      <p data-i18n lang="vi">Chỉ cho họ <code>07-baseline-uat/uat-report.md</code> (biên bản nghiệm thu) cùng dòng <code>Approved:</code> của nó, dẫn tới bản ghi trong <code>.aidlc/audit/approvals/&lt;yyyy-mm&gt;/</code>; và, khi liên quan tới một baseline cụ thể, manifest tại <code>activation/baselines/</code>. Auditor không cần quyền ghi — <code>status</code> và <code>check</code> đủ để họ tự đọc mọi thứ, vì cả hai đều chỉ đọc (§8.2, §8.4).</p>
+    </div>
+  </div>
+  <div class="card sit" style="margin-top:16px">
+    <h3><span data-i18n lang="en">AI-DLC cost you time</span><span data-i18n lang="vi">AI-DLC làm bạn mất thời gian</span></h3>
+    <p data-i18n lang="en">Say “record this as a painpoint”. The agent drafts a <code>PP-NNNN</code> record under <code>.aidlc/audit/feedback/&lt;yyyy-mm&gt;/</code> from what just happened — the verbatim rule involved, what happened, and the cost as measured numbers (extra turns, a wrong artifact committed, a person who had to step in) — shows it, then writes it. Nothing blocks and nothing is sent anywhere by itself; only when you ask, and approve the exact text, does it go to the AI-DLC repository as an issue (§15.1).</p>
+    <p data-i18n lang="vi">Nói “ghi painpoint” (hoặc “AI-DLC chỗ này khó dùng”). Agent soạn một record <code>PP-NNNN</code> tại <code>.aidlc/audit/feedback/&lt;yyyy-mm&gt;/</code> từ đúng việc vừa xảy ra — trích nguyên văn đoạn quy tắc liên quan, chuyện gì đã xảy ra, và chi phí đo được (số lượt thừa, artifact sai đã commit, người phải can thiệp) — cho bạn xem, rồi mới ghi. Không có gì bị chặn, không có gì tự gửi đi đâu; chỉ khi bạn yêu cầu, và duyệt đúng nội dung, record mới được gửi lên kho AI-DLC dưới dạng issue (§15.1).</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="upgrading">
+  <div class="eyebrow">11</div>
+  <h2><span data-i18n lang="en">Upgrading and migrating the document set</span><span data-i18n lang="vi">Nâng cấp và di chuyển bộ tài liệu</span></h2>
+  <p data-i18n lang="en">A package upgrade (v1 → v1) installs only the package and proposes declinable <code>Move</code> rows; it <b>never</b> rewrites, merges, or splits a project document — because an approval binds a body (§5.3), a claim holds one whole file (§13.2), and no finding blocks work (§5.4), so a reshape must be a governed work item, never an installer side effect. When the installed release changes the document shape — <code>COVERAGE.md</code> differs from the <code>Document set shape:</code> the project records — <code>check</code> reports <code>DOC_SHAPE_LEGACY</code> and <code>next</code> offers a <b>document-set migration</b>, <code>DOC-MIG-NN</code>, written from its template into <code>.aidlc/migrations/DOC-MIG-NN/</code>. This is <b>optional</b>.</p>
+  <p data-i18n lang="vi">Nâng cấp package (v1 → v1) chỉ cài package và đề xuất các dòng <code>Move</code> có thể từ chối; nó <b>không bao giờ</b> viết lại, gộp, hay tách một tài liệu dự án — vì approval gắn với body (§5.3), claim giữ nguyên một file (§13.2), và không finding nào chặn việc (§5.4), nên việc đổi hình dạng phải là một work item được quản trị, không phải tác dụng phụ của installer. Khi release cài đặt đổi hình dạng tài liệu — <code>COVERAGE.md</code> khác với <code>Document set shape:</code> mà dự án đang ghi — <code>check</code> báo <code>DOC_SHAPE_LEGACY</code> và <code>next</code> đề xuất một <b>document-set migration</b>, <code>DOC-MIG-NN</code>, viết từ template vào <code>.aidlc/migrations/DOC-MIG-NN/</code>. Đây là việc <b>tuỳ chọn</b>.</p>
+
+  <div class="callout">
+    <p data-i18n lang="en"><b>If your complaint is “there is too much to read”, this is the job, not archiving.</b> Archiving only moves what has closed, and on a Hub that has not migrated almost nothing reads as closed — the state is still in prose rather than in a <code>Status:</code> field. Measured on a real Hub: the archive rule found <b>one</b> row, while <b>~40% of the files and ~42% of the words</b> sat in folders the §10.2 tree does not draw (<code>.aidlc/plans/</code>, <code>gates/</code>, <code>decisions/</code>, <code>onboarding/</code>). <code>DOC-MIG</code> reaches those with its <code>Move</code> batch and its <code>Header</code> batch — and only after <code>Header</code> does archiving have anything to read.</p>
+    <p data-i18n lang="vi"><b>Nếu cảm giác của bạn là “tài liệu nhiều quá, đọc không nổi” thì đây mới là việc cần làm, không phải archive.</b> Archive chỉ dời được những gì đã đóng, và trên một hub chưa migrate thì gần như không có work item nào đọc được là đã đóng — trạng thái còn nằm trong văn xuôi chứ chưa nằm ở trường <code>Status:</code>. Đo trên một hub thật: luật archive tìm ra <b>một</b> dòng, trong khi <b>~40% số file và ~42% số chữ</b> nằm ở những folder mà cây §10.2 không vẽ (<code>.aidlc/plans/</code>, <code>gates/</code>, <code>decisions/</code>, <code>onboarding/</code>). Phần đó <code>DOC-MIG</code> xử lý bằng batch <code>Move</code> và batch <code>Header</code> — sau <code>Header</code> thì archive mới có cái để bám vào.</p>
+    <p data-i18n lang="en"><b>The order is <code>check</code> → <code>DOC-MIG</code> → archive.</b> Archive is not a <code>DOC-MIG</code> batch: after the <code>Header</code> batch has run, it is the next monthly archive plan (§11.11) that moves the dossiers which now read <code>Done</code>.</p>
+    <p data-i18n lang="vi"><b>Thứ tự đúng là: <code>check</code> → <code>DOC-MIG</code> → archive.</b> Archive không phải là một batch của <code>DOC-MIG</code>: sau khi batch <code>Header</code> chạy xong, chính archive plan tháng kế tiếp (§11.11) mới là thứ dời những dossier lúc này đã đọc được là <code>Done</code>.</p>
+  </div>
+
+  <h3><span data-i18n lang="en">What a <code>DOC-MIG</code> plan holds</span><span data-i18n lang="vi">Một plan <code>DOC-MIG</code> gồm gì</span></h3>
+  <p data-i18n lang="en">A <code>DOC-MIG</code> plan lists rows of seven kinds — <code>Move</code>, <code>Delete</code>, <code>Split</code>, <code>Header</code>, <code>Normalise</code>, <code>Retire</code>, <code>Re-approve</code> — grouped into batches of at most 200 rows, each one Hub commit, checkpointed in the operation journal (§13.6). A row that meets an active claim is skipped and reported, never waited on.</p>
+  <p data-i18n lang="vi"><code>DOC-MIG</code> liệt kê các dòng thuộc bảy loại — <code>Move</code>, <code>Delete</code>, <code>Split</code>, <code>Header</code>, <code>Normalise</code>, <code>Retire</code>, <code>Re-approve</code> — chia thành các batch tối đa 200 dòng, mỗi batch là một commit Hub, có checkpoint trong nhật ký thao tác (§13.6). Một dòng gặp claim đang mở thì bị bỏ qua và báo cáo, không chờ.</p>
+  <p data-i18n lang="en"><code>Split</code> is a <b>structural restructure</b>: it partitions an approved body at <code>## </code> boundaries, and its mapping row carries the approval forward to each new file — the new file cites it as <code>Approved: APPR-NNNN (structural, DOC-MIG-NN row N)</code>. Anything that changes body content is a <code>Re-approve</code> row, running as an ordinary gate under the owning authority.</p>
+  <p data-i18n lang="vi"><code>Split</code> là một <b>structural restructure</b>: tách một body đã duyệt tại các ranh giới <code>## </code>, và mapping row của nó giữ nguyên approval cho từng file mới — file mới trích dẫn nó là <code>Approved: APPR-NNNN (structural, DOC-MIG-NN row N)</code>. Bất cứ gì làm thay đổi nội dung body là một dòng <code>Re-approve</code>, chạy như một gate bình thường dưới thẩm quyền sở hữu.</p>
+  <p data-i18n lang="en">On a hub whose <code>open-items.md</code> and <code>registry.md</code> are in an older shape, the <code>Normalise</code> batch is what brings them to the shipped shape — the old blob is kept byte-for-byte at <code>archive/&lt;yyyy-mm&gt;/&lt;original path&gt;</code>; no size threshold applies (§11.11). A register that is not one table takes the adoption path instead (§16).</p>
+  <p data-i18n lang="vi">Trên hub có <code>open-items.md</code> và <code>registry.md</code> ở hình dạng cũ, batch <code>Normalise</code> là thứ đưa chúng về hình dạng hiện hành — blob cũ được giữ nguyên tại <code>archive/&lt;yyyy-mm&gt;/&lt;path cũ&gt;</code>; không có ngưỡng kích thước nào (§11.11). Register không phải là một bảng duy nhất thì đi theo đường adoption (§16).</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">Never</span><span data-i18n lang="vi">Không bao giờ</span></h3>
+      <ul data-i18n lang="en">
+        <li>edit a completed record</li>
+        <li>renumber an ID</li>
+        <li>rewrite a link</li>
+        <li>change the language of an existing body</li>
+        <li>merge a dossier created in an earlier shape</li>
+      </ul>
+      <ul data-i18n lang="vi">
+        <li>sửa một record đã hoàn tất</li>
+        <li>đánh số lại một ID</li>
+        <li>viết lại một liên kết</li>
+        <li>đổi ngôn ngữ của một body đang tồn tại</li>
+        <li>gộp một dossier được tạo ở hình dạng cũ</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Who approves</span><span data-i18n lang="vi">Ai duyệt</span></h3>
+      <p data-i18n lang="en">SA, Tech Lead, a delegated Dev, or PO/PM approves the plan and the cutover, named in the plan; the owning authority approves each <code>Re-approve</code> gate and is named on each <code>Retire</code> row. A body the migration changes is written in place as <code>Status: In review</code> with <code>Approved: —</code>, and the approval is what promotes it (§13.2).</p>
+      <p data-i18n lang="vi">SA, Tech Lead, Dev được uỷ quyền, hoặc PO/PM duyệt plan và cutover, có ghi tên trong plan; thẩm quyền sở hữu duyệt từng gate <code>Re-approve</code> và được ghi tên trên từng dòng <code>Retire</code>. Body mà migration thay đổi được ghi tại chỗ với <code>Status: In review</code> và <code>Approved: —</code>; lượt duyệt là thứ promote nó (§13.2).</p>
+      <p data-i18n lang="en">A v0.3–v0.9.x migration lands directly in the current shape — no intermediate shape to pass through; what a human does not promote goes to <code>archive/legacy-v0.x/&lt;original path&gt;</code> as evidence.</p>
+      <p data-i18n lang="vi">Một migration v0.3–v0.9.x đi thẳng vào hình dạng hiện hành — không có hình dạng trung gian nào để đi qua; những gì con người không promote thì vào <code>archive/legacy-v0.x/&lt;path cũ&gt;</code> làm bằng chứng.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="next">
+  <div class="eyebrow">12</div>
+  <h2><span data-i18n lang="en">Where to go next</span><span data-i18n lang="vi">Đi tiếp ở đâu</span></h2>
+  <p data-i18n lang="en">Every path below is inside the installed package, rooted at <code>.kafi/ai-dlc/</code>:</p>
+  <p data-i18n lang="vi">Mọi đường dẫn dưới đây nằm trong gói đã cài, gốc là <code>.kafi/ai-dlc/</code>:</p>
+  <div class="tbl"><table class="wide">
+    <thead><tr><th>Path</th><th><span data-i18n lang="en">What it is</span><span data-i18n lang="vi">Có gì</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k"><code>core/spec/AI-DLC-v1.0.12-spec.md</code></td><td><span data-i18n lang="en">The full rule set; where this handbook and the spec differ, the spec wins.</span><span data-i18n lang="vi">Luật đầy đủ. Khi sổ tay này và spec khác nhau, spec thắng.</span></td></tr>
+      <tr><td class="k"><code>core/guide/project-handbook.md</code></td><td><span data-i18n lang="en">This handbook, as the agent reads it.</span><span data-i18n lang="vi">Chính sổ tay này, bản agent đọc.</span></td></tr>
+      <tr><td class="k"><code>core/bootstrap/bootstrap.md</code></td><td><span data-i18n lang="en">Install, upgrade, repair, rollback.</span><span data-i18n lang="vi">Cài đặt, nâng cấp, sửa chữa, rollback.</span></td></tr>
+      <tr><td class="k"><code>core/templates/&lt;group&gt;/&lt;name&gt;.md</code></td><td><span data-i18n lang="en">Every authoring template; <code>core/templates/_meta/COVERAGE.md</code> is the catalogue.</span><span data-i18n lang="vi">Mọi template soạn thảo; <code>core/templates/_meta/COVERAGE.md</code> là danh mục.</span></td></tr>
+      <tr><td class="k"><code>core/reference/</code></td><td><span data-i18n lang="en">Three filled worked examples on an invented project: read one beside the empty template to see length, how sources are cited, and the shape of a row when two sources disagree. Never cite it as a source.</span><span data-i18n lang="vi">Ba tài liệu mẫu đã điền, viết trên một dự án hư cấu: đọc cạnh template rỗng để thấy độ dài, cách trích nguồn, và hình dạng một dòng khi hai nguồn mâu thuẫn. Không bao giờ là nguồn trích dẫn.</span></td></tr>
+      <tr><td class="k"><code>core/design-system/kafi-design-system.md</code></td><td><span data-i18n lang="en">The canonical Design System text; the <code>kafi-design-system</code> skill is a projection of it, and this file wins where they differ.</span><span data-i18n lang="vi">Bản chuẩn của KAFI Design System — skill <code>kafi-design-system</code> chỉ là một projection của file này; khi hai bên khác nhau, file này thắng.</span></td></tr>
+      <tr><td class="k"><code>core/registry/intents.json</code></td><td><span data-i18n lang="en">The ten intents and which skill answers each.</span><span data-i18n lang="vi">Mười intent và skill nào trả lời intent nào.</span></td></tr>
+      <tr><td class="k"><code>core/migrations/index.json</code></td><td><span data-i18n lang="en">Which source tag maps to which migration recipe.</span><span data-i18n lang="vi">Tag nguồn nào dùng recipe nào.</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span data-i18n lang="en">Per role, per situation</span><span data-i18n lang="vi">Theo vai trò, theo tình huống</span></h3>
+      <p data-i18n lang="en">More specific scenarios: the role guides published with the release — <a href="ai-dlc-v1.0-role-guides.html">Scenarios and Roles</a>.</p>
+      <p data-i18n lang="vi">Từng role, từng tình huống cụ thể hơn: bộ role guide xuất bản kèm release — <a href="ai-dlc-v1.0-role-guides.html">Kịch bản và vai trò</a>.</p>
+    </div>
+    <div class="card">
+      <h3><span data-i18n lang="en">Install and upgrade</span><span data-i18n lang="vi">Cài đặt và nâng cấp</span></h3>
+      <p data-i18n lang="en">Installing, upgrading, and the exact commands: <code>core/bootstrap/bootstrap.md</code>, and on the web <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Install and operate</a>.</p>
+      <p data-i18n lang="vi">Cài đặt, nâng cấp, và các lệnh chính xác: <code>core/bootstrap/bootstrap.md</code>, và trên web <a href="ai-dlc-v1.0-install-upgrade-by-prompt.html">Cài đặt và vận hành</a>.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>KAFI Transformation Office · AI-DLC v1.0.12 · <span data-i18n lang="en">AI-DLC Project Handbook</span><span data-i18n lang="vi">Sổ tay dự án AI-DLC</span> · <a href="index.html"><span data-i18n lang="en">Documentation index</span><span data-i18n lang="vi">Mục lục tài liệu</span></a></footer>
+</div>
+
+<script>
+(function(){
+  var d=document.documentElement;
+  var LK="kafi-aidlc-language", TK="kafi-aidlc-theme";
+  function store(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function sync(){
+    document.querySelectorAll("[data-language-control]").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-language-control")===d.dataset.lang));});
+    document.querySelectorAll("[data-theme-control]").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-theme-control")===d.dataset.theme));});
+  }
+  function setLang(v){v=(v==="vi")?"vi":"en";d.dataset.lang=v;d.lang=v;store(LK,v);sync();}
+  function setTheme(v){v=(v==="light")?"light":"dark";d.dataset.theme=v;store(TK,v);sync();}
+  document.querySelectorAll("[data-language-control]").forEach(function(b){b.addEventListener("click",function(){setLang(b.getAttribute("data-language-control"));});});
+  document.querySelectorAll("[data-theme-control]").forEach(function(b){b.addEventListener("click",function(){setTheme(b.getAttribute("data-theme-control"));});});
+  sync();
+})();
+</script>
+</body>
+</html>
